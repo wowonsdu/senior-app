@@ -30,7 +30,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_m"
-                android:text="Jak dzialaja alerty?"
+                android:text="@string/alerts_overview_title"
                 android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
                 android:textColor="@color/senior_text_primary"
                 app:layout_constraintTop_toTopOf="@id/alerts_info_icon"
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_m"
                 android:layout_marginTop="@dimen/spacing_xs"
-                android:text="System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:"
+                android:text="@string/alerts_overview_body"
                 android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
                 android:textColor="@color/senior_text_secondary"
                 app:layout_constraintTop_toBottomOf="@id/alerts_info_title"
@@ -56,7 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_m"
                 android:layout_marginTop="@dimen/spacing_xs"
-                android:text="Wartosc jest krytycznie niska lub krytycznie wysoka."
+                android:text="@string/alerts_overview_body_low_high"
                 android:textAppearance="@style/TextAppearance.Senior.Caption"
                 android:textColor="@color/senior_text_secondary"
                 app:layout_constraintTop_toBottomOf="@id/alerts_info_body"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_m"
                 android:layout_marginTop="@dimen/spacing_xs"
-                android:text="Nastapila gwaltowna zmiana w ostatnich pomiarach."
+                android:text="@string/alerts_overview_body_spike"
                 android:textAppearance="@style/TextAppearance.Senior.Caption"
                 android:textColor="@color/senior_text_secondary"
                 app:layout_constraintTop_toBottomOf="@id/alerts_info_body_2"
@@ -82,8 +82,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_l"
-        app:alertTitle="Poziom cukru"
-        app:alertSubtitle="Glikemia - poziom glukozy we krwi"
+        app:alertTitle="@string/alert_item_title_sugar"
+        app:alertSubtitle="@string/alert_item_subtitle_sugar"
         app:alertIcon="@drawable/ic_alert_drop"
         app:alertColor="@color/senior_primary" />
 
@@ -91,8 +91,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
-        app:alertTitle="Dawka insuliny"
-        app:alertSubtitle="Ilosc podanej insuliny"
+        app:alertTitle="@string/alert_item_title_insulin"
+        app:alertSubtitle="@string/alert_item_subtitle_insulin"
         app:alertIcon="@drawable/ic_alert_medical"
         app:alertColor="@color/senior_secondary" />
 
@@ -100,8 +100,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
-        app:alertTitle="Cisnienie krwi"
-        app:alertSubtitle="Cisnienie skurczowe (gorna wartosc)"
+        app:alertTitle="@string/alert_item_title_pressure"
+        app:alertSubtitle="@string/alert_item_subtitle_pressure"
         app:alertIcon="@drawable/ic_alert_heart"
         app:alertColor="@color/senior_danger" />
 
@@ -109,8 +109,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
-        app:alertTitle="Tetno"
-        app:alertSubtitle="Czestosc uderzen serca na minute"
+        app:alertTitle="@string/alert_item_title_pulse"
+        app:alertSubtitle="@string/alert_item_subtitle_pulse"
         app:alertIcon="@drawable/ic_alert_pulse"
         app:alertColor="@color/senior_purple" />
 
@@ -119,6 +119,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_l"
-        android:text="ZAPISZ USTAWIENIA" />
+        android:text="@string/alerts_overview_save" />
 
 </LinearLayout>

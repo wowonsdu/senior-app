@@ -19,6 +19,7 @@
 - [x] Alerts overview (layout + custom view + demo)
 - [x] Layout Design Book z pelnym zestawem komponentow
 - [x] Activity + launcher alias
+- [x] Wydzielenie wszystkich tekstow do resources (strings)
 
 ## Etap 3 — Porownanie z makietami (ADB/MCP)
 - [x] Uruchomienie na emulatorze przez mcp__android-adb

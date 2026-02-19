@@ -14,14 +14,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Design Book"
+            android:text="@string/design_book_title"
             android:textAppearance="@style/TextAppearance.Senior.TitleLarge" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_l"
-            android:text="Przyciski"
+            android:text="@string/design_book_section_buttons"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 
         <com.google.android.material.button.MaterialButton
@@ -29,34 +29,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            android:text="Primary" />
+            android:text="@string/design_book_button_primary" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Senior.Button.Secondary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            android:text="Secondary" />
+            android:text="@string/design_book_button_secondary" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Senior.Button.Danger"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            android:text="Danger" />
+            android:text="@string/design_book_button_danger" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
-            android:text="Kafelki pomiarow"
+            android:text="@string/design_book_section_tiles"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 
         <zdrowy.senior.io.ui.views.MeasurementTileView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            app:tileTitle="Cukier"
+            app:tileTitle="@string/design_book_tile_sugar"
             app:tileIcon="@android:drawable/ic_menu_info_details"
             app:tileColor="@color/senior_primary" />
 
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            app:tileTitle="Insulina"
+            app:tileTitle="@string/design_book_tile_insulin"
             app:tileIcon="@android:drawable/ic_menu_edit"
             app:tileColor="@color/senior_secondary" />
 
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            app:tileTitle="Cisnienie"
+            app:tileTitle="@string/design_book_tile_pressure"
             app:tileIcon="@android:drawable/ic_menu_compass"
             app:tileColor="@color/senior_danger" />
 
@@ -80,14 +80,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
-            android:text="Akcje"
+            android:text="@string/design_book_section_actions"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 
         <zdrowy.senior.io.ui.views.ActionTileView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            app:actionTitle="Wezwij pomoc"
+            app:actionTitle="@string/design_book_action_call_help"
             app:actionIcon="@android:drawable/ic_dialog_alert"
             app:actionColor="@color/senior_danger" />
 
@@ -95,38 +95,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
-            android:text="Karty list"
+            android:text="@string/design_book_section_list_cards"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 
         <zdrowy.senior.io.ui.views.InfoCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            app:cardTitle="Cukier: 108 mg/dL"
-            app:cardSubtitle="19.02.2026, 02:41"
+            app:cardTitle="@string/design_book_card_sugar_value"
+            app:cardSubtitle="@string/design_book_card_sugar_time"
             app:cardIcon="@android:drawable/ic_menu_today" />
 
         <zdrowy.senior.io.ui.views.InfoCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            app:cardTitle="Janek, Syn"
-            app:cardSubtitle="Tel: 692 56 070"
+            app:cardTitle="@string/design_book_card_agent_name"
+            app:cardSubtitle="@string/design_book_card_agent_phone"
             app:cardIcon="@android:drawable/ic_menu_call" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
-            android:text="Lista pomiarow"
+            android:text="@string/design_book_section_measurement_list"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 
         <zdrowy.senior.io.ui.views.MeasurementListItemView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            app:measurementTitle="Cukier: 108 mg/dL"
-            app:measurementSubtitle="19.02.2026, 02:41"
+            app:measurementTitle="@string/design_book_measurement_sugar_value"
+            app:measurementSubtitle="@string/design_book_measurement_time"
             app:measurementIcon="@android:drawable/ic_menu_info_details"
             app:measurementIconTint="@color/senior_primary" />
 
@@ -134,8 +134,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_s"
-            app:measurementTitle="Cisnienie: 123 na 80 mmHg"
-            app:measurementSubtitle="19.02.2026, 02:41"
+            app:measurementTitle="@string/design_book_measurement_pressure_value"
+            app:measurementSubtitle="@string/design_book_measurement_time"
             app:measurementIcon="@android:drawable/ic_menu_compass"
             app:measurementIconTint="@color/senior_danger" />
 
@@ -143,7 +143,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
-            android:text="Alerty (przeglad)"
+            android:text="@string/design_book_section_alerts_overview"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 
         <include layout="@layout/view_alerts_overview_content" />
@@ -152,7 +152,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
-            android:text="Alerty"
+            android:text="@string/design_book_section_alerts"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 
         <com.google.android.material.card.MaterialCardView
@@ -166,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_l"
-                android:text="Uwaga: wysoki poziom cukru"
+                android:text="@string/design_book_alert_example"
                 android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
                 android:textColor="@color/white" />
         </com.google.android.material.card.MaterialCardView>
@@ -175,7 +175,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
-            android:text="Dialogi (podglad stylu)"
+            android:text="@string/design_book_section_dialogs"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 
         <com.google.android.material.card.MaterialCardView
@@ -188,7 +188,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_l"
-                android:text="Przykladowy dialog/formularz"
+                android:text="@string/design_book_dialog_example"
                 android:textAppearance="@style/TextAppearance.Senior.BodyLarge" />
         </com.google.android.material.card.MaterialCardView>
 

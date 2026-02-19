@@ -1,0 +1,44 @@
+<resources>
+    <string name="role_select_title">Wybierz role</string>
+
+    <string name="alerts_overview_title">Jak dzialaja alerty?</string>
+    <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
+    <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
+    <string name="alerts_overview_body_spike">Nastapila gwaltowna zmiana w ostatnich pomiarach.</string>
+    <string name="alerts_overview_save">ZAPISZ USTAWIENIA</string>
+
+    <string name="alert_item_title_sugar">Poziom cukru</string>
+    <string name="alert_item_subtitle_sugar">Glikemia - poziom glukozy we krwi</string>
+    <string name="alert_item_title_insulin">Dawka insuliny</string>
+    <string name="alert_item_subtitle_insulin">Ilosc podanej insuliny</string>
+    <string name="alert_item_title_pressure">Cisnienie krwi</string>
+    <string name="alert_item_subtitle_pressure">Cisnienie skurczowe (gorna wartosc)</string>
+    <string name="alert_item_title_pulse">Tetno</string>
+    <string name="alert_item_subtitle_pulse">Czestosc uderzen serca na minute</string>
+
+    <string name="design_book_title">Design Book</string>
+    <string name="design_book_section_buttons">Przyciski</string>
+    <string name="design_book_button_primary">Primary</string>
+    <string name="design_book_button_secondary">Secondary</string>
+    <string name="design_book_button_danger">Danger</string>
+    <string name="design_book_section_tiles">Kafelki pomiarow</string>
+    <string name="design_book_tile_sugar">Cukier</string>
+    <string name="design_book_tile_insulin">Insulina</string>
+    <string name="design_book_tile_pressure">Cisnienie</string>
+    <string name="design_book_section_actions">Akcje</string>
+    <string name="design_book_action_call_help">Wezwij pomoc</string>
+    <string name="design_book_section_list_cards">Karty list</string>
+    <string name="design_book_card_sugar_value">Cukier: 108 mg/dL</string>
+    <string name="design_book_card_sugar_time">19.02.2026, 02:41</string>
+    <string name="design_book_card_agent_name">Janek, Syn</string>
+    <string name="design_book_card_agent_phone">Tel: 692 56 070</string>
+    <string name="design_book_section_measurement_list">Lista pomiarow</string>
+    <string name="design_book_measurement_sugar_value">Cukier: 108 mg/dL</string>
+    <string name="design_book_measurement_pressure_value">Cisnienie: 123 na 80 mmHg</string>
+    <string name="design_book_measurement_time">19.02.2026, 02:41</string>
+    <string name="design_book_section_alerts_overview">Alerty (przeglad)</string>
+    <string name="design_book_section_alerts">Alerty</string>
+    <string name="design_book_alert_example">Uwaga: wysoki poziom cukru</string>
+    <string name="design_book_section_dialogs">Dialogi (podglad stylu)</string>
+    <string name="design_book_dialog_example">Przykladowy dialog/formularz</string>
+</resources>
