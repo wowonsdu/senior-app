@@ -84,3 +84,4 @@
         android:text="@string/patient_doctor_code_sms" />
 
 </LinearLayout>
+

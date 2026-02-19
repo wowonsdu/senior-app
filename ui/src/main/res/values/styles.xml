@@ -44,4 +44,10 @@
     <style name="Widget.Senior.Dialog" parent="ThemeOverlay.MaterialComponents.MaterialAlertDialog">
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Senior.Medium</item>
     </style>
+
+    <style name="Widget.Senior.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
+
+    <style name="Widget.Senior.TextInputEditText" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox" />
+
+    <style name="Widget.Senior.AutoCompleteTextView" parent="Widget.MaterialComponents.AutoCompleteTextView.OutlinedBox" />
 </resources>

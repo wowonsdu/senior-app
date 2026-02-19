@@ -206,6 +206,20 @@
     <string name="patient_personal_cancel">Anuluj</string>
     <string name="patient_personal_save">Zapisz</string>
 
+    <string name="patient_add_disease_title">Dodaj chorobe</string>
+    <string name="patient_add_disease_subtitle">Podaj nazwe choroby, od kiedy chorujesz i przebieg</string>
+    <string name="patient_add_disease_name_hint">Nazwa choroby</string>
+    <string name="patient_add_disease_since_hint">Od kiedy chorujesz</string>
+    <string name="patient_add_disease_course_hint">Przebieg choroby</string>
+    <string name="patient_add_disease_cancel">Anuluj</string>
+    <string name="patient_add_disease_save">Zapisz</string>
+
+    <string-array name="patient_add_disease_course_options">
+        <item>Lagodny</item>
+        <item>Sredni</item>
+        <item>Ciezki</item>
+    </string-array>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
@@ -246,4 +260,7 @@
     <string name="design_book_alert_example">Uwaga: wysoki poziom cukru</string>
     <string name="design_book_section_dialogs">Dialogi (podglad stylu)</string>
     <string name="design_book_dialog_example">Przykladowy dialog/formularz</string>
+    <string name="design_book_section_dialog_inputs">Pola w dialogach</string>
+    <string name="design_book_dialog_input_name">Nazwa</string>
+    <string name="design_book_dialog_input_course">Przebieg choroby</string>
 </resources>

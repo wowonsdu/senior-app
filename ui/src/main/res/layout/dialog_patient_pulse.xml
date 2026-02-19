@@ -51,7 +51,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/pulse_dialog_value_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_m"
@@ -60,6 +60,7 @@
         app:hintTextColor="@color/senior_text_secondary">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/pulse_dialog_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,3 +112,4 @@
     </LinearLayout>
 
 </LinearLayout>
+

@@ -180,6 +180,9 @@
         <action
             android:id="@+id/action_patientSettings_to_personalData"
             app:destination="@id/patientPersonalDataDialogFragment" />
+        <action
+            android:id="@+id/action_patientSettings_to_addDisease"
+            app:destination="@id/patientAddDiseaseDialogFragment" />
     </fragment>
 
     <dialog
@@ -187,6 +190,12 @@
         android:name="zdrowy.senior.io.ui.patient.PatientPersonalDataDialogFragment"
         android:label="@string/patient_personal_title"
         tools:layout="@layout/dialog_patient_personal_data" />
+
+    <dialog
+        android:id="@+id/patientAddDiseaseDialogFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAddDiseaseDialogFragment"
+        android:label="@string/patient_add_disease_title"
+        tools:layout="@layout/dialog_patient_add_disease" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"

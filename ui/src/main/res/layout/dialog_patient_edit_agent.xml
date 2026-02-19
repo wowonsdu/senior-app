@@ -50,13 +50,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_edit_agent_name_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_m"
         android:hint="@string/patient_add_agent_name_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/patient_edit_agent_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,13 +67,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_edit_agent_role_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
         android:hint="@string/patient_add_agent_role_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/patient_edit_agent_role"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,13 +84,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_edit_agent_phone_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
         android:hint="@string/patient_add_agent_phone_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/patient_edit_agent_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,13 +101,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_edit_agent_email_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
         android:hint="@string/patient_add_agent_email_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/patient_edit_agent_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,3 +141,4 @@
     </LinearLayout>
 
 </LinearLayout>
+

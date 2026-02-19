@@ -54,7 +54,7 @@ Zasady etapu:
 - [x] Agenci monitorujacy: edytuj lekarza (dialog)
 - [x] Moje ustawienia (przeglad)
 - [x] Dodaj dane osobowe (dialog)
-- [ ] Dodaj chorobe (dialog)
+- [x] Dodaj chorobe (dialog)
 - [ ] Dodaj lek (dialog)
 - [ ] Alerty i powiadomienia (przeglad)
 - [ ] Alerty i powiadomienia (pelna konfiguracja)

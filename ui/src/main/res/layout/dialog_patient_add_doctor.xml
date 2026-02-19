@@ -50,13 +50,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_add_doctor_name_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_m"
         android:hint="@string/patient_add_doctor_name_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/patient_add_doctor_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,13 +66,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_add_doctor_specialty_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
         android:hint="@string/patient_add_doctor_specialty_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/patient_add_doctor_specialty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -80,13 +82,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_add_doctor_phone_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
         android:hint="@string/patient_add_doctor_phone_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/patient_add_doctor_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,13 +98,14 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_add_doctor_email_input"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
         android:hint="@string/patient_add_doctor_email_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/patient_add_doctor_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -133,3 +137,4 @@
     </LinearLayout>
 
 </LinearLayout>
+
