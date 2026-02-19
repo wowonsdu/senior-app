@@ -47,10 +47,10 @@ class PatientAddDiseaseDialogFragment : DialogFragment() {
     }
 
     private fun validateNotBlank(
-        field: com.google.android.material.textfield.TextInputEditText,
+        field: android.view.View,
         value: String
     ): Boolean {
-        val layout = field.parent.parent as? com.google.android.material.textfield.TextInputLayout
+        val layout = field.parent?.parent as? com.google.android.material.textfield.TextInputLayout
         return if (value.isBlank()) {
             layout?.error = "Pole wymagane"
             false
