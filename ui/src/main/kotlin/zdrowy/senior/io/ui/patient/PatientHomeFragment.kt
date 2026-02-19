@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientHomeBinding
 
 class PatientHomeFragment : Fragment() {
@@ -17,6 +19,9 @@ class PatientHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPatientHomeBinding.inflate(inflater, container, false)
+        binding.patientHomeTileSugar.setOnClickListener {
+            findNavController().navigate(R.id.action_patientHome_to_patientSugarDialog)
+        }
         return binding.root
     }
 

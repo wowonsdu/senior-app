@@ -57,7 +57,17 @@
         android:id="@+id/patientHomeFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientHomeFragment"
         android:label="@string/patient_home_title"
-        tools:layout="@layout/fragment_patient_home" />
+        tools:layout="@layout/fragment_patient_home">
+        <action
+            android:id="@+id/action_patientHome_to_patientSugarDialog"
+            app:destination="@id/patientSugarDialogFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/patientSugarDialogFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientSugarDialogFragment"
+        android:label="@string/patient_sugar_dialog_title"
+        tools:layout="@layout/dialog_patient_sugar" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"

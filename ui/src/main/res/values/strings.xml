@@ -68,6 +68,13 @@
     <string name="patient_home_action_agents">Agenci Monitorujacy</string>
     <string name="patient_home_action_settings">Moje Ustawienia</string>
 
+    <string name="patient_sugar_dialog_title">Cukier</string>
+    <string name="patient_sugar_dialog_subtitle">Wpisz wynik pomiaru</string>
+    <string name="patient_sugar_dialog_hint">Poziom cukru</string>
+    <string name="patient_sugar_dialog_unit">Jednostka: mg/dL</string>
+    <string name="patient_sugar_dialog_cancel">Anuluj</string>
+    <string name="patient_sugar_dialog_save">Zapisz</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
