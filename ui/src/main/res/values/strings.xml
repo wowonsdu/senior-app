@@ -150,6 +150,15 @@
     <string name="patient_edit_agent_delete">Usun</string>
     <string name="patient_edit_agent_save">Zapisz zmiany</string>
 
+    <string name="patient_add_doctor_title">Dodaj lekarza</string>
+    <string name="patient_add_doctor_subtitle">Wpisz dane lekarza</string>
+    <string name="patient_add_doctor_name_hint">Imie i nazwisko</string>
+    <string name="patient_add_doctor_specialty_hint">Specjalizacja</string>
+    <string name="patient_add_doctor_phone_hint">Telefon</string>
+    <string name="patient_add_doctor_email_hint">Email (opcjonalnie)</string>
+    <string name="patient_add_doctor_cancel">Anuluj</string>
+    <string name="patient_add_doctor_save">Zapisz</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
