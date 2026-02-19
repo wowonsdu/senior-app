@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/senior_bg">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/patient_history_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/senior_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:navigationIcon="@android:drawable/ic_media_previous"
+        app:navigationIconTint="@color/white"
+        app:title="@string/patient_history_title"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
+        android:id="@+id/patient_history_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/patient_history_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_l">
+
+            <TextView
+                android:id="@+id/patient_history_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/patient_history_subtitle"
+                android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                android:textColor="@color/senior_text_secondary" />
+
+            <TextView
+                android:id="@+id/patient_history_measurement_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:text="@string/patient_history_measurement_title"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_text_primary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/patient_history_tile_sugar"
+                    style="@style/Widget.Senior.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/tile_height"
+                    android:layout_marginEnd="@dimen/spacing_s"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/senior_info">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_alert_drop"
+                            android:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_s"
+                            android:text="@string/patient_home_tile_sugar"
+                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/patient_history_tile_insulin"
+                    style="@style/Widget.Senior.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/tile_height"
+                    android:layout_marginStart="@dimen/spacing_s"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
+                    app:strokeColor="@color/senior_outline"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_alert_medical"
+                            android:tint="@color/senior_secondary" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_s"
+                            android:text="@string/patient_home_tile_insulin"
+                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                            android:textColor="@color/senior_secondary" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/patient_history_tile_pressure"
+                    style="@style/Widget.Senior.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/tile_height"
+                    android:layout_marginEnd="@dimen/spacing_s"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
+                    app:strokeColor="@color/senior_outline"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_alert_heart"
+                            android:tint="@color/senior_danger" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_s"
+                            android:text="@string/patient_home_tile_pressure"
+                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                            android:textColor="@color/senior_danger" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/patient_history_tile_pulse"
+                    style="@style/Widget.Senior.Card"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/tile_height"
+                    android:layout_marginStart="@dimen/spacing_s"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/white"
+                    app:strokeColor="@color/senior_outline"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_alert_pulse"
+                            android:tint="@color/senior_purple" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_s"
+                            android:text="@string/patient_home_tile_pulse"
+                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                            android:textColor="@color/senior_purple" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/patient_history_time_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/patient_history_time_title"
+                    android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                    android:textColor="@color/senior_text_primary" />
+
+                <TextView
+                    android:id="@+id/patient_history_time_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/patient_history_time_value"
+                    android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                    android:textColor="@color/senior_primary" />
+            </LinearLayout>
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/patient_history_slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:valueFrom="0"
+                android:valueTo="7"
+                android:value="7"
+                android:stepSize="1"
+                app:thumbTint="@color/senior_primary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/patient_history_time_today"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/patient_history_time_72h"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/patient_history_time_week"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/patient_history_time_2w"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/patient_history_time_month"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/patient_history_time_quarter"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/patient_history_time_year"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@string/patient_history_time_all"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_primary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_history_chart"
+                style="@style/Widget.Senior.Card"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginTop="@dimen/spacing_l"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@null"
+                        android:src="@android:drawable/ic_menu_sort_by_size"
+                        android:tint="@color/senior_text_tertiary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_s"
+                        android:text="@string/patient_history_chart_placeholder"
+                        android:textAppearance="@style/TextAppearance.Senior.Caption"
+                        android:textColor="@color/senior_text_tertiary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/patient_history_list_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:text="@string/patient_history_list_title"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_text_primary" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:orientation="vertical">
+
+                <zdrowy.senior.io.ui.views.MeasurementListItemView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_s"
+                    app:measurementTitle="@string/patient_history_item_sugar"
+                    app:measurementSubtitle="@string/patient_history_item_time"
+                    app:measurementIcon="@drawable/ic_alert_drop"
+                    app:measurementIconTint="@color/senior_info" />
+
+                <zdrowy.senior.io.ui.views.MeasurementListItemView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_s"
+                    app:measurementTitle="@string/patient_history_item_pressure"
+                    app:measurementSubtitle="@string/patient_history_item_time"
+                    app:measurementIcon="@drawable/ic_alert_heart"
+                    app:measurementIconTint="@color/senior_danger" />
+
+                <zdrowy.senior.io.ui.views.MeasurementListItemView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_s"
+                    app:measurementTitle="@string/patient_history_item_pulse"
+                    app:measurementSubtitle="@string/patient_history_item_time"
+                    app:measurementIcon="@drawable/ic_alert_pulse"
+                    app:measurementIconTint="@color/senior_purple" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

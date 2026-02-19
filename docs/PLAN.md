@@ -44,7 +44,7 @@ Zasady etapu:
 - [x] Dialog pomiaru: insulina
 - [x] Dialog pomiaru: cisnienie
 - [x] Dialog pomiaru: tetno
-- [ ] Historia pomiarow (wykres + lista + filtry)
+- [x] Historia pomiarow (wykres + lista + filtry)
 - [ ] Agenci monitorujacy: lista
 - [ ] Agenci monitorujacy: dodaj agenta (dialog)
 - [ ] Agenci monitorujacy: kod dostepu (dialog)

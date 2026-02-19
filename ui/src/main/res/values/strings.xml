@@ -97,6 +97,26 @@
     <string name="patient_pulse_dialog_cancel">Anuluj</string>
     <string name="patient_pulse_dialog_save">Zapisz</string>
 
+    <string name="patient_history_title">Historia pomiarow</string>
+    <string name="patient_history_subtitle">Zobacz pomiary z ostatnich dni</string>
+    <string name="patient_history_measurement_title">Wybierz pomiar</string>
+    <string name="patient_history_time_title">Przedzial czasowy</string>
+    <string name="patient_history_time_value">Wszystko</string>
+    <string name="patient_history_time_today">Dzis</string>
+    <string name="patient_history_time_72h">72h</string>
+    <string name="patient_history_time_week">Tydzien</string>
+    <string name="patient_history_time_2w">2 tyg</string>
+    <string name="patient_history_time_month">Miesiac</string>
+    <string name="patient_history_time_quarter">Kwartal</string>
+    <string name="patient_history_time_year">Rok</string>
+    <string name="patient_history_time_all">Wszystko</string>
+    <string name="patient_history_chart_placeholder">Wykres trendow (podglad)</string>
+    <string name="patient_history_list_title">Lista pomiarow</string>
+    <string name="patient_history_item_sugar">Cukier: 108 mg/dL</string>
+    <string name="patient_history_item_pressure">Cisnienie: 123/80 mmHg</string>
+    <string name="patient_history_item_pulse">Tetno: 72 bpm</string>
+    <string name="patient_history_item_time">19.02.2026, 02:41</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>

@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_patientHome_to_patientPulseDialog"
             app:destination="@id/patientPulseDialogFragment" />
+        <action
+            android:id="@+id/action_patientHome_to_patientHistory"
+            app:destination="@id/patientHistoryFragment" />
     </fragment>
 
     <dialog
@@ -95,6 +98,12 @@
         android:name="zdrowy.senior.io.ui.patient.PatientPulseDialogFragment"
         android:label="@string/patient_pulse_dialog_title"
         tools:layout="@layout/dialog_patient_pulse" />
+
+    <fragment
+        android:id="@+id/patientHistoryFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientHistoryFragment"
+        android:label="@string/patient_history_title"
+        tools:layout="@layout/fragment_patient_history" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"
