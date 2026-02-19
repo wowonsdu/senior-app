@@ -65,6 +65,7 @@ Zasady etapu:
 - [x] Agenci i lekarze: UC-AGENT-01..07 + dummy AgentRepository/AccessCodeRepository/NotificationRepository
 - [x] Alerty: UC-ALERT-01..07 + dummy AlertRepository
 - [x] Ustawienia pacjenta: UC-SET-01..11 + dummy SettingsRepository
+- [x] Integracja UI/VM z dummy use case
 
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 

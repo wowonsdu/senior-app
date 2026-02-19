@@ -5,13 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import org.koin.android.ext.android.get
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientAgentsBinding
 
 class PatientAgentsFragment : Fragment() {
     private var _binding: FragmentPatientAgentsBinding? = null
     private val binding get() = _binding!!
+    private val viewModel by viewModels<PatientAgentsViewModel> {
+        PatientAgentsViewModel.Factory(get())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +44,11 @@ class PatientAgentsFragment : Fragment() {
             true
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.loadAgents()
     }
 
     override fun onDestroyView() {

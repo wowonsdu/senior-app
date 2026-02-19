@@ -39,4 +39,5 @@ dependencies {
     implementation(libs.rxjava)
     implementation(libs.rxkotlin)
     implementation(libs.rxandroid)
+    implementation(libs.koin.android)
 }
