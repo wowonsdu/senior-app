@@ -28,7 +28,7 @@
 - [x] Optyczne porownanie z makietami
 - [x] Checklista zgodnosci (layout/typografia/kolory/odstepy)
 
-## Etap 4 — Implementacja flow (Pacjent -> Opiekun -> Logika)
+## Etap 4 — Pacjent: nawigacja + logika (use case + dummy repo)
 
 Zasady etapu:
 - Po dodaniu **pelnego ekranu**: uruchamiam ekran przez MCP i czekam na Twoja akceptacje.
@@ -58,20 +58,31 @@ Zasady etapu:
 - [x] Dodaj lek (dialog)
 - [x] Alerty i powiadomienia (przeglad)
 - [x] Alerty i powiadomienia (pelna konfiguracja)
-- [ ] Wizyty pacjenta (lista)
-- [ ] Wizyty pacjenta (dodaj/edytuj dialog)
 
-### 4.2 Opiekun flow (UI + nawigacja) — pozniej
+### 4.2 Logika pacjenta (use case + repo dummy)
+- [ ] Pomiary: UC-MEAS-01..03 + dummy MeasurementRepository
+- [ ] Historia: UC-HIST-01..03 + dummy repo
+- [ ] Agenci i lekarze: UC-AGENT-01..07 + dummy AgentRepository/AccessCodeRepository/NotificationRepository
+- [ ] Alerty: UC-ALERT-01..07 + dummy AlertRepository
+- [ ] Ustawienia pacjenta: UC-SET-01..11 + dummy SettingsRepository
+
+## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
+
+### 5.1 Opiekun flow (UI + nawigacja)
 - [ ] Nawigacja: kompletne wejscia/wyjscia, powroty
 - [ ] Panel opiekuna: dashboard
 - [ ] Podopieczni: lista
 - [ ] Podopieczni: dodaj (dialog)
 - [ ] Podopieczni: kod dostepu (dialog)
 - [ ] Wybierz podopiecznego
+
+### 5.2 Wizyty (Pacjent + Opiekun)
+- [ ] Wizyty pacjenta (lista)
+- [ ] Wizyty pacjenta (dodaj/edytuj dialog)
 - [ ] Wizyty opiekuna (lista)
 - [ ] Wizyty opiekuna (dodaj/edytuj dialog)
 
-### 4.3 Logika (use case + repo + Firebase) — pozniej
-- [ ] Dummy repo (mock danych zgodnych z makietami)
-- [ ] Use case logika (dummy)
-- [ ] Firebase repo (Auth + Firestore)
+### 5.3 Logika opiekuna i wizyt
+- [ ] UC-CARE-01..08 + dummy CaregiverRepository
+- [ ] UC-VISIT-01..06 + dummy VisitRepository
+- [ ] UC-NOTIF-01..02 (powiadomienia wizyt) — mock
