@@ -40,6 +40,7 @@ Zasady etapu:
 - [x] Nawigacja: kompletne wejscia/wyjscia, powroty
 - [x] Layouty i widoki — Ekran wyboru roli
 - [ ] Layouty i widoki — Logowanie (telefon/kod) — pacjent
+- [x] Layouty i widoki — Logowanie (telefon/kod) — pacjent
 - [ ] Layouty i widoki — Logowanie (telefon/kod) — opiekun
 - [ ] Layouty i widoki — Weryfikacja SMS — pacjent
 - [ ] Layouty i widoki — Weryfikacja SMS — opiekun

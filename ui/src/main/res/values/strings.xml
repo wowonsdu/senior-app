@@ -9,6 +9,20 @@
     <string name="role_select_footer">Aplikacja stworzona z mysla o seniorach</string>
     <string name="role_select_version">Wersja 1.0.0 - 2026</string>
 
+    <string name="patient_login_role_label">Pacjent</string>
+    <string name="patient_login_title">Zaloguj sie</string>
+    <string name="patient_login_subtitle">Wprowadz swoje dane</string>
+    <string name="login_or">lub</string>
+    <string name="login_method_title">Wybierz sposob logowania</string>
+    <string name="login_method_subtitle">Wypelnij jedno z ponizszych pol</string>
+    <string name="login_phone_hint">Numer telefonu</string>
+    <string name="login_or_divider">— LUB —</string>
+    <string name="login_code_hint">Kod dostepu (6 cyfr)</string>
+    <string name="login_phone_tip_patient">Numer telefonu: Wyslemy Ci kod SMS</string>
+    <string name="login_code_tip_patient">Kod dostepu: Otrzymany od opiekuna</string>
+    <string name="login_continue">KONTYNUUJ</string>
+    <string name="login_footer">Twoje dane sa bezpieczne i chronione</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
