@@ -26,4 +26,59 @@
         app:layout_constraintTop_toBottomOf="@id/dev_hub_title"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dev_hub_role_select"
+        style="@style/Widget.Senior.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_l"
+        android:text="@string/dev_hub_role_select"
+        app:layout_constraintTop_toBottomOf="@id/dev_hub_note"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dev_hub_patient_login"
+        style="@style/Widget.Senior.Button.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:text="@string/dev_hub_patient_login"
+        app:layout_constraintTop_toBottomOf="@id/dev_hub_role_select"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dev_hub_caregiver_login"
+        style="@style/Widget.Senior.Button.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:text="@string/dev_hub_caregiver_login"
+        app:layout_constraintTop_toBottomOf="@id/dev_hub_patient_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dev_hub_patient_sms"
+        style="@style/Widget.Senior.Button.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:text="@string/dev_hub_patient_sms"
+        app:layout_constraintTop_toBottomOf="@id/dev_hub_caregiver_login"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/dev_hub_caregiver_sms"
+        style="@style/Widget.Senior.Button.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:text="@string/dev_hub_caregiver_sms"
+        app:layout_constraintTop_toBottomOf="@id/dev_hub_patient_sms"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,10 @@ class PatientLoginFragment : Fragment() {
         binding.patientLoginContinue.setOnClickListener {
             findNavController().navigate(R.id.action_patientLogin_to_patientSmsVerify)
         }
+        binding.patientLoginContinue.setOnLongClickListener {
+            findNavController().navigate(R.id.action_patientLogin_to_devHub)
+            true
+        }
         return binding.root
     }
 

@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_patientLogin_to_patientSmsVerify"
             app:destination="@id/patientSmsVerifyFragment" />
+        <action
+            android:id="@+id/action_patientLogin_to_devHub"
+            app:destination="@id/devHubFragment" />
     </fragment>
 
     <fragment
@@ -56,5 +59,21 @@
         android:id="@+id/devHubFragment"
         android:name="zdrowy.senior.io.ui.dev.DevHubFragment"
         android:label="@string/dev_hub_title"
-        tools:layout="@layout/fragment_dev_hub" />
+        tools:layout="@layout/fragment_dev_hub">
+        <action
+            android:id="@+id/action_devHub_to_roleSelect"
+            app:destination="@id/roleSelectFragment" />
+        <action
+            android:id="@+id/action_devHub_to_patientLogin"
+            app:destination="@id/patientLoginFragment" />
+        <action
+            android:id="@+id/action_devHub_to_caregiverLogin"
+            app:destination="@id/caregiverLoginFragment" />
+        <action
+            android:id="@+id/action_devHub_to_patientSmsVerify"
+            app:destination="@id/patientSmsVerifyFragment" />
+        <action
+            android:id="@+id/action_devHub_to_caregiverSmsVerify"
+            app:destination="@id/caregiverSmsVerifyFragment" />
+    </fragment>
 </navigation>

@@ -196,7 +196,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_l"
-                android:enabled="false"
+                android:longClickable="true"
                 android:text="@string/login_continue" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

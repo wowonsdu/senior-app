@@ -43,6 +43,11 @@
 
     <string name="dev_hub_title">Dev Hub</string>
     <string name="dev_hub_note">Wejscie bez logowania (tymczasowe)</string>
+    <string name="dev_hub_role_select">Ekran wyboru roli</string>
+    <string name="dev_hub_patient_login">Logowanie — Pacjent</string>
+    <string name="dev_hub_caregiver_login">Logowanie — Opiekun</string>
+    <string name="dev_hub_patient_sms">Weryfikacja SMS — Pacjent</string>
+    <string name="dev_hub_caregiver_sms">Weryfikacja SMS — Opiekun</string>
 
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
