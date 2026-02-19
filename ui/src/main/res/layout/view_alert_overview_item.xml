@@ -8,25 +8,52 @@
     android:layout_height="wrap_content"
     app:cardBackgroundColor="@color/senior_primary">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="@dimen/spacing_m">
+
+        <ImageView
+            android:id="@+id/alert_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@null"
+            android:tint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/alert_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_m"
             android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="@id/alert_icon"
+            app:layout_constraintStart_toEndOf="@id/alert_icon"
+            app:layout_constraintEnd_toStartOf="@id/alert_chevron" />
 
         <TextView
             android:id="@+id/alert_subtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_m"
             android:layout_marginTop="@dimen/spacing_xs"
             android:textAppearance="@style/TextAppearance.Senior.Caption"
-            android:textColor="@color/white" />
-    </LinearLayout>
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/alert_title"
+            app:layout_constraintStart_toEndOf="@id/alert_icon"
+            app:layout_constraintEnd_toStartOf="@id/alert_chevron" />
+
+        <ImageView
+            android:id="@+id/alert_chevron"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_chevron_down"
+            android:tint="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -6,20 +6,78 @@
     android:orientation="vertical"
     android:padding="@dimen/spacing_l">
 
-    <TextView
-        android:id="@+id/alerts_info_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jak dzialaja alerty?"
-        android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
-
-    <TextView
-        android:id="@+id/alerts_info_body"
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Senior.Card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_s"
-        android:text="System automatycznie monitoruje pomiary i ostrzega opiekunow."
-        android:textAppearance="@style/TextAppearance.Senior.BodyMedium" />
+        app:cardBackgroundColor="@color/senior_warning_bg">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_m">
+
+            <ImageView
+                android:id="@+id/alerts_info_icon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_alert_bell"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/alerts_info_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_m"
+                android:text="Jak dzialaja alerty?"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_text_primary"
+                app:layout_constraintTop_toTopOf="@id/alerts_info_icon"
+                app:layout_constraintStart_toEndOf="@id/alerts_info_icon"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/alerts_info_body"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_m"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:"
+                android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                android:textColor="@color/senior_text_secondary"
+                app:layout_constraintTop_toBottomOf="@id/alerts_info_title"
+                app:layout_constraintStart_toEndOf="@id/alerts_info_icon"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/alerts_info_body_2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_m"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="Wartosc jest krytycznie niska lub krytycznie wysoka."
+                android:textAppearance="@style/TextAppearance.Senior.Caption"
+                android:textColor="@color/senior_text_secondary"
+                app:layout_constraintTop_toBottomOf="@id/alerts_info_body"
+                app:layout_constraintStart_toEndOf="@id/alerts_info_icon"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/alerts_info_body_3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_m"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="Nastapila gwaltowna zmiana w ostatnich pomiarach."
+                android:textAppearance="@style/TextAppearance.Senior.Caption"
+                android:textColor="@color/senior_text_secondary"
+                app:layout_constraintTop_toBottomOf="@id/alerts_info_body_2"
+                app:layout_constraintStart_toEndOf="@id/alerts_info_icon"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <zdrowy.senior.io.ui.views.AlertOverviewItemView
         android:layout_width="match_parent"
@@ -27,6 +85,7 @@
         android:layout_marginTop="@dimen/spacing_l"
         app:alertTitle="Poziom cukru"
         app:alertSubtitle="Glikemia - poziom glukozy we krwi"
+        app:alertIcon="@drawable/ic_alert_drop"
         app:alertColor="@color/senior_primary" />
 
     <zdrowy.senior.io.ui.views.AlertOverviewItemView
@@ -35,6 +94,7 @@
         android:layout_marginTop="@dimen/spacing_s"
         app:alertTitle="Dawka insuliny"
         app:alertSubtitle="Ilosc podanej insuliny"
+        app:alertIcon="@drawable/ic_alert_medical"
         app:alertColor="@color/senior_secondary" />
 
     <zdrowy.senior.io.ui.views.AlertOverviewItemView
@@ -43,6 +103,7 @@
         android:layout_marginTop="@dimen/spacing_s"
         app:alertTitle="Cisnienie krwi"
         app:alertSubtitle="Cisnienie skurczowe (gorna wartosc)"
+        app:alertIcon="@drawable/ic_alert_heart"
         app:alertColor="@color/senior_danger" />
 
     <zdrowy.senior.io.ui.views.AlertOverviewItemView
@@ -51,6 +112,7 @@
         android:layout_marginTop="@dimen/spacing_s"
         app:alertTitle="Tetno"
         app:alertSubtitle="Czestosc uderzen serca na minute"
+        app:alertIcon="@drawable/ic_alert_pulse"
         app:alertColor="@color/senior_purple" />
 
     <com.google.android.material.button.MaterialButton
@@ -58,6 +120,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_l"
-        android:text="Zapisz ustawienia" />
+        android:text="ZAPISZ USTAWIENIA" />
 
 </LinearLayout>

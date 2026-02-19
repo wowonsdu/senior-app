@@ -25,6 +25,7 @@ class AlertOverviewItemView @JvmOverloads constructor(
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.AlertOverviewItemView)
         val title = typedArray.getString(R.styleable.AlertOverviewItemView_alertTitle)
         val subtitle = typedArray.getString(R.styleable.AlertOverviewItemView_alertSubtitle)
+        val iconRes = typedArray.getResourceId(R.styleable.AlertOverviewItemView_alertIcon, 0)
         val color = typedArray.getColor(
             R.styleable.AlertOverviewItemView_alertColor,
             ContextCompat.getColor(context, R.color.senior_primary)
@@ -33,6 +34,9 @@ class AlertOverviewItemView @JvmOverloads constructor(
 
         setTitle(title)
         setSubtitle(subtitle)
+        if (iconRes != 0) {
+            binding.alertIcon.setImageResource(iconRes)
+        }
         setAlertColor(color)
     }
 

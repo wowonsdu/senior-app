@@ -29,5 +29,6 @@
         <attr name="alertTitle" format="string" />
         <attr name="alertSubtitle" format="string" />
         <attr name="alertColor" format="color|reference" />
+        <attr name="alertIcon" format="reference" />
     </declare-styleable>
 </resources>
