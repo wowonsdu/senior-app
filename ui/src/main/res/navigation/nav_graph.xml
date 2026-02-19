@@ -176,7 +176,17 @@
         android:id="@+id/patientSettingsFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientSettingsFragment"
         android:label="@string/patient_settings_title"
-        tools:layout="@layout/fragment_patient_settings" />
+        tools:layout="@layout/fragment_patient_settings">
+        <action
+            android:id="@+id/action_patientSettings_to_personalData"
+            app:destination="@id/patientPersonalDataDialogFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/patientPersonalDataDialogFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientPersonalDataDialogFragment"
+        android:label="@string/patient_personal_title"
+        tools:layout="@layout/dialog_patient_personal_data" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"

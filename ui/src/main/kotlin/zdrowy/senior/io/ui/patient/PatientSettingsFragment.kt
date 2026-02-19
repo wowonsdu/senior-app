@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientSettingsBinding
 
 class PatientSettingsFragment : Fragment() {
@@ -20,6 +21,9 @@ class PatientSettingsFragment : Fragment() {
         _binding = FragmentPatientSettingsBinding.inflate(inflater, container, false)
         binding.patientSettingsToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
+        }
+        binding.patientSettingsAddPersonal.setOnClickListener {
+            findNavController().navigate(R.id.action_patientSettings_to_personalData)
         }
         return binding.root
     }

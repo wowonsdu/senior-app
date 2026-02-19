@@ -197,6 +197,15 @@
     <string name="patient_settings_meds_title">Moje leki</string>
     <string name="patient_settings_meds_subtitle">Dawki i harmonogram</string>
 
+    <string name="patient_personal_title">Dodaj dane osobowe</string>
+    <string name="patient_personal_subtitle">Wpisz podstawowe informacje o sobie</string>
+    <string name="patient_personal_first_name_hint">Imie</string>
+    <string name="patient_personal_last_name_hint">Nazwisko</string>
+    <string name="patient_personal_phone_hint">Telefon</string>
+    <string name="patient_personal_address_hint">Adres</string>
+    <string name="patient_personal_cancel">Anuluj</string>
+    <string name="patient_personal_save">Zapisz</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
