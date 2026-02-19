@@ -35,7 +35,8 @@
     </style>
 
     <style name="Widget.Senior.Card" parent="Widget.MaterialComponents.CardView">
-        <item name="cardUseCompatPadding">true</item>
+        <item name="cardUseCompatPadding">false</item>
+        <item name="cardPreventCornerOverlap">true</item>
         <item name="cardCornerRadius">@dimen/radius_m</item>
         <item name="cardElevation">@dimen/card_elevation</item>
     </style>
