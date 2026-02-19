@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.get
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientSettingsBinding
@@ -17,6 +18,8 @@ class PatientSettingsFragment : Fragment() {
     private val viewModel by viewModels<PatientSettingsViewModel> {
         PatientSettingsViewModel.Factory(get(), get(), get())
     }
+    private val diseasesAdapter = PatientDiseasesAdapter()
+    private val medsAdapter = PatientMedicationsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,6 +42,10 @@ class PatientSettingsFragment : Fragment() {
         binding.patientSettingsAlerts.setOnClickListener {
             findNavController().navigate(R.id.action_patientSettings_to_alertsOverview)
         }
+        binding.patientSettingsDiseasesList.layoutManager = LinearLayoutManager(requireContext())
+        binding.patientSettingsDiseasesList.adapter = diseasesAdapter
+        binding.patientSettingsMedsList.layoutManager = LinearLayoutManager(requireContext())
+        binding.patientSettingsMedsList.adapter = medsAdapter
         return binding.root
     }
 
@@ -58,6 +65,7 @@ class PatientSettingsFragment : Fragment() {
                 "${diseases.size} • $names"
             }
             binding.patientSettingsDiseasesSubtitle.text = summary
+            diseasesAdapter.submitList(diseases)
         }
         viewModel.medications.observe(viewLifecycleOwner) { meds ->
             val summary = if (meds.isEmpty()) {
@@ -67,6 +75,7 @@ class PatientSettingsFragment : Fragment() {
                 "${meds.size} • $names"
             }
             binding.patientSettingsMedsSubtitle.text = summary
+            medsAdapter.submitList(meds)
         }
     }
 

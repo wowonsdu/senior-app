@@ -128,7 +128,11 @@ class PatientPulseDialogFragment : DialogFragment() {
         val value = binding.pulseDialogValue.text?.toString()
             ?.replace(',', '.')
             ?.toDoubleOrNull()
-            ?: return
+            ?: run {
+                binding.pulseDialogValueInput.error = "Wprowadz wartosc"
+                return
+            }
+        binding.pulseDialogValueInput.error = null
         disposables.add(
             addMeasurementUseCase(
                 MeasurementType.PULSE,

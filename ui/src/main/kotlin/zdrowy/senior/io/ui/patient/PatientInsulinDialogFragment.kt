@@ -128,7 +128,11 @@ class PatientInsulinDialogFragment : DialogFragment() {
         val value = binding.insulinDialogValue.text?.toString()
             ?.replace(',', '.')
             ?.toDoubleOrNull()
-            ?: return
+            ?: run {
+                binding.insulinDialogValueInput.error = "Wprowadz wartosc"
+                return
+            }
+        binding.insulinDialogValueInput.error = null
         disposables.add(
             addMeasurementUseCase(
                 MeasurementType.INSULIN,

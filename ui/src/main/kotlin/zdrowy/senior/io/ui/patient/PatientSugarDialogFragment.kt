@@ -128,7 +128,11 @@ class PatientSugarDialogFragment : DialogFragment() {
         val value = binding.sugarDialogValue.text?.toString()
             ?.replace(',', '.')
             ?.toDoubleOrNull()
-            ?: return
+            ?: run {
+                binding.sugarDialogValueInput.error = "Wprowadz wartosc"
+                return
+            }
+        binding.sugarDialogValueInput.error = null
         disposables.add(
             addMeasurementUseCase(
                 MeasurementType.SUGAR,

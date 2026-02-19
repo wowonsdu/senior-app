@@ -133,8 +133,12 @@ class PatientPressureDialogFragment : DialogFragment() {
         val systolic = binding.pressureDialogSystolic.text?.toString()?.toIntOrNull()
         val diastolic = binding.pressureDialogDiastolic.text?.toString()?.toIntOrNull()
         if (systolic == null || diastolic == null) {
+            binding.pressureDialogSystolicInput.error = if (systolic == null) "Wymagane" else null
+            binding.pressureDialogDiastolicInput.error = if (diastolic == null) "Wymagane" else null
             return
         }
+        binding.pressureDialogSystolicInput.error = null
+        binding.pressureDialogDiastolicInput.error = null
         disposables.add(
             addBloodPressureMeasurementUseCase(
                 systolic,

@@ -207,6 +207,20 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/patient_settings_diseases_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:nestedScrollingEnabled="false" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/patient_settings_meds_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:nestedScrollingEnabled="false" />
+
             <TextView
                 android:id="@+id/patient_settings_section_config"
                 android:layout_width="wrap_content"

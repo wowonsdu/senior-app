@@ -45,12 +45,25 @@ class PatientAddMedDialogFragment : DialogFragment() {
             .joinToString(", ")
             .ifBlank { frequency }
         val notificationsEnabled = binding.patientAddMedNotify.isChecked
-        if (name.isBlank() || dosage.isBlank()) {
-            return
-        }
+        if (!validateNotBlank(binding.patientAddMedName, name)) return
+        if (!validateNotBlank(binding.patientAddMedDose, dosage)) return
         disposables.add(
             addMedicationUseCase(MedicationDraft(name, dosage, schedule, notificationsEnabled))
                 .subscribe({ dismiss() }, { dismiss() })
         )
+    }
+
+    private fun validateNotBlank(
+        field: com.google.android.material.textfield.TextInputEditText,
+        value: String
+    ): Boolean {
+        val layout = field.parent.parent as? com.google.android.material.textfield.TextInputLayout
+        return if (value.isBlank()) {
+            layout?.error = "Pole wymagane"
+            false
+        } else {
+            layout?.error = null
+            true
+        }
     }
 }

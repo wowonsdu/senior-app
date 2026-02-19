@@ -40,9 +40,9 @@ class PatientPersonalDataDialogFragment : DialogFragment() {
         val phone = binding.patientPersonalPhone.text?.toString()?.trim().orEmpty()
         val address = binding.patientPersonalAddress.text?.toString()?.trim().orEmpty()
         val fullName = listOf(firstName, lastName).filter { it.isNotBlank() }.joinToString(" ")
-        if (fullName.isBlank() || phone.isBlank()) {
-            return
-        }
+        if (!validateNotBlank(binding.patientPersonalFirstName, firstName)) return
+        if (!validateNotBlank(binding.patientPersonalLastName, lastName)) return
+        if (!validateNotBlank(binding.patientPersonalPhone, phone)) return
         val data = PersonalData(
             fullName = fullName,
             phoneNumber = phone,
@@ -52,5 +52,19 @@ class PatientPersonalDataDialogFragment : DialogFragment() {
         disposables.add(
             upsertPersonalDataUseCase(data).subscribe({ dismiss() }, { dismiss() })
         )
+    }
+
+    private fun validateNotBlank(
+        field: com.google.android.material.textfield.TextInputEditText,
+        value: String
+    ): Boolean {
+        val layout = field.parent.parent as? com.google.android.material.textfield.TextInputLayout
+        return if (value.isBlank()) {
+            layout?.error = "Pole wymagane"
+            false
+        } else {
+            layout?.error = null
+            true
+        }
     }
 }

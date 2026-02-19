@@ -68,6 +68,9 @@ Zasady etapu:
 - [x] Integracja UI/VM z dummy use case
 - [x] Podpiecie danych do widokow
 - [x] Obsluga akcji dialogow (zapis/usun)
+- [x] Listy dynamiczne (RecyclerView) w historii, agentach, ustawieniach i alertach
+- [x] Walidacje formularzy w dialogach (wymagane pola)
+- [x] Checklista UX dla MCP
 
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 

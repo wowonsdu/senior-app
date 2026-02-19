@@ -38,12 +38,26 @@ class PatientAddAgentDialogFragment : DialogFragment() {
         val name = binding.patientAddAgentName.text?.toString()?.trim().orEmpty()
         val phone = binding.patientAddAgentPhone.text?.toString()?.trim().orEmpty()
         val email = binding.patientAddAgentEmail.text?.toString()?.trim().orEmpty()
-        if (name.isBlank() || phone.isBlank() || email.isBlank()) {
-            return
-        }
+        if (!validateNotBlank(binding.patientAddAgentName, name)) return
+        if (!validateNotBlank(binding.patientAddAgentPhone, phone)) return
+        if (!validateNotBlank(binding.patientAddAgentEmail, email)) return
         disposables.add(
             addAgentUseCase(AgentDraft(name, phone, email))
                 .subscribe({ dismiss() }, { dismiss() })
         )
+    }
+
+    private fun validateNotBlank(
+        field: com.google.android.material.textfield.TextInputEditText,
+        value: String
+    ): Boolean {
+        val layout = field.parent.parent as? com.google.android.material.textfield.TextInputLayout
+        return if (value.isBlank()) {
+            layout?.error = "Pole wymagane"
+            false
+        } else {
+            layout?.error = null
+            true
+        }
     }
 }

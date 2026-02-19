@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Senior.Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/spacing_s"
+    app:cardBackgroundColor="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_m">
+
+        <TextView
+            android:id="@+id/alert_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+            android:textColor="@color/senior_text_primary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/alert_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textAppearance="@style/TextAppearance.Senior.Caption"
+            android:textColor="@color/senior_text_secondary" />
+
+        <TextView
+            android:id="@+id/alert_thresholds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textAppearance="@style/TextAppearance.Senior.Caption"
+            android:textColor="@color/senior_text_secondary" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

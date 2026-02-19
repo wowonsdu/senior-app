@@ -354,42 +354,12 @@
                 android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
                 android:textColor="@color/senior_text_primary" />
 
-            <LinearLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/patient_history_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_s"
-                android:orientation="vertical">
-
-                <zdrowy.senior.io.ui.views.MeasurementListItemView
-                    android:id="@+id/patient_history_item_primary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_s"
-                    app:measurementTitle="@string/patient_history_item_sugar"
-                    app:measurementSubtitle="@string/patient_history_item_time"
-                    app:measurementIcon="@drawable/ic_alert_drop"
-                    app:measurementIconTint="@color/senior_info" />
-
-                <zdrowy.senior.io.ui.views.MeasurementListItemView
-                    android:id="@+id/patient_history_item_secondary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_s"
-                    app:measurementTitle="@string/patient_history_item_pressure"
-                    app:measurementSubtitle="@string/patient_history_item_time"
-                    app:measurementIcon="@drawable/ic_alert_heart"
-                    app:measurementIconTint="@color/senior_danger" />
-
-                <zdrowy.senior.io.ui.views.MeasurementListItemView
-                    android:id="@+id/patient_history_item_tertiary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_s"
-                    app:measurementTitle="@string/patient_history_item_pulse"
-                    app:measurementSubtitle="@string/patient_history_item_time"
-                    app:measurementIcon="@drawable/ic_alert_pulse"
-                    app:measurementIconTint="@color/senior_purple" />
-            </LinearLayout>
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
     </ScrollView>

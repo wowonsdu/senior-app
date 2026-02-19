@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.android.ext.android.get
 import zdrowy.senior.io.domain.agent.AgentRole
 import zdrowy.senior.io.ui.R
@@ -18,6 +19,7 @@ class PatientAgentsFragment : Fragment() {
     private val viewModel by viewModels<PatientAgentsViewModel> {
         PatientAgentsViewModel.Factory(get())
     }
+    private val adapter = PatientAgentsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +46,8 @@ class PatientAgentsFragment : Fragment() {
             findNavController().navigate(R.id.action_patientAgents_to_editDoctor)
             true
         }
+        binding.patientAgentsList.layoutManager = LinearLayoutManager(requireContext())
+        binding.patientAgentsList.adapter = adapter
         return binding.root
     }
 
@@ -68,6 +72,11 @@ class PatientAgentsFragment : Fragment() {
             } else {
                 doctors.joinToString { it.fullName }
             }
+
+            adapter.submitList(agents)
+            val showEmpty = agents.isEmpty()
+            binding.patientAgentsEmptyAgentsCard.visibility = if (showEmpty) View.VISIBLE else View.GONE
+            binding.patientAgentsEmptyDoctorsCard.visibility = if (showEmpty) View.VISIBLE else View.GONE
         }
     }
 

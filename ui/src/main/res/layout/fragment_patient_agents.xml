@@ -35,6 +35,7 @@
             android:padding="@dimen/spacing_l">
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_agents_empty_agents_card"
                 style="@style/Widget.Senior.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,6 +68,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_agents_empty_doctors_card"
                 style="@style/Widget.Senior.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -171,6 +173,22 @@
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/patient_agents_list_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:text="@string/patient_agents_title"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_text_primary" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/patient_agents_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
     </ScrollView>

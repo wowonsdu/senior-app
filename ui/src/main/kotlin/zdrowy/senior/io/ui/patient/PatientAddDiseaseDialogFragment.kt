@@ -38,12 +38,25 @@ class PatientAddDiseaseDialogFragment : DialogFragment() {
         val name = binding.patientAddDiseaseName.text?.toString()?.trim().orEmpty()
         val severity = binding.patientAddDiseaseCourse.text?.toString()?.trim().orEmpty()
         val notes = binding.patientAddDiseaseSince.text?.toString()?.trim().orEmpty()
-        if (name.isBlank() || severity.isBlank()) {
-            return
-        }
+        if (!validateNotBlank(binding.patientAddDiseaseName, name)) return
+        if (!validateNotBlank(binding.patientAddDiseaseCourse, severity)) return
         disposables.add(
             addDiseaseUseCase(DiseaseDraft(name, severity, notes))
                 .subscribe({ dismiss() }, { dismiss() })
         )
+    }
+
+    private fun validateNotBlank(
+        field: com.google.android.material.textfield.TextInputEditText,
+        value: String
+    ): Boolean {
+        val layout = field.parent.parent as? com.google.android.material.textfield.TextInputLayout
+        return if (value.isBlank()) {
+            layout?.error = "Pole wymagane"
+            false
+        } else {
+            layout?.error = null
+            true
+        }
     }
 }
