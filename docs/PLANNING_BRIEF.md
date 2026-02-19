@@ -76,6 +76,7 @@ Szczegolowa lista w `docs/USE_CASES.md`. Najwazniejsze obszary:
 - Ustawienia pacjenta: dane, choroby, leki i powiadomienia.
 
 ## Zasady realizacji ekranow
+- Najpierw pelny **Pacjent flow** (UI + nawigacja), potem **Opiekun flow**, a dopiero na koncu logika (use case/repo/Firebase).
 - Po dodaniu pelnego ekranu: uruchomienie przez MCP i akceptacja przez Ciebie.
 - Bez samodzielnego porownywania do makiet i bez analizy obrazkow.
 - Bez zapisu zrzutow ekranu do repo.

@@ -28,7 +28,7 @@
 - [x] Optyczne porownanie z makietami
 - [x] Checklista zgodnosci (layout/typografia/kolory/odstepy)
 
-## Etap 4 — Implementacja flow (Auth -> Pacjent -> Opiekun)
+## Etap 4 — Implementacja flow (Pacjent -> Opiekun -> Logika)
 
 Zasady etapu:
 - Po dodaniu **pelnego ekranu**: uruchamiam ekran przez MCP i czekam na Twoja akceptacje.
@@ -37,28 +37,41 @@ Zasady etapu:
 - Dopiero po akceptacji przechodzimy dalej.
 - Kazdy ekran/flow commitowany osobno.
 
-### 4.1 Auth flow
-- [x] Nawigacja: kompletne wejscia/wyjscia, powroty
-- [x] Layouty i widoki — Ekran wyboru roli
-- [x] Layouty i widoki — Logowanie (telefon/kod) — pacjent
-- [x] Layouty i widoki — Logowanie (telefon/kod) — opiekun
-- [x] Layouty i widoki — Dev Hub (wejscie bez logowania)
-- [x] Layouty i widoki — Weryfikacja SMS — pacjent
-- [x] Layouty i widoki — Weryfikacja SMS — opiekun
-- [ ] Dummy repo (mock danych zgodnych z makietami)
-- [ ] Use case logika (dummy)
-- [ ] Firebase repo (Auth + docelowe storage)
-
-### 4.2 Pacjent flow
+### 4.1 Pacjent flow (UI + nawigacja)
 - [ ] Nawigacja: kompletne wejscia/wyjscia, powroty
-- [ ] Layouty i widoki (zgodne z makietami)
-- [ ] Dummy repo (mock danych zgodnych z makietami)
-- [ ] Use case logika (dummy)
-- [ ] Firebase repo (Firestore)
+- [ ] Ekran glowny pacjenta (kafelki pomiarow + akcje)
+- [ ] Dialog pomiaru: cukier
+- [ ] Dialog pomiaru: insulina
+- [ ] Dialog pomiaru: cisnienie
+- [ ] Dialog pomiaru: tetno
+- [ ] Historia pomiarow (wykres + lista + filtry)
+- [ ] Agenci monitorujacy: lista
+- [ ] Agenci monitorujacy: dodaj agenta (dialog)
+- [ ] Agenci monitorujacy: kod dostepu (dialog)
+- [ ] Agenci monitorujacy: edytuj agenta (dialog)
+- [ ] Agenci monitorujacy: dodaj lekarza (dialog)
+- [ ] Agenci monitorujacy: kod lekarza (dialog)
+- [ ] Agenci monitorujacy: edytuj lekarza (dialog)
+- [ ] Moje ustawienia (przeglad)
+- [ ] Dodaj dane osobowe (dialog)
+- [ ] Dodaj chorobe (dialog)
+- [ ] Dodaj lek (dialog)
+- [ ] Alerty i powiadomienia (przeglad)
+- [ ] Alerty i powiadomienia (pelna konfiguracja)
+- [ ] Wizyty pacjenta (lista)
+- [ ] Wizyty pacjenta (dodaj/edytuj dialog)
 
-### 4.3 Opiekun flow
+### 4.2 Opiekun flow (UI + nawigacja) — pozniej
 - [ ] Nawigacja: kompletne wejscia/wyjscia, powroty
-- [ ] Layouty i widoki (zgodne z makietami)
+- [ ] Panel opiekuna: dashboard
+- [ ] Podopieczni: lista
+- [ ] Podopieczni: dodaj (dialog)
+- [ ] Podopieczni: kod dostepu (dialog)
+- [ ] Wybierz podopiecznego
+- [ ] Wizyty opiekuna (lista)
+- [ ] Wizyty opiekuna (dodaj/edytuj dialog)
+
+### 4.3 Logika (use case + repo + Firebase) — pozniej
 - [ ] Dummy repo (mock danych zgodnych z makietami)
 - [ ] Use case logika (dummy)
-- [ ] Firebase repo (Firestore)
+- [ ] Firebase repo (Auth + Firestore)
