@@ -4,17 +4,157 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/senior_bg">
+    android:background="@color/senior_info"
+    android:padding="@dimen/spacing_l">
 
-    <TextView
-        android:id="@+id/role_select_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/role_select_title"
-        android:textAppearance="@style/TextAppearance.Senior.TitleLarge"
+    <ImageView
+        android:id="@+id/role_select_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:contentDescription="@null"
+        android:src="@android:drawable/ic_lock_lock"
+        android:tint="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/role_select_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:text="@string/role_select_app_name"
+        android:textAppearance="@style/TextAppearance.Senior.TitleLarge"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/role_select_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/role_select_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:text="@string/role_select_question"
+        android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+        android:textColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/role_select_app_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/role_select_patient_card"
+        style="@style/Widget.Senior.Card"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="@dimen/spacing_xl"
+        app:cardBackgroundColor="@color/senior_secondary"
+        app:layout_constraintTop_toBottomOf="@id/role_select_question"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_m">
+
+            <ImageView
+                android:id="@+id/role_select_patient_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="@null"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/role_select_patient_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:text="@string/role_select_patient"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/role_select_patient_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/role_select_patient_subtitle"
+                android:textAppearance="@style/TextAppearance.Senior.Caption"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/role_select_caregiver_card"
+        style="@style/Widget.Senior.Card"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="@dimen/spacing_m"
+        app:cardBackgroundColor="@color/senior_primary"
+        app:layout_constraintTop_toBottomOf="@id/role_select_patient_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_m">
+
+            <ImageView
+                android:id="@+id/role_select_caregiver_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:contentDescription="@null"
+                android:src="@android:drawable/ic_menu_view"
+                android:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/role_select_caregiver_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:text="@string/role_select_caregiver"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/role_select_caregiver_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="@string/role_select_caregiver_subtitle"
+                android:textAppearance="@style/TextAppearance.Senior.Caption"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/role_select_footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/role_select_footer"
+        android:textAppearance="@style/TextAppearance.Senior.Caption"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/role_select_version"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/spacing_xl" />
+        android:layout_marginBottom="@dimen/spacing_xs" />
+
+    <TextView
+        android:id="@+id/role_select_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/role_select_version"
+        android:textAppearance="@style/TextAppearance.Senior.Caption"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/roleSelectFragment"
         android:name="zdrowy.senior.io.ui.auth.RoleSelectFragment"
-        android:label="@string/app_name"
+        android:label="@string/role_select_app_name"
         tools:layout="@layout/fragment_role_select">
         <action
             android:id="@+id/action_roleSelect_to_patientLogin"
@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/patientLoginFragment"
         android:name="zdrowy.senior.io.ui.auth.PatientLoginFragment"
-        android:label="@string/app_name"
+        android:label="@string/role_select_app_name"
         tools:layout="@layout/fragment_patient_login">
         <action
             android:id="@+id/action_patientLogin_to_patientSmsVerify"
@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/caregiverLoginFragment"
         android:name="zdrowy.senior.io.ui.auth.CaregiverLoginFragment"
-        android:label="@string/app_name"
+        android:label="@string/role_select_app_name"
         tools:layout="@layout/fragment_caregiver_login">
         <action
             android:id="@+id/action_caregiverLogin_to_caregiverSmsVerify"
@@ -40,12 +40,12 @@
     <fragment
         android:id="@+id/patientSmsVerifyFragment"
         android:name="zdrowy.senior.io.ui.auth.PatientSmsVerifyFragment"
-        android:label="@string/app_name"
+        android:label="@string/role_select_app_name"
         tools:layout="@layout/fragment_patient_sms_verify" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"
         android:name="zdrowy.senior.io.ui.auth.CaregiverSmsVerifyFragment"
-        android:label="@string/app_name"
+        android:label="@string/role_select_app_name"
         tools:layout="@layout/fragment_caregiver_sms_verify" />
 </navigation>
