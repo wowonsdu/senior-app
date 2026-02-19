@@ -203,20 +203,31 @@
         android:label="@string/patient_add_disease_title"
         tools:layout="@layout/dialog_patient_add_disease" />
 
-    <fragment
-        android:id="@+id/caregiverSmsVerifyFragment"
-        android:name="zdrowy.senior.io.ui.auth.CaregiverSmsVerifyFragment"
     <dialog
         android:id="@+id/patientAddMedDialogFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAddMedDialogFragment"
+        android:label="@string/patient_add_med_title"
+        tools:layout="@layout/dialog_patient_add_med" />
 
     <fragment
         android:id="@+id/patientAlertsOverviewFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientAlertsOverviewFragment"
         android:label="@string/patient_alerts_overview_title"
-        tools:layout="@layout/fragment_patient_alerts_overview" />
-        android:name="zdrowy.senior.io.ui.patient.PatientAddMedDialogFragment"
-        android:label="@string/patient_add_med_title"
-        tools:layout="@layout/dialog_patient_add_med" />
+        tools:layout="@layout/fragment_patient_alerts_overview">
+        <action
+            android:id="@+id/action_alertsOverview_to_alertsConfig"
+            app:destination="@id/patientAlertsConfigFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientAlertsConfigFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAlertsConfigFragment"
+        android:label="@string/patient_alerts_config_title"
+        tools:layout="@layout/fragment_patient_alerts_config" />
+
+    <fragment
+        android:id="@+id/caregiverSmsVerifyFragment"
+        android:name="zdrowy.senior.io.ui.auth.CaregiverSmsVerifyFragment"
         android:label="@string/role_select_app_name"
         tools:layout="@layout/fragment_caregiver_sms_verify" />
 

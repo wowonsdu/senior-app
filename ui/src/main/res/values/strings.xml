@@ -254,6 +254,37 @@
 
     <string name="patient_alerts_overview_title">Alerty i powiadomienia</string>
     <string name="patient_alerts_overview_subtitle">Przeglad i wyjasnienie alertow</string>
+    <string name="patient_alerts_config_title">Alerty i powiadomienia</string>
+    <string name="patient_alerts_config_subtitle">Konfiguracja wartosci krytycznych</string>
+    <string name="patient_alerts_config_section_critical">Wartosci krytyczne</string>
+    <string name="patient_alerts_config_section_spike">Gwałtowne zmiany</string>
+    <string name="patient_alerts_config_section_channels">Kanaly powiadomien</string>
+    <string name="patient_alerts_config_enable_sugar">Wlacz alerty dla poziomu cukru</string>
+    <string name="patient_alerts_config_low_hint">Krytycznie niska</string>
+    <string name="patient_alerts_config_high_hint">Krytycznie wysoka</string>
+    <string name="patient_alerts_config_critical_low_caption">Wartosc ponizej tej granicy</string>
+    <string name="patient_alerts_config_critical_high_caption">Wartosc powyzej tej granicy</string>
+    <string name="patient_alerts_config_spike_toggle">Monitoruj gwaltowne zmiany</string>
+    <string name="patient_alerts_config_spike_percent_hint">Zmiana (%)</string>
+    <string name="patient_alerts_config_spike_measurements_hint">W ciagu pomiarow</string>
+    <string name="patient_alerts_config_example">Przyklad: Alert pojawi sie gdy zmiana wyniesie 20% lub wiecej w ciagu ostatnich 3 pomiarow</string>
+    <string name="patient_alerts_config_channels_hint">Wybierz sposoby w jakie opiekunowie otrzymaja powiadomienia:</string>
+    <string name="patient_alerts_config_channels_enable_all">Wlacz wszystkie</string>
+    <string name="patient_alerts_config_channels_disable_all">Wylacz wszystkie</string>
+    <string name="patient_alerts_config_channel_sms">SMS</string>
+    <string name="patient_alerts_config_channel_email">Email</string>
+    <string name="patient_alerts_config_channel_app">W aplikacji</string>
+    <string name="patient_alerts_config_channel_sms_subtitle">Wiadomosc tekstowa</string>
+    <string name="patient_alerts_config_channel_email_subtitle">Wiadomosc mailowa</string>
+    <string name="patient_alerts_config_channel_app_subtitle">Push notification</string>
+    <string name="patient_alerts_config_caregivers_title">Powiadomienia dla opiekunow</string>
+    <string name="patient_alerts_config_caregivers_subtitle">Wybierz opiekunow, ktorzy otrzymaja powiadomienia o alertach dla poziomu cukru:</string>
+    <string name="patient_alerts_config_caregivers_select_all">Zaznacz wszystkich</string>
+    <string name="patient_alerts_config_caregivers_deselect_all">Odznacz wszystkich</string>
+    <string name="patient_alerts_config_agent_name">Janek, Syn</string>
+    <string name="patient_alerts_config_agent_phone">Tel: 692 56 070</string>
+    <string name="patient_alerts_config_save">Zapisz ustawienia</string>
+
     <string name="alert_item_title_sugar">Poziom cukru</string>
     <string name="alert_item_subtitle_sugar">Glikemia - poziom glukozy we krwi</string>
     <string name="alert_item_title_insulin">Dawka insuliny</string>

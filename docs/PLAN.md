@@ -57,7 +57,7 @@ Zasady etapu:
 - [x] Dodaj chorobe (dialog)
 - [x] Dodaj lek (dialog)
 - [x] Alerty i powiadomienia (przeglad)
-- [ ] Alerty i powiadomienia (pelna konfiguracja)
+- [x] Alerty i powiadomienia (pelna konfiguracja)
 - [ ] Wizyty pacjenta (lista)
 - [ ] Wizyty pacjenta (dodaj/edytuj dialog)
 

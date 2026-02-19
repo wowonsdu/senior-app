@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import zdrowy.senior.io.ui.R
-import zdrowy.senior.io.ui.databinding.FragmentPatientAlertsOverviewBinding
+import zdrowy.senior.io.ui.databinding.FragmentPatientAlertsConfigBinding
 
-class PatientAlertsOverviewFragment : Fragment() {
-    private var _binding: FragmentPatientAlertsOverviewBinding? = null
+class PatientAlertsConfigFragment : Fragment() {
+    private var _binding: FragmentPatientAlertsConfigBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -18,12 +17,9 @@ class PatientAlertsOverviewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPatientAlertsOverviewBinding.inflate(inflater, container, false)
-        binding.patientAlertsOverviewToolbar.setNavigationOnClickListener {
+        _binding = FragmentPatientAlertsConfigBinding.inflate(inflater, container, false)
+        binding.patientAlertsConfigToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
-        }
-        binding.patientAlertsOverviewContent.alertsOverviewSave.setOnClickListener {
-            findNavController().navigate(R.id.action_alertsOverview_to_alertsConfig)
         }
         return binding.root
     }
