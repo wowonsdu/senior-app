@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientAgentsBinding
 
 class PatientAgentsFragment : Fragment() {
@@ -20,6 +21,9 @@ class PatientAgentsFragment : Fragment() {
         _binding = FragmentPatientAgentsBinding.inflate(inflater, container, false)
         binding.patientAgentsToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
+        }
+        binding.patientAgentsAddAgent.setOnClickListener {
+            findNavController().navigate(R.id.action_patientAgents_to_addAgent)
         }
         return binding.root
     }

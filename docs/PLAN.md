@@ -46,7 +46,7 @@ Zasady etapu:
 - [x] Dialog pomiaru: tetno
 - [x] Historia pomiarow (wykres + lista + filtry)
 - [x] Agenci monitorujacy: lista
-- [ ] Agenci monitorujacy: dodaj agenta (dialog)
+- [x] Agenci monitorujacy: dodaj agenta (dialog)
 - [ ] Agenci monitorujacy: kod dostepu (dialog)
 - [ ] Agenci monitorujacy: edytuj agenta (dialog)
 - [ ] Agenci monitorujacy: dodaj lekarza (dialog)

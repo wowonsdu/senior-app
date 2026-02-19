@@ -126,6 +126,15 @@
     <string name="patient_agents_add_agent_tile">Dodaj Agenta</string>
     <string name="patient_agents_add_doctor_tile">Dodaj Lekarza</string>
 
+    <string name="patient_add_agent_title">Dodaj opiekuna</string>
+    <string name="patient_add_agent_subtitle">Wpisz dane nowego opiekuna</string>
+    <string name="patient_add_agent_name_hint">Imie i nazwisko</string>
+    <string name="patient_add_agent_role_hint">Relacja (np. syn, corka)</string>
+    <string name="patient_add_agent_phone_hint">Telefon</string>
+    <string name="patient_add_agent_email_hint">Email (opcjonalnie)</string>
+    <string name="patient_add_agent_cancel">Anuluj</string>
+    <string name="patient_add_agent_save">Zapisz</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
