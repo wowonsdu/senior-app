@@ -174,6 +174,29 @@
     <string name="patient_edit_doctor_delete">Usun</string>
     <string name="patient_edit_doctor_save">Zapisz zmiany</string>
 
+    <string name="patient_settings_title">Moje ustawienia</string>
+    <string name="patient_settings_subtitle">Zarzadzaj swoimi danymi i alertami</string>
+    <string name="patient_settings_profile_name">Janek, Syn</string>
+    <string name="patient_settings_profile_phone">Tel: 692 58 070</string>
+    <string name="patient_settings_section_diseases">Moje Choroby</string>
+    <string name="patient_settings_section_meds">Moje Leki</string>
+    <string name="patient_settings_section_config">Konfiguracja</string>
+    <string name="patient_settings_empty_diseases_title">Brak zarejestrowanych chorob</string>
+    <string name="patient_settings_empty_diseases_body">Kliknij przycisk ponizej, aby dodac informacje o chorobie</string>
+    <string name="patient_settings_empty_meds_title">Brak dodanych lekow</string>
+    <string name="patient_settings_empty_meds_body">Kliknij przycisk ponizej, aby dodac pierwszy lek</string>
+    <string name="patient_settings_alerts_title">Alerty i Powiadomienia</string>
+    <string name="patient_settings_alerts_subtitle">Ustaw wartosci krytyczne dla pomiarow zdrowotnych</string>
+    <string name="patient_settings_add_personal">Dodaj Dane</string>
+    <string name="patient_settings_add_disease">Dodaj Chorobe</string>
+    <string name="patient_settings_add_med">Dodaj Lek</string>
+    <string name="patient_settings_personal_title">Dane osobowe</string>
+    <string name="patient_settings_personal_subtitle">Imie, nazwisko, kontakt</string>
+    <string name="patient_settings_diseases_title">Moje choroby</string>
+    <string name="patient_settings_diseases_subtitle">Lista chorob i stopien ciezkosci</string>
+    <string name="patient_settings_meds_title">Moje leki</string>
+    <string name="patient_settings_meds_subtitle">Dawki i harmonogram</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
