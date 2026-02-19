@@ -31,6 +31,9 @@ class DevHubFragment : Fragment() {
         binding.devHubPatientSms.setOnClickListener {
             findNavController().navigate(R.id.action_devHub_to_patientSmsVerify)
         }
+        binding.devHubPatientHome.setOnClickListener {
+            findNavController().navigate(R.id.action_devHub_to_patientHome)
+        }
         binding.devHubCaregiverSms.setOnClickListener {
             findNavController().navigate(R.id.action_devHub_to_caregiverSmsVerify)
         }

@@ -47,7 +47,17 @@
         android:id="@+id/patientSmsVerifyFragment"
         android:name="zdrowy.senior.io.ui.auth.PatientSmsVerifyFragment"
         android:label="@string/role_select_app_name"
-        tools:layout="@layout/fragment_patient_sms_verify" />
+        tools:layout="@layout/fragment_patient_sms_verify">
+        <action
+            android:id="@+id/action_patientSmsVerify_to_patientHome"
+            app:destination="@id/patientHomeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientHomeFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientHomeFragment"
+        android:label="@string/patient_home_title"
+        tools:layout="@layout/fragment_patient_home" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"
@@ -75,5 +85,8 @@
         <action
             android:id="@+id/action_devHub_to_caregiverSmsVerify"
             app:destination="@id/caregiverSmsVerifyFragment" />
+        <action
+            android:id="@+id/action_devHub_to_patientHome"
+            app:destination="@id/patientHomeFragment" />
     </fragment>
 </navigation>

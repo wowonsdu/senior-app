@@ -50,6 +50,23 @@
     <string name="dev_hub_caregiver_login">Logowanie — Opiekun</string>
     <string name="dev_hub_patient_sms">Weryfikacja SMS — Pacjent</string>
     <string name="dev_hub_caregiver_sms">Weryfikacja SMS — Opiekun</string>
+    <string name="dev_hub_patient_home">Ekran glowny - Pacjent</string>
+
+    <string name="patient_home_title">Monitor Zdrowia</string>
+    <string name="patient_home_profile_label">Zarzadzasz danymi dla:</string>
+    <string name="patient_home_profile_name">Janina Kowalska</string>
+    <string name="patient_home_profile_phone">234342434</string>
+    <string name="patient_home_profile_avatar">JK</string>
+    <string name="patient_home_tile_sugar">Cukier</string>
+    <string name="patient_home_tile_insulin">Insulina</string>
+    <string name="patient_home_tile_pressure">Cisnienie</string>
+    <string name="patient_home_tile_pulse">Tetno</string>
+    <string name="patient_home_tile_notify_agents">Powiadom\nAgentow</string>
+    <string name="patient_home_tile_notify_doctors">Powiadom\nLekarzy</string>
+    <string name="patient_home_action_emergency_upper">WEZWIJ POMOC</string>
+    <string name="patient_home_action_history">Zobacz Historie</string>
+    <string name="patient_home_action_agents">Agenci Monitorujacy</string>
+    <string name="patient_home_action_settings">Moje Ustawienia</string>
 
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>

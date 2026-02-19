@@ -71,13 +71,24 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/dev_hub_patient_home"
+        style="@style/Widget.Senior.Button.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:text="@string/dev_hub_patient_home"
+        app:layout_constraintTop_toBottomOf="@id/dev_hub_patient_sms"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/dev_hub_caregiver_sms"
         style="@style/Widget.Senior.Button.Secondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
         android:text="@string/dev_hub_caregiver_sms"
-        app:layout_constraintTop_toBottomOf="@id/dev_hub_patient_sms"
+        app:layout_constraintTop_toBottomOf="@id/dev_hub_patient_home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

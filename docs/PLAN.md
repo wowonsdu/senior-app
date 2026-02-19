@@ -39,7 +39,7 @@ Zasady etapu:
 
 ### 4.1 Pacjent flow (UI + nawigacja)
 - [ ] Nawigacja: kompletne wejscia/wyjscia, powroty
-- [ ] Ekran glowny pacjenta (kafelki pomiarow + akcje)
+- [x] Ekran glowny pacjenta (kafelki pomiarow + akcje)
 - [ ] Dialog pomiaru: cukier
 - [ ] Dialog pomiaru: insulina
 - [ ] Dialog pomiaru: cisnienie
