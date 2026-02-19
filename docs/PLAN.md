@@ -41,7 +41,7 @@ Zasady etapu:
 - [ ] Nawigacja: kompletne wejscia/wyjscia, powroty
 - [x] Ekran glowny pacjenta (kafelki pomiarow + akcje)
 - [x] Dialog pomiaru: cukier
-- [ ] Dialog pomiaru: insulina
+- [x] Dialog pomiaru: insulina
 - [ ] Dialog pomiaru: cisnienie
 - [ ] Dialog pomiaru: tetno
 - [ ] Historia pomiarow (wykres + lista + filtry)

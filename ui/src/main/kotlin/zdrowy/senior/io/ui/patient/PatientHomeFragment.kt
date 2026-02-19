@@ -22,6 +22,9 @@ class PatientHomeFragment : Fragment() {
         binding.patientHomeTileSugar.setOnClickListener {
             findNavController().navigate(R.id.action_patientHome_to_patientSugarDialog)
         }
+        binding.patientHomeTileInsulin.setOnClickListener {
+            findNavController().navigate(R.id.action_patientHome_to_patientInsulinDialog)
+        }
         return binding.root
     }
 
