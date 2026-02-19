@@ -7,11 +7,11 @@
 - [x] Style kart i dialogow
 
 ## Etap 1 — Core, moduly, dependencje, DI, nawigacja
-- [ ] Moduly Gradle: app, domain, data, ui, di
-- [ ] Zaleznosci: RxJava/RxKotlin/RxAndroid, Koin, Timber, Navigation, Firebase
-- [ ] View Binding + Data Binding
-- [ ] Koin bootstrap + podstawowe moduly DI
-- [ ] Single-activity + Navigation Component (start flow)
+- [x] Moduly Gradle: app, domain, data, ui, di
+- [x] Zaleznosci: RxJava/RxKotlin/RxAndroid, Koin, Timber, Navigation, Firebase
+- [x] View Binding + Data Binding
+- [x] Koin bootstrap + podstawowe moduly DI
+- [x] Single-activity + Navigation Component (start flow)
 
 ## Etap 2 — Design Book Activity (dummy content)
 - [ ] Custom views (kafelki pomiarow, karty list)
