@@ -13,14 +13,21 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import org.koin.android.ext.android.get
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.DialogPatientPulseBinding
+import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
+import zdrowy.senior.io.domain.measurement.MeasurementSource
+import zdrowy.senior.io.domain.measurement.MeasurementType
 import java.util.Locale
 
 class PatientPulseDialogFragment : DialogFragment() {
     private var _binding: DialogPatientPulseBinding? = null
     private val binding get() = _binding!!
     private var speechRecognizer: SpeechRecognizer? = null
+    private val addMeasurementUseCase: AddMeasurementUseCase by lazy { get() }
+    private val disposables = CompositeDisposable()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -34,7 +41,7 @@ class PatientPulseDialogFragment : DialogFragment() {
         _binding = DialogPatientPulseBinding.inflate(LayoutInflater.from(context))
         binding.pulseDialogClose.setOnClickListener { dismiss() }
         binding.pulseDialogCancel.setOnClickListener { dismiss() }
-        binding.pulseDialogSave.setOnClickListener { dismiss() }
+        binding.pulseDialogSave.setOnClickListener { saveMeasurement() }
         binding.pulseDialogMic.setOnClickListener {
             startSpeechToText()
         }
@@ -55,6 +62,7 @@ class PatientPulseDialogFragment : DialogFragment() {
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
         speechRecognizer = null
+        disposables.clear()
         _binding = null
         super.onDestroyView()
     }
@@ -114,5 +122,20 @@ class PatientPulseDialogFragment : DialogFragment() {
     private fun extractFirstNumber(text: String): String {
         val match = Regex("\\d+(?:[\\.,]\\d+)?").find(text)
         return match?.value?.replace(',', '.') ?: text
+    }
+
+    private fun saveMeasurement() {
+        val value = binding.pulseDialogValue.text?.toString()
+            ?.replace(',', '.')
+            ?.toDoubleOrNull()
+            ?: return
+        disposables.add(
+            addMeasurementUseCase(
+                MeasurementType.PULSE,
+                value,
+                System.currentTimeMillis(),
+                MeasurementSource.MANUAL
+            ).subscribe({ dismiss() }, { dismiss() })
+        )
     }
 }

@@ -13,14 +13,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import org.koin.android.ext.android.get
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.DialogPatientPressureBinding
+import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
+import zdrowy.senior.io.domain.measurement.MeasurementSource
 import java.util.Locale
 
 class PatientPressureDialogFragment : DialogFragment() {
     private var _binding: DialogPatientPressureBinding? = null
     private val binding get() = _binding!!
     private var speechRecognizer: SpeechRecognizer? = null
+    private val addBloodPressureMeasurementUseCase: AddBloodPressureMeasurementUseCase by lazy { get() }
+    private val disposables = CompositeDisposable()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -34,7 +40,7 @@ class PatientPressureDialogFragment : DialogFragment() {
         _binding = DialogPatientPressureBinding.inflate(LayoutInflater.from(context))
         binding.pressureDialogClose.setOnClickListener { dismiss() }
         binding.pressureDialogCancel.setOnClickListener { dismiss() }
-        binding.pressureDialogSave.setOnClickListener { dismiss() }
+        binding.pressureDialogSave.setOnClickListener { saveMeasurement() }
         binding.pressureDialogMic.setOnClickListener {
             startSpeechToText()
         }
@@ -55,6 +61,7 @@ class PatientPressureDialogFragment : DialogFragment() {
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
         speechRecognizer = null
+        disposables.clear()
         _binding = null
         super.onDestroyView()
     }
@@ -120,5 +127,21 @@ class PatientPressureDialogFragment : DialogFragment() {
         return Regex("\\d+(?:[\\.,]\\d+)?").findAll(text)
             .map { it.value.replace(',', '.') }
             .toList()
+    }
+
+    private fun saveMeasurement() {
+        val systolic = binding.pressureDialogSystolic.text?.toString()?.toIntOrNull()
+        val diastolic = binding.pressureDialogDiastolic.text?.toString()?.toIntOrNull()
+        if (systolic == null || diastolic == null) {
+            return
+        }
+        disposables.add(
+            addBloodPressureMeasurementUseCase(
+                systolic,
+                diastolic,
+                System.currentTimeMillis(),
+                MeasurementSource.MANUAL
+            ).subscribe({ dismiss() }, { dismiss() })
+        )
     }
 }
