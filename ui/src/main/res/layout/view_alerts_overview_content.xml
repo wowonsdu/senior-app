@@ -115,6 +115,7 @@
         app:alertColor="@color/senior_purple" />
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/alerts_overview_save"
         style="@style/Widget.Senior.Button.Secondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -214,10 +214,13 @@
                 android:textColor="@color/senior_primary" />
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_settings_alerts"
                 style="@style/Widget.Senior.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_s"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="@color/white">
 
                 <LinearLayout

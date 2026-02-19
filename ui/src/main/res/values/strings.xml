@@ -252,6 +252,8 @@
     <string name="alerts_overview_body_spike">Nastapila gwaltowna zmiana w ostatnich pomiarach.</string>
     <string name="alerts_overview_save">ZAPISZ USTAWIENIA</string>
 
+    <string name="patient_alerts_overview_title">Alerty i powiadomienia</string>
+    <string name="patient_alerts_overview_subtitle">Przeglad i wyjasnienie alertow</string>
     <string name="alert_item_title_sugar">Poziom cukru</string>
     <string name="alert_item_subtitle_sugar">Glikemia - poziom glukozy we krwi</string>
     <string name="alert_item_title_insulin">Dawka insuliny</string>

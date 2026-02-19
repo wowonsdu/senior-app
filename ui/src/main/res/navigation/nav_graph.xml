@@ -186,6 +186,9 @@
         <action
             android:id="@+id/action_patientSettings_to_addMed"
             app:destination="@id/patientAddMedDialogFragment" />
+        <action
+            android:id="@+id/action_patientSettings_to_alertsOverview"
+            app:destination="@id/patientAlertsOverviewFragment" />
     </fragment>
 
     <dialog
@@ -205,6 +208,12 @@
         android:name="zdrowy.senior.io.ui.auth.CaregiverSmsVerifyFragment"
     <dialog
         android:id="@+id/patientAddMedDialogFragment"
+
+    <fragment
+        android:id="@+id/patientAlertsOverviewFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAlertsOverviewFragment"
+        android:label="@string/patient_alerts_overview_title"
+        tools:layout="@layout/fragment_patient_alerts_overview" />
         android:name="zdrowy.senior.io.ui.patient.PatientAddMedDialogFragment"
         android:label="@string/patient_add_med_title"
         tools:layout="@layout/dialog_patient_add_med" />
