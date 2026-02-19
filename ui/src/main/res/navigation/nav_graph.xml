@@ -128,6 +128,9 @@
         <action
             android:id="@+id/action_patientAgents_to_doctorCode"
             app:destination="@id/patientDoctorCodeDialogFragment" />
+        <action
+            android:id="@+id/action_patientAgents_to_editDoctor"
+            app:destination="@id/patientEditDoctorDialogFragment" />
     </fragment>
 
     <dialog
@@ -159,6 +162,12 @@
         android:name="zdrowy.senior.io.ui.patient.PatientDoctorCodeDialogFragment"
         android:label="@string/patient_doctor_code_title"
         tools:layout="@layout/dialog_patient_doctor_code" />
+
+    <dialog
+        android:id="@+id/patientEditDoctorDialogFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientEditDoctorDialogFragment"
+        android:label="@string/patient_edit_doctor_title"
+        tools:layout="@layout/dialog_patient_edit_doctor" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"

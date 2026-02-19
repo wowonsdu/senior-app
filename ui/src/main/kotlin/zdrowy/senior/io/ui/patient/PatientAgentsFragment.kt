@@ -34,6 +34,10 @@ class PatientAgentsFragment : Fragment() {
         binding.patientAgentsEmptyDoctorsTitle.setOnClickListener {
             findNavController().navigate(R.id.action_patientAgents_to_doctorCode)
         }
+        binding.patientAgentsEmptyDoctorsTitle.setOnLongClickListener {
+            findNavController().navigate(R.id.action_patientAgents_to_editDoctor)
+            true
+        }
         return binding.root
     }
 

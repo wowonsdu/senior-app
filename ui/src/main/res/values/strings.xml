@@ -165,6 +165,15 @@
     <string name="patient_doctor_code_copy">Kopiuj kod</string>
     <string name="patient_doctor_code_sms">Wyslij SMS</string>
 
+    <string name="patient_edit_doctor_title">Edytuj lekarza</string>
+    <string name="patient_edit_doctor_subtitle">Zaktualizuj dane lekarza</string>
+    <string name="patient_edit_doctor_prefill_name">Dr Anna Nowak</string>
+    <string name="patient_edit_doctor_prefill_specialty">Kardiolog</string>
+    <string name="patient_edit_doctor_prefill_phone">690 11 223</string>
+    <string name="patient_edit_doctor_prefill_email">anna.nowak@example.com</string>
+    <string name="patient_edit_doctor_delete">Usun</string>
+    <string name="patient_edit_doctor_save">Zapisz zmiany</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
