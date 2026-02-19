@@ -22,6 +22,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="zdrowy.senior.io.ui.designbook.DesignBookActivity"
+            android:exported="true" />
+
+        <activity-alias
+            android:name=".DesignBookLauncher"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/design_book_label"
+            android:targetActivity="zdrowy.senior.io.ui.designbook.DesignBookActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
     </application>
 
 </manifest>

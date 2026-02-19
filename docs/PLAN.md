@@ -14,9 +14,9 @@
 - [x] Single-activity + Navigation Component (start flow)
 
 ## Etap 2 — Design Book Activity (dummy content)
-- [ ] Custom views (kafelki pomiarow, karty list)
-- [ ] Layout Design Book z pelnym zestawem komponentow
-- [ ] Activity + launcher alias
+- [x] Custom views (kafelki pomiarow, karty list)
+- [x] Layout Design Book z pelnym zestawem komponentow
+- [x] Activity + launcher alias
 
 ## Etap 3 — Porownanie z makietami (ADB/MCP)
 - [ ] Uruchomienie na emulatorze przez mcp__android-adb

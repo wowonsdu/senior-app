@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/senior_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_l">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Design Book"
+            android:textAppearance="@style/TextAppearance.Senior.TitleLarge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:text="Przyciski"
+            android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Senior.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:text="Primary" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Senior.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:text="Secondary" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Senior.Button.Danger"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:text="Danger" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:text="Kafelki pomiarow"
+            android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
+
+        <zdrowy.senior.io.ui.views.MeasurementTileView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:tileTitle="Cukier"
+            app:tileIcon="@android:drawable/ic_menu_info_details"
+            app:tileColor="@color/senior_primary" />
+
+        <zdrowy.senior.io.ui.views.MeasurementTileView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:tileTitle="Insulina"
+            app:tileIcon="@android:drawable/ic_menu_edit"
+            app:tileColor="@color/senior_secondary" />
+
+        <zdrowy.senior.io.ui.views.MeasurementTileView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:tileTitle="Cisnienie"
+            app:tileIcon="@android:drawable/ic_menu_compass"
+            app:tileColor="@color/senior_danger" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:text="Akcje"
+            android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
+
+        <zdrowy.senior.io.ui.views.ActionTileView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:actionTitle="Wezwij pomoc"
+            app:actionIcon="@android:drawable/ic_dialog_alert"
+            app:actionColor="@color/senior_danger" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:text="Karty list"
+            android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
+
+        <zdrowy.senior.io.ui.views.InfoCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:cardTitle="Cukier: 108 mg/dL"
+            app:cardSubtitle="19.02.2026, 02:41"
+            app:cardIcon="@android:drawable/ic_menu_today" />
+
+        <zdrowy.senior.io.ui.views.InfoCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:cardTitle="Janek, Syn"
+            app:cardSubtitle="Tel: 692 56 070"
+            app:cardIcon="@android:drawable/ic_menu_call" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:text="Alerty"
+            android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Senior.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:cardBackgroundColor="@color/senior_warning">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_l"
+                android:text="Uwaga: wysoki poziom cukru"
+                android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                android:textColor="@color/white" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
+            android:text="Dialogi (podglad stylu)"
+            android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
+
+        <com.google.android.material.card.MaterialCardView
+            style="@style/Widget.Senior.Card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/spacing_l"
+                android:text="Przykladowy dialog/formularz"
+                android:textAppearance="@style/TextAppearance.Senior.BodyLarge" />
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+</ScrollView>

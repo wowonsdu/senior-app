@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="MeasurementTileView">
+        <attr name="tileTitle" format="string" />
+        <attr name="tileIcon" format="reference" />
+        <attr name="tileColor" format="color|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="ActionTileView">
+        <attr name="actionTitle" format="string" />
+        <attr name="actionIcon" format="reference" />
+        <attr name="actionColor" format="color|reference" />
+    </declare-styleable>
+
+    <declare-styleable name="InfoCardView">
+        <attr name="cardTitle" format="string" />
+        <attr name="cardSubtitle" format="string" />
+        <attr name="cardIcon" format="reference" />
+    </declare-styleable>
+</resources>
