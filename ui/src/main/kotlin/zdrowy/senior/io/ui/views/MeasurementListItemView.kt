@@ -48,6 +48,12 @@ class MeasurementListItemView @JvmOverloads constructor(
         binding.measurementSubtitle.text = subtitle ?: ""
     }
 
+    fun setIconRes(iconRes: Int) {
+        if (iconRes != 0) {
+            binding.measurementIcon.setImageResource(iconRes)
+        }
+    }
+
     fun setIconTint(@ColorInt color: Int) {
         binding.measurementIcon.setColorFilter(color)
     }

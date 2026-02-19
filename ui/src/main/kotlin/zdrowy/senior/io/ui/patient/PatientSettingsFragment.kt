@@ -45,6 +45,29 @@ class PatientSettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.load()
+        viewModel.personalData.observe(viewLifecycleOwner) { data ->
+            binding.patientSettingsSubtitle.text = "Profil pacjenta: ${data.fullName}"
+            binding.patientSettingsPersonalSubtitle.text =
+                "${data.phoneNumber} • ${data.email}"
+        }
+        viewModel.diseases.observe(viewLifecycleOwner) { diseases ->
+            val summary = if (diseases.isEmpty()) {
+                "Brak dodanych chorob."
+            } else {
+                val names = diseases.joinToString { it.name }
+                "${diseases.size} • $names"
+            }
+            binding.patientSettingsDiseasesSubtitle.text = summary
+        }
+        viewModel.medications.observe(viewLifecycleOwner) { meds ->
+            val summary = if (meds.isEmpty()) {
+                "Brak dodanych lekow."
+            } else {
+                val names = meds.joinToString { it.name }
+                "${meds.size} • $names"
+            }
+            binding.patientSettingsMedsSubtitle.text = summary
+        }
     }
 
     override fun onDestroyView() {

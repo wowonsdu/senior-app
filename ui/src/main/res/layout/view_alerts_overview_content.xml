@@ -79,6 +79,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <zdrowy.senior.io.ui.views.AlertOverviewItemView
+        android:id="@+id/alerts_overview_item_sugar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_l"
@@ -88,6 +89,7 @@
         app:alertColor="@color/senior_primary" />
 
     <zdrowy.senior.io.ui.views.AlertOverviewItemView
+        android:id="@+id/alerts_overview_item_insulin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
@@ -97,6 +99,7 @@
         app:alertColor="@color/senior_secondary" />
 
     <zdrowy.senior.io.ui.views.AlertOverviewItemView
+        android:id="@+id/alerts_overview_item_pressure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
@@ -106,6 +109,7 @@
         app:alertColor="@color/senior_danger" />
 
     <zdrowy.senior.io.ui.views.AlertOverviewItemView
+        android:id="@+id/alerts_overview_item_pulse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"

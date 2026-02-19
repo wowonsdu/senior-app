@@ -361,6 +361,7 @@
                 android:orientation="vertical">
 
                 <zdrowy.senior.io.ui.views.MeasurementListItemView
+                    android:id="@+id/patient_history_item_primary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_s"
@@ -370,6 +371,7 @@
                     app:measurementIconTint="@color/senior_info" />
 
                 <zdrowy.senior.io.ui.views.MeasurementListItemView
+                    android:id="@+id/patient_history_item_secondary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_s"
@@ -379,6 +381,7 @@
                     app:measurementIconTint="@color/senior_danger" />
 
                 <zdrowy.senior.io.ui.views.MeasurementListItemView
+                    android:id="@+id/patient_history_item_tertiary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_s"

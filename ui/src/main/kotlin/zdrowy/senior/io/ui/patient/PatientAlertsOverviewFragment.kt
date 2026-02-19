@@ -10,6 +10,8 @@ import androidx.navigation.fragment.findNavController
 import org.koin.android.ext.android.get
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientAlertsOverviewBinding
+import zdrowy.senior.io.domain.alert.AlertConfig
+import zdrowy.senior.io.domain.measurement.MeasurementType
 
 class PatientAlertsOverviewFragment : Fragment() {
     private var _binding: FragmentPatientAlertsOverviewBinding? = null
@@ -36,10 +38,38 @@ class PatientAlertsOverviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.load()
+        viewModel.alertConfig.observe(viewLifecycleOwner) { config ->
+            bindAlertConfig(config)
+        }
     }
 
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun bindAlertConfig(config: AlertConfig) {
+        val content = binding.patientAlertsOverviewContent
+        val byType = config.settings.associateBy { it.type }
+        content.alertsOverviewItemSugar.setSubtitle(
+            formatAlertSubtitle(byType[MeasurementType.SUGAR])
+        )
+        content.alertsOverviewItemInsulin.setSubtitle(
+            formatAlertSubtitle(byType[MeasurementType.INSULIN])
+        )
+        content.alertsOverviewItemPressure.setSubtitle(
+            formatAlertSubtitle(byType[MeasurementType.PRESSURE])
+        )
+        content.alertsOverviewItemPulse.setSubtitle(
+            formatAlertSubtitle(byType[MeasurementType.PULSE])
+        )
+    }
+
+    private fun formatAlertSubtitle(setting: zdrowy.senior.io.domain.alert.AlertSetting?): String {
+        if (setting == null) return "Brak danych."
+        val enabled = if (setting.enabled) "wlaczony" else "wylaczony"
+        val min = setting.min?.toString() ?: "-"
+        val max = setting.max?.toString() ?: "-"
+        return "Status: $enabled • Min: $min • Max: $max"
     }
 }

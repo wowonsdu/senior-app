@@ -56,6 +56,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/patient_agents_empty_agents_body"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_xs"
@@ -88,6 +89,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/patient_agents_empty_doctors_body"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/spacing_xs"

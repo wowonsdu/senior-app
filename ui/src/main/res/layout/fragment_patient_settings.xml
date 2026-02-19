@@ -79,6 +79,7 @@
                             android:textColor="@color/senior_text_primary" />
 
                         <TextView
+                            android:id="@+id/patient_settings_personal_subtitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_xs"
@@ -133,6 +134,7 @@
                             android:textColor="@color/senior_text_primary" />
 
                         <TextView
+                            android:id="@+id/patient_settings_diseases_subtitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_xs"
@@ -187,6 +189,7 @@
                             android:textColor="@color/senior_text_primary" />
 
                         <TextView
+                            android:id="@+id/patient_settings_meds_subtitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_xs"

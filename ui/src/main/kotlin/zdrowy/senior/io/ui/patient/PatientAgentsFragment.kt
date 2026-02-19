@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import org.koin.android.ext.android.get
+import zdrowy.senior.io.domain.agent.AgentRole
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientAgentsBinding
 
@@ -49,6 +50,25 @@ class PatientAgentsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.loadAgents()
+        viewModel.agents.observe(viewLifecycleOwner) { agents ->
+            val caregivers = agents.filter { it.role == AgentRole.CAREGIVER }
+            val doctors = agents.filter { it.role == AgentRole.DOCTOR }
+
+            binding.patientAgentsEmptyAgentsTitle.text = "Opiekunowie (${caregivers.size})"
+            binding.patientAgentsEmptyDoctorsTitle.text = "Lekarze (${doctors.size})"
+
+            binding.patientAgentsEmptyAgentsBody.text = if (caregivers.isEmpty()) {
+                "Brak dodanych opiekunow."
+            } else {
+                caregivers.joinToString { it.fullName }
+            }
+
+            binding.patientAgentsEmptyDoctorsBody.text = if (doctors.isEmpty()) {
+                "Brak dodanych lekarzy."
+            } else {
+                doctors.joinToString { it.fullName }
+            }
+        }
     }
 
     override fun onDestroyView() {
