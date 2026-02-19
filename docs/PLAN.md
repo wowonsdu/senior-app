@@ -43,7 +43,7 @@ Zasady etapu:
 - [x] Dialog pomiaru: cukier
 - [x] Dialog pomiaru: insulina
 - [x] Dialog pomiaru: cisnienie
-- [ ] Dialog pomiaru: tetno
+- [x] Dialog pomiaru: tetno
 - [ ] Historia pomiarow (wykres + lista + filtry)
 - [ ] Agenci monitorujacy: lista
 - [ ] Agenci monitorujacy: dodaj agenta (dialog)
