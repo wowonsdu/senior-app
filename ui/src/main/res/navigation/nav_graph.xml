@@ -79,6 +79,12 @@
         <action
             android:id="@+id/action_patientHome_to_patientSettings"
             app:destination="@id/patientSettingsFragment" />
+        <action
+            android:id="@+id/action_patientHome_to_roleSelect"
+            app:destination="@id/roleSelectFragment"
+            app:popUpTo="@id/roleSelectFragment"
+            app:popUpToInclusive="false"
+            app:launchSingleTop="true" />
     </fragment>
 
     <dialog

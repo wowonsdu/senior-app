@@ -19,6 +19,14 @@ class PatientHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPatientHomeBinding.inflate(inflater, container, false)
+        binding.patientHomeToolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.patient_home_logout) {
+                findNavController().navigate(R.id.action_patientHome_to_roleSelect)
+                true
+            } else {
+                false
+            }
+        }
         binding.patientHomeTileSugar.setOnClickListener {
             findNavController().navigate(R.id.action_patientHome_to_patientSugarDialog)
         }
