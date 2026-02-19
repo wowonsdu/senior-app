@@ -34,6 +34,9 @@ class PatientHomeFragment : Fragment() {
         binding.patientHomeActionHistory.setOnClickListener {
             findNavController().navigate(R.id.action_patientHome_to_patientHistory)
         }
+        binding.patientHomeActionAgents.setOnClickListener {
+            findNavController().navigate(R.id.action_patientHome_to_patientAgents)
+        }
         return binding.root
     }
 

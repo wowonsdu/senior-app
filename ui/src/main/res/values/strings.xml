@@ -117,6 +117,15 @@
     <string name="patient_history_item_pulse">Tetno: 72 bpm</string>
     <string name="patient_history_item_time">19.02.2026, 02:41</string>
 
+    <string name="patient_agents_title">Agenci monitorujacy</string>
+    <string name="patient_agents_subtitle">Osoby, ktore maja dostep do Twoich pomiarow</string>
+    <string name="patient_agents_empty_agents_title">Brak dodanych agentow</string>
+    <string name="patient_agents_empty_agents_body">Kliknij przycisk ponizej, aby dodac pierwszego agenta</string>
+    <string name="patient_agents_empty_doctors_title">Brak dodanych lekarzy</string>
+    <string name="patient_agents_empty_doctors_body">Kliknij przycisk ponizej, aby dodac pierwszego lekarza</string>
+    <string name="patient_agents_add_agent_tile">Dodaj Agenta</string>
+    <string name="patient_agents_add_doctor_tile">Dodaj Lekarza</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>

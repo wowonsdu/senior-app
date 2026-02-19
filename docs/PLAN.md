@@ -45,7 +45,7 @@ Zasady etapu:
 - [x] Dialog pomiaru: cisnienie
 - [x] Dialog pomiaru: tetno
 - [x] Historia pomiarow (wykres + lista + filtry)
-- [ ] Agenci monitorujacy: lista
+- [x] Agenci monitorujacy: lista
 - [ ] Agenci monitorujacy: dodaj agenta (dialog)
 - [ ] Agenci monitorujacy: kod dostepu (dialog)
 - [ ] Agenci monitorujacy: edytuj agenta (dialog)

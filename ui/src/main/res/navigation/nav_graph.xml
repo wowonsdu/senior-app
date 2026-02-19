@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_patientHome_to_patientHistory"
             app:destination="@id/patientHistoryFragment" />
+        <action
+            android:id="@+id/action_patientHome_to_patientAgents"
+            app:destination="@id/patientAgentsFragment" />
     </fragment>
 
     <dialog
@@ -104,6 +107,12 @@
         android:name="zdrowy.senior.io.ui.patient.PatientHistoryFragment"
         android:label="@string/patient_history_title"
         tools:layout="@layout/fragment_patient_history" />
+
+    <fragment
+        android:id="@+id/patientAgentsFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAgentsFragment"
+        android:label="@string/patient_agents_title"
+        tools:layout="@layout/fragment_patient_agents" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"
