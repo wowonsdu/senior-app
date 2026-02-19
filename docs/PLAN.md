@@ -12,6 +12,7 @@
 - [x] View Binding + Data Binding
 - [x] Koin bootstrap + podstawowe moduly DI
 - [x] Single-activity + Navigation Component (start flow)
+- [x] Plan use case'ow (docs/USE_CASES.md)
 
 ## Etap 2 — Design Book Activity (dummy content)
 - [x] Custom views (kafelki pomiarow, karty list)

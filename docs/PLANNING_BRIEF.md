@@ -65,6 +65,16 @@ Opiekun:
 - Wybierz podopiecznego + dodaj podopiecznego (dialog + kod SMS).
 - Wizyty: planowanie, lista, statusy (nadchodzace/wszystkie/zakonczone).
 
+## Plan use case'ow (skrot)
+Szczegolowa lista w `docs/USE_CASES.md`. Najwazniejsze obszary:
+- Auth i sesja: SMS, kod dostepu, logowanie/wylogowanie.
+- Pomiary: dodawanie, historia, wykresy.
+- Agenci i lekarze: CRUD, generowanie kodu, wysylka SMS.
+- Opiekun: podopieczni, dashboard, oznaczanie nowych pomiarow.
+- Alerty: progi, kanaly, przypisanie opiekunow, zapis konfiguracji.
+- Wizyty: dodawanie, edycja, statusy i przypomnienia.
+- Ustawienia pacjenta: dane, choroby, leki i powiadomienia.
+
 ## UX i wymagania wizualne
 - Material Design (Material 3 w estetyce UI).
 - Duze przyciski i czytelne karty (dla seniorow).

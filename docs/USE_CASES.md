@@ -1,0 +1,282 @@
+# Use case'y (domena)
+
+Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla warstwy domeny
+(use case'y z `operator fun invoke()`), niezalezny od implementacji repozytoriow.
+
+## Auth i sesja
+- UC-AUTH-01 RequestSmsCode
+  - Cel: wyslanie kodu SMS na numer telefonu.
+  - Wejscie: `phoneNumber`.
+  - Wyjscie: `SmsRequestResult` (ok / error).
+  - Repo: `AuthRepository`.
+- UC-AUTH-02 VerifySmsCode
+  - Cel: weryfikacja kodu SMS i utworzenie sesji.
+  - Wejscie: `phoneNumber`, `code`.
+  - Wyjscie: `AuthSession`.
+  - Repo: `AuthRepository`.
+- UC-AUTH-03 LoginWithAccessCode
+  - Cel: logowanie kodem dostepu (pacjent lub opiekun).
+  - Wejscie: `role`, `accessCode`.
+  - Wyjscie: `AuthSession` + `AccessGrant`.
+  - Repo: `AccessCodeRepository`, `AuthRepository`.
+- UC-AUTH-04 Logout
+  - Cel: wylogowanie i wyczyszczenie sesji.
+  - Wejscie: `sessionId`.
+  - Wyjscie: `Unit`.
+  - Repo: `AuthRepository`.
+- UC-AUTH-05 ObserveAuthState
+  - Cel: obserwacja stanu zalogowania.
+  - Wejscie: brak.
+  - Wyjscie: `Observable<AuthState>`.
+  - Repo: `AuthRepository`.
+
+## Pomiary (pacjent)
+- UC-MEAS-01 AddMeasurement
+  - Cel: dodanie pomiaru zdrowotnego.
+  - Wejscie: `type`, `value`, `timestamp`, `source`.
+  - Wyjscie: `MeasurementId`.
+  - Repo: `MeasurementRepository`.
+- UC-MEAS-02 AddBloodPressureMeasurement
+  - Cel: dodanie cisnienia (skurczowe/rozkurczowe).
+  - Wejscie: `systolic`, `diastolic`, `timestamp`, `source`.
+  - Wyjscie: `MeasurementId`.
+  - Repo: `MeasurementRepository`.
+- UC-MEAS-03 GetRecentMeasurements
+  - Cel: pobranie ostatnich pomiarow (na ekran glowny).
+  - Wejscie: `limit`, opcjonalnie `types`.
+  - Wyjscie: `List<Measurement>`.
+  - Repo: `MeasurementRepository`.
+
+## Historia pomiarow i wykresy
+- UC-HIST-01 GetMeasurementHistory
+  - Cel: lista pomiarow z filtrami.
+  - Wejscie: `types`, `dateRange`.
+  - Wyjscie: `List<Measurement>`.
+  - Repo: `MeasurementRepository`.
+- UC-HIST-02 GetMeasurementChartData
+  - Cel: dane do wykresu liniowego.
+  - Wejscie: `types`, `dateRange`.
+  - Wyjscie: `ChartSeries`.
+  - Repo: `MeasurementRepository`.
+- UC-HIST-03 GetHistoryFilters
+  - Cel: przygotowanie listy filtrów (typy, zakresy).
+  - Wejscie: brak.
+  - Wyjscie: `HistoryFilterState`.
+  - Repo: `MeasurementRepository`.
+
+## Agenci i lekarze (pacjent)
+- UC-AGENT-01 AddAgent
+  - Cel: dodanie opiekuna.
+  - Wejscie: `AgentDraft` (imie, rola, tel, email).
+  - Wyjscie: `AgentId`.
+  - Repo: `AgentRepository`.
+- UC-AGENT-02 AddDoctor
+  - Cel: dodanie lekarza.
+  - Wejscie: `DoctorDraft` (imie, tel, email, specjalizacja).
+  - Wyjscie: `AgentId`.
+  - Repo: `AgentRepository`.
+- UC-AGENT-03 UpdateAgent
+  - Cel: edycja danych agenta.
+  - Wejscie: `AgentId`, `AgentUpdate`.
+  - Wyjscie: `Unit`.
+  - Repo: `AgentRepository`.
+- UC-AGENT-04 RemoveAgent
+  - Cel: usuniecie agenta/lekarza.
+  - Wejscie: `AgentId`.
+  - Wyjscie: `Unit`.
+  - Repo: `AgentRepository`.
+- UC-AGENT-05 ListAgents
+  - Cel: pobranie listy opiekunow i lekarzy.
+  - Wejscie: brak.
+  - Wyjscie: `List<Agent>`.
+  - Repo: `AgentRepository`.
+- UC-AGENT-06 GenerateAccessCodeForAgent
+  - Cel: wygenerowanie 6-cyfrowego kodu dla agenta.
+  - Wejscie: `AgentId`, `ttl`.
+  - Wyjscie: `AccessCode`.
+  - Repo: `AccessCodeRepository`.
+- UC-AGENT-07 SendAccessCodeSms
+  - Cel: wyslanie kodu SMS do agenta.
+  - Wejscie: `AgentId`, `AccessCode`.
+  - Wyjscie: `Unit`.
+  - Repo: `NotificationRepository`.
+
+## Opiekun / panel opiekuna
+- UC-CARE-01 AddDependent
+  - Cel: dodanie podopiecznego po numerze telefonu.
+  - Wejscie: `fullName`, `phoneNumber`.
+  - Wyjscie: `DependentId`.
+  - Repo: `CaregiverRepository`.
+- UC-CARE-02 GenerateAccessCodeForDependent
+  - Cel: wygenerowanie kodu dostepu dla podopiecznego i wysylka SMS.
+  - Wejscie: `DependentId`, `ttl`.
+  - Wyjscie: `AccessCode`.
+  - Repo: `AccessCodeRepository`, `NotificationRepository`.
+- UC-CARE-03 ListDependents
+  - Cel: lista podopiecznych.
+  - Wejscie: brak.
+  - Wyjscie: `List<Dependent>`.
+  - Repo: `CaregiverRepository`.
+- UC-CARE-04 SelectActiveDependent
+  - Cel: ustawienie aktywnego podopiecznego w sesji opiekuna.
+  - Wejscie: `DependentId`.
+  - Wyjscie: `Unit`.
+  - Repo: `CaregiverRepository`.
+- UC-CARE-05 GetDependentMeasurements
+  - Cel: pobranie pomiarow aktywnego podopiecznego.
+  - Wejscie: `types`, `dateRange`.
+  - Wyjscie: `List<Measurement>`.
+  - Repo: `CaregiverRepository`.
+- UC-CARE-06 GetCaregiverDashboard
+  - Cel: dane na dashboardzie (nowe pomiary, najwieksze zmiany).
+  - Wejscie: brak.
+  - Wyjscie: `DashboardState`.
+  - Repo: `CaregiverRepository`.
+- UC-CARE-07 MarkMeasurementAsRead
+  - Cel: oznaczenie pomiaru jako przeczytany.
+  - Wejscie: `MeasurementId`.
+  - Wyjscie: `Unit`.
+  - Repo: `CaregiverRepository`.
+- UC-CARE-08 MarkAllMeasurementsAsRead
+  - Cel: oznaczenie wszystkich jako przeczytane.
+  - Wejscie: brak.
+  - Wyjscie: `Unit`.
+  - Repo: `CaregiverRepository`.
+
+## Alerty i powiadomienia
+- UC-ALERT-01 GetAlertConfig
+  - Cel: pobranie konfiguracji alertow.
+  - Wejscie: brak.
+  - Wyjscie: `AlertConfig`.
+  - Repo: `AlertRepository`.
+- UC-ALERT-02 UpdateAlertConfig
+  - Cel: zapis konfiguracji alertow.
+  - Wejscie: `AlertConfig`.
+  - Wyjscie: `Unit`.
+  - Repo: `AlertRepository`.
+- UC-ALERT-03 SetAlertEnabled
+  - Cel: wlacz/wyłącz alert dla typu pomiaru.
+  - Wejscie: `type`, `enabled`.
+  - Wyjscie: `Unit`.
+  - Repo: `AlertRepository`.
+- UC-ALERT-04 UpdateCriticalThresholds
+  - Cel: ustawienie progow krytycznych.
+  - Wejscie: `type`, `min`, `max`.
+  - Wyjscie: `Unit`.
+  - Repo: `AlertRepository`.
+- UC-ALERT-05 UpdateSpikeRules
+  - Cel: ustawienie progu gwaltownej zmiany.
+  - Wejscie: `type`, `percent`, `windowCount`.
+  - Wyjscie: `Unit`.
+  - Repo: `AlertRepository`.
+- UC-ALERT-06 UpdateAlertChannels
+  - Cel: ustawienie kanalow powiadomien (SMS/email/app).
+  - Wejscie: `type`, `channels`.
+  - Wyjscie: `Unit`.
+  - Repo: `AlertRepository`.
+- UC-ALERT-07 UpdateAlertCaregivers
+  - Cel: przypisanie opiekunow do alertu.
+  - Wejscie: `type`, `caregiverIds`.
+  - Wyjscie: `Unit`.
+  - Repo: `AlertRepository`.
+
+## Wizyty
+- UC-VISIT-01 AddVisit
+  - Cel: dodanie wizyty.
+  - Wejscie: `VisitDraft` (typ, data, godzina, lekarz, notatki, lokalizacja).
+  - Wyjscie: `VisitId`.
+  - Repo: `VisitRepository`.
+- UC-VISIT-02 UpdateVisit
+  - Cel: edycja wizyty.
+  - Wejscie: `VisitId`, `VisitUpdate`.
+  - Wyjscie: `Unit`.
+  - Repo: `VisitRepository`.
+- UC-VISIT-03 RemoveVisit
+  - Cel: usuniecie wizyty.
+  - Wejscie: `VisitId`.
+  - Wyjscie: `Unit`.
+  - Repo: `VisitRepository`.
+- UC-VISIT-04 ListVisits
+  - Cel: lista wizyt z filtrem (nadchodzace/wszystkie/zakonczone).
+  - Wejscie: `statusFilter`.
+  - Wyjscie: `List<Visit>`.
+  - Repo: `VisitRepository`.
+- UC-VISIT-05 MarkVisitCompleted
+  - Cel: oznaczenie wizyty jako zakonczona.
+  - Wejscie: `VisitId`.
+  - Wyjscie: `Unit`.
+  - Repo: `VisitRepository`.
+- UC-VISIT-06 ReopenVisit
+  - Cel: przywrocenie wizyty do aktywnych.
+  - Wejscie: `VisitId`.
+  - Wyjscie: `Unit`.
+  - Repo: `VisitRepository`.
+
+## Ustawienia pacjenta
+- UC-SET-01 GetPersonalData
+  - Cel: pobranie danych osobowych.
+  - Wejscie: brak.
+  - Wyjscie: `PersonalData`.
+  - Repo: `SettingsRepository`.
+- UC-SET-02 UpsertPersonalData
+  - Cel: dodanie/edycja danych osobowych.
+  - Wejscie: `PersonalData`.
+  - Wyjscie: `Unit`.
+  - Repo: `SettingsRepository`.
+- UC-SET-03 AddDisease
+  - Cel: dodanie choroby.
+  - Wejscie: `DiseaseDraft`.
+  - Wyjscie: `DiseaseId`.
+  - Repo: `SettingsRepository`.
+- UC-SET-04 UpdateDisease
+  - Cel: edycja choroby.
+  - Wejscie: `DiseaseId`, `DiseaseUpdate`.
+  - Wyjscie: `Unit`.
+  - Repo: `SettingsRepository`.
+- UC-SET-05 RemoveDisease
+  - Cel: usuniecie choroby.
+  - Wejscie: `DiseaseId`.
+  - Wyjscie: `Unit`.
+  - Repo: `SettingsRepository`.
+- UC-SET-06 ListDiseases
+  - Cel: pobranie listy chorob.
+  - Wejscie: brak.
+  - Wyjscie: `List<Disease>`.
+  - Repo: `SettingsRepository`.
+- UC-SET-07 AddMedication
+  - Cel: dodanie leku.
+  - Wejscie: `MedicationDraft`.
+  - Wyjscie: `MedicationId`.
+  - Repo: `SettingsRepository`.
+- UC-SET-08 UpdateMedication
+  - Cel: edycja leku.
+  - Wejscie: `MedicationId`, `MedicationUpdate`.
+  - Wyjscie: `Unit`.
+  - Repo: `SettingsRepository`.
+- UC-SET-09 RemoveMedication
+  - Cel: usuniecie leku.
+  - Wejscie: `MedicationId`.
+  - Wyjscie: `Unit`.
+  - Repo: `SettingsRepository`.
+- UC-SET-10 ListMedications
+  - Cel: pobranie listy lekow.
+  - Wejscie: brak.
+  - Wyjscie: `List<Medication>`.
+  - Repo: `SettingsRepository`.
+- UC-SET-11 ToggleMedicationNotifications
+  - Cel: wlacz/wyłącz powiadomienia o leku.
+  - Wejscie: `MedicationId`, `enabled`.
+  - Wyjscie: `Unit`.
+  - Repo: `SettingsRepository`.
+
+## Powiadomienia (lokalne / SMS / email)
+- UC-NOTIF-01 ScheduleVisitReminder
+  - Cel: zaplanowanie powiadomienia o wizycie.
+  - Wejscie: `VisitId`, `channel`, `offset`.
+  - Wyjscie: `Unit`.
+  - Repo: `NotificationRepository`.
+- UC-NOTIF-02 CancelVisitReminder
+  - Cel: anulowanie zaplanowanego powiadomienia.
+  - Wejscie: `VisitId`.
+  - Wyjscie: `Unit`.
+  - Repo: `NotificationRepository`.
