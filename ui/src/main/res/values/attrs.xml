@@ -17,4 +17,11 @@
         <attr name="cardSubtitle" format="string" />
         <attr name="cardIcon" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="MeasurementListItemView">
+        <attr name="measurementTitle" format="string" />
+        <attr name="measurementSubtitle" format="string" />
+        <attr name="measurementIcon" format="reference" />
+        <attr name="measurementIconTint" format="color|reference" />
+    </declare-styleable>
 </resources>

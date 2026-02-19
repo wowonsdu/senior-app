@@ -118,6 +118,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
+            android:text="Lista pomiarow"
+            android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
+
+        <zdrowy.senior.io.ui.views.MeasurementListItemView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:measurementTitle="Cukier: 108 mg/dL"
+            app:measurementSubtitle="19.02.2026, 02:41"
+            app:measurementIcon="@android:drawable/ic_menu_info_details"
+            app:measurementIconTint="@color/senior_primary" />
+
+        <zdrowy.senior.io.ui.views.MeasurementListItemView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:measurementTitle="Cisnienie: 123 na 80 mmHg"
+            app:measurementSubtitle="19.02.2026, 02:41"
+            app:measurementIcon="@android:drawable/ic_menu_compass"
+            app:measurementIconTint="@color/senior_danger" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
             android:text="Alerty"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 
