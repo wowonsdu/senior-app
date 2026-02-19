@@ -32,7 +32,7 @@
 
 Zasady etapu:
 - Po dodaniu **pelnego ekranu**: weryfikacja z makieta przez MCP.
-- Zapis zrzutu ekranu do `docs/screens` (nazwy z podkreslnikami).
+- Bez zapisu zrzutow ekranu do repo.
 - Dopiero po akceptacji przechodzimy dalej.
 - Kazdy ekran/flow commitowany osobno.
 
@@ -43,7 +43,7 @@ Zasady etapu:
 - [x] Layouty i widoki — Logowanie (telefon/kod) — opiekun
 - [x] Layouty i widoki — Dev Hub (wejscie bez logowania)
 - [x] Layouty i widoki — Weryfikacja SMS — pacjent
-- [ ] Layouty i widoki — Weryfikacja SMS — opiekun
+- [x] Layouty i widoki — Weryfikacja SMS — opiekun
 - [ ] Dummy repo (mock danych zgodnych z makietami)
 - [ ] Use case logika (dummy)
 - [ ] Firebase repo (Auth + docelowe storage)
