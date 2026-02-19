@@ -77,7 +77,7 @@ Szczegolowa lista w `docs/USE_CASES.md`. Najwazniejsze obszary:
 
 ## Zasady realizacji ekranow
 - Po dodaniu pelnego ekranu: weryfikacja z makieta przez MCP.
-- Bez nowych screenshotow w repo.
+- Zapis zrzutu ekranu do `docs/screens` (nazwy z podkreslnikami).
 - Dopiero po akceptacji przechodzimy dalej.
 - Kazdy ekran/flow commitowany osobno.
 

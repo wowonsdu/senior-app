@@ -32,13 +32,13 @@
 
 Zasady etapu:
 - Po dodaniu **pelnego ekranu**: weryfikacja z makieta przez MCP.
-- Bez nowych screenshotow w repo.
+- Zapis zrzutu ekranu do `docs/screens` (nazwy z podkreslnikami).
 - Dopiero po akceptacji przechodzimy dalej.
 - Kazdy ekran/flow commitowany osobno.
 
 ### 4.1 Auth flow
 - [x] Nawigacja: kompletne wejscia/wyjscia, powroty
-- [ ] Layouty i widoki — Ekran wyboru roli
+- [x] Layouty i widoki — Ekran wyboru roli
 - [ ] Layouty i widoki — Logowanie (telefon/kod) — pacjent
 - [ ] Layouty i widoki — Logowanie (telefon/kod) — opiekun
 - [ ] Layouty i widoki — Weryfikacja SMS — pacjent
