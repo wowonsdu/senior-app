@@ -28,7 +28,35 @@
 - [x] Optyczne porownanie z makietami
 - [x] Checklista zgodnosci (layout/typografia/kolory/odstepy)
 
-## Etap 4 — Implementacja ekranow
-- [ ] Auth flow
-- [ ] Pacjent flow
-- [ ] Opiekun flow
+## Etap 4 — Implementacja flow (Auth -> Pacjent -> Opiekun)
+
+Zasady etapu:
+- Po dodaniu **pelnego ekranu**: weryfikacja z makieta przez MCP.
+- Bez nowych screenshotow w repo.
+- Dopiero po akceptacji przechodzimy dalej.
+- Kazdy ekran/flow commitowany osobno.
+
+### 4.1 Auth flow
+- [ ] Nawigacja: kompletne wejscia/wyjscia, powroty
+- [ ] Layouty i widoki — Ekran wyboru roli
+- [ ] Layouty i widoki — Logowanie (telefon/kod) — pacjent
+- [ ] Layouty i widoki — Logowanie (telefon/kod) — opiekun
+- [ ] Layouty i widoki — Weryfikacja SMS — pacjent
+- [ ] Layouty i widoki — Weryfikacja SMS — opiekun
+- [ ] Dummy repo (mock danych zgodnych z makietami)
+- [ ] Use case logika (dummy)
+- [ ] Firebase repo (Auth + docelowe storage)
+
+### 4.2 Pacjent flow
+- [ ] Nawigacja: kompletne wejscia/wyjscia, powroty
+- [ ] Layouty i widoki (zgodne z makietami)
+- [ ] Dummy repo (mock danych zgodnych z makietami)
+- [ ] Use case logika (dummy)
+- [ ] Firebase repo (Firestore)
+
+### 4.3 Opiekun flow
+- [ ] Nawigacja: kompletne wejscia/wyjscia, powroty
+- [ ] Layouty i widoki (zgodne z makietami)
+- [ ] Dummy repo (mock danych zgodnych z makietami)
+- [ ] Use case logika (dummy)
+- [ ] Firebase repo (Firestore)

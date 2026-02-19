@@ -75,6 +75,12 @@ Szczegolowa lista w `docs/USE_CASES.md`. Najwazniejsze obszary:
 - Wizyty: dodawanie, edycja, statusy i przypomnienia.
 - Ustawienia pacjenta: dane, choroby, leki i powiadomienia.
 
+## Zasady realizacji ekranow
+- Po dodaniu pelnego ekranu: weryfikacja z makieta przez MCP.
+- Bez nowych screenshotow w repo.
+- Dopiero po akceptacji przechodzimy dalej.
+- Kazdy ekran/flow commitowany osobno.
+
 ## UX i wymagania wizualne
 - Material Design (Material 3 w estetyce UI).
 - Duze przyciski i czytelne karty (dla seniorow).
