@@ -159,6 +159,12 @@
     <string name="patient_add_doctor_cancel">Anuluj</string>
     <string name="patient_add_doctor_save">Zapisz</string>
 
+    <string name="patient_doctor_code_title">Kod lekarza</string>
+    <string name="patient_doctor_code_subtitle">Przekaz kod lekarzowi, aby mogl sie zalogowac</string>
+    <string name="patient_doctor_code_value">982 114</string>
+    <string name="patient_doctor_code_copy">Kopiuj kod</string>
+    <string name="patient_doctor_code_sms">Wyslij SMS</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>

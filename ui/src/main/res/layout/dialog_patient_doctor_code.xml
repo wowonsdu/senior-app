@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_l">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_alert_medical"
+            android:tint="@color/senior_primary" />
+
+        <TextView
+            android:id="@+id/patient_doctor_code_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_weight="1"
+            android:text="@string/patient_doctor_code_title"
+            android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+            android:textColor="@color/senior_text_primary" />
+
+        <ImageButton
+            android:id="@+id/patient_doctor_code_close"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@null"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:tint="@color/senior_text_secondary" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/patient_doctor_code_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:text="@string/patient_doctor_code_subtitle"
+        android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+        android:textColor="@color/senior_text_secondary" />
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.Senior.Card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m"
+        app:cardBackgroundColor="@color/senior_bg">
+
+        <TextView
+            android:id="@+id/patient_doctor_code_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/spacing_l"
+            android:text="@string/patient_doctor_code_value"
+            android:textAppearance="@style/TextAppearance.Senior.TitleLarge"
+            android:textColor="@color/senior_primary"
+            android:textStyle="bold" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/patient_doctor_code_copy"
+        style="@style/Widget.Senior.Button.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:text="@string/patient_doctor_code_copy" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/patient_doctor_code_sms"
+        style="@style/Widget.Senior.Button.Primary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:text="@string/patient_doctor_code_sms" />
+
+</LinearLayout>

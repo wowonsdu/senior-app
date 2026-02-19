@@ -50,7 +50,7 @@ Zasady etapu:
 - [x] Agenci monitorujacy: kod dostepu (dialog)
 - [x] Agenci monitorujacy: edytuj agenta (dialog)
 - [x] Agenci monitorujacy: dodaj lekarza (dialog)
-- [ ] Agenci monitorujacy: kod lekarza (dialog)
+- [x] Agenci monitorujacy: kod lekarza (dialog)
 - [ ] Agenci monitorujacy: edytuj lekarza (dialog)
 - [ ] Moje ustawienia (przeglad)
 - [ ] Dodaj dane osobowe (dialog)
