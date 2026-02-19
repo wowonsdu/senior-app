@@ -141,6 +141,15 @@
     <string name="patient_agent_code_copy">Kopiuj kod</string>
     <string name="patient_agent_code_sms">Wyslij SMS</string>
 
+    <string name="patient_edit_agent_title">Edytuj opiekuna</string>
+    <string name="patient_edit_agent_subtitle">Zaktualizuj dane opiekuna</string>
+    <string name="patient_edit_agent_prefill_name">Janek, Syn</string>
+    <string name="patient_edit_agent_prefill_role">Syn</string>
+    <string name="patient_edit_agent_prefill_phone">692 56 070</string>
+    <string name="patient_edit_agent_prefill_email">janek@example.com</string>
+    <string name="patient_edit_agent_delete">Usun</string>
+    <string name="patient_edit_agent_save">Zapisz zmiany</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>

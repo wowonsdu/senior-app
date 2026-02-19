@@ -47,6 +47,7 @@
                     android:padding="@dimen/spacing_l">
 
                     <TextView
+                        android:id="@+id/patient_agents_empty_agents_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/patient_agents_empty_agents_title"
@@ -78,6 +79,7 @@
                     android:padding="@dimen/spacing_l">
 
                     <TextView
+                        android:id="@+id/patient_agents_empty_doctors_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/patient_agents_empty_doctors_title"

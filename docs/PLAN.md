@@ -48,7 +48,7 @@ Zasady etapu:
 - [x] Agenci monitorujacy: lista
 - [x] Agenci monitorujacy: dodaj agenta (dialog)
 - [x] Agenci monitorujacy: kod dostepu (dialog)
-- [ ] Agenci monitorujacy: edytuj agenta (dialog)
+- [x] Agenci monitorujacy: edytuj agenta (dialog)
 - [ ] Agenci monitorujacy: dodaj lekarza (dialog)
 - [ ] Agenci monitorujacy: kod lekarza (dialog)
 - [ ] Agenci monitorujacy: edytuj lekarza (dialog)
