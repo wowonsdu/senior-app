@@ -10,7 +10,7 @@ class SeniorApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        if (Timber.treeCount() == 0) {
+        if (Timber.forest().isEmpty()) {
             Timber.plant(Timber.DebugTree())
         }
 

@@ -3,9 +3,9 @@
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.FrameLayout
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
-import com.google.android.material.card.MaterialCardView
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.ViewActionTileBinding
 
@@ -13,7 +13,7 @@ class ActionTileView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : MaterialCardView(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val binding = ViewActionTileBinding.inflate(
         LayoutInflater.from(context),
@@ -22,10 +22,6 @@ class ActionTileView @JvmOverloads constructor(
     )
 
     init {
-        radius = resources.getDimension(R.dimen.radius_l)
-        useCompatPadding = true
-        setCardBackgroundColor(ContextCompat.getColor(context, R.color.senior_info))
-
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.ActionTileView)
         val title = typedArray.getString(R.styleable.ActionTileView_actionTitle)
         val iconRes = typedArray.getResourceId(R.styleable.ActionTileView_actionIcon, 0)
@@ -47,6 +43,6 @@ class ActionTileView @JvmOverloads constructor(
     }
 
     fun setTileColor(@ColorInt color: Int) {
-        setCardBackgroundColor(color)
+        binding.cardRoot.setCardBackgroundColor(color)
     }
 }

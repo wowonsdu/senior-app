@@ -19,10 +19,10 @@
 - [x] Activity + launcher alias
 
 ## Etap 3 — Porownanie z makietami (ADB/MCP)
-- [ ] Uruchomienie na emulatorze przez mcp__android-adb
-- [ ] Zrzuty ekranu Design Book
-- [ ] Optyczne porownanie z makietami
-- [ ] Checklista zgodnosci (layout/typografia/kolory/odstepy)
+- [x] Uruchomienie na emulatorze przez mcp__android-adb
+- [x] Zrzuty ekranu Design Book
+- [x] Optyczne porownanie z makietami
+- [x] Checklista zgodnosci (layout/typografia/kolory/odstepy)
 
 ## Etap 4 — Implementacja ekranow
 - [ ] Auth flow

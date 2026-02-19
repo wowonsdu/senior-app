@@ -3,8 +3,7 @@
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import androidx.core.content.ContextCompat
-import com.google.android.material.card.MaterialCardView
+import android.widget.FrameLayout
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.ViewInfoCardBinding
 
@@ -12,7 +11,7 @@ class InfoCardView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : MaterialCardView(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     private val binding = ViewInfoCardBinding.inflate(
         LayoutInflater.from(context),
@@ -21,10 +20,6 @@ class InfoCardView @JvmOverloads constructor(
     )
 
     init {
-        radius = resources.getDimension(R.dimen.radius_m)
-        useCompatPadding = true
-        setCardBackgroundColor(ContextCompat.getColor(context, R.color.senior_surface))
-
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.InfoCardView)
         val title = typedArray.getString(R.styleable.InfoCardView_cardTitle)
         val subtitle = typedArray.getString(R.styleable.InfoCardView_cardSubtitle)
