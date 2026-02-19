@@ -21,7 +21,15 @@ class InMemorySettingsRepository : SettingsRepository {
         seedData()
     }
 
-    override fun getPersonalData(): Single<PersonalData?> = Single.just(personalData)
+    override fun getPersonalData(): Single<PersonalData> {
+        val fallback = PersonalData(
+            fullName = "",
+            phoneNumber = "",
+            email = "",
+            address = ""
+        )
+        return Single.just(personalData ?: fallback)
+    }
 
     override fun upsertPersonalData(data: PersonalData): Completable {
         personalData = data

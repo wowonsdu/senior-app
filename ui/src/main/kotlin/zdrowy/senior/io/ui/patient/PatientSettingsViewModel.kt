@@ -21,8 +21,8 @@ class PatientSettingsViewModel(
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
 
-    private val _personalData = MutableLiveData<PersonalData?>()
-    val personalData: LiveData<PersonalData?> = _personalData
+    private val _personalData = MutableLiveData<PersonalData>()
+    val personalData: LiveData<PersonalData> = _personalData
 
     private val _diseases = MutableLiveData<List<Disease>>()
     val diseases: LiveData<List<Disease>> = _diseases

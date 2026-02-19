@@ -4,7 +4,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 interface SettingsRepository {
-    fun getPersonalData(): Single<PersonalData?>
+    fun getPersonalData(): Single<PersonalData>
     fun upsertPersonalData(data: PersonalData): Completable
 
     fun addDisease(draft: DiseaseDraft): Single<String>
