@@ -21,4 +21,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "Senior"
 include(":app")
+include(":domain")
+include(":data")
+include(":ui")
+include(":di")
  

@@ -1,10 +1,10 @@
 ﻿# Plan wykonania (checklista)
 
 ## Etap 0 — System stylu (UI system)
-- [ ] Theme + kolory + typografia + shapes
-- [ ] Dimens (odstepy, rozmiary, promienie)
-- [ ] Style przyciskow (primary/secondary/danger)
-- [ ] Style kart i dialogow
+- [x] Theme + kolory + typografia + shapes
+- [x] Dimens (odstepy, rozmiary, promienie)
+- [x] Style przyciskow (primary/secondary/danger)
+- [x] Style kart i dialogow
 
 ## Etap 1 — Core, moduly, dependencje, DI, nawigacja
 - [ ] Moduly Gradle: app, domain, data, ui, di

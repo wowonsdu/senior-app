@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="senior_primary">#1F7AE0</color>
+    <color name="senior_primary_dark">#155DB0</color>
+    <color name="senior_secondary">#4CAF50</color>
+    <color name="senior_secondary_dark">#388E3C</color>
+    <color name="senior_danger">#E53935</color>
+    <color name="senior_warning">#FB8C00</color>
+    <color name="senior_info">#1E88E5</color>
+    <color name="senior_purple">#8E24AA</color>
+
+    <color name="senior_bg">#F6F8FB</color>
+    <color name="senior_surface">#FFFFFF</color>
+    <color name="senior_outline">#E0E0E0</color>
+    <color name="senior_text_primary">#1F2933</color>
+    <color name="senior_text_secondary">#52616B</color>
+    <color name="senior_text_tertiary">#88949B</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+</resources>

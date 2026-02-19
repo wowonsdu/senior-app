@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ShapeAppearance.Senior.Small" parent="ShapeAppearance.Material3.SmallComponent">
+        <item name="cornerSize">@dimen/radius_s</item>
+    </style>
+
+    <style name="ShapeAppearance.Senior.Medium" parent="ShapeAppearance.Material3.MediumComponent">
+        <item name="cornerSize">@dimen/radius_m</item>
+    </style>
+
+    <style name="ShapeAppearance.Senior.Large" parent="ShapeAppearance.Material3.LargeComponent">
+        <item name="cornerSize">@dimen/radius_l</item>
+    </style>
+
+    <style name="Widget.Senior.Button.Base" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/button_height</item>
+        <item name="cornerRadius">@dimen/radius_l</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Widget.Senior.Button.Primary" parent="Widget.Senior.Button.Base">
+        <item name="backgroundTint">@color/senior_primary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.Senior.Button.Secondary" parent="Widget.Senior.Button.Base">
+        <item name="backgroundTint">@color/senior_secondary</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.Senior.Button.Danger" parent="Widget.Senior.Button.Base">
+        <item name="backgroundTint">@color/senior_danger</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.Senior.Card" parent="Widget.Material3.CardView">
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cardCornerRadius">@dimen/radius_m</item>
+        <item name="cardElevation">@dimen/card_elevation</item>
+    </style>
+
+    <style name="Widget.Senior.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Senior.Medium</item>
+    </style>
+</resources>

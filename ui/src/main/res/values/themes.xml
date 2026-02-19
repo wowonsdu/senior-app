@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Senior" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/senior_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/senior_secondary</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSurface">@color/senior_surface</item>
+        <item name="colorOnSurface">@color/senior_text_primary</item>
+        <item name="colorBackground">@color/senior_bg</item>
+        <item name="android:statusBarColor">@color/senior_primary_dark</item>
+        <item name="materialButtonStyle">@style/Widget.Senior.Button.Primary</item>
+        <item name="materialAlertDialogTheme">@style/Widget.Senior.Dialog</item>
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Senior.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Senior.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Senior.Large</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.Senior.TitleLarge</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.Senior.TitleMedium</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.Senior.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.Senior.BodyMedium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.Senior.Caption</item>
+    </style>
+</resources>
