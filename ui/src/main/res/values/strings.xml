@@ -82,6 +82,14 @@
     <string name="patient_insulin_dialog_cancel">Anuluj</string>
     <string name="patient_insulin_dialog_save">Zapisz</string>
 
+    <string name="patient_pressure_dialog_title">Cisnienie</string>
+    <string name="patient_pressure_dialog_subtitle">Wpisz wynik pomiaru</string>
+    <string name="patient_pressure_dialog_hint_systolic">Skurczowe</string>
+    <string name="patient_pressure_dialog_hint_diastolic">Rozkurczowe</string>
+    <string name="patient_pressure_dialog_unit">Jednostka: mmHg</string>
+    <string name="patient_pressure_dialog_cancel">Anuluj</string>
+    <string name="patient_pressure_dialog_save">Zapisz</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>

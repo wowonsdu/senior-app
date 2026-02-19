@@ -64,6 +64,9 @@
         <action
             android:id="@+id/action_patientHome_to_patientInsulinDialog"
             app:destination="@id/patientInsulinDialogFragment" />
+        <action
+            android:id="@+id/action_patientHome_to_patientPressureDialog"
+            app:destination="@id/patientPressureDialogFragment" />
     </fragment>
 
     <dialog
@@ -77,6 +80,12 @@
         android:name="zdrowy.senior.io.ui.patient.PatientInsulinDialogFragment"
         android:label="@string/patient_insulin_dialog_title"
         tools:layout="@layout/dialog_patient_insulin" />
+
+    <dialog
+        android:id="@+id/patientPressureDialogFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientPressureDialogFragment"
+        android:label="@string/patient_pressure_dialog_title"
+        tools:layout="@layout/dialog_patient_pressure" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"

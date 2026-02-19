@@ -42,7 +42,7 @@ Zasady etapu:
 - [x] Ekran glowny pacjenta (kafelki pomiarow + akcje)
 - [x] Dialog pomiaru: cukier
 - [x] Dialog pomiaru: insulina
-- [ ] Dialog pomiaru: cisnienie
+- [x] Dialog pomiaru: cisnienie
 - [ ] Dialog pomiaru: tetno
 - [ ] Historia pomiarow (wykres + lista + filtry)
 - [ ] Agenci monitorujacy: lista
