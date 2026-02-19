@@ -28,6 +28,9 @@ class PatientSettingsFragment : Fragment() {
         binding.patientSettingsAddDisease.setOnClickListener {
             findNavController().navigate(R.id.action_patientSettings_to_addDisease)
         }
+        binding.patientSettingsAddMed.setOnClickListener {
+            findNavController().navigate(R.id.action_patientSettings_to_addMed)
+        }
         return binding.root
     }
 
