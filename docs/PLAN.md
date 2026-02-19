@@ -31,7 +31,8 @@
 ## Etap 4 — Implementacja flow (Auth -> Pacjent -> Opiekun)
 
 Zasady etapu:
-- Po dodaniu **pelnego ekranu**: weryfikacja z makieta przez MCP.
+- Po dodaniu **pelnego ekranu**: uruchamiam ekran przez MCP i czekam na Twoja akceptacje.
+- Bez samodzielnego porownywania do makiet i bez analizy obrazkow.
 - Bez zapisu zrzutow ekranu do repo.
 - Dopiero po akceptacji przechodzimy dalej.
 - Kazdy ekran/flow commitowany osobno.

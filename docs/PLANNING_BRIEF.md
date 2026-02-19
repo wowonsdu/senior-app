@@ -76,7 +76,8 @@ Szczegolowa lista w `docs/USE_CASES.md`. Najwazniejsze obszary:
 - Ustawienia pacjenta: dane, choroby, leki i powiadomienia.
 
 ## Zasady realizacji ekranow
-- Po dodaniu pelnego ekranu: weryfikacja z makieta przez MCP.
+- Po dodaniu pelnego ekranu: uruchomienie przez MCP i akceptacja przez Ciebie.
+- Bez samodzielnego porownywania do makiet i bez analizy obrazkow.
 - Bez zapisu zrzutow ekranu do repo.
 - Dopiero po akceptacji przechodzimy dalej.
 - Kazdy ekran/flow commitowany osobno.

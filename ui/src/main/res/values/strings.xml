@@ -36,6 +36,8 @@
     <string name="sms_verify_phone">235434534543545345</string>
     <string name="sms_verify_dev_code">DEV MODE: Twoj kod to:
 480945</string>
+    <string name="sms_verify_dev_code_alt">DEV MODE: Twoj kod to:
+109853</string>
     <string name="sms_verify_code_hint">Kod z SMS</string>
     <string name="sms_verify_confirm">POTWIERDZ I ZALOGUJ</string>
     <string name="sms_verify_resend">WYSLIJ PONOWNIE</string>
