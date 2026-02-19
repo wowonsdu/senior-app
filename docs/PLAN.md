@@ -60,11 +60,11 @@ Zasady etapu:
 - [x] Alerty i powiadomienia (pelna konfiguracja)
 
 ### 4.2 Logika pacjenta (use case + repo dummy)
-- [ ] Pomiary: UC-MEAS-01..03 + dummy MeasurementRepository
-- [ ] Historia: UC-HIST-01..03 + dummy repo
-- [ ] Agenci i lekarze: UC-AGENT-01..07 + dummy AgentRepository/AccessCodeRepository/NotificationRepository
-- [ ] Alerty: UC-ALERT-01..07 + dummy AlertRepository
-- [ ] Ustawienia pacjenta: UC-SET-01..11 + dummy SettingsRepository
+- [x] Pomiary: UC-MEAS-01..03 + dummy MeasurementRepository
+- [x] Historia: UC-HIST-01..03 + dummy repo
+- [x] Agenci i lekarze: UC-AGENT-01..07 + dummy AgentRepository/AccessCodeRepository/NotificationRepository
+- [x] Alerty: UC-ALERT-01..07 + dummy AlertRepository
+- [x] Ustawienia pacjenta: UC-SET-01..11 + dummy SettingsRepository
 
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 
