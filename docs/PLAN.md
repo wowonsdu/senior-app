@@ -39,10 +39,9 @@ Zasady etapu:
 ### 4.1 Auth flow
 - [x] Nawigacja: kompletne wejscia/wyjscia, powroty
 - [x] Layouty i widoki — Ekran wyboru roli
-- [ ] Layouty i widoki — Logowanie (telefon/kod) — pacjent
 - [x] Layouty i widoki — Logowanie (telefon/kod) — pacjent
-- [ ] Layouty i widoki — Logowanie (telefon/kod) — opiekun
 - [x] Layouty i widoki — Logowanie (telefon/kod) — opiekun
+- [x] Layouty i widoki — Dev Hub (wejscie bez logowania)
 - [ ] Layouty i widoki — Weryfikacja SMS — pacjent
 - [ ] Layouty i widoki — Weryfikacja SMS — opiekun
 - [ ] Dummy repo (mock danych zgodnych z makietami)

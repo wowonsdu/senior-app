@@ -25,6 +25,9 @@ class RoleSelectFragment : Fragment() {
         binding.roleSelectCaregiverCard.setOnClickListener {
             findNavController().navigate(R.id.action_roleSelect_to_caregiverLogin)
         }
+        binding.roleSelectDevSkip.setOnClickListener {
+            findNavController().navigate(R.id.action_roleSelect_to_devHub)
+        }
         return binding.root
     }
 

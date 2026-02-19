@@ -134,6 +134,17 @@
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/role_select_dev_skip"
+        style="@style/Widget.Senior.Button.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_l"
+        android:text="@string/role_select_dev_skip"
+        app:layout_constraintTop_toBottomOf="@id/role_select_caregiver_card"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <TextView
         android:id="@+id/role_select_footer"
         android:layout_width="wrap_content"

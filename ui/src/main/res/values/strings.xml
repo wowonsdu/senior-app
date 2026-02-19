@@ -8,6 +8,7 @@
     <string name="role_select_caregiver_subtitle">Bede monitorowac zdrowie pacjenta</string>
     <string name="role_select_footer">Aplikacja stworzona z mysla o seniorach</string>
     <string name="role_select_version">Wersja 1.0.0 - 2026</string>
+    <string name="role_select_dev_skip">WEJDZ BEZ LOGOWANIA</string>
 
     <string name="patient_login_role_label">Pacjent</string>
     <string name="patient_login_title">Zaloguj sie</string>
@@ -28,6 +29,20 @@
     <string name="caregiver_login_subtitle">Wprowadz swoje dane</string>
     <string name="login_phone_tip_caregiver">Numer telefonu: Wyslemy Ci kod SMS</string>
     <string name="login_code_tip_caregiver">Kod dostepu: Otrzymany od pacjenta</string>
+
+    <string name="sms_verify_title">Zaloguj sie</string>
+    <string name="sms_verify_header">Wpisz kod z SMS</string>
+    <string name="sms_verify_sent_to">Wyslaliśmy kod na:</string>
+    <string name="sms_verify_phone">235434534543545345</string>
+    <string name="sms_verify_dev_code">DEV MODE: Twoj kod to:
+480945</string>
+    <string name="sms_verify_code_hint">Kod z SMS</string>
+    <string name="sms_verify_confirm">POTWIERDZ I ZALOGUJ</string>
+    <string name="sms_verify_resend">WYSLIJ PONOWNIE</string>
+    <string name="sms_verify_change">ZMIEN DANE</string>
+
+    <string name="dev_hub_title">Dev Hub</string>
+    <string name="dev_hub_note">Wejscie bez logowania (tymczasowe)</string>
 
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>

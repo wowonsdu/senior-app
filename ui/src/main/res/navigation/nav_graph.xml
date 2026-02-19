@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_roleSelect_to_caregiverLogin"
             app:destination="@id/caregiverLoginFragment" />
+        <action
+            android:id="@+id/action_roleSelect_to_devHub"
+            app:destination="@id/devHubFragment" />
     </fragment>
 
     <fragment
@@ -48,4 +51,10 @@
         android:name="zdrowy.senior.io.ui.auth.CaregiverSmsVerifyFragment"
         android:label="@string/role_select_app_name"
         tools:layout="@layout/fragment_caregiver_sms_verify" />
+
+    <fragment
+        android:id="@+id/devHubFragment"
+        android:name="zdrowy.senior.io.ui.dev.DevHubFragment"
+        android:label="@string/dev_hub_title"
+        tools:layout="@layout/fragment_dev_hub" />
 </navigation>
