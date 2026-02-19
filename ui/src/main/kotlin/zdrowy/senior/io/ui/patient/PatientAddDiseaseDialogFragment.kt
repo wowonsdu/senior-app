@@ -36,8 +36,8 @@ class PatientAddDiseaseDialogFragment : DialogFragment() {
 
     private fun saveDisease() {
         val name = binding.patientAddDiseaseName.text?.toString()?.trim().orEmpty()
-        val severity = binding.patientAddDiseaseSeverity.text?.toString()?.trim().orEmpty()
-        val notes = binding.patientAddDiseaseNotes.text?.toString()?.trim().orEmpty()
+        val severity = binding.patientAddDiseaseCourse.text?.toString()?.trim().orEmpty()
+        val notes = binding.patientAddDiseaseSince.text?.toString()?.trim().orEmpty()
         if (name.isBlank() || severity.isBlank()) {
             return
         }

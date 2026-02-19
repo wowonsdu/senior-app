@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import org.koin.android.ext.android.get
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.DialogPatientAgentCodeBinding
+import zdrowy.senior.io.domain.agent.AccessCode
 import zdrowy.senior.io.domain.agent.GenerateAccessCodeForAgentUseCase
 import zdrowy.senior.io.domain.agent.ListAgentsUseCase
 import zdrowy.senior.io.domain.agent.SendAccessCodeSmsUseCase
@@ -41,17 +42,16 @@ class PatientAgentCodeDialogFragment : DialogFragment() {
     }
 
     private fun loadCode() {
+        val fallback = AccessCode(code = "------", expiresAt = null)
         disposables.add(
             listAgentsUseCase()
                 .flatMap { agents ->
                     val target = agents.firstOrNull { it.role == AgentRole.CAREGIVER }
-                        ?: return@flatMap io.reactivex.rxjava3.core.Single.just(null)
+                        ?: return@flatMap io.reactivex.rxjava3.core.Single.just(fallback)
                     generateAccessCodeForAgentUseCase(target.id, 3600)
                 }
                 .subscribe({ code ->
-                    if (code != null) {
-                        binding.patientAgentCodeValue.text = code.code
-                    }
+                    binding.patientAgentCodeValue.text = code.code
                 }, { })
         )
     }

@@ -38,7 +38,7 @@ class PatientAddDoctorDialogFragment : DialogFragment() {
         val name = binding.patientAddDoctorName.text?.toString()?.trim().orEmpty()
         val phone = binding.patientAddDoctorPhone.text?.toString()?.trim().orEmpty()
         val email = binding.patientAddDoctorEmail.text?.toString()?.trim().orEmpty()
-        val specialization = binding.patientAddDoctorSpecialization.text?.toString()?.trim().orEmpty()
+        val specialization = binding.patientAddDoctorSpecialty.text?.toString()?.trim().orEmpty()
         if (name.isBlank() || phone.isBlank() || email.isBlank() || specialization.isBlank()) {
             return
         }

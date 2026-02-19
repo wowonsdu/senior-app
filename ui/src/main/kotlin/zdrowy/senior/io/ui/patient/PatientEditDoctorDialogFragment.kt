@@ -45,7 +45,7 @@ class PatientEditDoctorDialogFragment : DialogFragment() {
             fullName = binding.patientEditDoctorName.text?.toString()?.trim().takeUnless { it.isNullOrBlank() },
             phone = binding.patientEditDoctorPhone.text?.toString()?.trim().takeUnless { it.isNullOrBlank() },
             email = binding.patientEditDoctorEmail.text?.toString()?.trim().takeUnless { it.isNullOrBlank() },
-            specialization = binding.patientEditDoctorSpecialization.text?.toString()?.trim().takeUnless { it.isNullOrBlank() }
+            specialization = binding.patientEditDoctorSpecialty.text?.toString()?.trim().takeUnless { it.isNullOrBlank() }
         )
         disposables.add(
             listAgentsUseCase()
