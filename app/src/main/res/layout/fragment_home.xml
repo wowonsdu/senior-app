@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray_200"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/primary_blue"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/home_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_title"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:layout_centerHorizontal="true" />
+
+            <ImageButton
+                android:id="@+id/logout_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/bg_circle_light"
+                android:contentDescription="@string/logout"
+                android:src="@drawable/ic_logout"
+                app:tint="@color/white" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/active_patient_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/blue_50"
+                app:strokeColor="@color/primary_blue_light"
+                app:strokeWidth="1dp"
+                style="@style/Widget.Senior.Card">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/active_patient_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/patient_active_label"
+                        style="@style/Widget.Senior.SectionSubtitle"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:id="@+id/active_patient_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/patient_none_selected"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:textColor="@color/primary_blue" />
+
+                    <Button
+                        android:id="@+id/switch_patient_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Zmień pacjenta"
+                        android:layout_marginTop="8dp"
+                        android:backgroundTint="@color/primary_blue_light"
+                        android:textColor="@color/white" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/error_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:visibility="gone"
+                android:layout_marginBottom="8dp" />
+
+            <GridLayout
+                android:id="@+id/measurement_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:rowCount="3"
+                android:useDefaultMargins="true"
+                android:layout_marginBottom="16dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/measure_glucose_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:minHeight="120dp"
+                    app:cardBackgroundColor="@color/primary_blue_light"
+                    style="@style/Widget.Senior.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_drop"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/alert_glucose"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/measure_insulin_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:minHeight="120dp"
+                    app:cardBackgroundColor="@color/green"
+                    style="@style/Widget.Senior.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_medical"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/alert_insulin"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/measure_pressure_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:minHeight="120dp"
+                    app:cardBackgroundColor="@color/red"
+                    style="@style/Widget.Senior.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_heart"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/alert_pressure"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/measure_pulse_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:minHeight="120dp"
+                    app:cardBackgroundColor="@color/purple"
+                    style="@style/Widget.Senior.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_pulse"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/alert_pulse"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/notify_agents_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:minHeight="120dp"
+                    app:cardBackgroundColor="@color/primary_blue_light"
+                    style="@style/Widget.Senior.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_bell"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_notify_agents"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/notify_doctors_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_margin="8dp"
+                    android:minHeight="120dp"
+                    app:cardBackgroundColor="@color/pink"
+                    style="@style/Widget.Senior.Card">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="20dp">
+
+                        <ImageView
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_medical"
+                            app:tint="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_notify_doctors"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </GridLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/measurements_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="@color/white"
+                style="@style/Widget.Senior.Card"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/measurements_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/measurement_list_empty"
+                    android:textColor="@color/gray_700" />
+            </com.google.android.material.card.MaterialCardView>
+
+            <Button
+                android:id="@+id/emergency_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_emergency"
+                android:backgroundTint="@color/red"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"
+                android:padding="18dp" />
+
+            <Button
+                android:id="@+id/history_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_history"
+                android:backgroundTint="@color/gray_900"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"
+                android:padding="14dp" />
+
+            <Button
+                android:id="@+id/contacts_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_agents"
+                android:backgroundTint="@color/orange"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"
+                android:padding="14dp" />
+
+            <Button
+                android:id="@+id/settings_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home_settings"
+                android:backgroundTint="@color/purple"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"
+                android:padding="14dp" />
+
+            <Button
+                android:id="@+id/alerts_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alert_settings_title"
+                android:backgroundTint="@color/pink_dark"
+                android:textColor="@color/white"
+                android:layout_marginBottom="8dp"
+                android:padding="14dp" />
+
+            <Button
+                android:id="@+id/visits_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/visits_title"
+                android:backgroundTint="@color/primary_blue_light"
+                android:textColor="@color/white"
+                android:padding="14dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

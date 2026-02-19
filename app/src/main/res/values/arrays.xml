@@ -1,0 +1,12 @@
+<resources>
+    <string-array name="measurement_types">
+        <item>Cukier</item>
+        <item>Insulina</item>
+        <item>Cisnienie</item>
+        <item>Tetno</item>
+    </string-array>
+    <string-array name="contact_types">
+        <item>Opiekun</item>
+        <item>Lekarz</item>
+    </string-array>
+</resources>

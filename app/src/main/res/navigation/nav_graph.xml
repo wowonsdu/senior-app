@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/launcherFragment">
+
+    <fragment
+        android:id="@+id/launcherFragment"
+        android:name="zdrowy.senior.io.ui.LauncherFragment"
+        android:label="@string/app_name">
+        <action
+            android:id="@+id/action_launcher_to_roleSelection"
+            app:destination="@id/roleSelectionFragment" />
+        <action
+            android:id="@+id/action_launcher_to_home"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_launcher_to_caregiverDashboard"
+            app:destination="@id/caregiverDashboardFragment" />
+        <action
+            android:id="@+id/action_launcher_to_patientSelection"
+            app:destination="@id/patientSelectionFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="zdrowy.senior.io.ui.auth.LoginFragment"
+        android:label="@string/login_title">
+        <action
+            android:id="@+id/action_login_to_otp"
+            app:destination="@id/otpFragment" />
+        <action
+            android:id="@+id/action_login_to_launcher"
+            app:destination="@id/launcherFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/otpFragment"
+        android:name="zdrowy.senior.io.ui.auth.OtpFragment"
+        android:label="@string/otp_title">
+        <action
+            android:id="@+id/action_otp_to_launcher"
+            app:destination="@id/launcherFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/roleSelectionFragment"
+        android:name="zdrowy.senior.io.ui.auth.RoleSelectionFragment"
+        android:label="@string/role_title">
+        <action
+            android:id="@+id/action_roleSelection_to_login"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="zdrowy.senior.io.ui.HomeFragment"
+        android:label="@string/home_title">
+        <action
+            android:id="@+id/action_home_to_roleSelection"
+            app:destination="@id/roleSelectionFragment" />
+        <action
+            android:id="@+id/action_home_to_patientSelection"
+            app:destination="@id/patientSelectionFragment" />
+        <action
+            android:id="@+id/action_home_to_history"
+            app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_home_to_contacts"
+            app:destination="@id/contactsFragment" />
+        <action
+            android:id="@+id/action_home_to_alerts"
+            app:destination="@id/alertSettingsFragment" />
+        <action
+            android:id="@+id/action_home_to_visits"
+            app:destination="@id/visitsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/caregiverDashboardFragment"
+        android:name="zdrowy.senior.io.ui.caregiver.CaregiverDashboardFragment"
+        android:label="@string/caregiver_title">
+        <action
+            android:id="@+id/action_caregiverDashboard_to_patientSelection"
+            app:destination="@id/patientSelectionFragment" />
+        <action
+            android:id="@+id/action_caregiverDashboard_to_home"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientSelectionFragment"
+        android:name="zdrowy.senior.io.ui.caregiver.PatientSelectionFragment"
+        android:label="@string/patient_selection_title">
+        <action
+            android:id="@+id/action_patientSelection_to_caregiverDashboard"
+            app:destination="@id/caregiverDashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="zdrowy.senior.io.ui.history.HistoryFragment"
+        android:label="@string/history_title" />
+
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="zdrowy.senior.io.ui.contacts.ContactsFragment"
+        android:label="@string/contacts_title" />
+
+    <fragment
+        android:id="@+id/visitsFragment"
+        android:name="zdrowy.senior.io.ui.visit.VisitsFragment"
+        android:label="@string/visits_title" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="zdrowy.senior.io.ui.settings.SettingsFragment"
+        android:label="@string/settings_title" />
+
+    <fragment
+        android:id="@+id/alertSettingsFragment"
+        android:name="zdrowy.senior.io.ui.alert.AlertSettingsFragment"
+        android:label="@string/alert_settings_title" />
+
+</navigation>

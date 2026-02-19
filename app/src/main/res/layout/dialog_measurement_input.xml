@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Widget.Senior.InputLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/measurement_input"
+        style="@style/Widget.Senior.InputEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/measurement_value_hint"
+        android:inputType="text" />
+</com.google.android.material.textfield.TextInputLayout>
