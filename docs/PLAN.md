@@ -42,6 +42,7 @@ Zasady etapu:
 - [ ] Layouty i widoki — Logowanie (telefon/kod) — pacjent
 - [x] Layouty i widoki — Logowanie (telefon/kod) — pacjent
 - [ ] Layouty i widoki — Logowanie (telefon/kod) — opiekun
+- [x] Layouty i widoki — Logowanie (telefon/kod) — opiekun
 - [ ] Layouty i widoki — Weryfikacja SMS — pacjent
 - [ ] Layouty i widoki — Weryfikacja SMS — opiekun
 - [ ] Dummy repo (mock danych zgodnych z makietami)

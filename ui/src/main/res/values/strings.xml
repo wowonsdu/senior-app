@@ -23,6 +23,12 @@
     <string name="login_continue">KONTYNUUJ</string>
     <string name="login_footer">Twoje dane sa bezpieczne i chronione</string>
 
+    <string name="caregiver_login_role_label">Opiekun</string>
+    <string name="caregiver_login_title">Zaloguj sie</string>
+    <string name="caregiver_login_subtitle">Wprowadz swoje dane</string>
+    <string name="login_phone_tip_caregiver">Numer telefonu: Wyslemy Ci kod SMS</string>
+    <string name="login_code_tip_caregiver">Kod dostepu: Otrzymany od pacjenta</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>
