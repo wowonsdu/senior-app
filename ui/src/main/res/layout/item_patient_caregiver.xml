@@ -15,12 +15,12 @@
         android:padding="@dimen/spacing_m">
 
         <ImageView
-            android:id="@+id/medication_icon"
+            android:id="@+id/caregiver_icon"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:contentDescription="@null"
-            android:src="@drawable/ic_alert_drop"
-            android:tint="@color/senior_info" />
+            android:src="@android:drawable/ic_menu_myplaces"
+            android:tint="@color/senior_secondary" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -30,7 +30,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/medication_name"
+                android:id="@+id/caregiver_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
@@ -38,15 +38,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/medication_dosage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:textAppearance="@style/TextAppearance.Senior.Caption"
-                android:textColor="@color/senior_text_secondary" />
-
-            <TextView
-                android:id="@+id/medication_schedule"
+                android:id="@+id/caregiver_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_xs"

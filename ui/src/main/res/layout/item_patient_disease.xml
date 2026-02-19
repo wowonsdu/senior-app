@@ -11,31 +11,73 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="@dimen/spacing_m">
 
-        <TextView
-            android:id="@+id/disease_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-            android:textColor="@color/senior_text_primary"
-            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/disease_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_alert_medical"
+            android:tint="@color/senior_warning" />
 
-        <TextView
-            android:id="@+id/disease_severity"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:textAppearance="@style/TextAppearance.Senior.Caption"
-            android:textColor="@color/senior_text_secondary" />
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/disease_notes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:textAppearance="@style/TextAppearance.Senior.Caption"
-            android:textColor="@color/senior_text_secondary" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/disease_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                    android:textColor="@color/senior_text_primary"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/disease_severity_chip"
+                    style="@style/Widget.Senior.Card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    app:cardBackgroundColor="@color/senior_warning">
+
+                    <TextView
+                        android:id="@+id/disease_severity_chip_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingStart="@dimen/spacing_s"
+                        android:paddingEnd="@dimen/spacing_s"
+                        android:textAppearance="@style/TextAppearance.Senior.Caption"
+                        android:textColor="@color/white" />
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/disease_severity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:textAppearance="@style/TextAppearance.Senior.Caption"
+                android:textColor="@color/senior_text_secondary" />
+
+            <TextView
+                android:id="@+id/disease_notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:textAppearance="@style/TextAppearance.Senior.Caption"
+                android:textColor="@color/senior_text_secondary" />
+        </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

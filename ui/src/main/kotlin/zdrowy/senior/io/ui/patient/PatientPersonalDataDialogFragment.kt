@@ -37,14 +37,17 @@ class PatientPersonalDataDialogFragment : DialogFragment() {
     private fun savePersonalData() {
         val firstName = binding.patientPersonalFirstName.text?.toString()?.trim().orEmpty()
         val lastName = binding.patientPersonalLastName.text?.toString()?.trim().orEmpty()
+        val pesel = binding.patientPersonalPesel.text?.toString()?.trim().orEmpty()
         val phone = binding.patientPersonalPhone.text?.toString()?.trim().orEmpty()
         val address = binding.patientPersonalAddress.text?.toString()?.trim().orEmpty()
         val fullName = listOf(firstName, lastName).filter { it.isNotBlank() }.joinToString(" ")
         if (!validateNotBlank(binding.patientPersonalFirstName, firstName)) return
         if (!validateNotBlank(binding.patientPersonalLastName, lastName)) return
+        if (!validateNotBlank(binding.patientPersonalPesel, pesel)) return
         if (!validateNotBlank(binding.patientPersonalPhone, phone)) return
         val data = PersonalData(
             fullName = fullName,
+            pesel = pesel,
             phoneNumber = phone,
             email = "",
             address = address

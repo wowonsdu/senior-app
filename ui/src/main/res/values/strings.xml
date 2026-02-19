@@ -175,7 +175,8 @@
     <string name="patient_edit_doctor_save">Zapisz zmiany</string>
 
     <string name="patient_settings_title">Moje ustawienia</string>
-    <string name="patient_settings_subtitle">Zarzadzaj swoimi danymi i alertami</string>
+    <string name="patient_settings_section_about">O Mnie</string>
+    <string name="patient_settings_section_caregivers">Moi Opiekunowie</string>
     <string name="patient_settings_profile_name">Janek, Syn</string>
     <string name="patient_settings_profile_phone">Tel: 692 58 070</string>
     <string name="patient_settings_section_diseases">Moje Choroby</string>
@@ -201,6 +202,7 @@
     <string name="patient_personal_subtitle">Wpisz podstawowe informacje o sobie</string>
     <string name="patient_personal_first_name_hint">Imie</string>
     <string name="patient_personal_last_name_hint">Nazwisko</string>
+    <string name="patient_personal_pesel_hint">PESEL</string>
     <string name="patient_personal_phone_hint">Telefon</string>
     <string name="patient_personal_address_hint">Adres</string>
     <string name="patient_personal_cancel">Anuluj</string>

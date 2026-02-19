@@ -2,11 +2,13 @@
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import zdrowy.senior.io.ui.databinding.ItemPatientDiseaseBinding
 import zdrowy.senior.io.domain.settings.Disease
+import zdrowy.senior.io.ui.R
 
 class PatientDiseasesAdapter : ListAdapter<Disease, PatientDiseasesAdapter.ViewHolder>(Diff()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -19,11 +21,34 @@ class PatientDiseasesAdapter : ListAdapter<Disease, PatientDiseasesAdapter.ViewH
         holder.bind(getItem(position))
     }
 
-    class ViewHolder(private val binding: ItemPatientDiseaseBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemPatientDiseaseBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Disease) {
+            val context = binding.root.context
             binding.diseaseName.text = item.name
             binding.diseaseSeverity.text = item.severity
             binding.diseaseNotes.text = item.notes
+            val severityStyle = resolveSeverityStyle(item.severity)
+            binding.diseaseSeverityChipText.text = severityStyle.label
+            val color = ContextCompat.getColor(context, severityStyle.colorRes)
+            binding.diseaseSeverityChip.setCardBackgroundColor(color)
+            binding.diseaseIcon.setColorFilter(color)
+        }
+    }
+
+    private data class SeverityStyle(
+        val label: String,
+        val colorRes: Int
+    )
+
+    private fun resolveSeverityStyle(severity: String): SeverityStyle {
+        val normalized = severity.lowercase()
+        return when {
+            normalized.contains("ciezk") -> SeverityStyle("CIEZKI", R.color.senior_danger)
+            normalized.contains("sredn") || normalized.contains("umiark") ->
+                SeverityStyle("SREDNI", R.color.senior_warning)
+            normalized.contains("lagodn") || normalized.contains("lek") ->
+                SeverityStyle("LAGODNY", R.color.senior_secondary)
+            else -> SeverityStyle("INFO", R.color.senior_info)
         }
     }
 

@@ -81,6 +81,22 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/patient_personal_pesel_input"
+        style="@style/Widget.Senior.TextInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:hint="@string/patient_personal_pesel_hint">
+
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
+            android:id="@+id/patient_personal_pesel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/patient_personal_phone_input"
         style="@style/Widget.Senior.TextInputLayout"
         android:layout_width="match_parent"

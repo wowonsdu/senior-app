@@ -35,177 +35,112 @@
             android:padding="@dimen/spacing_l">
 
             <TextView
-                android:id="@+id/patient_settings_subtitle"
+                android:id="@+id/patient_settings_section_about"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/patient_settings_subtitle"
-                android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
-                android:textColor="@color/senior_text_secondary" />
+                android:text="@string/patient_settings_section_about"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_primary" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/patient_settings_personal"
                 style="@style/Widget.Senior.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_l">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="@null"
+                            android:src="@android:drawable/ic_menu_myplaces"
+                            android:tint="@color/senior_primary" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_m"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/patient_settings_personal_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                                android:textColor="@color/senior_text_primary" />
+
+                            <TextView
+                                android:id="@+id/patient_settings_personal_pesel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xs"
+                                android:textAppearance="@style/TextAppearance.Senior.Caption"
+                                android:textColor="@color/senior_text_secondary" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/spacing_m"
+                        android:background="@color/senior_outline" />
+
+                    <TextView
+                        android:id="@+id/patient_settings_personal_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_m"
+                        android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                        android:textColor="@color/senior_text_primary" />
+
+                    <TextView
+                        android:id="@+id/patient_settings_personal_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                        android:textColor="@color/senior_text_primary" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/patient_settings_section_caregivers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_l"
-                app:cardBackgroundColor="@color/white">
+                android:text="@string/patient_settings_section_caregivers"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_primary" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/spacing_l">
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:contentDescription="@null"
-                        android:src="@android:drawable/ic_menu_myplaces"
-                        android:tint="@color/senior_primary" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_m"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/patient_settings_personal_title"
-                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                            android:textColor="@color/senior_text_primary" />
-
-                        <TextView
-                            android:id="@+id/patient_settings_personal_subtitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_xs"
-                            android:text="@string/patient_settings_personal_subtitle"
-                            android:textAppearance="@style/TextAppearance.Senior.Caption"
-                            android:textColor="@color/senior_text_secondary" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_chevron_down"
-                        android:tint="@color/senior_text_tertiary" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/patient_settings_diseases"
-                style="@style/Widget.Senior.Card"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/patient_settings_caregivers_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_m"
-                app:cardBackgroundColor="@color/white">
+                android:layout_marginTop="@dimen/spacing_s"
+                android:nestedScrollingEnabled="false" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/spacing_l">
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_alert_medical"
-                        android:tint="@color/senior_danger" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_m"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/patient_settings_diseases_title"
-                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                            android:textColor="@color/senior_text_primary" />
-
-                        <TextView
-                            android:id="@+id/patient_settings_diseases_subtitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_xs"
-                            android:text="@string/patient_settings_diseases_subtitle"
-                            android:textAppearance="@style/TextAppearance.Senior.Caption"
-                            android:textColor="@color/senior_text_secondary" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_chevron_down"
-                        android:tint="@color/senior_text_tertiary" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/patient_settings_meds"
-                style="@style/Widget.Senior.Card"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/patient_settings_section_diseases"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_m"
-                app:cardBackgroundColor="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/spacing_l">
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_alert_drop"
-                        android:tint="@color/senior_info" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_m"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/patient_settings_meds_title"
-                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                            android:textColor="@color/senior_text_primary" />
-
-                        <TextView
-                            android:id="@+id/patient_settings_meds_subtitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_xs"
-                            android:text="@string/patient_settings_meds_subtitle"
-                            android:textAppearance="@style/TextAppearance.Senior.Caption"
-                            android:textColor="@color/senior_text_secondary" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:contentDescription="@null"
-                        android:src="@drawable/ic_chevron_down"
-                        android:tint="@color/senior_text_tertiary" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                android:layout_marginTop="@dimen/spacing_l"
+                android:text="@string/patient_settings_section_diseases"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_primary" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/patient_settings_diseases_list"
@@ -213,6 +148,23 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_s"
                 android:nestedScrollingEnabled="false" />
+
+            <TextView
+                android:id="@+id/patient_settings_section_meds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:text="@string/patient_settings_section_meds"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_primary" />
+
+            <TextView
+                android:id="@+id/patient_settings_meds_list_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                android:textColor="@color/senior_text_secondary" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/patient_settings_meds_list"

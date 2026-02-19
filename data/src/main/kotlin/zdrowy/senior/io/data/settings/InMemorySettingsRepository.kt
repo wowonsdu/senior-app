@@ -24,6 +24,7 @@ class InMemorySettingsRepository : SettingsRepository {
     override fun getPersonalData(): Single<PersonalData> {
         val fallback = PersonalData(
             fullName = "",
+            pesel = "",
             phoneNumber = "",
             email = "",
             address = ""
@@ -116,6 +117,7 @@ class InMemorySettingsRepository : SettingsRepository {
     private fun seedData() {
         personalData = PersonalData(
             fullName = "Janina Kowalska",
+            pesel = "2343242",
             phoneNumber = "+48 500 111 222",
             email = "janina.kowalska@example.com",
             address = "Warszawa, ul. Sloneczna 12"

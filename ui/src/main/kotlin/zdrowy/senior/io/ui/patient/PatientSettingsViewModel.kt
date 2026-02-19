@@ -7,54 +7,32 @@ import androidx.lifecycle.ViewModelProvider
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import zdrowy.senior.io.domain.settings.Disease
-import zdrowy.senior.io.domain.settings.GetPersonalDataUseCase
-import zdrowy.senior.io.domain.settings.ListDiseasesUseCase
-import zdrowy.senior.io.domain.settings.ListMedicationsUseCase
-import zdrowy.senior.io.domain.settings.Medication
-import zdrowy.senior.io.domain.settings.PersonalData
+import zdrowy.senior.io.domain.agent.AgentRole
+import zdrowy.senior.io.domain.agent.ListAgentsUseCase
+import zdrowy.senior.io.domain.settings.GetSettingsOverviewUseCase
 
 class PatientSettingsViewModel(
-    private val getPersonalData: GetPersonalDataUseCase,
-    private val listDiseases: ListDiseasesUseCase,
-    private val listMedications: ListMedicationsUseCase
+    private val getSettingsOverview: GetSettingsOverviewUseCase,
+    private val listAgents: ListAgentsUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
 
-    private val _personalData = MutableLiveData<PersonalData>()
-    val personalData: LiveData<PersonalData> = _personalData
-
-    private val _diseases = MutableLiveData<List<Disease>>()
-    val diseases: LiveData<List<Disease>> = _diseases
-
-    private val _medications = MutableLiveData<List<Medication>>()
-    val medications: LiveData<List<Medication>> = _medications
+    private val _uiState = MutableLiveData<PatientSettingsUiState>()
+    val uiState: LiveData<PatientSettingsUiState> = _uiState
 
     fun load() {
         disposables.add(
-            getPersonalData()
+            io.reactivex.rxjava3.core.Single.zip(
+                getSettingsOverview(),
+                listAgents()
+            ) { overview, agents ->
+                val caregivers = agents.filter { it.role == AgentRole.CAREGIVER }
+                PatientSettingsUiState.from(overview, caregivers)
+            }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ data ->
-                    _personalData.value = data
-                }, {
-                })
-        )
-        disposables.add(
-            listDiseases()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ items ->
-                    _diseases.value = items
-                }, {
-                })
-        )
-        disposables.add(
-            listMedications()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ items ->
-                    _medications.value = items
+                .subscribe({ state ->
+                    _uiState.value = state
                 }, {
                 })
         )
@@ -66,17 +44,15 @@ class PatientSettingsViewModel(
     }
 
     class Factory(
-        private val getPersonalData: GetPersonalDataUseCase,
-        private val listDiseases: ListDiseasesUseCase,
-        private val listMedications: ListMedicationsUseCase
+        private val getSettingsOverview: GetSettingsOverviewUseCase,
+        private val listAgents: ListAgentsUseCase
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(PatientSettingsViewModel::class.java)) {
                 return PatientSettingsViewModel(
-                    getPersonalData,
-                    listDiseases,
-                    listMedications
+                    getSettingsOverview,
+                    listAgents
                 ) as T
             }
             throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

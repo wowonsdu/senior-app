@@ -16,10 +16,11 @@ class PatientSettingsFragment : Fragment() {
     private var _binding: FragmentPatientSettingsBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModels<PatientSettingsViewModel> {
-        PatientSettingsViewModel.Factory(get(), get(), get())
+        PatientSettingsViewModel.Factory(get(), get())
     }
     private val diseasesAdapter = PatientDiseasesAdapter()
     private val medsAdapter = PatientMedicationsAdapter()
+    private val caregiversAdapter = PatientCaregiversAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,36 +47,24 @@ class PatientSettingsFragment : Fragment() {
         binding.patientSettingsDiseasesList.adapter = diseasesAdapter
         binding.patientSettingsMedsList.layoutManager = LinearLayoutManager(requireContext())
         binding.patientSettingsMedsList.adapter = medsAdapter
+        binding.patientSettingsCaregiversList.layoutManager = LinearLayoutManager(requireContext())
+        binding.patientSettingsCaregiversList.adapter = caregiversAdapter
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.load()
-        viewModel.personalData.observe(viewLifecycleOwner) { data ->
-            binding.patientSettingsSubtitle.text = "Profil pacjenta: ${data.fullName}"
-            binding.patientSettingsPersonalSubtitle.text =
-                "${data.phoneNumber} • ${data.email}"
-        }
-        viewModel.diseases.observe(viewLifecycleOwner) { diseases ->
-            val summary = if (diseases.isEmpty()) {
-                "Brak dodanych chorob."
-            } else {
-                val names = diseases.joinToString { it.name }
-                "${diseases.size} • $names"
-            }
-            binding.patientSettingsDiseasesSubtitle.text = summary
-            diseasesAdapter.submitList(diseases)
-        }
-        viewModel.medications.observe(viewLifecycleOwner) { meds ->
-            val summary = if (meds.isEmpty()) {
-                "Brak dodanych lekow."
-            } else {
-                val names = meds.joinToString { it.name }
-                "${meds.size} • $names"
-            }
-            binding.patientSettingsMedsSubtitle.text = summary
-            medsAdapter.submitList(meds)
+        viewModel.uiState.observe(viewLifecycleOwner) { state ->
+            binding.patientSettingsPersonalName.text = state.personalData.fullName
+            binding.patientSettingsPersonalPesel.text = "PESEL: ${state.personalData.pesel}"
+            binding.patientSettingsPersonalAddress.text = "Adres: ${state.personalData.address}"
+            binding.patientSettingsPersonalPhone.text = "Telefon: ${state.personalData.phoneNumber}"
+            diseasesAdapter.submitList(state.diseases)
+            binding.patientSettingsMedsListLabel.text =
+                "Lista Lekow (${state.medications.size})"
+            medsAdapter.submitList(state.medications)
+            caregiversAdapter.submitList(state.caregivers)
         }
     }
 

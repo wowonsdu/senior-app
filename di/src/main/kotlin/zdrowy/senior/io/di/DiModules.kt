@@ -35,6 +35,7 @@ import zdrowy.senior.io.domain.measurement.MeasurementRepository
 import zdrowy.senior.io.domain.settings.AddDiseaseUseCase
 import zdrowy.senior.io.domain.settings.AddMedicationUseCase
 import zdrowy.senior.io.domain.settings.GetPersonalDataUseCase
+import zdrowy.senior.io.domain.settings.GetSettingsOverviewUseCase
 import zdrowy.senior.io.domain.settings.ListDiseasesUseCase
 import zdrowy.senior.io.domain.settings.ListMedicationsUseCase
 import zdrowy.senior.io.domain.settings.RemoveDiseaseUseCase
@@ -70,6 +71,7 @@ val domainModule = module {
     factory { UpdateAlertCaregiversUseCase(get()) }
 
     factory { GetPersonalDataUseCase(get()) }
+    factory { GetSettingsOverviewUseCase(get()) }
     factory { UpsertPersonalDataUseCase(get()) }
     factory { AddDiseaseUseCase(get()) }
     factory { UpdateDiseaseUseCase(get()) }
