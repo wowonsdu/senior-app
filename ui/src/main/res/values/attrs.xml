@@ -24,4 +24,10 @@
         <attr name="measurementIcon" format="reference" />
         <attr name="measurementIconTint" format="color|reference" />
     </declare-styleable>
+
+    <declare-styleable name="AlertOverviewItemView">
+        <attr name="alertTitle" format="string" />
+        <attr name="alertSubtitle" format="string" />
+        <attr name="alertColor" format="color|reference" />
+    </declare-styleable>
 </resources>

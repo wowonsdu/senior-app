@@ -143,6 +143,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xl"
+            android:text="Alerty (przeglad)"
+            android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
+
+        <include layout="@layout/view_alerts_overview_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xl"
             android:text="Alerty"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
 

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_l">
+
+    <TextView
+        android:id="@+id/alerts_info_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jak dzialaja alerty?"
+        android:textAppearance="@style/TextAppearance.Senior.TitleMedium" />
+
+    <TextView
+        android:id="@+id/alerts_info_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:text="System automatycznie monitoruje pomiary i ostrzega opiekunow."
+        android:textAppearance="@style/TextAppearance.Senior.BodyMedium" />
+
+    <zdrowy.senior.io.ui.views.AlertOverviewItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_l"
+        app:alertTitle="Poziom cukru"
+        app:alertSubtitle="Glikemia - poziom glukozy we krwi"
+        app:alertColor="@color/senior_primary" />
+
+    <zdrowy.senior.io.ui.views.AlertOverviewItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        app:alertTitle="Dawka insuliny"
+        app:alertSubtitle="Ilosc podanej insuliny"
+        app:alertColor="@color/senior_secondary" />
+
+    <zdrowy.senior.io.ui.views.AlertOverviewItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        app:alertTitle="Cisnienie krwi"
+        app:alertSubtitle="Cisnienie skurczowe (gorna wartosc)"
+        app:alertColor="@color/senior_danger" />
+
+    <zdrowy.senior.io.ui.views.AlertOverviewItemView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        app:alertTitle="Tetno"
+        app:alertSubtitle="Czestosc uderzen serca na minute"
+        app:alertColor="@color/senior_purple" />
+
+    <com.google.android.material.button.MaterialButton
+        style="@style/Widget.Senior.Button.Secondary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_l"
+        android:text="Zapisz ustawienia" />
+
+</LinearLayout>

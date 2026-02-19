@@ -16,6 +16,7 @@
 ## Etap 2 — Design Book Activity (dummy content)
 - [x] Custom views (kafelki pomiarow, karty list)
 - [x] List item pomiarow (custom view + layout)
+- [x] Alerts overview (layout + custom view + demo)
 - [x] Layout Design Book z pelnym zestawem komponentow
 - [x] Activity + launcher alias
 
