@@ -135,6 +135,12 @@
     <string name="patient_add_agent_cancel">Anuluj</string>
     <string name="patient_add_agent_save">Zapisz</string>
 
+    <string name="patient_agent_code_title">Kod dostepu</string>
+    <string name="patient_agent_code_subtitle">Przekaz kod opiekunowi, aby mogl sie zalogowac</string>
+    <string name="patient_agent_code_value">483 920</string>
+    <string name="patient_agent_code_copy">Kopiuj kod</string>
+    <string name="patient_agent_code_sms">Wyslij SMS</string>
+
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
     <string name="alerts_overview_body">System automatycznie monitoruje pomiary i powiadamia opiekunow gdy:</string>
     <string name="alerts_overview_body_low_high">Wartosc jest krytycznie niska lub krytycznie wysoka.</string>

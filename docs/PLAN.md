@@ -47,7 +47,7 @@ Zasady etapu:
 - [x] Historia pomiarow (wykres + lista + filtry)
 - [x] Agenci monitorujacy: lista
 - [x] Agenci monitorujacy: dodaj agenta (dialog)
-- [ ] Agenci monitorujacy: kod dostepu (dialog)
+- [x] Agenci monitorujacy: kod dostepu (dialog)
 - [ ] Agenci monitorujacy: edytuj agenta (dialog)
 - [ ] Agenci monitorujacy: dodaj lekarza (dialog)
 - [ ] Agenci monitorujacy: kod lekarza (dialog)

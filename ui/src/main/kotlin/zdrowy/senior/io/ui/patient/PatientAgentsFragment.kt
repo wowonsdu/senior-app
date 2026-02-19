@@ -25,6 +25,9 @@ class PatientAgentsFragment : Fragment() {
         binding.patientAgentsAddAgent.setOnClickListener {
             findNavController().navigate(R.id.action_patientAgents_to_addAgent)
         }
+        binding.patientAgentsAddDoctor.setOnClickListener {
+            findNavController().navigate(R.id.action_patientAgents_to_agentCode)
+        }
         return binding.root
     }
 
