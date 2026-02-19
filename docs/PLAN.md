@@ -37,7 +37,7 @@ Zasady etapu:
 - Kazdy ekran/flow commitowany osobno.
 
 ### 4.1 Auth flow
-- [ ] Nawigacja: kompletne wejscia/wyjscia, powroty
+- [x] Nawigacja: kompletne wejscia/wyjscia, powroty
 - [ ] Layouty i widoki — Ekran wyboru roli
 - [ ] Layouty i widoki — Logowanie (telefon/kod) — pacjent
 - [ ] Layouty i widoki — Logowanie (telefon/kod) — opiekun

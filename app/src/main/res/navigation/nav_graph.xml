@@ -8,5 +8,44 @@
         android:id="@+id/roleSelectFragment"
         android:name="zdrowy.senior.io.ui.auth.RoleSelectFragment"
         android:label="@string/app_name"
-        tools:layout="@layout/fragment_role_select" />
+        tools:layout="@layout/fragment_role_select">
+        <action
+            android:id="@+id/action_roleSelect_to_patientLogin"
+            app:destination="@id/patientLoginFragment" />
+        <action
+            android:id="@+id/action_roleSelect_to_caregiverLogin"
+            app:destination="@id/caregiverLoginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientLoginFragment"
+        android:name="zdrowy.senior.io.ui.auth.PatientLoginFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_patient_login">
+        <action
+            android:id="@+id/action_patientLogin_to_patientSmsVerify"
+            app:destination="@id/patientSmsVerifyFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/caregiverLoginFragment"
+        android:name="zdrowy.senior.io.ui.auth.CaregiverLoginFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_caregiver_login">
+        <action
+            android:id="@+id/action_caregiverLogin_to_caregiverSmsVerify"
+            app:destination="@id/caregiverSmsVerifyFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientSmsVerifyFragment"
+        android:name="zdrowy.senior.io.ui.auth.PatientSmsVerifyFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_patient_sms_verify" />
+
+    <fragment
+        android:id="@+id/caregiverSmsVerifyFragment"
+        android:name="zdrowy.senior.io.ui.auth.CaregiverSmsVerifyFragment"
+        android:label="@string/app_name"
+        tools:layout="@layout/fragment_caregiver_sms_verify" />
 </navigation>
