@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
 import zdrowy.senior.io.ui.databinding.FragmentPatientHistoryBinding
 import zdrowy.senior.io.domain.measurement.MeasurementType
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -45,10 +44,10 @@ class PatientHistoryFragment : Fragment() {
         binding.patientHistoryScroll.post {
             val availableHeight = binding.patientHistoryScroll.height
             val padding = binding.patientHistoryContent.paddingTop + binding.patientHistoryContent.paddingBottom
-            val headerHeight = binding.patientHistoryHeader.root.height
+            val appBarHeight = binding.patientHistoryToolbar.height
             val listMargins = (binding.patientHistoryList.layoutParams as? ViewGroup.MarginLayoutParams)
                 ?.let { it.topMargin + it.bottomMargin } ?: 0
-            val targetHeight = (availableHeight - padding - headerHeight - listMargins).coerceAtLeast(0)
+            val targetHeight = (availableHeight - padding - appBarHeight - listMargins).coerceAtLeast(0)
             binding.patientHistoryList.updateLayoutParams<ViewGroup.LayoutParams> {
                 height = targetHeight
             }
