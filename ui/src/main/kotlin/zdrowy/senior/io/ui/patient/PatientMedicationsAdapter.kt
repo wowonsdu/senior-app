@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import zdrowy.senior.io.domain.settings.Medication
 import zdrowy.senior.io.ui.databinding.ItemPatientMedicationBinding
 
-class PatientMedicationsAdapter : ListAdapter<Medication, PatientMedicationsAdapter.ViewHolder>(Diff()) {
+class PatientMedicationsAdapter(
+    private val onItemClick: (Medication) -> Unit = {}
+) : ListAdapter<Medication, PatientMedicationsAdapter.ViewHolder>(Diff()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemPatientMedicationBinding.inflate(inflater, parent, false)
@@ -21,6 +23,7 @@ class PatientMedicationsAdapter : ListAdapter<Medication, PatientMedicationsAdap
 
     class ViewHolder(private val binding: ItemPatientMedicationBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Medication) {
+            binding.root.setOnClickListener { onItemClick(item) }
             binding.medicationName.text = item.name
             binding.medicationDosage.text = item.dosage
             binding.medicationSchedule.text = item.schedule

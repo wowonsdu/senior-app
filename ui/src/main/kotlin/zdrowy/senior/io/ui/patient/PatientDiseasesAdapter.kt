@@ -10,7 +10,9 @@ import zdrowy.senior.io.ui.databinding.ItemPatientDiseaseBinding
 import zdrowy.senior.io.domain.settings.Disease
 import zdrowy.senior.io.ui.R
 
-class PatientDiseasesAdapter : ListAdapter<Disease, PatientDiseasesAdapter.ViewHolder>(Diff()) {
+class PatientDiseasesAdapter(
+    private val onItemClick: (Disease) -> Unit = {}
+) : ListAdapter<Disease, PatientDiseasesAdapter.ViewHolder>(Diff()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemPatientDiseaseBinding.inflate(inflater, parent, false)
@@ -24,6 +26,7 @@ class PatientDiseasesAdapter : ListAdapter<Disease, PatientDiseasesAdapter.ViewH
     inner class ViewHolder(private val binding: ItemPatientDiseaseBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Disease) {
             val context = binding.root.context
+            binding.root.setOnClickListener { onItemClick(item) }
             binding.diseaseName.text = item.name
             binding.diseaseSeverity.text = item.severity
             binding.diseaseNotes.text = item.notes
