@@ -264,6 +264,12 @@
         tools:layout="@layout/fragment_caregiver_sms_verify" />
 
     <fragment
+        android:id="@+id/caregiverHomeFragment"
+        android:name="zdrowy.senior.io.ui.caregiver.CaregiverHomeFragment"
+        android:label="@string/role_select_app_name"
+        tools:layout="@layout/fragment_caregiver_home" />
+
+    <fragment
         android:id="@+id/devHubFragment"
         android:name="zdrowy.senior.io.ui.dev.DevHubFragment"
         android:label="@string/dev_hub_title"

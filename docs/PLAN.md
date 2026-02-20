@@ -106,6 +106,6 @@ Zasady etapu:
 - [x] Plan: subplany w `docs/plan/MAIN-PLAN-firebase-phone-auth.md`
 - [x] Konfiguracja Firebase (deps + init + emulator w DEBUG)
 - [x] Pacjent: logowanie SMS (wyslanie kodu + weryfikacja)
-- [ ] Opiekun: logowanie SMS (wyslanie kodu + weryfikacja) + ekran placeholder po zalogowaniu
+- [x] Opiekun: logowanie SMS (wyslanie kodu + weryfikacja) + ekran placeholder po zalogowaniu
 - [ ] Sesja: Role Select respektuje zalogowanie + logout (FirebaseAuth.signOut)
 - [ ] Walidacja: smoke test ADB/MCP na `emulator-5554` + instrukcja uruchomienia emulatora Auth
