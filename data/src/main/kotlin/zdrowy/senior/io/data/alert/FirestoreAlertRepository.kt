@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
 import zdrowy.senior.io.data.firestore.toCompletable
@@ -27,31 +28,31 @@ class FirestoreAlertRepository : AlertRepository {
 
         return col.get()
             .toSingle()
-            .map { snapshot ->
-                val byType = snapshot.documents.associateBy { it.id }
-                val settings = MeasurementType.values().map { type ->
-                    val doc = byType[type.name]
-                    val enabled = doc?.getBoolean("enabled") ?: true
-                    val min = (doc?.get("min") as? Number)?.toDouble()
-                    val max = (doc?.get("max") as? Number)?.toDouble()
-                    val spikePercent = ((doc?.get("spikePercent") as? Number)?.toInt()) ?: 20
-                    val windowCount = ((doc?.get("windowCount") as? Number)?.toInt()) ?: 3
-                    val channels = parseChannels(doc?.get("channels"))
-                    val caregiverUids = parseStringList(doc?.get("caregiverUids"))
+            .map { snapshot -> buildAlertConfig(snapshot.documents) }
+    }
 
-                    AlertSetting(
-                        type = type,
-                        enabled = enabled,
-                        min = min,
-                        max = max,
-                        spikePercent = spikePercent,
-                        windowCount = windowCount,
-                        channels = if (channels.isEmpty()) setOf(AlertChannel.APP) else channels,
-                        caregiverIds = caregiverUids
-                    )
-                }
-                AlertConfig(settings = settings)
+    override fun observeAlertConfig(): Observable<AlertConfig> {
+        return Observable.create { emitter ->
+            val uid = try {
+                requireUid()
+            } catch (error: Throwable) {
+                emitter.onError(error)
+                return@create
             }
+            val col = firestore.collection(FirestorePaths.USERS)
+                .document(uid)
+                .collection(FirestorePaths.ALERTS)
+
+            val registration = col.addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    if (!emitter.isDisposed) emitter.onError(error)
+                    return@addSnapshotListener
+                }
+                val documents = snapshot?.documents.orEmpty()
+                if (!emitter.isDisposed) emitter.onNext(buildAlertConfig(documents))
+            }
+            emitter.setCancellable { registration.remove() }
+        }
     }
 
     override fun updateAlertConfig(config: AlertConfig): Completable {
@@ -125,8 +126,33 @@ class FirestoreAlertRepository : AlertRepository {
         return (raw as? List<*>)?.mapNotNull { it as? String }.orEmpty()
     }
 
+    private fun buildAlertConfig(documents: List<com.google.firebase.firestore.DocumentSnapshot>): AlertConfig {
+        val byType = documents.associateBy { it.id }
+        val settings = MeasurementType.values().map { type ->
+            val doc = byType[type.name]
+            val enabled = doc?.getBoolean("enabled") ?: true
+            val min = (doc?.get("min") as? Number)?.toDouble()
+            val max = (doc?.get("max") as? Number)?.toDouble()
+            val spikePercent = ((doc?.get("spikePercent") as? Number)?.toInt()) ?: 20
+            val windowCount = ((doc?.get("windowCount") as? Number)?.toInt()) ?: 3
+            val channels = parseChannels(doc?.get("channels"))
+            val caregiverUids = parseStringList(doc?.get("caregiverUids"))
+
+            AlertSetting(
+                type = type,
+                enabled = enabled,
+                min = min,
+                max = max,
+                spikePercent = spikePercent,
+                windowCount = windowCount,
+                channels = if (channels.isEmpty()) setOf(AlertChannel.APP) else channels,
+                caregiverIds = caregiverUids
+            )
+        }
+        return AlertConfig(settings = settings)
+    }
+
     private fun requireUid(): String {
         return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
     }
 }
-

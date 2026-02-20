@@ -1,5 +1,6 @@
 ﻿package zdrowy.senior.io.domain.measurement
 
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.domain.history.ChartSeries
 import zdrowy.senior.io.domain.history.DateRange
@@ -25,15 +26,30 @@ interface MeasurementRepository {
         types: List<MeasurementType>? = null
     ): Single<List<Measurement>>
 
+    fun observeRecentMeasurements(
+        limit: Int,
+        types: List<MeasurementType>? = null
+    ): Observable<List<Measurement>>
+
     fun getMeasurementHistory(
         types: List<MeasurementType>?,
         dateRange: DateRange?
     ): Single<List<Measurement>>
 
+    fun observeMeasurementHistory(
+        types: List<MeasurementType>?,
+        dateRange: DateRange?
+    ): Observable<List<Measurement>>
+
     fun getMeasurementChartData(
         types: List<MeasurementType>?,
         dateRange: DateRange?
     ): Single<List<ChartSeries>>
+
+    fun observeMeasurementChartData(
+        types: List<MeasurementType>?,
+        dateRange: DateRange?
+    ): Observable<List<ChartSeries>>
 
     fun getHistoryFilters(): Single<HistoryFilterState>
 

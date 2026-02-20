@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.DocumentSnapshot
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
 import zdrowy.senior.io.data.firestore.toSingle
@@ -92,6 +93,28 @@ class FirestoreMeasurementRepository : MeasurementRepository {
             .map { snapshot -> snapshot.documents.map { it.toMeasurement() } }
     }
 
+    override fun observeRecentMeasurements(
+        limit: Int,
+        types: List<MeasurementType>?
+    ): Observable<List<Measurement>> {
+        if (types != null && types.isEmpty()) return Observable.just(emptyList())
+
+        val uid = requireUid()
+        val col = firestore.collection(FirestorePaths.USERS)
+            .document(uid)
+            .collection(FirestorePaths.MEASUREMENTS)
+
+        val query = buildMeasurementsQuery(
+            base = col,
+            types = types,
+            dateRange = null
+        )
+            .orderBy("timestampMs", Query.Direction.DESCENDING)
+            .limit(limit.toLong())
+
+        return observeMeasurements(query)
+    }
+
     override fun getMeasurementHistory(
         types: List<MeasurementType>?,
         dateRange: DateRange?
@@ -114,11 +137,67 @@ class FirestoreMeasurementRepository : MeasurementRepository {
             .map { snapshot -> snapshot.documents.map { it.toMeasurement() } }
     }
 
+    override fun observeMeasurementHistory(
+        types: List<MeasurementType>?,
+        dateRange: DateRange?
+    ): Observable<List<Measurement>> {
+        if (types != null && types.isEmpty()) return Observable.just(emptyList())
+
+        val uid = requireUid()
+        val col = firestore.collection(FirestorePaths.USERS)
+            .document(uid)
+            .collection(FirestorePaths.MEASUREMENTS)
+
+        val query = buildMeasurementsQuery(
+            base = col,
+            types = types,
+            dateRange = dateRange
+        ).orderBy("timestampMs", Query.Direction.DESCENDING)
+
+        return observeMeasurements(query)
+    }
+
     override fun getMeasurementChartData(
         types: List<MeasurementType>?,
         dateRange: DateRange?
     ): Single<List<ChartSeries>> {
         return getMeasurementHistory(types, dateRange)
+            .map { list ->
+                val grouped = list.groupBy { it.type }
+                grouped.map { (type, measurements) ->
+                    val sorted = measurements.sortedBy { it.timestamp }
+                    val points = sorted.mapNotNull { measurement ->
+                        val value = measurement.value
+                            ?: measurement.systolic?.toDouble()
+                            ?: measurement.diastolic?.toDouble()
+                        value?.let { ChartPoint(measurement.timestamp, it) }
+                    }
+                    val secondaryPoints = if (type == MeasurementType.PRESSURE) {
+                        sorted.mapNotNull { measurement ->
+                            measurement.diastolic?.toDouble()
+                                ?.let { ChartPoint(measurement.timestamp, it) }
+                        }
+                    } else {
+                        emptyList()
+                    }
+                    val primaryPoints = if (type == MeasurementType.PRESSURE) {
+                        sorted.mapNotNull { measurement ->
+                            measurement.systolic?.toDouble()
+                                ?.let { ChartPoint(measurement.timestamp, it) }
+                        }
+                    } else {
+                        points
+                    }
+                    ChartSeries(type, primaryPoints, secondaryPoints)
+                }.sortedBy { it.type.name.lowercase(Locale.ROOT) }
+            }
+    }
+
+    override fun observeMeasurementChartData(
+        types: List<MeasurementType>?,
+        dateRange: DateRange?
+    ): Observable<List<ChartSeries>> {
+        return observeMeasurementHistory(types, dateRange)
             .map { list ->
                 val grouped = list.groupBy { it.type }
                 grouped.map { (type, measurements) ->
@@ -254,6 +333,20 @@ class FirestoreMeasurementRepository : MeasurementRepository {
             timestamp = timestamp,
             source = source
         )
+    }
+
+    private fun observeMeasurements(query: Query): Observable<List<Measurement>> {
+        return Observable.create { emitter ->
+            val registration = query.addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    if (!emitter.isDisposed) emitter.onError(error)
+                    return@addSnapshotListener
+                }
+                val items = snapshot?.documents.orEmpty().map { it.toMeasurement() }
+                if (!emitter.isDisposed) emitter.onNext(items)
+            }
+            emitter.setCancellable { registration.remove() }
+        }
     }
 
     private fun requireUid(): String {

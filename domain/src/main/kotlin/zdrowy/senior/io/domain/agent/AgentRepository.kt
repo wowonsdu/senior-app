@@ -1,6 +1,7 @@
 ﻿package zdrowy.senior.io.domain.agent
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface AgentRepository {
@@ -9,4 +10,5 @@ interface AgentRepository {
     fun updateAgent(agentId: String, update: AgentUpdate): Completable
     fun removeAgent(agentId: String): Completable
     fun listAgents(): Single<List<Agent>>
+    fun observeAgents(): Observable<List<Agent>>
 }

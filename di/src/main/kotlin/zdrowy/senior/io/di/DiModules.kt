@@ -16,11 +16,13 @@ import zdrowy.senior.io.domain.agent.GenerateAccessCodeForAgentUseCase
 import zdrowy.senior.io.domain.agent.ListAgentsUseCase
 import zdrowy.senior.io.domain.agent.NotificationRepository
 import zdrowy.senior.io.domain.agent.NotifyAgentsUseCase
+import zdrowy.senior.io.domain.agent.ObserveAgentsUseCase
 import zdrowy.senior.io.domain.agent.RemoveAgentUseCase
 import zdrowy.senior.io.domain.agent.SendAccessCodeSmsUseCase
 import zdrowy.senior.io.domain.agent.UpdateAgentUseCase
 import zdrowy.senior.io.domain.alert.AlertRepository
 import zdrowy.senior.io.domain.alert.GetAlertConfigUseCase
+import zdrowy.senior.io.domain.alert.ObserveAlertConfigUseCase
 import zdrowy.senior.io.domain.alert.SetAlertEnabledUseCase
 import zdrowy.senior.io.domain.alert.UpdateAlertCaregiversUseCase
 import zdrowy.senior.io.domain.alert.UpdateAlertChannelsUseCase
@@ -35,6 +37,9 @@ import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.DeleteMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.GetRecentMeasurementsUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementRepository
+import zdrowy.senior.io.domain.measurement.ObserveMeasurementChartDataUseCase
+import zdrowy.senior.io.domain.measurement.ObserveMeasurementHistoryUseCase
+import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsUseCase
 import zdrowy.senior.io.domain.measurement.UpdateBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.UpdateMeasurementUseCase
 import zdrowy.senior.io.domain.settings.AddDiseaseUseCase
@@ -74,17 +79,22 @@ val domainModule = module {
     factory { GetMeasurementHistoryUseCase(get()) }
     factory { GetMeasurementChartDataUseCase(get()) }
     factory { GetHistoryFiltersUseCase(get()) }
+    factory { ObserveRecentMeasurementsUseCase(get()) }
+    factory { ObserveMeasurementHistoryUseCase(get()) }
+    factory { ObserveMeasurementChartDataUseCase(get()) }
 
     factory { AddAgentUseCase(get()) }
     factory { AddDoctorUseCase(get()) }
     factory { UpdateAgentUseCase(get()) }
     factory { RemoveAgentUseCase(get()) }
     factory { ListAgentsUseCase(get()) }
+    factory { ObserveAgentsUseCase(get()) }
     factory { GenerateAccessCodeForAgentUseCase(get()) }
     factory { SendAccessCodeSmsUseCase(get()) }
     factory { NotifyAgentsUseCase(get()) }
 
     factory { GetAlertConfigUseCase(get()) }
+    factory { ObserveAlertConfigUseCase(get()) }
     factory { UpdateAlertConfigUseCase(get()) }
     factory { SetAlertEnabledUseCase(get()) }
     factory { UpdateCriticalThresholdsUseCase(get()) }

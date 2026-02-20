@@ -1,6 +1,8 @@
 ﻿package zdrowy.senior.io.data.measurement
 
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import zdrowy.senior.io.domain.history.ChartPoint
 import zdrowy.senior.io.domain.history.ChartSeries
 import zdrowy.senior.io.domain.history.DateRange
@@ -14,9 +16,11 @@ import java.util.UUID
 
 class InMemoryMeasurementRepository : MeasurementRepository {
     private val measurements = mutableListOf<Measurement>()
+    private val measurementsSubject = BehaviorSubject.create<List<Measurement>>()
 
     init {
         seedData()
+        measurementsSubject.onNext(measurements.toList())
     }
 
     override fun addMeasurement(
@@ -37,6 +41,7 @@ class InMemoryMeasurementRepository : MeasurementRepository {
                 source = source
             )
         )
+        measurementsSubject.onNext(measurements.toList())
         return Single.just(id)
     }
 
@@ -58,6 +63,7 @@ class InMemoryMeasurementRepository : MeasurementRepository {
                 source = source
             )
         )
+        measurementsSubject.onNext(measurements.toList())
         return Single.just(id)
     }
 
@@ -65,20 +71,36 @@ class InMemoryMeasurementRepository : MeasurementRepository {
         limit: Int,
         types: List<MeasurementType>?
     ): Single<List<Measurement>> {
-        val filtered = applyFilters(types, null)
+        val filtered = applyFilters(measurements, types, null)
         return Single.just(filtered.sortedByDescending { it.timestamp }.take(limit))
+    }
+
+    override fun observeRecentMeasurements(
+        limit: Int,
+        types: List<MeasurementType>?
+    ): Observable<List<Measurement>> {
+        return measurementsSubject.map { list ->
+            applyFilters(list, types, null).sortedByDescending { it.timestamp }.take(limit)
+        }
     }
 
     override fun getMeasurementHistory(
         types: List<MeasurementType>?,
         dateRange: DateRange?
-    ): Single<List<Measurement>> = Single.just(applyFilters(types, dateRange))
+    ): Single<List<Measurement>> = Single.just(applyFilters(measurements, types, dateRange))
+
+    override fun observeMeasurementHistory(
+        types: List<MeasurementType>?,
+        dateRange: DateRange?
+    ): Observable<List<Measurement>> = measurementsSubject.map { list ->
+        applyFilters(list, types, dateRange)
+    }
 
     override fun getMeasurementChartData(
         types: List<MeasurementType>?,
         dateRange: DateRange?
     ): Single<List<ChartSeries>> {
-        val filtered = applyFilters(types, dateRange)
+        val filtered = applyFilters(measurements, types, dateRange)
         val grouped = filtered.groupBy { it.type }
         val series = grouped.map { (type, list) ->
             val sorted = list.sortedBy { it.timestamp }
@@ -107,6 +129,42 @@ class InMemoryMeasurementRepository : MeasurementRepository {
             ChartSeries(type, primaryPoints, secondaryPoints)
         }
         return Single.just(series)
+    }
+
+    override fun observeMeasurementChartData(
+        types: List<MeasurementType>?,
+        dateRange: DateRange?
+    ): Observable<List<ChartSeries>> {
+        return observeMeasurementHistory(types, dateRange)
+            .map { filtered ->
+                val grouped = filtered.groupBy { it.type }
+                grouped.map { (type, list) ->
+                    val sorted = list.sortedBy { it.timestamp }
+                    val points = sorted.mapNotNull { measurement ->
+                        val value = measurement.value
+                            ?: measurement.systolic?.toDouble()
+                            ?: measurement.diastolic?.toDouble()
+                        value?.let { ChartPoint(measurement.timestamp, it) }
+                    }
+                    val secondaryPoints = if (type == MeasurementType.PRESSURE) {
+                        sorted.mapNotNull { measurement ->
+                            measurement.diastolic?.toDouble()
+                                ?.let { ChartPoint(measurement.timestamp, it) }
+                        }
+                    } else {
+                        emptyList()
+                    }
+                    val primaryPoints = if (type == MeasurementType.PRESSURE) {
+                        sorted.mapNotNull { measurement ->
+                            measurement.systolic?.toDouble()
+                                ?.let { ChartPoint(measurement.timestamp, it) }
+                        }
+                    } else {
+                        points
+                    }
+                    ChartSeries(type, primaryPoints, secondaryPoints)
+                }
+            }
     }
 
     override fun getHistoryFilters(): Single<HistoryFilterState> {
@@ -138,6 +196,7 @@ class InMemoryMeasurementRepository : MeasurementRepository {
             diastolic = null,
             timestamp = timestamp
         )
+        measurementsSubject.onNext(measurements.toList())
         return Single.just(Unit)
     }
 
@@ -157,19 +216,22 @@ class InMemoryMeasurementRepository : MeasurementRepository {
             diastolic = diastolic,
             timestamp = timestamp
         )
+        measurementsSubject.onNext(measurements.toList())
         return Single.just(Unit)
     }
 
     override fun deleteMeasurement(id: String): Single<Unit> {
         measurements.removeAll { it.id == id }
+        measurementsSubject.onNext(measurements.toList())
         return Single.just(Unit)
     }
 
     private fun applyFilters(
+        source: List<Measurement>,
         types: List<MeasurementType>?,
         dateRange: DateRange?
     ): List<Measurement> {
-        return measurements.filter { measurement ->
+        return source.filter { measurement ->
             val typeMatch = types?.contains(measurement.type) ?: true
             val fromMatch = dateRange?.from?.let { measurement.timestamp >= it } ?: true
             val toMatch = dateRange?.to?.let { measurement.timestamp <= it } ?: true

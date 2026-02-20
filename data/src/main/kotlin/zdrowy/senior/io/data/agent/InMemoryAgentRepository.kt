@@ -1,7 +1,9 @@
 ﻿package zdrowy.senior.io.data.agent
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import zdrowy.senior.io.domain.agent.Agent
 import zdrowy.senior.io.domain.agent.AgentDraft
 import zdrowy.senior.io.domain.agent.AgentRepository
@@ -12,9 +14,11 @@ import java.util.UUID
 
 class InMemoryAgentRepository : AgentRepository {
     private val agents = mutableListOf<Agent>()
+    private val agentsSubject = BehaviorSubject.create<List<Agent>>()
 
     init {
         seedData()
+        agentsSubject.onNext(agents.toList())
     }
 
     override fun addAgent(draft: AgentDraft): Single<String> {
@@ -29,6 +33,7 @@ class InMemoryAgentRepository : AgentRepository {
                 specialization = null
             )
         )
+        agentsSubject.onNext(agents.toList())
         return Single.just(id)
     }
 
@@ -44,6 +49,7 @@ class InMemoryAgentRepository : AgentRepository {
                 specialization = draft.specialization
             )
         )
+        agentsSubject.onNext(agents.toList())
         return Single.just(id)
     }
 
@@ -58,15 +64,19 @@ class InMemoryAgentRepository : AgentRepository {
                 specialization = update.specialization ?: current.specialization
             )
         }
+        agentsSubject.onNext(agents.toList())
         return Completable.complete()
     }
 
     override fun removeAgent(agentId: String): Completable {
         agents.removeAll { it.id == agentId }
+        agentsSubject.onNext(agents.toList())
         return Completable.complete()
     }
 
     override fun listAgents(): Single<List<Agent>> = Single.just(agents.toList())
+
+    override fun observeAgents(): Observable<List<Agent>> = agentsSubject.hide()
 
     private fun seedData() {
         agents += Agent(

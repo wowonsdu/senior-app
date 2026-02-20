@@ -1,11 +1,13 @@
 ﻿package zdrowy.senior.io.domain.alert
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.domain.measurement.MeasurementType
 
 interface AlertRepository {
     fun getAlertConfig(): Single<AlertConfig>
+    fun observeAlertConfig(): Observable<AlertConfig>
     fun updateAlertConfig(config: AlertConfig): Completable
     fun setAlertEnabled(type: MeasurementType, enabled: Boolean): Completable
     fun updateCriticalThresholds(type: MeasurementType, min: Double?, max: Double?): Completable

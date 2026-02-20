@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
 import zdrowy.senior.io.data.firestore.toCompletable
@@ -96,24 +97,49 @@ class FirestoreAgentRepository : AgentRepository {
 
         return col.get()
             .toSingle()
-            .map { snapshot ->
-                snapshot.documents.map { doc ->
-                    val roleRaw = doc.getString("role").orEmpty()
-                    val role = runCatching { AgentRole.valueOf(roleRaw) }.getOrDefault(AgentRole.CAREGIVER)
-                    Agent(
-                        id = doc.id,
-                        fullName = doc.getString("fullName").orEmpty(),
-                        role = role,
-                        phone = doc.getString("phone").orEmpty(),
-                        email = doc.getString("email").orEmpty(),
-                        specialization = doc.getString("specialization")
-                    )
-                }.sortedBy { it.fullName.lowercase(Locale.ROOT) }
+            .map { snapshot -> snapshot.documents.map { it.toAgent() }.sortedBy { it.fullName.lowercase(Locale.ROOT) } }
+    }
+
+    override fun observeAgents(): Observable<List<Agent>> {
+        return Observable.create { emitter ->
+            val uid = try {
+                requireUid()
+            } catch (error: Throwable) {
+                emitter.onError(error)
+                return@create
             }
+            val col = firestore.collection(FirestorePaths.USERS)
+                .document(uid)
+                .collection(FirestorePaths.CONTACTS)
+
+            val registration = col.addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    if (!emitter.isDisposed) emitter.onError(error)
+                    return@addSnapshotListener
+                }
+                val items = snapshot?.documents.orEmpty()
+                    .map { it.toAgent() }
+                    .sortedBy { it.fullName.lowercase(Locale.ROOT) }
+                if (!emitter.isDisposed) emitter.onNext(items)
+            }
+            emitter.setCancellable { registration.remove() }
+        }
+    }
+
+    private fun com.google.firebase.firestore.DocumentSnapshot.toAgent(): Agent {
+        val roleRaw = getString("role").orEmpty()
+        val role = runCatching { AgentRole.valueOf(roleRaw) }.getOrDefault(AgentRole.CAREGIVER)
+        return Agent(
+            id = id,
+            fullName = getString("fullName").orEmpty(),
+            role = role,
+            phone = getString("phone").orEmpty(),
+            email = getString("email").orEmpty(),
+            specialization = getString("specialization")
+        )
     }
 
     private fun requireUid(): String {
         return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
     }
 }
-
