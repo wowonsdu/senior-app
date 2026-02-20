@@ -120,4 +120,4 @@ Zasady etapu:
 - [x] Migracja: MeasurementRepository (InMemory -> Firestore)
 - [x] Migracja: AgentRepository + AccessCodeRepository (InMemory -> Firestore)
 - [x] Migracja: AlertRepository (InMemory -> Firestore)
-- [ ] Migracja: DI przełączone na Firestore repozytoria
+- [x] Migracja: DI przełączone na Firestore repozytoria
