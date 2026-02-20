@@ -28,7 +28,7 @@
 - [x] Zaktualizowac `PatientSettingsUiState` oraz `PatientSettingsFragment` do `firstName/lastName`.
 - [x] Zaktualizowac `PatientPersonalDataDialogFragment` (prefill + zapis `firstName/lastName`).
 - [x] Zaktualizowac stringi tytulow/CTA ("Edytuj chorobe", "Edytuj lek", "Usun").
-- [ ] Zaktualizowac `docs/PLAN.md` i zrobic commit opisujacy etap.
+- [x] Zaktualizowac `docs/PLAN.md` i zrobic commit opisujacy etap.
 
 ## Validation
 - [ ] Tap na itemach listy otwiera edycje z prefill.
