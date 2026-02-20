@@ -113,4 +113,11 @@ Zasady etapu:
 ## Etap 7 — Firebase Firestore (emulator + przygotowanie pod realne dane)
 - [x] Konfiguracja emulatora Firestore w DEBUG (`useEmulator(10.0.2.2, 8082)`)
 - [x] Instrukcja uruchomienia emulatora Firestore
-- [ ] Migracja: repozytoria z InMemory -> Firestore (etapami, ekran po ekranie)
+- [x] Plan: model danych Firestore (master + subplany w `docs/plan/MAIN-PLAN-firestore-user-data-model.md`)
+- [ ] Firestore: rules + indexes + wiring w `firebase.json`
+- [ ] Firestore: users/{uid} + bootstrap roli (PATIENT/CAREGIVER)
+- [ ] Migracja: SettingsRepository (InMemory -> Firestore)
+- [ ] Migracja: MeasurementRepository (InMemory -> Firestore)
+- [ ] Migracja: AgentRepository + AccessCodeRepository (InMemory -> Firestore)
+- [ ] Migracja: AlertRepository (InMemory -> Firestore)
+- [ ] Migracja: DI przełączone na Firestore repozytoria
