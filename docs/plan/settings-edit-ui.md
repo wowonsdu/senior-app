@@ -20,7 +20,7 @@
 
 ## Implementation Checklist
 - [x] Dodac klik w itemach chorob i lekow w adapterach.
-- [ ] Ustawic `MaterialCardView` w itemach jako clickable, jesli potrzeba.
+- [x] Ustawic `MaterialCardView` w itemach jako clickable, jesli potrzeba.
 - [ ] Dodac akcje i argumenty w `nav_graph.xml` dla edycji (id choroby/leku).
 - [ ] Dodac nowe dialogi edycji z prefill z repo (pobranie listy i wybor po id).
 - [ ] Dodac "Usun" w dialogach edycji chorob/lekow i obsluzyc `Remove*UseCase`.
