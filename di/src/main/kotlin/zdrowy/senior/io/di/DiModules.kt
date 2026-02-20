@@ -3,7 +3,7 @@
 import org.koin.dsl.module
 import zdrowy.senior.io.data.agent.FirestoreAccessCodeRepository
 import zdrowy.senior.io.data.agent.FirestoreAgentRepository
-import zdrowy.senior.io.data.alert.InMemoryAlertRepository
+import zdrowy.senior.io.data.alert.FirestoreAlertRepository
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementRepository
 import zdrowy.senior.io.data.notification.NoOpNotificationRepository
 import zdrowy.senior.io.data.settings.FirestoreSettingsRepository
@@ -94,7 +94,7 @@ val dataModule = module {
     single<AgentRepository> { FirestoreAgentRepository() }
     single<AccessCodeRepository> { FirestoreAccessCodeRepository() }
     single<NotificationRepository> { NoOpNotificationRepository() }
-    single<AlertRepository> { InMemoryAlertRepository() }
+    single<AlertRepository> { FirestoreAlertRepository() }
     single<SettingsRepository> { FirestoreSettingsRepository() }
 
     single<UserProfileRepository> { FirestoreUserProfileRepository() }
