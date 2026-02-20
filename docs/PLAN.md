@@ -101,3 +101,11 @@ Zasady etapu:
 - [ ] UC-CARE-01..08 + dummy CaregiverRepository
 - [ ] UC-VISIT-01..06 + dummy VisitRepository
 - [ ] UC-NOTIF-01..02 (powiadomienia wizyt) — mock
+
+## Etap 6 — Firebase Auth (SMS / numer telefonu)
+- [x] Plan: subplany w `docs/plan/MAIN-PLAN-firebase-phone-auth.md`
+- [ ] Konfiguracja Firebase (deps + init + emulator w DEBUG)
+- [ ] Pacjent: logowanie SMS (wyslanie kodu + weryfikacja)
+- [ ] Opiekun: logowanie SMS (wyslanie kodu + weryfikacja) + ekran placeholder po zalogowaniu
+- [ ] Sesja: Role Select respektuje zalogowanie + logout (FirebaseAuth.signOut)
+- [ ] Walidacja: smoke test ADB/MCP na `emulator-5554` + instrukcja uruchomienia emulatora Auth
