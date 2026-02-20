@@ -14,12 +14,12 @@
 - Prefill pol i zapis/usun przez use case'y
 
 ## Implementation Checklist
-- [ ] Dodaj argumenty edycji do dialogow w nav_graph
-- [ ] Dodaj przycisk Usun do layoutow dialogow
-- [ ] Uzyj wspolnego ViewModela dialogow (Koin)
-- [ ] Prefill pol z argumentow
-- [ ] Save -> update, Delete -> delete
-- [ ] Emituj refresh listy historii po zapisie/usunieciu
+- [x] Dodaj argumenty edycji do dialogow w nav_graph
+- [x] Dodaj przycisk Usun do layoutow dialogow
+- [x] Uzyj wspolnego ViewModela dialogow (Koin)
+- [x] Prefill pol z argumentow
+- [x] Save -> update, Delete -> delete
+- [x] Emituj refresh listy historii po zapisie/usunieciu
 
 ## Validation
 - [ ] Otworz dialog z historii i sprawdz prefill

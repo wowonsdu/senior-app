@@ -12,10 +12,10 @@
 - Nawigacja z argumentami
 
 ## Implementation Checklist
-- [ ] Rozszerz PatientMeasurementItemUi o pola do edycji
-- [ ] Mapuj pola w PatientHistoryViewModel
-- [ ] Dodaj callback klikniecia w adapterze
-- [ ] Nawiguj do odpowiedniego dialogu z argumentami
+- [x] Rozszerz PatientMeasurementItemUi o pola do edycji
+- [x] Mapuj pola w PatientHistoryViewModel
+- [x] Dodaj callback klikniecia w adapterze
+- [x] Nawiguj do odpowiedniego dialogu z argumentami
 
 ## Validation
 - [ ] Klikniecie w kazdy typ pomiaru otwiera dialog edycji

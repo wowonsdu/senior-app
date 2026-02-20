@@ -15,12 +15,12 @@
 - Rejestracja w Koin
 
 ## Implementation Checklist
-- [ ] Rozszerz MeasurementRepository o update/delete
-- [ ] Dodaj UpdateMeasurementUseCase i UpdateBloodPressureMeasurementUseCase
-- [ ] Dodaj DeleteMeasurementUseCase
-- [ ] Zaimplementuj update/delete w FirestoreMeasurementRepository
-- [ ] Zaimplementuj update/delete w InMemoryMeasurementRepository
-- [ ] Zarejestruj use case'y w module DI
+- [x] Rozszerz MeasurementRepository o update/delete
+- [x] Dodaj UpdateMeasurementUseCase i UpdateBloodPressureMeasurementUseCase
+- [x] Dodaj DeleteMeasurementUseCase
+- [x] Zaimplementuj update/delete w FirestoreMeasurementRepository
+- [x] Zaimplementuj update/delete w InMemoryMeasurementRepository
+- [x] Zarejestruj use case'y w module DI
 
 ## Validation
 - [ ] Build compile
