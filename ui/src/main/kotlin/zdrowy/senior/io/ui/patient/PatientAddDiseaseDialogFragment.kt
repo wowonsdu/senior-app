@@ -23,6 +23,7 @@ class PatientAddDiseaseDialogFragment : DialogFragment() {
         binding.patientAddDiseaseClose.setOnClickListener { dismiss() }
         binding.patientAddDiseaseCancel.setOnClickListener { dismiss() }
         binding.patientAddDiseaseSave.setOnClickListener { saveDisease() }
+        setupCourseDropdown()
 
         return MaterialAlertDialogBuilder(requireContext(), R.style.Widget_Senior_Dialog)
             .setView(binding.root)
@@ -51,6 +52,20 @@ class PatientAddDiseaseDialogFragment : DialogFragment() {
                     dismiss()
                 }, { dismiss() })
         )
+    }
+
+    private fun setupCourseDropdown() {
+        val options = resources.getStringArray(R.array.patient_add_disease_course_options)
+        val adapter = android.widget.ArrayAdapter(
+            requireContext(),
+            com.google.android.material.R.layout.mtrl_auto_complete_simple_item,
+            options
+        )
+        binding.patientAddDiseaseCourse.setAdapter(adapter)
+        binding.patientAddDiseaseCourse.setOnClickListener { binding.patientAddDiseaseCourse.showDropDown() }
+        binding.patientAddDiseaseCourse.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) binding.patientAddDiseaseCourse.showDropDown()
+        }
     }
 
     private fun validateNotBlank(

@@ -27,6 +27,7 @@ class PatientEditDiseaseDialogFragment : DialogFragment() {
         binding.patientEditDiseaseClose.setOnClickListener { dismiss() }
         binding.patientEditDiseaseDelete.setOnClickListener { deleteDisease() }
         binding.patientEditDiseaseSave.setOnClickListener { saveDisease() }
+        setupCourseDropdown()
         prefillDisease()
 
         return MaterialAlertDialogBuilder(requireContext(), R.style.Widget_Senior_Dialog)
@@ -89,6 +90,20 @@ class PatientEditDiseaseDialogFragment : DialogFragment() {
                     dismiss()
                 }, { dismiss() })
         )
+    }
+
+    private fun setupCourseDropdown() {
+        val options = resources.getStringArray(R.array.patient_add_disease_course_options)
+        val adapter = android.widget.ArrayAdapter(
+            requireContext(),
+            com.google.android.material.R.layout.mtrl_auto_complete_simple_item,
+            options
+        )
+        binding.patientEditDiseaseCourse.setAdapter(adapter)
+        binding.patientEditDiseaseCourse.setOnClickListener { binding.patientEditDiseaseCourse.showDropDown() }
+        binding.patientEditDiseaseCourse.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) binding.patientEditDiseaseCourse.showDropDown()
+        }
     }
 
     private fun validateNotBlank(

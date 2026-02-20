@@ -88,6 +88,7 @@ Zasady etapu:
 
 ## Etap 4.6 — Ustawienia: przebieg choroby (opcje)
 - [x] Aktualizacja opcji przebiegu choroby (Lekki/Sredni/Ciezki/Bardzo ciezki) + seed + styl
+- [x] Fix: dropdown przebiegu choroby otwiera liste opcji
 
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 
