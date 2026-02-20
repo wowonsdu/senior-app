@@ -18,16 +18,25 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("boolean", "USE_FIREBASE_AUTH_EMULATOR", "true")
+            buildConfigField("String", "FIREBASE_AUTH_EMULATOR_HOST", "\"10.0.2.2\"")
+            buildConfigField("int", "FIREBASE_AUTH_EMULATOR_PORT", "9099")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("boolean", "USE_FIREBASE_AUTH_EMULATOR", "false")
+            buildConfigField("String", "FIREBASE_AUTH_EMULATOR_HOST", "\"\"")
+            buildConfigField("int", "FIREBASE_AUTH_EMULATOR_PORT", "0")
         }
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -47,6 +56,8 @@ dependencies {
     implementation(libs.androidx.navigation.ui)
     implementation(libs.koin.android)
     implementation(libs.timber)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
     implementation(project(":ui"))
     implementation(project(":di"))
     testImplementation(libs.junit)

@@ -104,7 +104,7 @@ Zasady etapu:
 
 ## Etap 6 — Firebase Auth (SMS / numer telefonu)
 - [x] Plan: subplany w `docs/plan/MAIN-PLAN-firebase-phone-auth.md`
-- [ ] Konfiguracja Firebase (deps + init + emulator w DEBUG)
+- [x] Konfiguracja Firebase (deps + init + emulator w DEBUG)
 - [ ] Pacjent: logowanie SMS (wyslanie kodu + weryfikacja)
 - [ ] Opiekun: logowanie SMS (wyslanie kodu + weryfikacja) + ekran placeholder po zalogowaniu
 - [ ] Sesja: Role Select respektuje zalogowanie + logout (FirebaseAuth.signOut)
