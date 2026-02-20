@@ -193,6 +193,12 @@
             android:id="@+id/action_patientSettings_to_addMed"
             app:destination="@id/patientAddMedDialogFragment" />
         <action
+            android:id="@+id/action_patientSettings_to_editDisease"
+            app:destination="@id/patientEditDiseaseDialogFragment" />
+        <action
+            android:id="@+id/action_patientSettings_to_editMed"
+            app:destination="@id/patientEditMedDialogFragment" />
+        <action
             android:id="@+id/action_patientSettings_to_alertsOverview"
             app:destination="@id/patientAlertsOverviewFragment" />
     </fragment>
@@ -214,6 +220,26 @@
         android:name="zdrowy.senior.io.ui.patient.PatientAddMedDialogFragment"
         android:label="@string/patient_add_med_title"
         tools:layout="@layout/dialog_patient_add_med" />
+
+    <dialog
+        android:id="@+id/patientEditDiseaseDialogFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientEditDiseaseDialogFragment"
+        android:label="@string/patient_add_disease_title"
+        tools:layout="@layout/dialog_patient_add_disease">
+        <argument
+            android:name="diseaseId"
+            app:argType="string" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/patientEditMedDialogFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientEditMedDialogFragment"
+        android:label="@string/patient_add_med_title"
+        tools:layout="@layout/dialog_patient_add_med">
+        <argument
+            android:name="medicationId"
+            app:argType="string" />
+    </dialog>
 
     <fragment
         android:id="@+id/patientAlertsOverviewFragment"
