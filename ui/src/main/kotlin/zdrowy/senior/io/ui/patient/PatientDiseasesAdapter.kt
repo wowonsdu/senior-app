@@ -46,11 +46,13 @@ class PatientDiseasesAdapter(
     private fun resolveSeverityStyle(severity: String): SeverityStyle {
         val normalized = severity.lowercase()
         return when {
+            normalized.contains("bardzo") && normalized.contains("ciezk") ->
+                SeverityStyle("BARDZO CIEZKI", R.color.senior_danger)
             normalized.contains("ciezk") -> SeverityStyle("CIEZKI", R.color.senior_danger)
             normalized.contains("sredn") || normalized.contains("umiark") ->
                 SeverityStyle("SREDNI", R.color.senior_warning)
             normalized.contains("lagodn") || normalized.contains("lek") ->
-                SeverityStyle("LAGODNY", R.color.senior_secondary)
+                SeverityStyle("LEKKI", R.color.senior_secondary)
             else -> SeverityStyle("INFO", R.color.senior_info)
         }
     }

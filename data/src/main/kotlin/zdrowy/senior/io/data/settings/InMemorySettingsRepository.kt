@@ -137,13 +137,13 @@ class InMemorySettingsRepository : SettingsRepository {
         diseases += Disease(
             id = UUID.randomUUID().toString(),
             name = "Nadcisnienie",
-            severity = "Umiarkowane",
+            severity = "Sredni",
             notes = "Kontrola co 3 miesiace"
         )
         diseases += Disease(
             id = UUID.randomUUID().toString(),
             name = "Cukrzyca",
-            severity = "Lekka",
+            severity = "Lekki",
             notes = "Dieta i ruch"
         )
 

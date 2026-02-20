@@ -86,6 +86,9 @@ Zasady etapu:
 - [x] Dialog UI + nawigacja (kafelek na Monitorze zdrowia)
 - [x] ViewModel + logika wysylki + toast
 
+## Etap 4.6 — Ustawienia: przebieg choroby (opcje)
+- [x] Aktualizacja opcji przebiegu choroby (Lekki/Sredni/Ciezki/Bardzo ciezki) + seed + styl
+
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 
 ### 5.1 Opiekun flow (UI + nawigacja)

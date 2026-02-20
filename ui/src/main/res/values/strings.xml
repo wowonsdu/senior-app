@@ -231,9 +231,10 @@
     <string name="patient_edit_remove">Usun</string>
 
     <string-array name="patient_add_disease_course_options">
-        <item>Lagodny</item>
+        <item>Lekki</item>
         <item>Sredni</item>
         <item>Ciezki</item>
+        <item>Bardzo ciezki</item>
     </string-array>
 
     <string name="patient_add_med_title">Dodaj lek</string>
