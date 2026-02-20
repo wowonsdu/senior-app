@@ -195,11 +195,10 @@ class PatientEditMedDialogFragment : DialogFragment() {
     }
 
     private fun findTextInputLayout(field: android.view.View): com.google.android.material.textfield.TextInputLayout? {
-        return when (val parent = field.parent) {
-            is com.google.android.material.textfield.TextInputLayout -> parent
-            is android.view.View -> parent.parent as? com.google.android.material.textfield.TextInputLayout
-            else -> null
-        }
+        val directParent = field.parent
+        if (directParent is com.google.android.material.textfield.TextInputLayout) return directParent
+        val parentView = directParent as? android.view.View ?: return null
+        return parentView.parent as? com.google.android.material.textfield.TextInputLayout
     }
 
     private val medicationId: String?
