@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import zdrowy.senior.io.ui.databinding.ItemPatientMeasurementBinding
 
-class PatientMeasurementsAdapter :
-    ListAdapter<PatientMeasurementItemUi, PatientMeasurementsAdapter.ViewHolder>(Diff()) {
+class PatientMeasurementsAdapter(
+    private val onItemClick: (PatientMeasurementItemUi) -> Unit
+) : ListAdapter<PatientMeasurementItemUi, PatientMeasurementsAdapter.ViewHolder>(Diff()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemPatientMeasurementBinding.inflate(inflater, parent, false)
@@ -17,19 +18,23 @@ class PatientMeasurementsAdapter :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onItemClick)
     }
 
     class ViewHolder(
         private val binding: ItemPatientMeasurementBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: PatientMeasurementItemUi) {
+        fun bind(
+            item: PatientMeasurementItemUi,
+            onItemClick: (PatientMeasurementItemUi) -> Unit
+        ) {
             binding.itemMeasurementRow.setTitle(item.title)
             binding.itemMeasurementRow.setSubtitle(item.subtitle)
             binding.itemMeasurementRow.setIconRes(item.iconRes)
             binding.itemMeasurementRow.setIconTint(
                 ContextCompat.getColor(binding.root.context, item.iconTintRes)
             )
+            binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 

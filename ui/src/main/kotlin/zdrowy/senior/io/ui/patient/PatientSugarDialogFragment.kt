@@ -9,15 +9,15 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.DialogPatientSugarBinding
-import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementSource
 import zdrowy.senior.io.domain.measurement.MeasurementType
 import java.util.Locale
@@ -26,8 +26,7 @@ class PatientSugarDialogFragment : DialogFragment() {
     private var _binding: DialogPatientSugarBinding? = null
     private val binding get() = _binding!!
     private var speechRecognizer: SpeechRecognizer? = null
-    private val addMeasurementUseCase: AddMeasurementUseCase by lazy { get() }
-    private val disposables = CompositeDisposable()
+    private val viewModel: PatientMeasurementDialogViewModel by viewModel()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -39,11 +38,23 @@ class PatientSugarDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogPatientSugarBinding.inflate(LayoutInflater.from(context))
+        val measurementId = arguments?.getString(ARG_MEASUREMENT_ID)
+        val editMode = !measurementId.isNullOrBlank()
         binding.sugarDialogClose.setOnClickListener { dismiss() }
         binding.sugarDialogCancel.setOnClickListener { dismiss() }
         binding.sugarDialogSave.setOnClickListener { saveMeasurement() }
         binding.sugarDialogMic.setOnClickListener {
             startSpeechToText()
+        }
+        binding.sugarDialogDelete.visibility = if (editMode) View.VISIBLE else View.GONE
+        if (editMode) {
+            val value = arguments?.getFloat(ARG_MEASUREMENT_VALUE) ?: 0f
+            binding.sugarDialogValue.setText(
+                if (value == 0f) "" else value.toString()
+            )
+            binding.sugarDialogDelete.setOnClickListener {
+                deleteMeasurement(measurementId.orEmpty())
+            }
         }
 
         return MaterialAlertDialogBuilder(requireContext(), R.style.Widget_Senior_Dialog)
@@ -62,7 +73,6 @@ class PatientSugarDialogFragment : DialogFragment() {
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
         speechRecognizer = null
-        disposables.clear()
         _binding = null
         super.onDestroyView()
     }
@@ -125,6 +135,8 @@ class PatientSugarDialogFragment : DialogFragment() {
     }
 
     private fun saveMeasurement() {
+        val measurementId = arguments?.getString(ARG_MEASUREMENT_ID)
+        val editMode = !measurementId.isNullOrBlank()
         val value = binding.sugarDialogValue.text?.toString()
             ?.replace(',', '.')
             ?.toDoubleOrNull()
@@ -133,13 +145,37 @@ class PatientSugarDialogFragment : DialogFragment() {
                 return
             }
         binding.sugarDialogValueInput.error = null
-        disposables.add(
-            addMeasurementUseCase(
-                MeasurementType.SUGAR,
-                value,
-                System.currentTimeMillis(),
-                MeasurementSource.MANUAL
-            ).subscribe({ dismiss() }, { dismiss() })
-        )
+        val timestamp = if (editMode) {
+            val argTimestamp = arguments?.getLong(ARG_MEASUREMENT_TIMESTAMP) ?: 0L
+            if (argTimestamp == 0L) System.currentTimeMillis() else argTimestamp
+        } else {
+            System.currentTimeMillis()
+        }
+        if (editMode) {
+            viewModel.updateSimpleMeasurement(
+                id = measurementId.orEmpty(),
+                type = MeasurementType.SUGAR,
+                value = value,
+                timestamp = timestamp,
+                onDone = { notifyHistoryChangedAndDismiss() }
+            )
+        } else {
+            viewModel.addSimpleMeasurement(
+                type = MeasurementType.SUGAR,
+                value = value,
+                timestamp = timestamp,
+                source = MeasurementSource.MANUAL,
+                onDone = { notifyHistoryChangedAndDismiss() }
+            )
+        }
+    }
+
+    private fun deleteMeasurement(id: String) {
+        viewModel.deleteMeasurement(id) { notifyHistoryChangedAndDismiss() }
+    }
+
+    private fun notifyHistoryChangedAndDismiss() {
+        parentFragmentManager.setFragmentResult("history_refresh", bundleOf())
+        dismiss()
     }
 }

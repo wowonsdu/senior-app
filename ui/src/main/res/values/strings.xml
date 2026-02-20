@@ -172,6 +172,7 @@
     <string name="patient_edit_doctor_prefill_phone">690 11 223</string>
     <string name="patient_edit_doctor_prefill_email">anna.nowak@example.com</string>
     <string name="patient_edit_doctor_delete">Usun</string>
+    <string name="patient_measurement_delete">Usun pomiar</string>
     <string name="patient_edit_doctor_save">Zapisz zmiany</string>
 
     <string name="patient_settings_title">Moje ustawienia</string>

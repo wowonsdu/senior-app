@@ -148,6 +148,62 @@ class FirestoreMeasurementRepository : MeasurementRepository {
         )
     }
 
+    override fun updateMeasurement(
+        id: String,
+        type: MeasurementType,
+        value: Double,
+        timestamp: Long
+    ): Single<Unit> {
+        val uid = requireUid()
+        val doc = firestore.collection(FirestorePaths.USERS)
+            .document(uid)
+            .collection(FirestorePaths.MEASUREMENTS)
+            .document(id)
+
+        return doc.update(
+            mapOf(
+                "type" to type.name,
+                "value" to value,
+                "timestampMs" to timestamp,
+                "systolic" to FieldValue.delete(),
+                "diastolic" to FieldValue.delete()
+            )
+        ).toSingle().map { Unit }
+    }
+
+    override fun updateBloodPressureMeasurement(
+        id: String,
+        systolic: Int,
+        diastolic: Int,
+        timestamp: Long
+    ): Single<Unit> {
+        val uid = requireUid()
+        val doc = firestore.collection(FirestorePaths.USERS)
+            .document(uid)
+            .collection(FirestorePaths.MEASUREMENTS)
+            .document(id)
+
+        return doc.update(
+            mapOf(
+                "type" to MeasurementType.PRESSURE.name,
+                "systolic" to systolic,
+                "diastolic" to diastolic,
+                "timestampMs" to timestamp,
+                "value" to FieldValue.delete()
+            )
+        ).toSingle().map { Unit }
+    }
+
+    override fun deleteMeasurement(id: String): Single<Unit> {
+        val uid = requireUid()
+        val doc = firestore.collection(FirestorePaths.USERS)
+            .document(uid)
+            .collection(FirestorePaths.MEASUREMENTS)
+            .document(id)
+
+        return doc.delete().toSingle().map { Unit }
+    }
+
     private fun buildMeasurementsQuery(
         base: com.google.firebase.firestore.CollectionReference,
         types: List<MeasurementType>?,
@@ -189,4 +245,3 @@ class FirestoreMeasurementRepository : MeasurementRepository {
         return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
     }
 }
-

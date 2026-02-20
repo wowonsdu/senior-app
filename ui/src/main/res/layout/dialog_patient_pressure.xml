@@ -116,6 +116,15 @@
         android:src="@android:drawable/ic_btn_speak_now"
         android:tint="@color/black" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/pressure_dialog_delete"
+        style="@style/Widget.Senior.Button.Danger"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:text="@string/patient_measurement_delete"
+        android:visibility="gone" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

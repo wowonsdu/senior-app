@@ -31,8 +31,11 @@ import zdrowy.senior.io.domain.history.GetMeasurementChartDataUseCase
 import zdrowy.senior.io.domain.history.GetMeasurementHistoryUseCase
 import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
+import zdrowy.senior.io.domain.measurement.DeleteMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.GetRecentMeasurementsUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementRepository
+import zdrowy.senior.io.domain.measurement.UpdateBloodPressureMeasurementUseCase
+import zdrowy.senior.io.domain.measurement.UpdateMeasurementUseCase
 import zdrowy.senior.io.domain.settings.AddDiseaseUseCase
 import zdrowy.senior.io.domain.settings.AddMedicationUseCase
 import zdrowy.senior.io.domain.settings.GetPersonalDataUseCase
@@ -53,11 +56,15 @@ import zdrowy.senior.io.ui.patient.PatientAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientAlertsViewModel
 import zdrowy.senior.io.ui.patient.PatientHistoryViewModel
 import zdrowy.senior.io.ui.patient.PatientHomeViewModel
+import zdrowy.senior.io.ui.patient.PatientMeasurementDialogViewModel
 import zdrowy.senior.io.ui.patient.PatientSettingsViewModel
 
 val domainModule = module {
     factory { AddMeasurementUseCase(get()) }
     factory { AddBloodPressureMeasurementUseCase(get()) }
+    factory { UpdateMeasurementUseCase(get()) }
+    factory { UpdateBloodPressureMeasurementUseCase(get()) }
+    factory { DeleteMeasurementUseCase(get()) }
     factory { GetRecentMeasurementsUseCase(get()) }
     factory { GetMeasurementHistoryUseCase(get()) }
     factory { GetMeasurementChartDataUseCase(get()) }
@@ -116,6 +123,7 @@ val viewModelModule = module {
     viewModel { PatientAlertsViewModel(get()) }
     viewModel { PatientHomeViewModel(get()) }
     viewModel { PatientSettingsViewModel(get(), get()) }
+    viewModel { PatientMeasurementDialogViewModel(get(), get(), get(), get(), get()) }
 }
 
 val appModules = listOf(domainModule, dataModule, viewModelModule, uiModule)

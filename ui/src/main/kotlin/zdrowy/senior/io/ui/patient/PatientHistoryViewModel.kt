@@ -80,7 +80,12 @@ class PatientHistoryViewModel(
                             title = title,
                             subtitle = formatter.format(Date(measurement.timestamp)),
                             iconRes = iconFor(measurement.type),
-                            iconTintRes = tintFor(measurement.type)
+                            iconTintRes = tintFor(measurement.type),
+                            type = measurement.type,
+                            timestamp = measurement.timestamp,
+                            value = measurement.value,
+                            systolic = measurement.systolic,
+                            diastolic = measurement.diastolic
                         )
                     }
                 }

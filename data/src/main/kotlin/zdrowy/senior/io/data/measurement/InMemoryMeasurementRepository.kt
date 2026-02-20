@@ -105,6 +105,49 @@ class InMemoryMeasurementRepository : MeasurementRepository {
         )
     }
 
+    override fun updateMeasurement(
+        id: String,
+        type: MeasurementType,
+        value: Double,
+        timestamp: Long
+    ): Single<Unit> {
+        val index = measurements.indexOfFirst { it.id == id }
+        if (index == -1) return Single.error(IllegalArgumentException("Measurement not found"))
+        val current = measurements[index]
+        measurements[index] = current.copy(
+            type = type,
+            value = value,
+            systolic = null,
+            diastolic = null,
+            timestamp = timestamp
+        )
+        return Single.just(Unit)
+    }
+
+    override fun updateBloodPressureMeasurement(
+        id: String,
+        systolic: Int,
+        diastolic: Int,
+        timestamp: Long
+    ): Single<Unit> {
+        val index = measurements.indexOfFirst { it.id == id }
+        if (index == -1) return Single.error(IllegalArgumentException("Measurement not found"))
+        val current = measurements[index]
+        measurements[index] = current.copy(
+            type = MeasurementType.PRESSURE,
+            value = null,
+            systolic = systolic,
+            diastolic = diastolic,
+            timestamp = timestamp
+        )
+        return Single.just(Unit)
+    }
+
+    override fun deleteMeasurement(id: String): Single<Unit> {
+        measurements.removeAll { it.id == id }
+        return Single.just(Unit)
+    }
+
     private fun applyFilters(
         types: List<MeasurementType>?,
         dateRange: DateRange?

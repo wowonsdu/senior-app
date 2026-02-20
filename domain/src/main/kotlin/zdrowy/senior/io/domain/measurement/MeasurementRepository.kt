@@ -36,4 +36,20 @@ interface MeasurementRepository {
     ): Single<List<ChartSeries>>
 
     fun getHistoryFilters(): Single<HistoryFilterState>
+
+    fun updateMeasurement(
+        id: String,
+        type: MeasurementType,
+        value: Double,
+        timestamp: Long
+    ): Single<Unit>
+
+    fun updateBloodPressureMeasurement(
+        id: String,
+        systolic: Int,
+        diastolic: Int,
+        timestamp: Long
+    ): Single<Unit>
+
+    fun deleteMeasurement(id: String): Single<Unit>
 }

@@ -91,25 +91,81 @@
         android:id="@+id/patientSugarDialogFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientSugarDialogFragment"
         android:label="@string/patient_sugar_dialog_title"
-        tools:layout="@layout/dialog_patient_sugar" />
+        tools:layout="@layout/dialog_patient_sugar">
+        <argument
+            android:name="measurementId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="measurementValue"
+            android:defaultValue="0"
+            app:argType="float" />
+        <argument
+            android:name="measurementTimestamp"
+            android:defaultValue="0"
+            app:argType="long" />
+    </dialog>
 
     <dialog
         android:id="@+id/patientInsulinDialogFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientInsulinDialogFragment"
         android:label="@string/patient_insulin_dialog_title"
-        tools:layout="@layout/dialog_patient_insulin" />
+        tools:layout="@layout/dialog_patient_insulin">
+        <argument
+            android:name="measurementId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="measurementValue"
+            android:defaultValue="0"
+            app:argType="float" />
+        <argument
+            android:name="measurementTimestamp"
+            android:defaultValue="0"
+            app:argType="long" />
+    </dialog>
 
     <dialog
         android:id="@+id/patientPressureDialogFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientPressureDialogFragment"
         android:label="@string/patient_pressure_dialog_title"
-        tools:layout="@layout/dialog_patient_pressure" />
+        tools:layout="@layout/dialog_patient_pressure">
+        <argument
+            android:name="measurementId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="measurementSystolic"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="measurementDiastolic"
+            android:defaultValue="0"
+            app:argType="integer" />
+        <argument
+            android:name="measurementTimestamp"
+            android:defaultValue="0"
+            app:argType="long" />
+    </dialog>
 
     <dialog
         android:id="@+id/patientPulseDialogFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientPulseDialogFragment"
         android:label="@string/patient_pulse_dialog_title"
-        tools:layout="@layout/dialog_patient_pulse" />
+        tools:layout="@layout/dialog_patient_pulse">
+        <argument
+            android:name="measurementId"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="measurementValue"
+            android:defaultValue="0"
+            app:argType="float" />
+        <argument
+            android:name="measurementTimestamp"
+            android:defaultValue="0"
+            app:argType="long" />
+    </dialog>
 
     <fragment
         android:id="@+id/patientHistoryFragment"

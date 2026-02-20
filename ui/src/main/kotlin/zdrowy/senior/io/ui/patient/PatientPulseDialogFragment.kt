@@ -9,15 +9,15 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.DialogPatientPulseBinding
-import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementSource
 import zdrowy.senior.io.domain.measurement.MeasurementType
 import java.util.Locale
@@ -26,8 +26,7 @@ class PatientPulseDialogFragment : DialogFragment() {
     private var _binding: DialogPatientPulseBinding? = null
     private val binding get() = _binding!!
     private var speechRecognizer: SpeechRecognizer? = null
-    private val addMeasurementUseCase: AddMeasurementUseCase by lazy { get() }
-    private val disposables = CompositeDisposable()
+    private val viewModel: PatientMeasurementDialogViewModel by viewModel()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -39,11 +38,23 @@ class PatientPulseDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogPatientPulseBinding.inflate(LayoutInflater.from(context))
+        val measurementId = arguments?.getString(ARG_MEASUREMENT_ID)
+        val editMode = !measurementId.isNullOrBlank()
         binding.pulseDialogClose.setOnClickListener { dismiss() }
         binding.pulseDialogCancel.setOnClickListener { dismiss() }
         binding.pulseDialogSave.setOnClickListener { saveMeasurement() }
         binding.pulseDialogMic.setOnClickListener {
             startSpeechToText()
+        }
+        binding.pulseDialogDelete.visibility = if (editMode) View.VISIBLE else View.GONE
+        if (editMode) {
+            val value = arguments?.getFloat(ARG_MEASUREMENT_VALUE) ?: 0f
+            binding.pulseDialogValue.setText(
+                if (value == 0f) "" else value.toString()
+            )
+            binding.pulseDialogDelete.setOnClickListener {
+                deleteMeasurement(measurementId.orEmpty())
+            }
         }
 
         return MaterialAlertDialogBuilder(requireContext(), R.style.Widget_Senior_Dialog)
@@ -62,7 +73,6 @@ class PatientPulseDialogFragment : DialogFragment() {
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
         speechRecognizer = null
-        disposables.clear()
         _binding = null
         super.onDestroyView()
     }
@@ -125,6 +135,8 @@ class PatientPulseDialogFragment : DialogFragment() {
     }
 
     private fun saveMeasurement() {
+        val measurementId = arguments?.getString(ARG_MEASUREMENT_ID)
+        val editMode = !measurementId.isNullOrBlank()
         val value = binding.pulseDialogValue.text?.toString()
             ?.replace(',', '.')
             ?.toDoubleOrNull()
@@ -133,13 +145,37 @@ class PatientPulseDialogFragment : DialogFragment() {
                 return
             }
         binding.pulseDialogValueInput.error = null
-        disposables.add(
-            addMeasurementUseCase(
-                MeasurementType.PULSE,
-                value,
-                System.currentTimeMillis(),
-                MeasurementSource.MANUAL
-            ).subscribe({ dismiss() }, { dismiss() })
-        )
+        val timestamp = if (editMode) {
+            val argTimestamp = arguments?.getLong(ARG_MEASUREMENT_TIMESTAMP) ?: 0L
+            if (argTimestamp == 0L) System.currentTimeMillis() else argTimestamp
+        } else {
+            System.currentTimeMillis()
+        }
+        if (editMode) {
+            viewModel.updateSimpleMeasurement(
+                id = measurementId.orEmpty(),
+                type = MeasurementType.PULSE,
+                value = value,
+                timestamp = timestamp,
+                onDone = { notifyHistoryChangedAndDismiss() }
+            )
+        } else {
+            viewModel.addSimpleMeasurement(
+                type = MeasurementType.PULSE,
+                value = value,
+                timestamp = timestamp,
+                source = MeasurementSource.MANUAL,
+                onDone = { notifyHistoryChangedAndDismiss() }
+            )
+        }
+    }
+
+    private fun deleteMeasurement(id: String) {
+        viewModel.deleteMeasurement(id) { notifyHistoryChangedAndDismiss() }
+    }
+
+    private fun notifyHistoryChangedAndDismiss() {
+        parentFragmentManager.setFragmentResult("history_refresh", bundleOf())
+        dismiss()
     }
 }

@@ -15,6 +15,7 @@ import zdrowy.senior.io.domain.history.ChartSeries
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.updateLayoutParams
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -26,7 +27,7 @@ class PatientHistoryFragment : Fragment() {
     private var _binding: FragmentPatientHistoryBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PatientHistoryViewModel by viewModel()
-    private val adapter = PatientMeasurementsAdapter()
+    private val adapter = PatientMeasurementsAdapter { item -> openEditDialog(item) }
     private val selectedTypes = mutableSetOf<MeasurementType>()
     private lateinit var tiles: Map<MeasurementType, TileUi>
 
@@ -104,6 +105,13 @@ class PatientHistoryFragment : Fragment() {
             tile.card.setOnClickListener { toggleType(type) }
         }
 
+        parentFragmentManager.setFragmentResultListener(
+            "history_refresh",
+            viewLifecycleOwner
+        ) { _, _ ->
+            viewModel.setSelectedTypes(selectedTypes.toList())
+        }
+
         setupChart()
         viewModel.load()
         viewModel.measurements.observe(viewLifecycleOwner) { items ->
@@ -117,6 +125,32 @@ class PatientHistoryFragment : Fragment() {
                 selectedTypes.clear()
                 selectedTypes.addAll(state.selectedTypes)
                 updateTileStates()
+            }
+        }
+    }
+
+    private fun openEditDialog(item: PatientMeasurementItemUi) {
+        val args = bundleOf(
+            ARG_MEASUREMENT_ID to item.id,
+            ARG_MEASUREMENT_TIMESTAMP to item.timestamp
+        )
+        when (item.type) {
+            MeasurementType.SUGAR -> {
+                args.putFloat(ARG_MEASUREMENT_VALUE, (item.value ?: 0.0).toFloat())
+                findNavController().navigate(R.id.patientSugarDialogFragment, args)
+            }
+            MeasurementType.INSULIN -> {
+                args.putFloat(ARG_MEASUREMENT_VALUE, (item.value ?: 0.0).toFloat())
+                findNavController().navigate(R.id.patientInsulinDialogFragment, args)
+            }
+            MeasurementType.PRESSURE -> {
+                args.putInt(ARG_MEASUREMENT_SYSTOLIC, item.systolic ?: 0)
+                args.putInt(ARG_MEASUREMENT_DIASTOLIC, item.diastolic ?: 0)
+                findNavController().navigate(R.id.patientPressureDialogFragment, args)
+            }
+            MeasurementType.PULSE -> {
+                args.putFloat(ARG_MEASUREMENT_VALUE, (item.value ?: 0.0).toFloat())
+                findNavController().navigate(R.id.patientPulseDialogFragment, args)
             }
         }
     }

@@ -9,15 +9,15 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.DialogPatientPressureBinding
-import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementSource
 import java.util.Locale
 
@@ -25,8 +25,7 @@ class PatientPressureDialogFragment : DialogFragment() {
     private var _binding: DialogPatientPressureBinding? = null
     private val binding get() = _binding!!
     private var speechRecognizer: SpeechRecognizer? = null
-    private val addBloodPressureMeasurementUseCase: AddBloodPressureMeasurementUseCase by lazy { get() }
-    private val disposables = CompositeDisposable()
+    private val viewModel: PatientMeasurementDialogViewModel by viewModel()
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -38,11 +37,23 @@ class PatientPressureDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogPatientPressureBinding.inflate(LayoutInflater.from(context))
+        val measurementId = arguments?.getString(ARG_MEASUREMENT_ID)
+        val editMode = !measurementId.isNullOrBlank()
         binding.pressureDialogClose.setOnClickListener { dismiss() }
         binding.pressureDialogCancel.setOnClickListener { dismiss() }
         binding.pressureDialogSave.setOnClickListener { saveMeasurement() }
         binding.pressureDialogMic.setOnClickListener {
             startSpeechToText()
+        }
+        binding.pressureDialogDelete.visibility = if (editMode) View.VISIBLE else View.GONE
+        if (editMode) {
+            val systolic = arguments?.getInt(ARG_MEASUREMENT_SYSTOLIC) ?: 0
+            val diastolic = arguments?.getInt(ARG_MEASUREMENT_DIASTOLIC) ?: 0
+            if (systolic != 0) binding.pressureDialogSystolic.setText(systolic.toString())
+            if (diastolic != 0) binding.pressureDialogDiastolic.setText(diastolic.toString())
+            binding.pressureDialogDelete.setOnClickListener {
+                deleteMeasurement(measurementId.orEmpty())
+            }
         }
 
         return MaterialAlertDialogBuilder(requireContext(), R.style.Widget_Senior_Dialog)
@@ -61,7 +72,6 @@ class PatientPressureDialogFragment : DialogFragment() {
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
         speechRecognizer = null
-        disposables.clear()
         _binding = null
         super.onDestroyView()
     }
@@ -130,6 +140,8 @@ class PatientPressureDialogFragment : DialogFragment() {
     }
 
     private fun saveMeasurement() {
+        val measurementId = arguments?.getString(ARG_MEASUREMENT_ID)
+        val editMode = !measurementId.isNullOrBlank()
         val systolic = binding.pressureDialogSystolic.text?.toString()?.toIntOrNull()
         val diastolic = binding.pressureDialogDiastolic.text?.toString()?.toIntOrNull()
         if (systolic == null || diastolic == null) {
@@ -139,13 +151,37 @@ class PatientPressureDialogFragment : DialogFragment() {
         }
         binding.pressureDialogSystolicInput.error = null
         binding.pressureDialogDiastolicInput.error = null
-        disposables.add(
-            addBloodPressureMeasurementUseCase(
-                systolic,
-                diastolic,
-                System.currentTimeMillis(),
-                MeasurementSource.MANUAL
-            ).subscribe({ dismiss() }, { dismiss() })
-        )
+        val timestamp = if (editMode) {
+            val argTimestamp = arguments?.getLong(ARG_MEASUREMENT_TIMESTAMP) ?: 0L
+            if (argTimestamp == 0L) System.currentTimeMillis() else argTimestamp
+        } else {
+            System.currentTimeMillis()
+        }
+        if (editMode) {
+            viewModel.updatePressureMeasurement(
+                id = measurementId.orEmpty(),
+                systolic = systolic,
+                diastolic = diastolic,
+                timestamp = timestamp,
+                onDone = { notifyHistoryChangedAndDismiss() }
+            )
+        } else {
+            viewModel.addPressureMeasurement(
+                systolic = systolic,
+                diastolic = diastolic,
+                timestamp = timestamp,
+                source = MeasurementSource.MANUAL,
+                onDone = { notifyHistoryChangedAndDismiss() }
+            )
+        }
+    }
+
+    private fun deleteMeasurement(id: String) {
+        viewModel.deleteMeasurement(id) { notifyHistoryChangedAndDismiss() }
+    }
+
+    private fun notifyHistoryChangedAndDismiss() {
+        parentFragmentManager.setFragmentResult("history_refresh", bundleOf())
+        dismiss()
     }
 }
