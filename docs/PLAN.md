@@ -91,6 +91,12 @@ Zasady etapu:
 - [x] Fix: dropdown przebiegu choroby otwiera liste opcji
 - [x] Reaktywne listy chorob/lekow (observe + VM update)
 
+## Etap 4.7 — Leki: nowy UX dodawania/edycji
+- [x] Plan: MAIN-PLAN-dodawanie-leku + subplany
+- [ ] UI: dawka jako input, czestotliwosc 0..10, dynamiczne godziny
+- [ ] Logika: dynamiczne godziny + walidacja + zapis/prefill schedule
+- [ ] Walidacja: smoke check dialogow i odswiezania listy
+
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 
 ### 5.1 Opiekun flow (UI + nawigacja)
