@@ -173,6 +173,8 @@
     <string name="patient_edit_doctor_prefill_email">anna.nowak@example.com</string>
     <string name="patient_edit_doctor_delete">Usun</string>
     <string name="patient_measurement_delete">Usun pomiar</string>
+    <string name="patient_history_pressure_systolic">Gorne</string>
+    <string name="patient_history_pressure_diastolic">Dolne</string>
     <string name="patient_edit_doctor_save">Zapisz zmiany</string>
 
     <string name="patient_settings_title">Moje ustawienia</string>

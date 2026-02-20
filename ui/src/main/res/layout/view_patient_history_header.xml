@@ -268,6 +268,54 @@
                     android:text="@string/patient_home_tile_pressure"
                     android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
                     android:textColor="@color/senior_danger" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+
+                        <View
+                            android:layout_width="28dp"
+                            android:layout_height="2dp"
+                            android:background="@drawable/line_legend_solid_pressure" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/patient_history_pressure_systolic"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/senior_danger" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_s"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+
+                        <View
+                            android:layout_width="28dp"
+                            android:layout_height="2dp"
+                            android:background="@drawable/line_legend_dashed_pressure" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/patient_history_pressure_diastolic"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/senior_danger" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
