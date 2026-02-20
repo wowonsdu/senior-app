@@ -108,4 +108,4 @@ Zasady etapu:
 - [x] Pacjent: logowanie SMS (wyslanie kodu + weryfikacja)
 - [x] Opiekun: logowanie SMS (wyslanie kodu + weryfikacja) + ekran placeholder po zalogowaniu
 - [x] Sesja: Role Select respektuje zalogowanie + logout (FirebaseAuth.signOut)
-- [ ] Walidacja: smoke test ADB/MCP na `emulator-5554` + instrukcja uruchomienia emulatora Auth
+- [x] Walidacja: smoke test ADB/MCP na `emulator-5554` + instrukcja uruchomienia emulatora Auth

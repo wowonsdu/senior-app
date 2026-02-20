@@ -84,7 +84,7 @@ class PatientLoginFragment : Fragment() {
                 binding.patientLoginPhoneInput.error = when (e) {
                     is FirebaseAuthInvalidCredentialsException -> "Nieprawidlowy numer telefonu"
                     is FirebaseAuthMissingActivityForRecaptchaException -> "Brak Activity dla weryfikacji"
-                    else -> "Nie udalo sie wyslac kodu"
+                    else -> e.localizedMessage ?: "Nie udalo sie wyslac kodu"
                 }
             }
 
