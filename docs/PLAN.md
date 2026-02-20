@@ -142,3 +142,19 @@ Zasady etapu:
 - [x] Domena + data + UI: observePersonalData (Firestore/InMemory) + ViewModel/Fragment
 - [x] Docs: USE_CASES (UC-SET-12 ObservePersonalData)
 - [ ] Walidacja: smoke test UI (odswiezanie po zapisie i po zewnetrznej zmianie)
+
+## Etap 9 — Refaktor zgodnosci z AGENTS.md (architektura + UI)
+- [x] 9.0 Aktualizacja AGENTS.md (Schedulers w VM) + plan refaktoru w PLAN.md
+- [ ] 9.1 API obserwacyjne: domain/data/di (Agents/Measurements/Alerts + use case observe)
+- [ ] 9.2 Ekran: Patient Settings (overview + listy) — UI models + observe + data binding
+- [ ] 9.3 Dialog: Personal Data (dodaj/edytuj)
+- [ ] 9.4 Dialog: Disease add/edit
+- [ ] 9.5 Dialog: Medication add/edit
+- [ ] 9.6 Ekran: Patient Agents (lista)
+- [ ] 9.7 Dialogi: Add/Edit Agent + Doctor
+- [ ] 9.8 Dialogi: Access Code (agent/doctor)
+- [ ] 9.9 Ekran: Patient History (lista + wykres)
+- [ ] 9.10 Dialogi: Measurements (cukier/insulina/cisnienie/tetno)
+- [ ] 9.11 Ekran: Patient Home (kafelki pomiarow)
+- [ ] 9.12 Ekran: Alerts Overview + Config
+- [ ] 9.13 Auth: SMS verify (patient/caregiver) — VM + UI models + data binding

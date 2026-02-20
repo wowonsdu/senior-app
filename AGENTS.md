@@ -6,13 +6,43 @@
 - Nie pomijaj aktualizacji `docs/PLAN.md`.
 
 ## Architektura i przeplyw danych
-- Pracujesz nad aplikacja Android w Clean Architecture, z DI w Koin.
+- Pracujesz nad aplikacja Android w Clean Architecture z MVVM, z DI w Koin.
+- Podzial na moduly: `ui`, `domain`, `data`, `di`.
 - Dane i repozytoria sa zawsze w module `data`.
 - Cala logika jest w `domain` jako pojedyncze use case'y z operatorem `invoke`.
-- Use case'y uruchamiaj zawsze asynchronicznie przez RxKotlin na `Schedulers.io`.
-- Mapowanie na modele domenowe odbywa sie w ViewModelach.
+- Use case'y uruchamiaj zawsze asynchronicznie przez RxKotlin na `Schedulers.io` w ViewModelach.
+- Mapowanie na modele widokowe odbywa sie w ViewModelach.
 - UI (fragmenty/aktywności) dostaja juz gotowe, zmapowane modele.
 - ViewModele zawsze inicjalizuj w module Koin (viewModelModule), bez Factory.
+
+## UI
+- Data binding i view binding.
+- Widoki czyste, pozbawione logiki, oparte o MVVM.
+- ViewModele wstrzykuja domenowe use case'y z `operator fun invoke()`.
+- Obsluga klikniec i przekazywanie danych zmapowanych na modele widokowe w ViewModelach.
+- UI nie zna domeny, a domena nie zna widokow.
+- Minimalna ilosc logiki w ViewModelu, wszystko co logicznie uzasadnione ma byc w use case.
+- Asynchronicznosc oparta o RxKotlin: `Single`, `Observable`, `Completable`, `Maybe`.
+- Nie rob nic na glownym watku poza aktualizacja UI.
+
+## Domain
+- Wystawia interfejsy repozytoriow implementowanych w `data`.
+- Wystawia modele domenowe i zawiera cala logike.
+- ViewModele spina ja z UI i mapuja, wyjatek to ficzery Androidowe, ktorych domena nie obsluguje.
+
+## Data
+- Dostarcza implementacje przez repozytoria oraz warstwe bazy danych i serwisow.
+- Domena nie wie nic o bazie danych ani serwisach.
+
+## DI
+- Spina wszystkie moduly i dostarcza zaleznosci przez Koin.
+- Wstrzykuje ViewModele, use case'y, repozytoria i pozostale zaleznosci w odpowiedniej kolejnosci.
+
+## Reaktywnosc i Firestore
+- Aplikacja bazuje na Firestore Database.
+- Wszystko, co wymienia dane, ma byc spiete jako `Observable` na query.
+- Kazdy widok obserwuje zmiany danych, nawet jesli edycja odbywa sie w dialogu.
+- Aktualizacja danych ma wynikac z obserwowania query, nie z recznego przekazywania miedzy dialogiem a widokiem.
 
 ## Planowanie i flow init-plan
 - Gdy uzytkownik zawoła `$init-plan`, najpierw zapytaj, czy jest w trybie planowania; kontynuuj dopiero po potwierdzeniu.
