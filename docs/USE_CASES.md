@@ -274,6 +274,12 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Wyjscie: `Unit`.
   - Repo: `SettingsRepository`.
 
+- UC-SET-12 ObservePersonalData
+  - Cel: realtime obserwacja danych osobowych.
+  - Wejscie: brak.
+  - Wyjscie: `Observable<PersonalData>`.
+  - Repo: `SettingsRepository`.
+
 ## Powiadomienia (lokalne / SMS / email)
 - UC-NOTIF-01 ScheduleVisitReminder
   - Cel: zaplanowanie powiadomienia o wizycie.

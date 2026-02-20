@@ -129,4 +129,5 @@ Zasady etapu:
 
 ## Etap 8 — Realtime: PersonalData (watcher)
 - [x] Domena + data + UI: observePersonalData (Firestore/InMemory) + ViewModel/Fragment
-- [ ] Docs + walidacja: USE_CASES + smoke test UI
+- [x] Docs: USE_CASES (UC-SET-12 ObservePersonalData)
+- [ ] Walidacja: smoke test UI (odswiezanie po zapisie i po zewnetrznej zmianie)
