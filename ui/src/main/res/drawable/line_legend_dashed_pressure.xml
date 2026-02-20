@@ -4,7 +4,8 @@
     <size android:height="2dp" />
     <stroke
         android:width="2dp"
-        android:color="@color/senior_danger"
+        android:color="@color/white"
         android:dashWidth="4dp"
         android:dashGap="2dp" />
+    <alpha android:value="204" />
 </shape>
