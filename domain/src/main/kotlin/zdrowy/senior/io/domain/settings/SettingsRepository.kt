@@ -13,11 +13,13 @@ interface SettingsRepository {
     fun updateDisease(id: String, update: DiseaseUpdate): Completable
     fun removeDisease(id: String): Completable
     fun listDiseases(): Single<List<Disease>>
+    fun observeDiseases(): Observable<List<Disease>>
 
     fun addMedication(draft: MedicationDraft): Single<String>
     fun updateMedication(id: String, update: MedicationUpdate): Completable
     fun removeMedication(id: String): Completable
     fun listMedications(): Single<List<Medication>>
+    fun observeMedications(): Observable<List<Medication>>
 
     fun toggleMedicationNotifications(id: String, enabled: Boolean): Completable
 }

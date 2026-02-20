@@ -280,6 +280,18 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Wyjscie: `Observable<PersonalData>`.
   - Repo: `SettingsRepository`.
 
+- UC-SET-13 ObserveDiseases
+  - Cel: realtime obserwacja listy chorob.
+  - Wejscie: brak.
+  - Wyjscie: `Observable<List<Disease>>`.
+  - Repo: `SettingsRepository`.
+
+- UC-SET-14 ObserveMedications
+  - Cel: realtime obserwacja listy lekow.
+  - Wejscie: brak.
+  - Wyjscie: `Observable<List<Medication>>`.
+  - Repo: `SettingsRepository`.
+
 ## Powiadomienia (lokalne / SMS / email)
 - UC-NOTIF-01 ScheduleVisitReminder
   - Cel: zaplanowanie powiadomienia o wizycie.

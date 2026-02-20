@@ -27,10 +27,14 @@ class InMemorySettingsRepository : SettingsRepository {
         address = ""
     )
     private val personalDataSubject = BehaviorSubject.createDefault(fallbackPersonalData)
+    private val diseasesSubject = BehaviorSubject.createDefault(emptyList<Disease>())
+    private val medicationsSubject = BehaviorSubject.createDefault(emptyList<Medication>())
 
     init {
         seedData()
         personalData?.let { personalDataSubject.onNext(it) }
+        diseasesSubject.onNext(diseases.toList())
+        medicationsSubject.onNext(medications.toList())
     }
 
     override fun getPersonalData(): Single<PersonalData> {
@@ -57,6 +61,7 @@ class InMemorySettingsRepository : SettingsRepository {
                 notes = draft.notes
             )
         )
+        diseasesSubject.onNext(diseases.toList())
         return Single.just(id)
     }
 
@@ -69,16 +74,20 @@ class InMemorySettingsRepository : SettingsRepository {
                 severity = update.severity ?: current.severity,
                 notes = update.notes ?: current.notes
             )
+            diseasesSubject.onNext(diseases.toList())
         }
         return Completable.complete()
     }
 
     override fun removeDisease(id: String): Completable {
         diseases.removeAll { it.id == id }
+        diseasesSubject.onNext(diseases.toList())
         return Completable.complete()
     }
 
     override fun listDiseases(): Single<List<Disease>> = Single.just(diseases.toList())
+
+    override fun observeDiseases(): Observable<List<Disease>> = diseasesSubject.hide()
 
     override fun addMedication(draft: MedicationDraft): Single<String> {
         val id = UUID.randomUUID().toString()
@@ -91,6 +100,7 @@ class InMemorySettingsRepository : SettingsRepository {
                 notificationsEnabled = draft.notificationsEnabled
             )
         )
+        medicationsSubject.onNext(medications.toList())
         return Single.just(id)
     }
 
@@ -104,22 +114,27 @@ class InMemorySettingsRepository : SettingsRepository {
                 schedule = update.schedule ?: current.schedule,
                 notificationsEnabled = update.notificationsEnabled ?: current.notificationsEnabled
             )
+            medicationsSubject.onNext(medications.toList())
         }
         return Completable.complete()
     }
 
     override fun removeMedication(id: String): Completable {
         medications.removeAll { it.id == id }
+        medicationsSubject.onNext(medications.toList())
         return Completable.complete()
     }
 
     override fun listMedications(): Single<List<Medication>> = Single.just(medications.toList())
+
+    override fun observeMedications(): Observable<List<Medication>> = medicationsSubject.hide()
 
     override fun toggleMedicationNotifications(id: String, enabled: Boolean): Completable {
         val index = medications.indexOfFirst { it.id == id }
         if (index >= 0) {
             val current = medications[index]
             medications[index] = current.copy(notificationsEnabled = enabled)
+            medicationsSubject.onNext(medications.toList())
         }
         return Completable.complete()
     }

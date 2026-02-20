@@ -182,6 +182,37 @@ class FirestoreSettingsRepository : SettingsRepository {
             }
     }
 
+    override fun observeDiseases(): Observable<List<Disease>> {
+        return Observable.create { emitter ->
+            val uid = try {
+                requireUid()
+            } catch (error: Throwable) {
+                emitter.onError(error)
+                return@create
+            }
+            val col = firestore.collection(FirestorePaths.USERS)
+                .document(uid)
+                .collection(FirestorePaths.DISEASES)
+
+            val registration = col.addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    if (!emitter.isDisposed) emitter.onError(error)
+                    return@addSnapshotListener
+                }
+                val items = snapshot?.documents.orEmpty().map { doc ->
+                    Disease(
+                        id = doc.id,
+                        name = doc.getString("name").orEmpty(),
+                        severity = doc.getString("severity").orEmpty(),
+                        notes = doc.getString("notes").orEmpty()
+                    )
+                }.sortedBy { it.name.lowercase() }
+                if (!emitter.isDisposed) emitter.onNext(items)
+            }
+            emitter.setCancellable { registration.remove() }
+        }
+    }
+
     override fun addMedication(draft: MedicationDraft): Single<String> {
         val uid = requireUid()
         val col = firestore.collection(FirestorePaths.USERS)
@@ -245,6 +276,38 @@ class FirestoreSettingsRepository : SettingsRepository {
                     )
                 }.sortedBy { it.name.lowercase() }
             }
+    }
+
+    override fun observeMedications(): Observable<List<Medication>> {
+        return Observable.create { emitter ->
+            val uid = try {
+                requireUid()
+            } catch (error: Throwable) {
+                emitter.onError(error)
+                return@create
+            }
+            val col = firestore.collection(FirestorePaths.USERS)
+                .document(uid)
+                .collection(FirestorePaths.MEDICATIONS)
+
+            val registration = col.addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    if (!emitter.isDisposed) emitter.onError(error)
+                    return@addSnapshotListener
+                }
+                val items = snapshot?.documents.orEmpty().map { doc ->
+                    Medication(
+                        id = doc.id,
+                        name = doc.getString("name").orEmpty(),
+                        dosage = doc.getString("dosage").orEmpty(),
+                        schedule = doc.getString("schedule").orEmpty(),
+                        notificationsEnabled = doc.getBoolean("notificationsEnabled") ?: false
+                    )
+                }.sortedBy { it.name.lowercase() }
+                if (!emitter.isDisposed) emitter.onNext(items)
+            }
+            emitter.setCancellable { registration.remove() }
+        }
     }
 
     override fun toggleMedicationNotifications(id: String, enabled: Boolean): Completable {
