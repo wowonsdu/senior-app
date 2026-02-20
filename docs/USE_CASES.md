@@ -100,6 +100,11 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Wejscie: `AgentId`, `AccessCode`.
   - Wyjscie: `Unit`.
   - Repo: `NotificationRepository`.
+- UC-AGENT-08 NotifyAgents
+  - Cel: wyslanie powiadomienia do opiekunow.
+  - Wejscie: `List<AgentId>`, `message`.
+  - Wyjscie: `Unit`.
+  - Repo: `NotificationRepository`.
 
 ## Opiekun / panel opiekuna
 - UC-CARE-01 AddDependent

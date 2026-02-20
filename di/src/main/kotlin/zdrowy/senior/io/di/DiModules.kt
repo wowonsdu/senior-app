@@ -15,6 +15,7 @@ import zdrowy.senior.io.domain.agent.AgentRepository
 import zdrowy.senior.io.domain.agent.GenerateAccessCodeForAgentUseCase
 import zdrowy.senior.io.domain.agent.ListAgentsUseCase
 import zdrowy.senior.io.domain.agent.NotificationRepository
+import zdrowy.senior.io.domain.agent.NotifyAgentsUseCase
 import zdrowy.senior.io.domain.agent.RemoveAgentUseCase
 import zdrowy.senior.io.domain.agent.SendAccessCodeSmsUseCase
 import zdrowy.senior.io.domain.agent.UpdateAgentUseCase
@@ -77,6 +78,7 @@ val domainModule = module {
     factory { ListAgentsUseCase(get()) }
     factory { GenerateAccessCodeForAgentUseCase(get()) }
     factory { SendAccessCodeSmsUseCase(get()) }
+    factory { NotifyAgentsUseCase(get()) }
 
     factory { GetAlertConfigUseCase(get()) }
     factory { UpdateAlertConfigUseCase(get()) }

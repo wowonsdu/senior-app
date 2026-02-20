@@ -8,4 +8,8 @@ class NoOpNotificationRepository : NotificationRepository {
     override fun sendAccessCodeSms(agentId: String, accessCode: AccessCode): Completable {
         return Completable.complete()
     }
+
+    override fun notifyAgents(agentIds: List<String>, message: String): Completable {
+        return Completable.complete()
+    }
 }
