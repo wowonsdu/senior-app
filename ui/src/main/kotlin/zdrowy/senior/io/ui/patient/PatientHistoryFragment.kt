@@ -36,7 +36,7 @@ class PatientHistoryFragment : Fragment() {
         _binding = FragmentPatientHistoryBinding.inflate(inflater, container, false)
         _headerBinding = ViewPatientHistoryHeaderBinding.inflate(
             inflater,
-            binding.patientHistoryList,
+            container,
             false
         )
         val headerAdapter = PatientHistoryHeaderAdapter(headerBinding)
