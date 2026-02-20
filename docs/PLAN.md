@@ -84,7 +84,7 @@ Zasady etapu:
 ## Etap 4.5 — Powiadom agenta (dialog)
 - [x] Domena + dummy powiadomienia (repo + UC + DI + USE_CASES)
 - [x] Dialog UI + nawigacja (kafelek na Monitorze zdrowia)
-- [ ] ViewModel + logika wysylki + toast
+- [x] ViewModel + logika wysylki + toast
 
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 

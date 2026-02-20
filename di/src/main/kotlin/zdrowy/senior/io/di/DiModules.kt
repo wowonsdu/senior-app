@@ -58,6 +58,7 @@ import zdrowy.senior.io.ui.patient.PatientAlertsViewModel
 import zdrowy.senior.io.ui.patient.PatientHistoryViewModel
 import zdrowy.senior.io.ui.patient.PatientHomeViewModel
 import zdrowy.senior.io.ui.patient.PatientMeasurementDialogViewModel
+import zdrowy.senior.io.ui.patient.PatientNotifyAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientSettingsViewModel
 
 val domainModule = module {
@@ -126,6 +127,7 @@ val viewModelModule = module {
     viewModel { PatientHomeViewModel(get()) }
     viewModel { PatientSettingsViewModel(get(), get()) }
     viewModel { PatientMeasurementDialogViewModel(get(), get(), get(), get(), get()) }
+    viewModel { PatientNotifyAgentsViewModel(get(), get()) }
 }
 
 val appModules = listOf(domainModule, dataModule, viewModelModule, uiModule)
