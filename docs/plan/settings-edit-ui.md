@@ -24,7 +24,7 @@
 - [x] Dodac akcje i argumenty w `nav_graph.xml` dla edycji (id choroby/leku).
 - [x] Dodac nowe dialogi edycji z prefill z repo (pobranie listy i wybor po id).
 - [x] Dodac "Usun" w dialogach edycji chorob/lekow i obsluzyc `Remove*UseCase`.
-- [ ] Ustawic tap na `patient_settings_personal` jako wejscie do edycji danych osobowych.
+- [x] Ustawic tap na `patient_settings_personal` jako wejscie do edycji danych osobowych.
 - [ ] Zaktualizowac `PatientSettingsUiState` oraz `PatientSettingsFragment` do `firstName/lastName`.
 - [ ] Zaktualizowac `PatientPersonalDataDialogFragment` (prefill + zapis `firstName/lastName`).
 - [ ] Zaktualizowac stringi tytulow/CTA ("Edytuj chorobe", "Edytuj lek", "Usun").

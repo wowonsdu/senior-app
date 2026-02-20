@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,8 +19,18 @@ class PatientSettingsFragment : Fragment() {
     private val viewModel by viewModels<PatientSettingsViewModel> {
         PatientSettingsViewModel.Factory(get(), get())
     }
-    private val diseasesAdapter = PatientDiseasesAdapter()
-    private val medsAdapter = PatientMedicationsAdapter()
+    private val diseasesAdapter = PatientDiseasesAdapter { disease ->
+        findNavController().navigate(
+            R.id.action_patientSettings_to_editDisease,
+            bundleOf("diseaseId" to disease.id)
+        )
+    }
+    private val medsAdapter = PatientMedicationsAdapter { medication ->
+        findNavController().navigate(
+            R.id.action_patientSettings_to_editMed,
+            bundleOf("medicationId" to medication.id)
+        )
+    }
     private val caregiversAdapter = PatientCaregiversAdapter()
 
     override fun onCreateView(
@@ -32,6 +43,9 @@ class PatientSettingsFragment : Fragment() {
             findNavController().popBackStack()
         }
         binding.patientSettingsAddPersonal.setOnClickListener {
+            findNavController().navigate(R.id.action_patientSettings_to_personalData)
+        }
+        binding.patientSettingsPersonal.setOnClickListener {
             findNavController().navigate(R.id.action_patientSettings_to_personalData)
         }
         binding.patientSettingsAddDisease.setOnClickListener {
@@ -56,7 +70,11 @@ class PatientSettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.load()
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            binding.patientSettingsPersonalName.text = state.personalData.fullName
+            val firstName = state.personalData.firstName
+            val lastName = state.personalData.lastName
+            binding.patientSettingsPersonalName.text = listOf(firstName, lastName)
+                .filter { it.isNotBlank() }
+                .joinToString(" ")
             binding.patientSettingsPersonalPesel.text = "PESEL: ${state.personalData.pesel}"
             binding.patientSettingsPersonalAddress.text = "Adres: ${state.personalData.address}"
             binding.patientSettingsPersonalPhone.text = "Telefon: ${state.personalData.phoneNumber}"
