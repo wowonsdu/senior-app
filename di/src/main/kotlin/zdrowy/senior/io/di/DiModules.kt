@@ -1,5 +1,6 @@
 ﻿package zdrowy.senior.io.di
 
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import zdrowy.senior.io.data.agent.FirestoreAccessCodeRepository
 import zdrowy.senior.io.data.agent.FirestoreAgentRepository
@@ -48,6 +49,7 @@ import zdrowy.senior.io.domain.settings.UpsertPersonalDataUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
 import zdrowy.senior.io.domain.user.UserProfileRepository
 import zdrowy.senior.io.data.user.FirestoreUserProfileRepository
+import zdrowy.senior.io.ui.patient.PatientHistoryViewModel
 
 val domainModule = module {
     factory { AddMeasurementUseCase(get()) }
@@ -104,4 +106,8 @@ val uiModule = module {
     // ViewModel bindings will be added here.
 }
 
-val appModules = listOf(domainModule, dataModule, uiModule)
+val viewModelModule = module {
+    viewModel { PatientHistoryViewModel(get(), get(), get()) }
+}
+
+val appModules = listOf(domainModule, dataModule, viewModelModule, uiModule)

@@ -5,11 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
-import org.koin.android.ext.android.get
 import zdrowy.senior.io.ui.databinding.FragmentPatientHistoryBinding
 import zdrowy.senior.io.domain.measurement.MeasurementType
 import android.widget.ImageView
@@ -20,9 +19,7 @@ import zdrowy.senior.io.ui.R
 class PatientHistoryFragment : Fragment() {
     private var _binding: FragmentPatientHistoryBinding? = null
     private val binding get() = _binding!!
-    private val viewModel by viewModels<PatientHistoryViewModel> {
-        PatientHistoryViewModel.Factory(get(), get(), get())
-    }
+    private val viewModel: PatientHistoryViewModel by viewModel()
     private val adapter = PatientMeasurementsAdapter()
     private val selectedTypes = mutableSetOf<MeasurementType>()
     private lateinit var tiles: Map<MeasurementType, TileUi>

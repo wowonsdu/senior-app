@@ -3,7 +3,6 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -108,24 +107,6 @@ class PatientHistoryViewModel(
     override fun onCleared() {
         disposables.clear()
         super.onCleared()
-    }
-
-    class Factory(
-        private val getMeasurementHistory: GetMeasurementHistoryUseCase,
-        private val getMeasurementChartData: GetMeasurementChartDataUseCase,
-        private val getHistoryFilters: GetHistoryFiltersUseCase
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PatientHistoryViewModel::class.java)) {
-                return PatientHistoryViewModel(
-                    getMeasurementHistory,
-                    getMeasurementChartData,
-                    getHistoryFilters
-                ) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-        }
     }
 
     private fun iconFor(type: MeasurementType): Int {
