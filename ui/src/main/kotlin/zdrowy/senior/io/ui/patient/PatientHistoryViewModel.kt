@@ -37,12 +37,23 @@ class PatientHistoryViewModel(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ state ->
-                    _filters.value = state
-                    loadHistory(state.selectedTypes)
-                    loadChart(state.selectedTypes)
+                    val selected = state.selectedTypes.ifEmpty { MeasurementType.values().toList() }
+                    _filters.value = state.copy(selectedTypes = selected)
+                    loadHistory(selected)
+                    loadChart(selected)
                 }, {
                 })
         )
+    }
+
+    fun setSelectedTypes(types: List<MeasurementType>) {
+        if (types.isEmpty()) return
+        val current = _filters.value
+        if (current != null) {
+            _filters.value = current.copy(selectedTypes = types)
+        }
+        loadHistory(types)
+        loadChart(types)
     }
 
     private fun loadHistory(types: List<MeasurementType>) {
