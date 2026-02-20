@@ -249,82 +249,77 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/patient_history_tile_pressure_icon"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_alert_heart"
-                    android:tint="@color/senior_danger" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/patient_history_tile_pressure_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_s"
-                    android:text="@string/patient_home_tile_pressure"
-                    android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                    android:textColor="@color/senior_danger" />
+                    <ImageView
+                        android:id="@+id/patient_history_tile_pressure_icon"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_alert_heart"
+                        android:tint="@color/senior_danger" />
+
+                    <TextView
+                        android:id="@+id/patient_history_tile_pressure_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_s"
+                        android:text="@string/patient_home_tile_pressure"
+                        android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                        android:textColor="@color/senior_danger" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_xs"
-                    android:orientation="vertical">
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
 
                         <View
                             android:layout_width="32dp"
                             android:layout_height="3dp"
-                            android:layout_marginEnd="@dimen/spacing_m"
                             android:background="@drawable/line_legend_solid_pressure" />
 
-                        <View
-                            android:layout_width="4dp"
-                            android:layout_height="3dp"
-                            android:layout_marginEnd="@dimen/spacing_s"
-                            android:background="@drawable/line_legend_solid_pressure" />
-
-                        <View
-                            android:layout_width="4dp"
-                            android:layout_height="3dp"
-                            android:layout_marginEnd="@dimen/spacing_s"
-                            android:background="@drawable/line_legend_solid_pressure" />
-
-                        <View
-                            android:layout_width="4dp"
-                            android:layout_height="3dp"
-                            android:layout_marginEnd="@dimen/spacing_s"
-                            android:background="@drawable/line_legend_solid_pressure" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:alpha="0.8"
+                            android:text="@string/patient_history_pressure_systolic"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/white" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
+                        android:layout_marginStart="@dimen/spacing_l"
+                        android:orientation="vertical"
+                        android:gravity="center_horizontal">
+
+                        <View
+                            android:layout_width="32dp"
+                            android:layout_height="3dp"
+                            android:background="@drawable/line_legend_dashed_pressure" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/spacing_s"
-                            android:alpha="0.8"
-                            android:text="@string/patient_history_pressure_systolic"
-                            android:textAppearance="@style/TextAppearance.Senior.Caption"
-                            android:textColor="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
                             android:alpha="0.8"
                             android:text="@string/patient_history_pressure_diastolic"
                             android:textAppearance="@style/TextAppearance.Senior.Caption"
