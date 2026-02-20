@@ -116,7 +116,7 @@ Zasady etapu:
 - [x] Plan: model danych Firestore (master + subplany w `docs/plan/MAIN-PLAN-firestore-user-data-model.md`)
 - [x] Firestore: rules + indexes + wiring w `firebase.json`
 - [x] Firestore: users/{uid} + bootstrap roli (PATIENT/CAREGIVER)
-- [ ] Migracja: SettingsRepository (InMemory -> Firestore)
+- [x] Migracja: SettingsRepository (InMemory -> Firestore)
 - [ ] Migracja: MeasurementRepository (InMemory -> Firestore)
 - [ ] Migracja: AgentRepository + AccessCodeRepository (InMemory -> Firestore)
 - [ ] Migracja: AlertRepository (InMemory -> Firestore)

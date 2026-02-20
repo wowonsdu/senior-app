@@ -6,7 +6,7 @@ import zdrowy.senior.io.data.agent.InMemoryAgentRepository
 import zdrowy.senior.io.data.alert.InMemoryAlertRepository
 import zdrowy.senior.io.data.measurement.InMemoryMeasurementRepository
 import zdrowy.senior.io.data.notification.NoOpNotificationRepository
-import zdrowy.senior.io.data.settings.InMemorySettingsRepository
+import zdrowy.senior.io.data.settings.FirestoreSettingsRepository
 import zdrowy.senior.io.domain.agent.AccessCodeRepository
 import zdrowy.senior.io.domain.agent.AddAgentUseCase
 import zdrowy.senior.io.domain.agent.AddDoctorUseCase
@@ -95,7 +95,7 @@ val dataModule = module {
     single<AccessCodeRepository> { InMemoryAccessCodeRepository() }
     single<NotificationRepository> { NoOpNotificationRepository() }
     single<AlertRepository> { InMemoryAlertRepository() }
-    single<SettingsRepository> { InMemorySettingsRepository() }
+    single<SettingsRepository> { FirestoreSettingsRepository() }
 
     single<UserProfileRepository> { FirestoreUserProfileRepository() }
 }
