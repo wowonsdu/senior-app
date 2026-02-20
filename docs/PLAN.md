@@ -79,7 +79,7 @@ Zasady etapu:
 
 ## Etap 4.4 — Stabilizacja (MCP)
 - [x] Fix: separator w subtitle alertow (brak "krzakow" typu `â€˘`)
-- [ ] Skrypt: smoke test MCP (ustawienia + alerty) na emulatorze
+- [x] Skrypt: smoke test MCP (ustawienia + alerty) na emulatorze
 
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 
