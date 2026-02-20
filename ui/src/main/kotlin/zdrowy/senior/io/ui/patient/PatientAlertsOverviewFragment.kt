@@ -75,6 +75,6 @@ class PatientAlertsOverviewFragment : Fragment() {
         val enabled = if (setting.enabled) "wlaczony" else "wylaczony"
         val min = setting.min?.toString() ?: "-"
         val max = setting.max?.toString() ?: "-"
-        return "Status: $enabled • Min: $min • Max: $max"
+        return "Status: $enabled \u2022 Min: $min \u2022 Max: $max"
     }
 }

@@ -26,7 +26,7 @@ class PatientAlertsAdapter : ListAdapter<AlertSetting, PatientAlertsAdapter.View
             val max = item.max?.toString() ?: "-"
             binding.alertName.text = item.type.name.lowercase().replaceFirstChar { it.uppercase() }
             binding.alertStatus.text = "Status: $status"
-            binding.alertThresholds.text = "Min: $min • Max: $max"
+            binding.alertThresholds.text = "Min: $min \u2022 Max: $max"
         }
     }
 

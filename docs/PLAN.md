@@ -77,6 +77,10 @@ Zasady etapu:
 ## Etap 4.3 — Ustawienia: model danych osobowych
 - [x] PersonalData: firstName/lastName + seed w InMemorySettingsRepository
 
+## Etap 4.4 — Stabilizacja (MCP)
+- [x] Fix: separator w subtitle alertow (brak "krzakow" typu `â€˘`)
+- [ ] Skrypt: smoke test MCP (ustawienia + alerty) na emulatorze
+
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 
 ### 5.1 Opiekun flow (UI + nawigacja)
