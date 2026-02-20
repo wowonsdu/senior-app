@@ -5,26 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.ConcatAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
 import zdrowy.senior.io.ui.databinding.FragmentPatientHistoryBinding
-import zdrowy.senior.io.ui.databinding.ViewPatientHistoryHeaderBinding
 import zdrowy.senior.io.domain.measurement.MeasurementType
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import zdrowy.senior.io.ui.R
 
 class PatientHistoryFragment : Fragment() {
     private var _binding: FragmentPatientHistoryBinding? = null
     private val binding get() = _binding!!
-    private var _headerBinding: ViewPatientHistoryHeaderBinding? = null
-    private val headerBinding get() = _headerBinding!!
     private val viewModel: PatientHistoryViewModel by viewModel()
-    private val measurementsAdapter = PatientMeasurementsAdapter()
+    private val adapter = PatientMeasurementsAdapter()
     private val selectedTypes = mutableSetOf<MeasurementType>()
     private lateinit var tiles: Map<MeasurementType, TileUi>
 
@@ -34,14 +31,8 @@ class PatientHistoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPatientHistoryBinding.inflate(inflater, container, false)
-        _headerBinding = ViewPatientHistoryHeaderBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-        val headerAdapter = PatientHistoryHeaderAdapter(headerBinding)
         binding.patientHistoryList.layoutManager = LinearLayoutManager(requireContext())
-        binding.patientHistoryList.adapter = ConcatAdapter(headerAdapter, measurementsAdapter)
+        binding.patientHistoryList.adapter = adapter
         binding.patientHistoryToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -50,38 +41,46 @@ class PatientHistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.patientHistoryScroll.post {
+            val availableHeight = binding.patientHistoryScroll.height
+            val padding = binding.patientHistoryContent.paddingTop + binding.patientHistoryContent.paddingBottom
+            val targetHeight = (availableHeight - padding).coerceAtLeast(0)
+            binding.patientHistoryList.updateLayoutParams<ViewGroup.LayoutParams> {
+                height = targetHeight
+            }
+        }
         tiles = mapOf(
             MeasurementType.SUGAR to TileUi(
-                card = headerBinding.patientHistoryTileSugar,
-                icon = headerBinding.patientHistoryTileSugarIcon,
-                label = headerBinding.patientHistoryTileSugarLabel,
+                card = binding.patientHistoryHeader.patientHistoryTileSugar,
+                icon = binding.patientHistoryHeader.patientHistoryTileSugarIcon,
+                label = binding.patientHistoryHeader.patientHistoryTileSugarLabel,
                 selectedBackground = R.color.senior_info,
                 selectedContent = R.color.white,
                 unselectedBackground = R.color.white,
                 unselectedContent = R.color.senior_info
             ),
             MeasurementType.INSULIN to TileUi(
-                card = headerBinding.patientHistoryTileInsulin,
-                icon = headerBinding.patientHistoryTileInsulinIcon,
-                label = headerBinding.patientHistoryTileInsulinLabel,
+                card = binding.patientHistoryHeader.patientHistoryTileInsulin,
+                icon = binding.patientHistoryHeader.patientHistoryTileInsulinIcon,
+                label = binding.patientHistoryHeader.patientHistoryTileInsulinLabel,
                 selectedBackground = R.color.senior_secondary,
                 selectedContent = R.color.white,
                 unselectedBackground = R.color.white,
                 unselectedContent = R.color.senior_secondary
             ),
             MeasurementType.PRESSURE to TileUi(
-                card = headerBinding.patientHistoryTilePressure,
-                icon = headerBinding.patientHistoryTilePressureIcon,
-                label = headerBinding.patientHistoryTilePressureLabel,
+                card = binding.patientHistoryHeader.patientHistoryTilePressure,
+                icon = binding.patientHistoryHeader.patientHistoryTilePressureIcon,
+                label = binding.patientHistoryHeader.patientHistoryTilePressureLabel,
                 selectedBackground = R.color.senior_danger,
                 selectedContent = R.color.white,
                 unselectedBackground = R.color.white,
                 unselectedContent = R.color.senior_danger
             ),
             MeasurementType.PULSE to TileUi(
-                card = headerBinding.patientHistoryTilePulse,
-                icon = headerBinding.patientHistoryTilePulseIcon,
-                label = headerBinding.patientHistoryTilePulseLabel,
+                card = binding.patientHistoryHeader.patientHistoryTilePulse,
+                icon = binding.patientHistoryHeader.patientHistoryTilePulseIcon,
+                label = binding.patientHistoryHeader.patientHistoryTilePulseLabel,
                 selectedBackground = R.color.senior_purple,
                 selectedContent = R.color.white,
                 unselectedBackground = R.color.white,
@@ -99,7 +98,7 @@ class PatientHistoryFragment : Fragment() {
 
         viewModel.load()
         viewModel.measurements.observe(viewLifecycleOwner) { items ->
-            measurementsAdapter.submitList(items)
+            adapter.submitList(items)
         }
         viewModel.filters.observe(viewLifecycleOwner) { state ->
             if (state.selectedTypes.isNotEmpty()) {
@@ -111,7 +110,6 @@ class PatientHistoryFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        _headerBinding = null
         _binding = null
         super.onDestroyView()
     }

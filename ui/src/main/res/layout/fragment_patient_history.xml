@@ -18,15 +18,34 @@
         app:title="@string/patient_history_title"
         app:titleTextColor="@color/white" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/patient_history_list"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/patient_history_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:padding="@dimen/spacing_l"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/patient_history_toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/patient_history_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_l">
+
+            <include
+                android:id="@+id/patient_history_header"
+                layout="@layout/view_patient_history_header" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/patient_history_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
