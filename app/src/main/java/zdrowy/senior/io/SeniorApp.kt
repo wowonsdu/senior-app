@@ -1,6 +1,7 @@
 ﻿package zdrowy.senior.io
 
 import android.app.Application
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -48,6 +49,13 @@ class SeniorApp : Application() {
                 BuildConfig.FIREBASE_AUTH_EMULATOR_PORT
             )
             auth.firebaseAuthSettings.setAppVerificationDisabledForTesting(true)
+        }
+
+        if (BuildConfig.USE_FIREBASE_FIRESTORE_EMULATOR) {
+            FirebaseFirestore.getInstance().useEmulator(
+                BuildConfig.FIREBASE_FIRESTORE_EMULATOR_HOST,
+                BuildConfig.FIREBASE_FIRESTORE_EMULATOR_PORT
+            )
         }
     }
 }

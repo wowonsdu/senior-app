@@ -109,3 +109,8 @@ Zasady etapu:
 - [x] Opiekun: logowanie SMS (wyslanie kodu + weryfikacja) + ekran placeholder po zalogowaniu
 - [x] Sesja: Role Select respektuje zalogowanie + logout (FirebaseAuth.signOut)
 - [x] Walidacja: smoke test ADB/MCP na `emulator-5554` + instrukcja uruchomienia emulatora Auth
+
+## Etap 7 — Firebase Firestore (emulator + przygotowanie pod realne dane)
+- [x] Konfiguracja emulatora Firestore w DEBUG (`useEmulator(10.0.2.2, 8080)`)
+- [ ] Instrukcja uruchomienia emulatora Firestore
+- [ ] Migracja: repozytoria z InMemory -> Firestore (etapami, ekran po ekranie)

@@ -22,6 +22,10 @@ android {
             buildConfigField("boolean", "USE_FIREBASE_AUTH_EMULATOR", "true")
             buildConfigField("String", "FIREBASE_AUTH_EMULATOR_HOST", "\"10.0.2.2\"")
             buildConfigField("int", "FIREBASE_AUTH_EMULATOR_PORT", "9099")
+
+            buildConfigField("boolean", "USE_FIREBASE_FIRESTORE_EMULATOR", "true")
+            buildConfigField("String", "FIREBASE_FIRESTORE_EMULATOR_HOST", "\"10.0.2.2\"")
+            buildConfigField("int", "FIREBASE_FIRESTORE_EMULATOR_PORT", "8080")
         }
         release {
             isMinifyEnabled = false
@@ -32,6 +36,10 @@ android {
             buildConfigField("boolean", "USE_FIREBASE_AUTH_EMULATOR", "false")
             buildConfigField("String", "FIREBASE_AUTH_EMULATOR_HOST", "\"\"")
             buildConfigField("int", "FIREBASE_AUTH_EMULATOR_PORT", "0")
+
+            buildConfigField("boolean", "USE_FIREBASE_FIRESTORE_EMULATOR", "false")
+            buildConfigField("String", "FIREBASE_FIRESTORE_EMULATOR_HOST", "\"\"")
+            buildConfigField("int", "FIREBASE_FIRESTORE_EMULATOR_PORT", "0")
         }
     }
     buildFeatures {
@@ -58,6 +66,7 @@ dependencies {
     implementation(libs.timber)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
     implementation(project(":ui"))
     implementation(project(":di"))
     testImplementation(libs.junit)
