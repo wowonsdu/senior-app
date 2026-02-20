@@ -19,29 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_marginTop="@dimen/spacing_l"
+        app:contentPadding="@dimen/spacing_m"
         app:cardBackgroundColor="@color/white">
 
-        <LinearLayout
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/patient_history_chart_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="@null"
-                android:src="@android:drawable/ic_menu_sort_by_size"
-                android:tint="@color/senior_text_tertiary" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_s"
-                android:text="@string/patient_history_chart_placeholder"
-                android:textAppearance="@style/TextAppearance.Senior.Caption"
-                android:textColor="@color/senior_text_tertiary" />
-        </LinearLayout>
+            android:layout_height="match_parent" />
     </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout

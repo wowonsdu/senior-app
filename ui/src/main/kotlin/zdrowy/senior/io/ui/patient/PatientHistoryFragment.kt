@@ -11,10 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.card.MaterialCardView
 import zdrowy.senior.io.ui.databinding.FragmentPatientHistoryBinding
 import zdrowy.senior.io.domain.measurement.MeasurementType
+import zdrowy.senior.io.domain.history.ChartSeries
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import zdrowy.senior.io.ui.R
 
 class PatientHistoryFragment : Fragment() {
@@ -99,9 +104,13 @@ class PatientHistoryFragment : Fragment() {
             tile.card.setOnClickListener { toggleType(type) }
         }
 
+        setupChart()
         viewModel.load()
         viewModel.measurements.observe(viewLifecycleOwner) { items ->
             adapter.submitList(items)
+        }
+        viewModel.chartSeries.observe(viewLifecycleOwner) { series ->
+            renderChart(series)
         }
         viewModel.filters.observe(viewLifecycleOwner) { state ->
             if (state.selectedTypes.isNotEmpty()) {
@@ -110,6 +119,57 @@ class PatientHistoryFragment : Fragment() {
                 updateTileStates()
             }
         }
+    }
+
+    private fun renderChart(series: List<ChartSeries>) {
+        val chart = binding.patientHistoryHeader.patientHistoryChartView
+        if (series.isEmpty()) {
+            chart.clear()
+            chart.invalidate()
+            return
+        }
+        val dataSets = series.mapNotNull { chartSeries ->
+            if (chartSeries.points.isEmpty()) return@mapNotNull null
+            val entries = chartSeries.points.mapIndexed { index, point ->
+                Entry(index.toFloat(), point.value.toFloat())
+            }
+            LineDataSet(entries, null).apply {
+                color = colorOf(colorFor(chartSeries.type))
+                lineWidth = 2f
+                setDrawValues(false)
+                setDrawCircles(false)
+                setDrawCircleHole(false)
+                mode = LineDataSet.Mode.CUBIC_BEZIER
+            }
+        }
+        chart.data = LineData(dataSets)
+        chart.invalidate()
+    }
+
+    private fun colorFor(type: MeasurementType): Int {
+        return when (type) {
+            MeasurementType.SUGAR -> R.color.senior_info
+            MeasurementType.INSULIN -> R.color.senior_secondary
+            MeasurementType.PRESSURE -> R.color.senior_danger
+            MeasurementType.PULSE -> R.color.senior_purple
+        }
+    }
+
+    private fun setupChart() {
+        val chart = binding.patientHistoryHeader.patientHistoryChartView
+        chart.description.isEnabled = false
+        chart.legend.isEnabled = false
+        chart.setNoDataText(getString(R.string.patient_history_chart_placeholder))
+        chart.setNoDataTextColor(colorOf(R.color.senior_text_tertiary))
+        chart.setTouchEnabled(false)
+        chart.axisRight.isEnabled = false
+        chart.axisLeft.setDrawGridLines(true)
+        chart.axisLeft.textColor = colorOf(R.color.senior_text_tertiary)
+        chart.axisLeft.axisLineColor = colorOf(R.color.senior_outline)
+        chart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+        chart.xAxis.setDrawGridLines(false)
+        chart.xAxis.textColor = colorOf(R.color.senior_text_tertiary)
+        chart.xAxis.axisLineColor = colorOf(R.color.senior_outline)
     }
 
     override fun onDestroyView() {

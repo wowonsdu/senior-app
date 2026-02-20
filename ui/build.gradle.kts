@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.rxkotlin)
     implementation(libs.rxandroid)
     implementation(libs.koin.android)
+    implementation(libs.mpandroidchart)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
 }
