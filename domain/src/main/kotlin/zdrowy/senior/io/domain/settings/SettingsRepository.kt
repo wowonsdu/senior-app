@@ -1,11 +1,13 @@
 ﻿package zdrowy.senior.io.domain.settings
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
 interface SettingsRepository {
     fun getPersonalData(): Single<PersonalData>
     fun upsertPersonalData(data: PersonalData): Completable
+    fun observePersonalData(): Observable<PersonalData>
 
     fun addDisease(draft: DiseaseDraft): Single<String>
     fun updateDisease(id: String, update: DiseaseUpdate): Completable

@@ -1,7 +1,9 @@
 ﻿package zdrowy.senior.io.data.settings
 
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
 import zdrowy.senior.io.domain.settings.Disease
 import zdrowy.senior.io.domain.settings.DiseaseDraft
 import zdrowy.senior.io.domain.settings.DiseaseUpdate
@@ -16,26 +18,33 @@ class InMemorySettingsRepository : SettingsRepository {
     private var personalData: PersonalData? = null
     private val diseases = mutableListOf<Disease>()
     private val medications = mutableListOf<Medication>()
+    private val fallbackPersonalData = PersonalData(
+        firstName = "",
+        lastName = "",
+        pesel = "",
+        phoneNumber = "",
+        email = "",
+        address = ""
+    )
+    private val personalDataSubject = BehaviorSubject.createDefault(fallbackPersonalData)
 
     init {
         seedData()
+        personalData?.let { personalDataSubject.onNext(it) }
     }
 
     override fun getPersonalData(): Single<PersonalData> {
-        val fallback = PersonalData(
-            firstName = "",
-            lastName = "",
-            pesel = "",
-            phoneNumber = "",
-            email = "",
-            address = ""
-        )
-        return Single.just(personalData ?: fallback)
+        return Single.just(personalData ?: fallbackPersonalData)
     }
 
     override fun upsertPersonalData(data: PersonalData): Completable {
         personalData = data
+        personalDataSubject.onNext(data)
         return Completable.complete()
+    }
+
+    override fun observePersonalData(): Observable<PersonalData> {
+        return personalDataSubject.hide()
     }
 
     override fun addDisease(draft: DiseaseDraft): Single<String> {

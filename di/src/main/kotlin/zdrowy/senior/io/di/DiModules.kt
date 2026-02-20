@@ -43,6 +43,7 @@ import zdrowy.senior.io.domain.settings.GetPersonalDataUseCase
 import zdrowy.senior.io.domain.settings.GetSettingsOverviewUseCase
 import zdrowy.senior.io.domain.settings.ListDiseasesUseCase
 import zdrowy.senior.io.domain.settings.ListMedicationsUseCase
+import zdrowy.senior.io.domain.settings.ObservePersonalDataUseCase
 import zdrowy.senior.io.domain.settings.RemoveDiseaseUseCase
 import zdrowy.senior.io.domain.settings.RemoveMedicationUseCase
 import zdrowy.senior.io.domain.settings.SettingsRepository
@@ -92,6 +93,7 @@ val domainModule = module {
     factory { GetPersonalDataUseCase(get()) }
     factory { GetSettingsOverviewUseCase(get()) }
     factory { UpsertPersonalDataUseCase(get()) }
+    factory { ObservePersonalDataUseCase(get()) }
     factory { AddDiseaseUseCase(get()) }
     factory { UpdateDiseaseUseCase(get()) }
     factory { RemoveDiseaseUseCase(get()) }
@@ -125,7 +127,7 @@ val viewModelModule = module {
     viewModel { PatientAgentsViewModel(get()) }
     viewModel { PatientAlertsViewModel(get()) }
     viewModel { PatientHomeViewModel(get()) }
-    viewModel { PatientSettingsViewModel(get(), get()) }
+    viewModel { PatientSettingsViewModel(get(), get(), get()) }
     viewModel { PatientMeasurementDialogViewModel(get(), get(), get(), get(), get()) }
     viewModel { PatientNotifyAgentsViewModel(get(), get()) }
 }

@@ -5,6 +5,7 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
 import zdrowy.senior.io.data.firestore.toCompletable
@@ -51,6 +52,51 @@ class FirestoreSettingsRepository : SettingsRepository {
                     address = snapshot.getString("address").orEmpty()
                 )
             }
+    }
+
+    override fun observePersonalData(): Observable<PersonalData> {
+        val fallback = PersonalData(
+            firstName = "",
+            lastName = "",
+            pesel = "",
+            phoneNumber = "",
+            email = "",
+            address = ""
+        )
+
+        return Observable.create { emitter ->
+            val uid = try {
+                requireUid()
+            } catch (error: Throwable) {
+                emitter.onError(error)
+                return@create
+            }
+            val doc = firestore.collection(FirestorePaths.USERS)
+                .document(uid)
+                .collection(FirestorePaths.SETTINGS)
+                .document(FirestorePaths.PERSONAL_DATA)
+
+            val registration = doc.addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    if (!emitter.isDisposed) emitter.onError(error)
+                    return@addSnapshotListener
+                }
+                if (snapshot == null || !snapshot.exists()) {
+                    if (!emitter.isDisposed) emitter.onNext(fallback)
+                    return@addSnapshotListener
+                }
+                val data = PersonalData(
+                    firstName = snapshot.getString("firstName").orEmpty(),
+                    lastName = snapshot.getString("lastName").orEmpty(),
+                    pesel = snapshot.getString("pesel").orEmpty(),
+                    phoneNumber = snapshot.getString("phoneNumber").orEmpty(),
+                    email = snapshot.getString("email").orEmpty(),
+                    address = snapshot.getString("address").orEmpty()
+                )
+                if (!emitter.isDisposed) emitter.onNext(data)
+            }
+            emitter.setCancellable { registration.remove() }
+        }
     }
 
     override fun upsertPersonalData(data: PersonalData): Completable {
@@ -220,4 +266,3 @@ class FirestoreSettingsRepository : SettingsRepository {
         return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
     }
 }
-

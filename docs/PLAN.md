@@ -126,3 +126,7 @@ Zasady etapu:
 - [x] Migracja: AgentRepository + AccessCodeRepository (InMemory -> Firestore)
 - [x] Migracja: AlertRepository (InMemory -> Firestore)
 - [x] Migracja: DI przełączone na Firestore repozytoria
+
+## Etap 8 — Realtime: PersonalData (watcher)
+- [x] Domena + data + UI: observePersonalData (Firestore/InMemory) + ViewModel/Fragment
+- [ ] Docs + walidacja: USE_CASES + smoke test UI

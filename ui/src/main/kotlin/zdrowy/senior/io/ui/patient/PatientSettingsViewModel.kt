@@ -9,12 +9,15 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.agent.AgentRole
 import zdrowy.senior.io.domain.agent.ListAgentsUseCase
 import zdrowy.senior.io.domain.settings.GetSettingsOverviewUseCase
+import zdrowy.senior.io.domain.settings.ObservePersonalDataUseCase
 
 class PatientSettingsViewModel(
     private val getSettingsOverview: GetSettingsOverviewUseCase,
-    private val listAgents: ListAgentsUseCase
+    private val listAgents: ListAgentsUseCase,
+    private val observePersonalData: ObservePersonalDataUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
+    private var personalDataObserved = false
 
     private val _uiState = MutableLiveData<PatientSettingsUiState>()
     val uiState: LiveData<PatientSettingsUiState> = _uiState
@@ -32,6 +35,21 @@ class PatientSettingsViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ state ->
                     _uiState.value = state
+                }, {
+                })
+        )
+    }
+
+    fun startPersonalDataObservation() {
+        if (personalDataObserved) return
+        personalDataObserved = true
+        disposables.add(
+            observePersonalData()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ data ->
+                    val current = _uiState.value ?: return@subscribe
+                    _uiState.value = current.copy(personalData = data)
                 }, {
                 })
         )
