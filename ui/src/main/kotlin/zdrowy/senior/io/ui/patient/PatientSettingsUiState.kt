@@ -12,6 +12,11 @@ data class PatientSettingsUiState(
     val medications: List<Medication>,
     val caregivers: List<Agent>
 ) {
+    val personalFullName: String
+        get() = listOf(personalData.firstName, personalData.lastName)
+            .filter { it.isNotBlank() }
+            .joinToString(" ")
+
     companion object {
         fun from(
             overview: SettingsOverview,

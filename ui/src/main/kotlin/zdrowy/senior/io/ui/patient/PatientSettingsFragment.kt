@@ -70,11 +70,7 @@ class PatientSettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.load()
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
-            val firstName = state.personalData.firstName
-            val lastName = state.personalData.lastName
-            binding.patientSettingsPersonalName.text = listOf(firstName, lastName)
-                .filter { it.isNotBlank() }
-                .joinToString(" ")
+            binding.patientSettingsPersonalName.text = state.personalFullName
             binding.patientSettingsPersonalPesel.text = "PESEL: ${state.personalData.pesel}"
             binding.patientSettingsPersonalAddress.text = "Adres: ${state.personalData.address}"
             binding.patientSettingsPersonalPhone.text = "Telefon: ${state.personalData.phoneNumber}"

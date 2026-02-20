@@ -25,7 +25,7 @@
 - [x] Dodac nowe dialogi edycji z prefill z repo (pobranie listy i wybor po id).
 - [x] Dodac "Usun" w dialogach edycji chorob/lekow i obsluzyc `Remove*UseCase`.
 - [x] Ustawic tap na `patient_settings_personal` jako wejscie do edycji danych osobowych.
-- [ ] Zaktualizowac `PatientSettingsUiState` oraz `PatientSettingsFragment` do `firstName/lastName`.
+- [x] Zaktualizowac `PatientSettingsUiState` oraz `PatientSettingsFragment` do `firstName/lastName`.
 - [ ] Zaktualizowac `PatientPersonalDataDialogFragment` (prefill + zapis `firstName/lastName`).
 - [ ] Zaktualizowac stringi tytulow/CTA ("Edytuj chorobe", "Edytuj lek", "Usun").
 - [ ] Zaktualizowac `docs/PLAN.md` i zrobic commit opisujacy etap.
