@@ -81,13 +81,30 @@ class InMemoryMeasurementRepository : MeasurementRepository {
         val filtered = applyFilters(types, dateRange)
         val grouped = filtered.groupBy { it.type }
         val series = grouped.map { (type, list) ->
-            val points = list.sortedBy { it.timestamp }.mapNotNull { measurement ->
+            val sorted = list.sortedBy { it.timestamp }
+            val points = sorted.mapNotNull { measurement ->
                 val value = measurement.value
                     ?: measurement.systolic?.toDouble()
                     ?: measurement.diastolic?.toDouble()
                 value?.let { ChartPoint(measurement.timestamp, it) }
             }
-            ChartSeries(type, points)
+            val secondaryPoints = if (type == MeasurementType.PRESSURE) {
+                sorted.mapNotNull { measurement ->
+                    measurement.diastolic?.toDouble()
+                        ?.let { ChartPoint(measurement.timestamp, it) }
+                }
+            } else {
+                emptyList()
+            }
+            val primaryPoints = if (type == MeasurementType.PRESSURE) {
+                sorted.mapNotNull { measurement ->
+                    measurement.systolic?.toDouble()
+                        ?.let { ChartPoint(measurement.timestamp, it) }
+                }
+            } else {
+                points
+            }
+            ChartSeries(type, primaryPoints, secondaryPoints)
         }
         return Single.just(series)
     }

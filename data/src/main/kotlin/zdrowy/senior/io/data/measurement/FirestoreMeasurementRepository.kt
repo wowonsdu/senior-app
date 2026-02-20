@@ -122,15 +122,30 @@ class FirestoreMeasurementRepository : MeasurementRepository {
             .map { list ->
                 val grouped = list.groupBy { it.type }
                 grouped.map { (type, measurements) ->
-                    val points = measurements
-                        .sortedBy { it.timestamp }
-                        .mapNotNull { measurement ->
-                            val value = measurement.value
-                                ?: measurement.systolic?.toDouble()
-                                ?: measurement.diastolic?.toDouble()
-                            value?.let { ChartPoint(measurement.timestamp, it) }
+                    val sorted = measurements.sortedBy { it.timestamp }
+                    val points = sorted.mapNotNull { measurement ->
+                        val value = measurement.value
+                            ?: measurement.systolic?.toDouble()
+                            ?: measurement.diastolic?.toDouble()
+                        value?.let { ChartPoint(measurement.timestamp, it) }
+                    }
+                    val secondaryPoints = if (type == MeasurementType.PRESSURE) {
+                        sorted.mapNotNull { measurement ->
+                            measurement.diastolic?.toDouble()
+                                ?.let { ChartPoint(measurement.timestamp, it) }
                         }
-                    ChartSeries(type, points)
+                    } else {
+                        emptyList()
+                    }
+                    val primaryPoints = if (type == MeasurementType.PRESSURE) {
+                        sorted.mapNotNull { measurement ->
+                            measurement.systolic?.toDouble()
+                                ?.let { ChartPoint(measurement.timestamp, it) }
+                        }
+                    } else {
+                        points
+                    }
+                    ChartSeries(type, primaryPoints, secondaryPoints)
                 }.sortedBy { it.type.name.lowercase(Locale.ROOT) }
             }
     }

@@ -15,6 +15,7 @@ import zdrowy.senior.io.domain.history.ChartSeries
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
 import androidx.core.view.updateLayoutParams
 import com.github.mikephil.charting.components.XAxis
@@ -167,7 +168,7 @@ class PatientHistoryFragment : Fragment() {
             val entries = chartSeries.points.mapIndexed { index, point ->
                 Entry(index.toFloat(), point.value.toFloat())
             }
-            LineDataSet(entries, null).apply {
+            val primary = LineDataSet(entries, null).apply {
                 color = colorOf(colorFor(chartSeries.type))
                 lineWidth = 2f
                 setDrawValues(false)
@@ -175,8 +176,29 @@ class PatientHistoryFragment : Fragment() {
                 setDrawCircleHole(false)
                 mode = LineDataSet.Mode.CUBIC_BEZIER
             }
+            if (chartSeries.type == MeasurementType.PRESSURE && chartSeries.secondaryPoints.isNotEmpty()) {
+                val secondaryEntries = chartSeries.secondaryPoints.mapIndexed { index, point ->
+                    Entry(index.toFloat(), point.value.toFloat())
+                }
+                val secondaryColor = ColorUtils.setAlphaComponent(
+                    colorOf(colorFor(chartSeries.type)),
+                    140
+                )
+                val secondary = LineDataSet(secondaryEntries, null).apply {
+                    color = secondaryColor
+                    lineWidth = 2f
+                    setDrawValues(false)
+                    setDrawCircles(false)
+                    setDrawCircleHole(false)
+                    enableDashedLine(10f, 6f, 0f)
+                    mode = LineDataSet.Mode.CUBIC_BEZIER
+                }
+                listOf(primary, secondary)
+            } else {
+                listOf(primary)
+            }
         }
-        chart.data = LineData(dataSets)
+        chart.data = LineData(dataSets.flatten())
         chart.invalidate()
     }
 
