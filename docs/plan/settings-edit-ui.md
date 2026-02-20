@@ -27,7 +27,7 @@
 - [x] Ustawic tap na `patient_settings_personal` jako wejscie do edycji danych osobowych.
 - [x] Zaktualizowac `PatientSettingsUiState` oraz `PatientSettingsFragment` do `firstName/lastName`.
 - [x] Zaktualizowac `PatientPersonalDataDialogFragment` (prefill + zapis `firstName/lastName`).
-- [ ] Zaktualizowac stringi tytulow/CTA ("Edytuj chorobe", "Edytuj lek", "Usun").
+- [x] Zaktualizowac stringi tytulow/CTA ("Edytuj chorobe", "Edytuj lek", "Usun").
 - [ ] Zaktualizowac `docs/PLAN.md` i zrobic commit opisujacy etap.
 
 ## Validation

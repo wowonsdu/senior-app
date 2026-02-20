@@ -224,7 +224,7 @@
     <dialog
         android:id="@+id/patientEditDiseaseDialogFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientEditDiseaseDialogFragment"
-        android:label="@string/patient_add_disease_title"
+        android:label="@string/patient_edit_disease_title"
         tools:layout="@layout/dialog_patient_add_disease">
         <argument
             android:name="diseaseId"
@@ -234,7 +234,7 @@
     <dialog
         android:id="@+id/patientEditMedDialogFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientEditMedDialogFragment"
-        android:label="@string/patient_add_med_title"
+        android:label="@string/patient_edit_med_title"
         tools:layout="@layout/dialog_patient_add_med">
         <argument
             android:name="medicationId"

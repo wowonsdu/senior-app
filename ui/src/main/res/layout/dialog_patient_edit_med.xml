@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_s"
             android:layout_weight="1"
-            android:text="@string/patient_add_med_title"
+            android:text="@string/patient_edit_med_title"
             android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
             android:textColor="@color/senior_text_primary" />
 
@@ -185,7 +185,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/patient_edit_agent_delete" />
+            android:text="@string/patient_edit_remove" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/patient_edit_med_save"

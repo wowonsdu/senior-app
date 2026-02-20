@@ -215,6 +215,8 @@
     <string name="patient_add_disease_course_hint">Przebieg choroby</string>
     <string name="patient_add_disease_cancel">Anuluj</string>
     <string name="patient_add_disease_save">Zapisz</string>
+    <string name="patient_edit_disease_title">Edytuj chorobe</string>
+    <string name="patient_edit_remove">Usun</string>
 
     <string-array name="patient_add_disease_course_options">
         <item>Lagodny</item>
@@ -233,6 +235,7 @@
     <string name="patient_add_med_notify">Powiadamiaj o godzinie przyjecia</string>
     <string name="patient_add_med_cancel">Anuluj</string>
     <string name="patient_add_med_save">Zapisz</string>
+    <string name="patient_edit_med_title">Edytuj lek</string>
 
     <string-array name="patient_add_med_dose_options">
         <item>1 tabletka</item>
