@@ -15,6 +15,7 @@
 - ViewModele zawsze inicjalizuj w module Koin (viewModelModule), bez Factory.
 
 ## Planowanie i flow init-plan
+- Gdy uzytkownik zawoła `$init-plan`, najpierw zapytaj, czy jest w trybie planowania; kontynuuj dopiero po potwierdzeniu.
 - Gdy uzytkownik uruchamia `init-plan`, najpierw popros o tytul ficzera do planowania.
 - Po tytule popros o zalozenia i input do planu.
 - Wejdz w tryb planowania i wykonaj analize, plan oraz pytania doprecyzowujace.
