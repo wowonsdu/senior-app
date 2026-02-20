@@ -102,7 +102,7 @@
             app:argType="float" />
         <argument
             android:name="measurementTimestamp"
-            android:defaultValue="0"
+            android:defaultValue="0L"
             app:argType="long" />
     </dialog>
 
@@ -121,7 +121,7 @@
             app:argType="float" />
         <argument
             android:name="measurementTimestamp"
-            android:defaultValue="0"
+            android:defaultValue="0L"
             app:argType="long" />
     </dialog>
 
@@ -144,7 +144,7 @@
             app:argType="integer" />
         <argument
             android:name="measurementTimestamp"
-            android:defaultValue="0"
+            android:defaultValue="0L"
             app:argType="long" />
     </dialog>
 
@@ -163,7 +163,7 @@
             app:argType="float" />
         <argument
             android:name="measurementTimestamp"
-            android:defaultValue="0"
+            android:defaultValue="0L"
             app:argType="long" />
     </dialog>
 
