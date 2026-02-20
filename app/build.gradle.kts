@@ -21,11 +21,11 @@ android {
         debug {
             buildConfigField("boolean", "USE_FIREBASE_AUTH_EMULATOR", "true")
             buildConfigField("String", "FIREBASE_AUTH_EMULATOR_HOST", "\"10.0.2.2\"")
-            buildConfigField("int", "FIREBASE_AUTH_EMULATOR_PORT", "9099")
+            buildConfigField("int", "FIREBASE_AUTH_EMULATOR_PORT", "9098")
 
             buildConfigField("boolean", "USE_FIREBASE_FIRESTORE_EMULATOR", "true")
             buildConfigField("String", "FIREBASE_FIRESTORE_EMULATOR_HOST", "\"10.0.2.2\"")
-            buildConfigField("int", "FIREBASE_FIRESTORE_EMULATOR_PORT", "8080")
+            buildConfigField("int", "FIREBASE_FIRESTORE_EMULATOR_PORT", "8082")
         }
         release {
             isMinifyEnabled = false

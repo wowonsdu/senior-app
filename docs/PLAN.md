@@ -111,6 +111,6 @@ Zasady etapu:
 - [x] Walidacja: smoke test ADB/MCP na `emulator-5554` + instrukcja uruchomienia emulatora Auth
 
 ## Etap 7 — Firebase Firestore (emulator + przygotowanie pod realne dane)
-- [x] Konfiguracja emulatora Firestore w DEBUG (`useEmulator(10.0.2.2, 8080)`)
-- [ ] Instrukcja uruchomienia emulatora Firestore
+- [x] Konfiguracja emulatora Firestore w DEBUG (`useEmulator(10.0.2.2, 8082)`)
+- [x] Instrukcja uruchomienia emulatora Firestore
 - [ ] Migracja: repozytoria z InMemory -> Firestore (etapami, ekran po ekranie)

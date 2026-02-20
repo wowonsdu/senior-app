@@ -18,7 +18,7 @@ param(
   [string]$SmsCode = "123456",
   [string]$FirebaseProjectId = "demo-senior-app",
   [string]$AuthEmulatorHost = "127.0.0.1",
-  [int]$AuthEmulatorPort = 9099,
+  [int]$AuthEmulatorPort = 9098,
   [string]$Adb = "adb"
 )
 
