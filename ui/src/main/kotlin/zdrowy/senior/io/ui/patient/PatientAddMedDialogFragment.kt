@@ -2,6 +2,7 @@ package zdrowy.senior.io.ui.patient
 
 import android.app.Dialog
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -49,7 +50,13 @@ class PatientAddMedDialogFragment : DialogFragment() {
         if (!validateNotBlank(binding.patientAddMedDose, dosage)) return
         disposables.add(
             addMedicationUseCase(MedicationDraft(name, dosage, schedule, notificationsEnabled))
-                .subscribe({ dismiss() }, { dismiss() })
+                .subscribe({
+                    parentFragmentManager.setFragmentResult(
+                        SETTINGS_REFRESH_REQUEST_KEY,
+                        bundleOf()
+                    )
+                    dismiss()
+                }, { dismiss() })
         )
     }
 

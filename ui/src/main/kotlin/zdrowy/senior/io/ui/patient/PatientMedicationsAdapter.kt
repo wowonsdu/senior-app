@@ -21,7 +21,7 @@ class PatientMedicationsAdapter(
         holder.bind(getItem(position))
     }
 
-    class ViewHolder(private val binding: ItemPatientMedicationBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemPatientMedicationBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Medication) {
             binding.root.setOnClickListener { onItemClick(item) }
             binding.medicationName.text = item.name

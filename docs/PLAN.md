@@ -55,7 +55,9 @@ Zasady etapu:
 - [x] Moje ustawienia (przeglad)
 - [x] Dodaj dane osobowe (dialog)
 - [x] Dodaj chorobe (dialog)
-- [x] Dodaj lek (dialog)\r\n- [x] Moje ustawienia: edycja chorob/lekow/danych
+- [x] Dodaj lek (dialog)
+- [x] Moje ustawienia: edycja chorob/lekow/danych
+- [x] Moje ustawienia: odswiezanie po edycji + QA
 - [x] Alerty i powiadomienia (przeglad)
 - [x] Alerty i powiadomienia (pelna konfiguracja)
 

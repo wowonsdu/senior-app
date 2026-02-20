@@ -1,4 +1,4 @@
-# Etap 2 � Edycja UI (choroby/leki/dane) Plan
+﻿# Etap 2 - Edycja UI (choroby/leki/dane) Plan
 
 ## Scope
 - Tap na elementach listy chorob/lekow otwiera dialog edycji.
@@ -31,7 +31,7 @@
 - [x] Zaktualizowac `docs/PLAN.md` i zrobic commit opisujacy etap.
 
 ## Validation
-- [ ] Tap na itemach listy otwiera edycje z prefill.
-- [ ] "Usun" usuwa wpis i nie crashuje.
-- [ ] Po zapisie dane sa widoczne w liscie.
-- [ ] Karta danych osobowych pokazuje poprawne imie i nazwisko.
+- [x] Tap na itemach listy otwiera edycje z prefill.
+- [x] "Usun" usuwa wpis i nie crashuje.
+- [x] Po zapisie dane sa widoczne w liscie.
+- [x] Karta danych osobowych pokazuje poprawne imie i nazwisko.

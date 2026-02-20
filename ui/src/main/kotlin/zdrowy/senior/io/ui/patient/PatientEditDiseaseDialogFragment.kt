@@ -2,6 +2,7 @@
 
 import android.app.Dialog
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -66,7 +67,13 @@ class PatientEditDiseaseDialogFragment : DialogFragment() {
         )
         disposables.add(
             updateDiseaseUseCase(id, update)
-                .subscribe({ dismiss() }, { dismiss() })
+                .subscribe({
+                    parentFragmentManager.setFragmentResult(
+                        SETTINGS_REFRESH_REQUEST_KEY,
+                        bundleOf()
+                    )
+                    dismiss()
+                }, { dismiss() })
         )
     }
 
@@ -74,7 +81,13 @@ class PatientEditDiseaseDialogFragment : DialogFragment() {
         val id = diseaseId ?: return
         disposables.add(
             removeDiseaseUseCase(id)
-                .subscribe({ dismiss() }, { dismiss() })
+                .subscribe({
+                    parentFragmentManager.setFragmentResult(
+                        SETTINGS_REFRESH_REQUEST_KEY,
+                        bundleOf()
+                    )
+                    dismiss()
+                }, { dismiss() })
         )
     }
 
