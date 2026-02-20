@@ -273,45 +273,58 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/spacing_xs"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
                         <View
                             android:layout_width="32dp"
                             android:layout_height="3dp"
+                            android:layout_marginEnd="@dimen/spacing_m"
                             android:background="@drawable/line_legend_solid_pressure" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:alpha="0.8"
-                            android:text="@string/patient_history_pressure_systolic"
-                            android:textAppearance="@style/TextAppearance.Senior.Caption"
-                            android:textColor="@color/white" />
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="3dp"
+                            android:layout_marginEnd="@dimen/spacing_s"
+                            android:background="@drawable/line_legend_solid_pressure" />
+
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="3dp"
+                            android:layout_marginEnd="@dimen/spacing_s"
+                            android:background="@drawable/line_legend_solid_pressure" />
+
+                        <View
+                            android:layout_width="4dp"
+                            android:layout_height="3dp"
+                            android:layout_marginEnd="@dimen/spacing_s"
+                            android:background="@drawable/line_legend_solid_pressure" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_s"
-                        android:orientation="vertical"
-                        android:gravity="center_horizontal">
-
-                        <View
-                            android:layout_width="32dp"
-                            android:layout_height="3dp"
-                            android:background="@drawable/line_legend_dashed_pressure" />
+                        android:layout_marginTop="2dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
+                            android:layout_marginEnd="@dimen/spacing_s"
+                            android:alpha="0.8"
+                            android:text="@string/patient_history_pressure_systolic"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:alpha="0.8"
                             android:text="@string/patient_history_pressure_diastolic"
                             android:textAppearance="@style/TextAppearance.Senior.Caption"
