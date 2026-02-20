@@ -45,6 +45,9 @@ import zdrowy.senior.io.domain.settings.ToggleMedicationNotificationsUseCase
 import zdrowy.senior.io.domain.settings.UpdateDiseaseUseCase
 import zdrowy.senior.io.domain.settings.UpdateMedicationUseCase
 import zdrowy.senior.io.domain.settings.UpsertPersonalDataUseCase
+import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
+import zdrowy.senior.io.domain.user.UserProfileRepository
+import zdrowy.senior.io.data.user.FirestoreUserProfileRepository
 
 val domainModule = module {
     factory { AddMeasurementUseCase(get()) }
@@ -82,6 +85,8 @@ val domainModule = module {
     factory { RemoveMedicationUseCase(get()) }
     factory { ListMedicationsUseCase(get()) }
     factory { ToggleMedicationNotificationsUseCase(get()) }
+
+    factory { EnsureUserProfileUseCase(get()) }
 }
 
 val dataModule = module {
@@ -91,6 +96,8 @@ val dataModule = module {
     single<NotificationRepository> { NoOpNotificationRepository() }
     single<AlertRepository> { InMemoryAlertRepository() }
     single<SettingsRepository> { InMemorySettingsRepository() }
+
+    single<UserProfileRepository> { FirestoreUserProfileRepository() }
 }
 
 val uiModule = module {
