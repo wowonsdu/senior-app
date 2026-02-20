@@ -5,10 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import org.koin.android.ext.android.get
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientHomeBinding
 
@@ -16,9 +15,7 @@ class PatientHomeFragment : Fragment() {
     private var _binding: FragmentPatientHomeBinding? = null
     private val binding get() = _binding!!
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val viewModel by viewModels<PatientHomeViewModel> {
-        PatientHomeViewModel.Factory(get())
-    }
+    private val viewModel: PatientHomeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,

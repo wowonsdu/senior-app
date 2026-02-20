@@ -3,7 +3,6 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -34,15 +33,4 @@ class PatientHomeViewModel(
         super.onCleared()
     }
 
-    class Factory(
-        private val getRecentMeasurements: GetRecentMeasurementsUseCase
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PatientHomeViewModel::class.java)) {
-                return PatientHomeViewModel(getRecentMeasurements) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-        }
-    }
 }

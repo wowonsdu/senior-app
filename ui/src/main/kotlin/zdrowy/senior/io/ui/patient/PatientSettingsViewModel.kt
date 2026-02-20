@@ -3,7 +3,6 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -43,19 +42,4 @@ class PatientSettingsViewModel(
         super.onCleared()
     }
 
-    class Factory(
-        private val getSettingsOverview: GetSettingsOverviewUseCase,
-        private val listAgents: ListAgentsUseCase
-    ) : ViewModelProvider.Factory {
-        @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(PatientSettingsViewModel::class.java)) {
-                return PatientSettingsViewModel(
-                    getSettingsOverview,
-                    listAgents
-                ) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-        }
-    }
 }
