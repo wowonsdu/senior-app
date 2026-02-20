@@ -44,6 +44,9 @@ class PatientHomeFragment : Fragment() {
         binding.patientHomeTilePulse.setOnClickListener {
             findNavController().navigate(R.id.action_patientHome_to_patientPulseDialog)
         }
+        binding.patientHomeTileNotifyAgents.setOnClickListener {
+            findNavController().navigate(R.id.action_patientHome_to_patientNotifyAgentsDialog)
+        }
         binding.patientHomeActionHistory.setOnClickListener {
             findNavController().navigate(R.id.action_patientHome_to_patientHistory)
         }

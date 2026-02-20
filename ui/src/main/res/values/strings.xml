@@ -68,6 +68,15 @@
     <string name="patient_home_action_agents">Agenci Monitorujacy</string>
     <string name="patient_home_action_settings">Moje Ustawienia</string>
 
+    <string name="patient_notify_agents_title">Powiadom agentow</string>
+    <string name="patient_notify_agents_subtitle">Wpisz wiadomosc dla opiekunow</string>
+    <string name="patient_notify_agents_message_hint">Wiadomosc</string>
+    <string name="patient_notify_agents_cancel">Anuluj</string>
+    <string name="patient_notify_agents_send">Wyslij</string>
+    <string name="patient_notify_agents_toast_success">Powiadomienie wyslane</string>
+    <string name="patient_notify_agents_toast_empty">Brak dodanych agentow</string>
+    <string name="patient_notify_agents_toast_error">Nie udalo sie wyslac powiadomienia</string>
+
     <string name="patient_sugar_dialog_title">Cukier</string>
     <string name="patient_sugar_dialog_subtitle">Wpisz wynik pomiaru</string>
     <string name="patient_sugar_dialog_hint">Poziom cukru</string>

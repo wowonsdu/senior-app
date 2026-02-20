@@ -71,6 +71,9 @@
             android:id="@+id/action_patientHome_to_patientPulseDialog"
             app:destination="@id/patientPulseDialogFragment" />
         <action
+            android:id="@+id/action_patientHome_to_patientNotifyAgentsDialog"
+            app:destination="@id/patientNotifyAgentsDialogFragment" />
+        <action
             android:id="@+id/action_patientHome_to_patientHistory"
             app:destination="@id/patientHistoryFragment" />
         <action
@@ -166,6 +169,12 @@
             android:defaultValue="0L"
             app:argType="long" />
     </dialog>
+
+    <dialog
+        android:id="@+id/patientNotifyAgentsDialogFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientNotifyAgentsDialogFragment"
+        android:label="@string/patient_notify_agents_title"
+        tools:layout="@layout/dialog_patient_notify_agents" />
 
     <fragment
         android:id="@+id/patientHistoryFragment"
