@@ -72,6 +72,9 @@ Zasady etapu:
 - [x] Walidacje formularzy w dialogach (wymagane pola)
 - [x] Checklista UX dla MCP
 
+## Etap 4.3 — Ustawienia: model danych osobowych
+- [x] PersonalData: firstName/lastName + seed w InMemorySettingsRepository
+
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 
 ### 5.1 Opiekun flow (UI + nawigacja)
