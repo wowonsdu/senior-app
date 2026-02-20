@@ -282,8 +282,8 @@
                         android:gravity="center_horizontal">
 
                         <View
-                            android:layout_width="28dp"
-                            android:layout_height="2dp"
+                            android:layout_width="32dp"
+                            android:layout_height="3dp"
                             android:background="@drawable/line_legend_solid_pressure" />
 
                         <TextView
@@ -304,8 +304,8 @@
                         android:gravity="center_horizontal">
 
                         <View
-                            android:layout_width="28dp"
-                            android:layout_height="2dp"
+                            android:layout_width="32dp"
+                            android:layout_height="3dp"
                             android:background="@drawable/line_legend_dashed_pressure" />
 
                         <TextView

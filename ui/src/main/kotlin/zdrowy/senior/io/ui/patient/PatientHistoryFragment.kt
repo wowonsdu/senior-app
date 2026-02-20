@@ -15,7 +15,6 @@ import zdrowy.senior.io.domain.history.ChartSeries
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
 import androidx.core.view.updateLayoutParams
 import com.github.mikephil.charting.components.XAxis
@@ -180,10 +179,7 @@ class PatientHistoryFragment : Fragment() {
                 val secondaryEntries = chartSeries.secondaryPoints.mapIndexed { index, point ->
                     Entry(index.toFloat(), point.value.toFloat())
                 }
-                val secondaryColor = ColorUtils.setAlphaComponent(
-                    colorOf(colorFor(chartSeries.type)),
-                    140
-                )
+                val secondaryColor = colorOf(colorFor(chartSeries.type))
                 val secondary = LineDataSet(secondaryEntries, null).apply {
                     color = secondaryColor
                     lineWidth = 2f
