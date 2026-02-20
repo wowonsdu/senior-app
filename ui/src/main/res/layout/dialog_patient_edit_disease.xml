@@ -105,12 +105,12 @@
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/patient_edit_disease_cancel"
-            style="@style/Widget.Senior.Button.Secondary"
+            android:id="@+id/patient_edit_disease_delete"
+            style="@style/Widget.Senior.Button.Danger"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/patient_add_disease_cancel" />
+            android:text="@string/patient_edit_agent_delete" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/patient_edit_disease_save"

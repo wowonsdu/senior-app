@@ -23,7 +23,7 @@
 - [x] Ustawic `MaterialCardView` w itemach jako clickable, jesli potrzeba.
 - [x] Dodac akcje i argumenty w `nav_graph.xml` dla edycji (id choroby/leku).
 - [x] Dodac nowe dialogi edycji z prefill z repo (pobranie listy i wybor po id).
-- [ ] Dodac "Usun" w dialogach edycji chorob/lekow i obsluzyc `Remove*UseCase`.
+- [x] Dodac "Usun" w dialogach edycji chorob/lekow i obsluzyc `Remove*UseCase`.
 - [ ] Ustawic tap na `patient_settings_personal` jako wejscie do edycji danych osobowych.
 - [ ] Zaktualizowac `PatientSettingsUiState` oraz `PatientSettingsFragment` do `firstName/lastName`.
 - [ ] Zaktualizowac `PatientPersonalDataDialogFragment` (prefill + zapis `firstName/lastName`).

@@ -10,6 +10,7 @@ import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.DialogPatientEditMedBinding
 import zdrowy.senior.io.domain.settings.ListMedicationsUseCase
 import zdrowy.senior.io.domain.settings.MedicationUpdate
+import zdrowy.senior.io.domain.settings.RemoveMedicationUseCase
 import zdrowy.senior.io.domain.settings.UpdateMedicationUseCase
 
 class PatientEditMedDialogFragment : DialogFragment() {
@@ -17,12 +18,13 @@ class PatientEditMedDialogFragment : DialogFragment() {
     private val binding get() = _binding!!
     private val listMedicationsUseCase: ListMedicationsUseCase by lazy { get() }
     private val updateMedicationUseCase: UpdateMedicationUseCase by lazy { get() }
+    private val removeMedicationUseCase: RemoveMedicationUseCase by lazy { get() }
     private val disposables = CompositeDisposable()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         _binding = DialogPatientEditMedBinding.inflate(layoutInflater)
         binding.patientEditMedClose.setOnClickListener { dismiss() }
-        binding.patientEditMedCancel.setOnClickListener { dismiss() }
+        binding.patientEditMedDelete.setOnClickListener { deleteMedication() }
         binding.patientEditMedSave.setOnClickListener { saveMedication() }
         prefillMedication()
 
@@ -87,6 +89,14 @@ class PatientEditMedDialogFragment : DialogFragment() {
         )
         disposables.add(
             updateMedicationUseCase(id, update)
+                .subscribe({ dismiss() }, { dismiss() })
+        )
+    }
+
+    private fun deleteMedication() {
+        val id = medicationId ?: return
+        disposables.add(
+            removeMedicationUseCase(id)
                 .subscribe({ dismiss() }, { dismiss() })
         )
     }
