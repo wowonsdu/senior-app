@@ -93,7 +93,7 @@ Zasady etapu:
 
 ## Etap 4.7 — Leki: nowy UX dodawania/edycji
 - [x] Plan: MAIN-PLAN-dodawanie-leku + subplany
-- [ ] UI: dawka jako input, czestotliwosc 0..10, dynamiczne godziny
+- [x] UI: dawka jako input, czestotliwosc 0..10, dynamiczne godziny
 - [ ] Logika: dynamiczne godziny + walidacja + zapis/prefill schedule
 - [ ] Walidacja: smoke check dialogow i odswiezania listy
 

@@ -70,16 +70,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
-        android:hint="@string/patient_add_med_dose_hint"
-        app:endIconMode="dropdown_menu">
+        android:hint="@string/patient_add_med_dose_hint">
 
-        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        <com.google.android.material.textfield.TextInputEditText
+            style="@style/Widget.Senior.TextInputEditText"
             android:id="@+id/patient_edit_med_dose"
-            style="@style/Widget.Senior.AutoCompleteTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/patient_add_med_dose_options"
-            android:inputType="none" />
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -96,60 +94,15 @@
             style="@style/Widget.Senior.AutoCompleteTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:entries="@array/patient_add_med_frequency_options"
             android:inputType="none" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/patient_edit_med_time1_input"
-        style="@style/Widget.Senior.TextInputLayout"
+    <LinearLayout
+        android:id="@+id/patient_edit_med_times_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_s"
-        android:hint="@string/patient_add_med_time1_hint"
-        app:placeholderText="--:--">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Widget.Senior.TextInputEditText"
-            android:id="@+id/patient_edit_med_time1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="time" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/patient_edit_med_time2_input"
-        style="@style/Widget.Senior.TextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_s"
-        android:hint="@string/patient_add_med_time2_hint"
-        app:placeholderText="--:--">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Widget.Senior.TextInputEditText"
-            android:id="@+id/patient_edit_med_time2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="time" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/patient_edit_med_time3_input"
-        style="@style/Widget.Senior.TextInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_s"
-        android:hint="@string/patient_add_med_time3_hint"
-        app:placeholderText="--:--">
-
-        <com.google.android.material.textfield.TextInputEditText
-            style="@style/Widget.Senior.TextInputEditText"
-            android:id="@+id/patient_edit_med_time3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="time" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"

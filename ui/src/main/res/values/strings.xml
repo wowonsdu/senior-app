@@ -241,27 +241,25 @@
     <string name="patient_add_med_subtitle">Podaj nazwe leku, dawke i godziny przyjmowania</string>
     <string name="patient_add_med_name_hint">Nazwa leku</string>
     <string name="patient_add_med_dose_hint">Dawka</string>
-    <string name="patient_add_med_frequency_hint">Ilosc godzin przyjmowania dziennie</string>
-    <string name="patient_add_med_time1_hint">Godzina przyjecia 1</string>
-    <string name="patient_add_med_time2_hint">Godzina przyjecia 2</string>
-    <string name="patient_add_med_time3_hint">Godzina przyjecia 3</string>
+    <string name="patient_add_med_frequency_hint">Ile razy dziennie</string>
+    <string name="patient_add_med_time_hint_format">Godzina przyjecia %1$d</string>
     <string name="patient_add_med_notify">Powiadamiaj o godzinie przyjecia</string>
     <string name="patient_add_med_cancel">Anuluj</string>
     <string name="patient_add_med_save">Zapisz</string>
     <string name="patient_edit_med_title">Edytuj lek</string>
 
-    <string-array name="patient_add_med_dose_options">
-        <item>1 tabletka</item>
-        <item>2 tabletki</item>
-        <item>1 kapsulka</item>
-        <item>5 ml</item>
-    </string-array>
-
     <string-array name="patient_add_med_frequency_options">
+        <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
     </string-array>
 
     <string name="alerts_overview_title">Jak dzialaja alerty?</string>
