@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import org.koin.android.ext.android.get
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientHomeBinding
@@ -14,6 +15,7 @@ import zdrowy.senior.io.ui.databinding.FragmentPatientHomeBinding
 class PatientHomeFragment : Fragment() {
     private var _binding: FragmentPatientHomeBinding? = null
     private val binding get() = _binding!!
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val viewModel by viewModels<PatientHomeViewModel> {
         PatientHomeViewModel.Factory(get())
     }
@@ -26,6 +28,7 @@ class PatientHomeFragment : Fragment() {
         _binding = FragmentPatientHomeBinding.inflate(inflater, container, false)
         binding.patientHomeToolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.patient_home_logout) {
+                auth.signOut()
                 findNavController().navigate(R.id.action_patientHome_to_roleSelect)
                 true
             } else {
