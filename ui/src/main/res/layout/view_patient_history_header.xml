@@ -246,17 +246,20 @@
             app:strokeColor="@color/senior_outline"
             app:strokeWidth="1dp">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:id="@+id/patient_history_tile_pressure_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
 
                     <ImageView
                         android:id="@+id/patient_history_tile_pressure_icon"
@@ -277,11 +280,14 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/patient_history_tile_pressure_legend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:layout_gravity="center_horizontal"
-                    android:orientation="horizontal">
+                    android:layout_marginBottom="@dimen/spacing_xs"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -326,7 +332,7 @@
                             android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
