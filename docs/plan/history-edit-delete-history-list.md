@@ -18,4 +18,4 @@
 - [x] Nawiguj do odpowiedniego dialogu z argumentami
 
 ## Validation
-- [ ] Klikniecie w kazdy typ pomiaru otwiera dialog edycji
+- [x] Klikniecie w kazdy typ pomiaru otwiera dialog edycji

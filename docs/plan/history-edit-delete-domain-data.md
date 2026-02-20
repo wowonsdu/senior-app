@@ -23,4 +23,4 @@
 - [x] Zarejestruj use case'y w module DI
 
 ## Validation
-- [ ] Build compile
+- [x] Build compile

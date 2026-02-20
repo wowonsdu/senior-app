@@ -22,5 +22,5 @@
 - [x] Emituj refresh listy historii po zapisie/usunieciu
 
 ## Validation
-- [ ] Otworz dialog z historii i sprawdz prefill
-- [ ] Zapis i usun dzialaja
+- [x] Otworz dialog z historii i sprawdz prefill
+- [x] Zapis i usun dzialaja

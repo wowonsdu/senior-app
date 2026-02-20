@@ -9,9 +9,9 @@
 - domain
 
 ## Implementation Checklist
-- [ ] Sprawdz edycje cukru/insuliny/tetna/cisnienia
-- [ ] Sprawdz usuwanie z listy historii
-- [ ] Sprawdz odswiezenie listy po zapisie/usunieciu
+- [x] Sprawdz edycje cukru/insuliny/tetna/cisnienia
+- [x] Sprawdz usuwanie z listy historii
+- [x] Sprawdz odswiezenie listy po zapisie/usunieciu
 
 ## Validation
-- [ ] Manualny smoke test
+- [x] Manualny smoke test
