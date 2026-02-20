@@ -114,7 +114,7 @@ Zasady etapu:
 - [x] Konfiguracja emulatora Firestore w DEBUG (`useEmulator(10.0.2.2, 8082)`)
 - [x] Instrukcja uruchomienia emulatora Firestore
 - [x] Plan: model danych Firestore (master + subplany w `docs/plan/MAIN-PLAN-firestore-user-data-model.md`)
-- [ ] Firestore: rules + indexes + wiring w `firebase.json`
+- [x] Firestore: rules + indexes + wiring w `firebase.json`
 - [ ] Firestore: users/{uid} + bootstrap roli (PATIENT/CAREGIVER)
 - [ ] Migracja: SettingsRepository (InMemory -> Firestore)
 - [ ] Migracja: MeasurementRepository (InMemory -> Firestore)
