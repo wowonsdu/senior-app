@@ -118,6 +118,6 @@ Zasady etapu:
 - [x] Firestore: users/{uid} + bootstrap roli (PATIENT/CAREGIVER)
 - [x] Migracja: SettingsRepository (InMemory -> Firestore)
 - [x] Migracja: MeasurementRepository (InMemory -> Firestore)
-- [ ] Migracja: AgentRepository + AccessCodeRepository (InMemory -> Firestore)
+- [x] Migracja: AgentRepository + AccessCodeRepository (InMemory -> Firestore)
 - [ ] Migracja: AlertRepository (InMemory -> Firestore)
 - [ ] Migracja: DI przełączone na Firestore repozytoria
