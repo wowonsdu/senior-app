@@ -12,3 +12,4 @@
 - Use case'y uruchamiaj zawsze asynchronicznie przez RxKotlin na `Schedulers.io`.
 - Mapowanie na modele domenowe odbywa sie w ViewModelach.
 - UI (fragmenty/aktywnoœci) dostaja juz gotowe, zmapowane modele.
+- ViewModele zawsze inicjalizuj w module Koin (viewModelModule), bez Factory.
