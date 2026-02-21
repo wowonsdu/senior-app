@@ -18,5 +18,5 @@ class ClearActivePatientUseCase(
 class ObserveActivePatientUseCase(
     private val context: ActivePatientContext
 ) {
-    operator fun invoke(): Observable<String?> = context.observeActivePatientUid()
+    operator fun invoke(): Observable<String> = context.observeActivePatientUid()
 }
