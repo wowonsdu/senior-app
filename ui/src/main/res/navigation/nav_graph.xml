@@ -77,14 +77,8 @@
             android:id="@+id/action_patientHome_to_patientPulseDialog"
             app:destination="@id/patientPulseDialogFragment" />
         <action
-            android:id="@+id/action_patientHome_to_patientNotifyAgentsDialog"
-            app:destination="@id/patientNotifyAgentsDialogFragment" />
-        <action
             android:id="@+id/action_patientHome_to_patientHistory"
             app:destination="@id/patientHistoryFragment" />
-        <action
-            android:id="@+id/action_patientHome_to_patientAgents"
-            app:destination="@id/patientAgentsFragment" />
         <action
             android:id="@+id/action_patientHome_to_patientSettings"
             app:destination="@id/patientSettingsFragment" />
