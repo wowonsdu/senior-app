@@ -126,7 +126,7 @@ Zasady etapu:
 - [ ] UC-NOTIF-01..02 (powiadomienia wizyt) — mock
 
 ## Meta — Standard formularzy (dialog -> fragment)
-- [ ] `AGENTS.md`: standard budowy formularzy (scroll + VM + DI + observe, przyklad commita)
+- [x] `AGENTS.md`: standard budowy formularzy (scroll + VM + DI + observe, przyklad commita)
 - [ ] Skill: `formularz` (workflow + przyklad commita + szablon plikow)
 
 ## Etap 6 — Firebase Auth (SMS / numer telefonu)

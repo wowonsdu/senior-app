@@ -44,6 +44,31 @@
 - Kazdy widok obserwuje zmiany danych, nawet jesli edycja odbywa sie w dialogu.
 - Aktualizacja danych ma wynikac z obserwowania query, nie z recznego przekazywania miedzy dialogiem a widokiem.
 
+## Formularze (standard)
+Cel: kazdy formularz, ktory moze miec wiecej pol / dynamiczne sekcje, robimy jako pelnoekranowy fragment ze scrollem (zamiast `DialogFragment`).
+
+### UI (fragment)
+- Toolbar (`MaterialToolbar`) z back + tytul/subtitle.
+- `ScrollView` / `NestedScrollView` z `fillViewport=true`, a w srodku `LinearLayout` z polami.
+- Na dole sekcja akcji: `Anuluj`/`Zapisz` (add) oraz `Usun`/`Zapisz` (edit).
+- Walidacja w UI: ustawiaj `TextInputLayout.error` dla wymaganych pol.
+
+### ViewModel (logika)
+- VM zawiera tylko spinanie use case'ow i walidacje UI-level (wymagane pola); business rules w `domain`.
+- Use case'y uruchamiaj zawsze: `subscribeOn(Schedulers.io())` + `observeOn(AndroidSchedulers.mainThread())`.
+- Na sukces: nawigacja `popBackStack()` (bez `FragmentResult`).
+- Prefill w edycji: reaktwnie przez `ObserveXxxUseCase()` i wybor po `id` (lista -> element).
+
+### Nawigacja + cleanup
+- `nav_graph.xml`: zamien `<dialog>` na `<fragment>` i przepnij `action_*` na nowe destination IDs.
+- Usun stare dialogi i ich layouty (zeby nie dublowac UX).
+- Nie dodawaj recznego odswiezania list (FragmentResult / manual refresh). Lista ma sie aktualizowac przez obserwacje (`ObserveXxxUseCase`).
+
+### Commit (przyklad)
+- Przykład (implementacja ekranow + VM): `Choroby: dodaj/edytuj jako fragmenty + VM`
+- Przykład (nawigacja): `Choroby: nawigacja do fragmentow`
+- Przykład (cleanup): `Choroby: cleanup dialogow i FragmentResult`
+
 ## Planowanie i flow init-plan
 - Gdy uzytkownik zawoła `$init-plan`, najpierw zapytaj, czy jest w trybie planowania; kontynuuj dopiero po potwierdzeniu.
 - Gdy uzytkownik uruchamia `init-plan`, najpierw popros o tytul ficzera do planowania.
