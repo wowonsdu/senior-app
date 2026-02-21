@@ -7,9 +7,11 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.user.EnsureCurrentUserRoleLoadedUseCase
+import zdrowy.senior.io.domain.user.UserRole
 
 sealed class StartupGateNavTarget {
-    object Home : StartupGateNavTarget()
+    object PatientHome : StartupGateNavTarget()
+    object CaregiverHome : StartupGateNavTarget()
     object RoleSelect : StartupGateNavTarget()
 }
 
@@ -28,8 +30,12 @@ class StartupGateViewModel(
             ensureCurrentUserRoleLoaded()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    _navTarget.value = StartupGateNavTarget.Home
+                .subscribe({ role ->
+                    _navTarget.value = if (role == UserRole.CAREGIVER) {
+                        StartupGateNavTarget.CaregiverHome
+                    } else {
+                        StartupGateNavTarget.PatientHome
+                    }
                 }, {
                     _navTarget.value = StartupGateNavTarget.RoleSelect
                 })

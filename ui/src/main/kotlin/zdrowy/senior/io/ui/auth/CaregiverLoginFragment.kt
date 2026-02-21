@@ -137,7 +137,7 @@ class CaregiverLoginFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     findNavController().navigate(
-                        R.id.patientHomeFragment,
+                        R.id.caregiverHomeFragment,
                         null,
                         PhoneAuthUi.navOptionsPopToRoleSelect()
                     )

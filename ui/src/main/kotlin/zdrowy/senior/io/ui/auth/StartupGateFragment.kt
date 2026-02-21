@@ -36,7 +36,8 @@ class StartupGateFragment : Fragment() {
         viewModel.start()
         viewModel.navTarget.observe(viewLifecycleOwner) { target ->
             when (target) {
-                StartupGateNavTarget.Home -> navigateToHome()
+                StartupGateNavTarget.PatientHome -> navigateToPatientHome()
+                StartupGateNavTarget.CaregiverHome -> navigateToCaregiverHome()
                 StartupGateNavTarget.RoleSelect -> {
                     auth.signOut()
                     navigateToRoleSelect()
@@ -52,9 +53,20 @@ class StartupGateFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private fun navigateToHome() {
+    private fun navigateToPatientHome() {
         findNavController().navigate(
             R.id.patientHomeFragment,
+            null,
+            NavOptions.Builder()
+                .setPopUpTo(R.id.startupGateFragment, true)
+                .setLaunchSingleTop(true)
+                .build()
+        )
+    }
+
+    private fun navigateToCaregiverHome() {
+        findNavController().navigate(
+            R.id.caregiverHomeFragment,
             null,
             NavOptions.Builder()
                 .setPopUpTo(R.id.startupGateFragment, true)

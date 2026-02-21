@@ -212,7 +212,7 @@ Zasady etapu:
 - [ ] Walidacja: smoke test live update (pacjent/opiekun)
 
 ## Etap 12 — Opiekun: Panel (taby) + Podopieczni
-- [ ] Panel opiekuna: routing (login + startup gate) + nav_graph
+- [x] Panel opiekuna: routing (login + startup gate) + nav_graph
 - [ ] Panel opiekuna: UI tabs (TabLayout + ViewPager2) + placeholdery
 - [ ] Podopieczni: lista careLinks (kafelki) + wybór pacjenta
 - [ ] Podopieczni: formularz dodaj + kod + kopiuj
