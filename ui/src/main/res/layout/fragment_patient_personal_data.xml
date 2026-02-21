@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/senior_bg">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/patient_personal_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/senior_primary"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:navigationIcon="@android:drawable/ic_media_previous"
+        app:navigationIconTint="@color/white"
+        app:title="@string/patient_personal_title"
+        app:subtitle="@string/patient_personal_subtitle"
+        app:titleTextAppearance="@style/TextAppearance.Senior.BodyLarge"
+        app:subtitleTextAppearance="@style/TextAppearance.Senior.Caption"
+        app:subtitleTextColor="@color/white"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
+        android:id="@+id/patient_personal_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/patient_personal_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_l">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_personal_first_name_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/patient_personal_first_name_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_personal_first_name"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_personal_last_name_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/patient_personal_last_name_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_personal_last_name"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_personal_pesel_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/patient_personal_pesel_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_personal_pesel"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_personal_phone_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/patient_personal_phone_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_personal_phone"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_personal_address_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/patient_personal_address_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_personal_address"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPostalAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/patient_personal_cancel"
+                    style="@style/Widget.Senior.Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/patient_personal_cancel" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/patient_personal_save"
+                    style="@style/Widget.Senior.Button.Primary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_s"
+                    android:layout_weight="1"
+                    android:text="@string/patient_personal_save" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
