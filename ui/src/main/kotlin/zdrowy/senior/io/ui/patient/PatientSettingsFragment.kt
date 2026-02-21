@@ -54,6 +54,9 @@ class PatientSettingsFragment : Fragment() {
         binding.patientSettingsAlerts.setOnClickListener {
             findNavController().navigate(R.id.action_patientSettings_to_patientAlerts)
         }
+        binding.patientSettingsAgents.setOnClickListener {
+            findNavController().navigate(R.id.action_patientSettings_to_patientAgents)
+        }
         binding.patientSettingsDiseasesList.layoutManager = LinearLayoutManager(requireContext())
         binding.patientSettingsDiseasesList.adapter = diseasesAdapter
         binding.patientSettingsMedsList.layoutManager = LinearLayoutManager(requireContext())

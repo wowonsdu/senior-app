@@ -73,12 +73,8 @@
     <string name="patient_home_tile_insulin">Insulina</string>
     <string name="patient_home_tile_pressure">Cisnienie</string>
     <string name="patient_home_tile_pulse">Tetno</string>
-    <string name="patient_home_tile_notify_agents">Powiadom\nAgentow</string>
-    <string name="patient_home_tile_notify_doctors">Powiadom\nLekarzy</string>
-    <string name="patient_home_action_emergency_upper">WEZWIJ POMOC</string>
-    <string name="patient_home_action_history">Zobacz Historie</string>
-    <string name="patient_home_action_agents">Agenci Monitorujacy</string>
-    <string name="patient_home_action_settings">Moje Ustawienia</string>
+    <string name="patient_home_tile_history">Historia Pomiarow</string>
+    <string name="patient_home_tile_settings">Ustawienia</string>
 
     <string name="patient_notify_agents_title">Powiadom agentow</string>
     <string name="patient_notify_agents_subtitle">Wpisz wiadomosc dla opiekunow</string>
@@ -213,6 +209,8 @@
     <string name="patient_settings_empty_meds_body">Kliknij przycisk ponizej, aby dodac pierwszy lek</string>
     <string name="patient_settings_alerts_title">Alerty i Powiadomienia</string>
     <string name="patient_settings_alerts_subtitle">Ustaw wartosci krytyczne dla pomiarow zdrowotnych</string>
+    <string name="patient_settings_agents_title">Agenci monitorujacy</string>
+    <string name="patient_settings_agents_subtitle">Opiekunowie i lekarze</string>
     <string name="patient_settings_add_personal">Dodaj Dane</string>
     <string name="patient_settings_add_disease">Dodaj Chorobe</string>
     <string name="patient_settings_add_med">Dodaj Lek</string>

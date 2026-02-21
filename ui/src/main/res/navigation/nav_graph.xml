@@ -278,6 +278,9 @@
         <action
             android:id="@+id/action_patientSettings_to_patientAlerts"
             app:destination="@id/patientAlertsFragment" />
+        <action
+            android:id="@+id/action_patientSettings_to_patientAgents"
+            app:destination="@id/patientAgentsFragment" />
     </fragment>
 
     <fragment

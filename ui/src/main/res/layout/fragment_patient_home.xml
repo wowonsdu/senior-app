@@ -175,90 +175,25 @@
                 android:orientation="horizontal">
 
                 <zdrowy.senior.io.ui.views.ActionTileView
-                    android:id="@+id/patient_home_tile_notify_agents"
+                    android:id="@+id/patient_home_tile_history"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/tile_height"
                     android:layout_marginEnd="@dimen/spacing_s"
                     android:layout_weight="1"
-                    app:actionTitle="@string/patient_home_tile_notify_agents"
-                    app:actionIcon="@drawable/ic_alert_bell"
-                    app:actionColor="@color/senior_info" />
+                    app:actionTitle="@string/patient_home_tile_history"
+                    app:actionIcon="@android:drawable/ic_menu_recent_history"
+                    app:actionColor="@color/senior_dark" />
 
                 <zdrowy.senior.io.ui.views.ActionTileView
-                    android:id="@+id/patient_home_tile_notify_doctors"
+                    android:id="@+id/patient_home_tile_settings"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/tile_height"
                     android:layout_marginStart="@dimen/spacing_s"
                     android:layout_weight="1"
-                    app:actionTitle="@string/patient_home_tile_notify_doctors"
-                    app:actionIcon="@drawable/ic_alert_medical"
-                    app:actionColor="@color/senior_magenta" />
+                    app:actionTitle="@string/patient_home_tile_settings"
+                    app:actionIcon="@android:drawable/ic_menu_manage"
+                    app:actionColor="@color/senior_purple" />
             </LinearLayout>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/patient_home_emergency_card"
-                style="@style/Widget.Senior.Card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_l"
-                app:cardBackgroundColor="@color/senior_danger">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_l">
-
-                    <ImageView
-                        android:id="@+id/patient_home_emergency_icon"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:contentDescription="@null"
-                        android:src="@android:drawable/ic_dialog_alert"
-                        android:tint="@color/white" />
-
-                    <TextView
-                        android:id="@+id/patient_home_emergency_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_s"
-                        android:text="@string/patient_home_action_emergency_upper"
-                        android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/patient_home_action_history"
-                style="@style/Widget.Senior.Button.Base"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_l"
-                android:text="@string/patient_home_action_history"
-                android:textColor="@color/white"
-                app:backgroundTint="@color/senior_dark" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/patient_home_action_agents"
-                style="@style/Widget.Senior.Button.Base"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_s"
-                android:text="@string/patient_home_action_agents"
-                android:textColor="@color/white"
-                app:backgroundTint="@color/senior_warning" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/patient_home_action_settings"
-                style="@style/Widget.Senior.Button.Base"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_s"
-                android:text="@string/patient_home_action_settings"
-                android:textColor="@color/white"
-                app:backgroundTint="@color/senior_purple" />
 
         </LinearLayout>
     </ScrollView>
