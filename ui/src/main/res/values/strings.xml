@@ -39,6 +39,12 @@
     <string name="caregiver_link_code_placeholder">------</string>
     <string name="caregiver_link_generate">Wygeneruj kod</string>
     <string name="caregiver_link_copy">Kopiuj kod</string>
+    <string name="caregiver_home_title">Panel Opiekuna</string>
+    <string name="caregiver_home_subtitle">Zarzadzaj swoimi podopiecznymi</string>
+    <string name="caregiver_tab_dashboard">Dashboard</string>
+    <string name="caregiver_tab_dependents">Podopieczni</string>
+    <string name="caregiver_tab_visits">Wizyty</string>
+    <string name="caregiver_placeholder_soon">Wkrotce</string>
 
     <string name="sms_verify_title">Zaloguj sie</string>
     <string name="sms_verify_header">Wpisz kod z SMS</string>

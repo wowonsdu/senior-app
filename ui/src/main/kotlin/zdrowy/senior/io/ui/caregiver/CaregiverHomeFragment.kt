@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
@@ -30,43 +31,58 @@ class CaregiverHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCaregiverHomeBinding.inflate(inflater, container, false)
-
-        binding.caregiverHomeBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-
-        binding.caregiverHomeLogout.setOnClickListener {
-            auth.signOut()
-            disposables.add(
-                clearActivePatient()
-                    .andThen(clearCurrentUserRole())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        findNavController().navigate(
-                            R.id.startupGateFragment,
-                            null,
-                            androidx.navigation.NavOptions.Builder()
-                                .setPopUpTo(R.id.caregiverHomeFragment, true)
-                                .setLaunchSingleTop(true)
-                                .build()
-                        )
-                    }, {
-                        findNavController().navigate(
-                            R.id.startupGateFragment,
-                            null,
-                            androidx.navigation.NavOptions.Builder()
-                                .setPopUpTo(R.id.caregiverHomeFragment, true)
-                                .setLaunchSingleTop(true)
-                                .build()
-                        )
-                    })
-            )
-        }
-
-        binding.caregiverHomePhone.text = auth.currentUser?.phoneNumber ?: "-"
-
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val pagerAdapter = CaregiverHomePagerAdapter(this)
+        binding.caregiverHomePager.adapter = pagerAdapter
+        TabLayoutMediator(binding.caregiverHomeTabs, binding.caregiverHomePager) { tab, position ->
+            tab.text = when (position) {
+                0 -> getString(R.string.caregiver_tab_dashboard)
+                1 -> getString(R.string.caregiver_tab_dependents)
+                else -> getString(R.string.caregiver_tab_visits)
+            }
+        }.attach()
+
+        binding.caregiverHomeToolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.caregiver_home_logout) {
+                logout()
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun logout() {
+        auth.signOut()
+        disposables.add(
+            clearActivePatient()
+                .andThen(clearCurrentUserRole())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    findNavController().navigate(
+                        R.id.startupGateFragment,
+                        null,
+                        androidx.navigation.NavOptions.Builder()
+                            .setPopUpTo(R.id.caregiverHomeFragment, true)
+                            .setLaunchSingleTop(true)
+                            .build()
+                    )
+                }, {
+                    findNavController().navigate(
+                        R.id.startupGateFragment,
+                        null,
+                        androidx.navigation.NavOptions.Builder()
+                            .setPopUpTo(R.id.caregiverHomeFragment, true)
+                            .setLaunchSingleTop(true)
+                            .build()
+                    )
+                })
+        )
     }
 
     override fun onDestroyView() {
