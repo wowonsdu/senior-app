@@ -24,8 +24,9 @@ service cloud.firestore {
 
     match /careLinks/{linkId} {
       allow get: if isSignedIn()
-        && resource != null
-        && (resource.data.patientUid == request.auth.uid || resource.data.caregiverUid == request.auth.uid);
+        && (resource == null
+            || resource.data.patientUid == request.auth.uid
+            || resource.data.caregiverUid == request.auth.uid);
 
       allow list: if isSignedIn();
 
