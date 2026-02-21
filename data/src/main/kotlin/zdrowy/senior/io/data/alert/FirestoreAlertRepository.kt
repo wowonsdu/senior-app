@@ -1,6 +1,5 @@
 package zdrowy.senior.io.data.alert
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -8,6 +7,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
+import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.firestore.toCompletable
 import zdrowy.senior.io.data.firestore.toSingle
 import zdrowy.senior.io.domain.alert.AlertChannel
@@ -16,9 +16,10 @@ import zdrowy.senior.io.domain.alert.AlertRepository
 import zdrowy.senior.io.domain.alert.AlertSetting
 import zdrowy.senior.io.domain.measurement.MeasurementType
 
-class FirestoreAlertRepository : AlertRepository {
+class FirestoreAlertRepository(
+    private val uidProvider: PatientUidProvider
+) : AlertRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun getAlertConfig(): Single<AlertConfig> {
         val uid = requireUid()
@@ -152,7 +153,5 @@ class FirestoreAlertRepository : AlertRepository {
         return AlertConfig(settings = settings)
     }
 
-    private fun requireUid(): String {
-        return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
-    }
+    private fun requireUid(): String = uidProvider.requirePatientUid()
 }

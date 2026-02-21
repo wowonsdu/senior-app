@@ -1,6 +1,5 @@
 package zdrowy.senior.io.data.settings
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -8,6 +7,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
+import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.firestore.toCompletable
 import zdrowy.senior.io.data.firestore.toSingle
 import zdrowy.senior.io.domain.settings.Disease
@@ -19,9 +19,10 @@ import zdrowy.senior.io.domain.settings.MedicationUpdate
 import zdrowy.senior.io.domain.settings.PersonalData
 import zdrowy.senior.io.domain.settings.SettingsRepository
 
-class FirestoreSettingsRepository : SettingsRepository {
+class FirestoreSettingsRepository(
+    private val uidProvider: PatientUidProvider
+) : SettingsRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun getPersonalData(): Single<PersonalData> {
         val uid = requireUid()
@@ -325,7 +326,5 @@ class FirestoreSettingsRepository : SettingsRepository {
         ).toCompletable()
     }
 
-    private fun requireUid(): String {
-        return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
-    }
+    private fun requireUid(): String = uidProvider.requirePatientUid()
 }

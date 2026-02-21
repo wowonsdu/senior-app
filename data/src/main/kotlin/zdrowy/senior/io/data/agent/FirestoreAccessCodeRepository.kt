@@ -1,18 +1,19 @@
 package zdrowy.senior.io.data.agent
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.rxjava3.core.Single
+import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.firestore.FirestorePaths
 import zdrowy.senior.io.data.firestore.toSingle
 import zdrowy.senior.io.domain.agent.AccessCode
 import zdrowy.senior.io.domain.agent.AccessCodeRepository
 import kotlin.random.Random
 
-class FirestoreAccessCodeRepository : AccessCodeRepository {
+class FirestoreAccessCodeRepository(
+    private val uidProvider: PatientUidProvider
+) : AccessCodeRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val random: Random = Random(System.currentTimeMillis())
 
     override fun generateAccessCodeForAgent(agentId: String, ttlSeconds: Long): Single<AccessCode> {
@@ -72,10 +73,7 @@ class FirestoreAccessCodeRepository : AccessCodeRepository {
             }
     }
 
-    private fun requireUid(): String {
-        return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
-    }
+    private fun requireUid(): String = uidProvider.requirePatientUid()
 
     private class CodeCollisionException : RuntimeException()
 }
-

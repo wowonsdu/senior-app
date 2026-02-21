@@ -1,6 +1,5 @@
 package zdrowy.senior.io.data.agent
 
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -8,6 +7,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
+import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.firestore.toCompletable
 import zdrowy.senior.io.data.firestore.toSingle
 import zdrowy.senior.io.domain.agent.Agent
@@ -18,9 +18,10 @@ import zdrowy.senior.io.domain.agent.AgentUpdate
 import zdrowy.senior.io.domain.agent.DoctorDraft
 import java.util.Locale
 
-class FirestoreAgentRepository : AgentRepository {
+class FirestoreAgentRepository(
+    private val uidProvider: PatientUidProvider
+) : AgentRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun addAgent(draft: AgentDraft): Single<String> {
         val uid = requireUid()
@@ -139,7 +140,5 @@ class FirestoreAgentRepository : AgentRepository {
         )
     }
 
-    private fun requireUid(): String {
-        return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
-    }
+    private fun requireUid(): String = uidProvider.requirePatientUid()
 }
