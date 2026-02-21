@@ -72,6 +72,7 @@ import zdrowy.senior.io.domain.settings.UpdateDiseaseUseCase
 import zdrowy.senior.io.domain.settings.UpdateMedicationUseCase
 import zdrowy.senior.io.domain.settings.UpsertPersonalDataUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
+import zdrowy.senior.io.domain.user.EnsureCurrentUserRoleLoadedUseCase
 import zdrowy.senior.io.domain.user.ActivePatientContext
 import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
 import zdrowy.senior.io.domain.user.ClearCurrentUserRoleUseCase
@@ -86,6 +87,7 @@ import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.UserProfileRepository
 import zdrowy.senior.io.data.user.FirestoreUserProfileRepository
 import zdrowy.senior.io.ui.caregiver.CaregiverLinkViewModel
+import zdrowy.senior.io.ui.auth.StartupGateViewModel
 import zdrowy.senior.io.ui.patient.PatientAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientAlertsViewModel
 import zdrowy.senior.io.ui.patient.PatientHistoryViewModel
@@ -154,6 +156,7 @@ val domainModule = module {
     factory { ToggleMedicationNotificationsUseCase(get()) }
 
     factory { EnsureUserProfileUseCase(get()) }
+    factory { EnsureCurrentUserRoleLoadedUseCase(get(), get()) }
     factory { SetCurrentUserRoleUseCase(get()) }
     factory { ObserveCurrentUserRoleUseCase(get()) }
     factory { GetCurrentUserRoleUseCase(get()) }
@@ -187,6 +190,7 @@ val uiModule = module {
 }
 
 val viewModelModule = module {
+    viewModel { StartupGateViewModel(get()) }
     viewModel { CaregiverLinkViewModel(get(), get(), get(), get(), get()) }
     viewModel { PatientHistoryViewModel(get(), get(), get()) }
     viewModel { PatientAgentsViewModel(get()) }

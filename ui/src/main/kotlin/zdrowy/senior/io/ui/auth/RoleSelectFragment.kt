@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import zdrowy.senior.io.ui.R
@@ -25,9 +26,12 @@ class RoleSelectFragment : Fragment() {
         binding.roleSelectPatientCard.setOnClickListener {
             if (auth.currentUser != null) {
                 findNavController().navigate(
-                    R.id.patientHomeFragment,
+                    R.id.startupGateFragment,
                     null,
-                    PhoneAuthUi.navOptionsPopToRoleSelect()
+                    NavOptions.Builder()
+                        .setPopUpTo(R.id.roleSelectFragment, true)
+                        .setLaunchSingleTop(true)
+                        .build()
                 )
             } else {
                 findNavController().navigate(R.id.action_roleSelect_to_patientLogin)
@@ -37,9 +41,12 @@ class RoleSelectFragment : Fragment() {
         binding.roleSelectCaregiverCard.setOnClickListener {
             if (auth.currentUser != null) {
                 findNavController().navigate(
-                    R.id.patientHomeFragment,
+                    R.id.startupGateFragment,
                     null,
-                    PhoneAuthUi.navOptionsPopToRoleSelect()
+                    NavOptions.Builder()
+                        .setPopUpTo(R.id.roleSelectFragment, true)
+                        .setLaunchSingleTop(true)
+                        .build()
                 )
             } else {
                 findNavController().navigate(R.id.action_roleSelect_to_caregiverLogin)

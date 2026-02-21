@@ -199,7 +199,7 @@ Zasady etapu:
 
 ## Etap 10.12 — Sesja: persist roli/pacjenta + startup gate + realtime home
 - [x] 10.12.1 Persist: rola + aktywny pacjent (SharedPrefs) + logout cleanup
-- [ ] 10.12.2 Startup gate: auto-route + recovery roli z Firestore
+- [x] 10.12.2 Startup gate: auto-route + recovery roli z Firestore
 - [ ] 10.12.3 Monitor zdrowia: realtime ostatnie pomiary (Observable)
 - [ ] 10.12.4 Smoke: restart app (pacjent/opiekun) + utrzymanie kontekstu
 

@@ -44,19 +44,19 @@ class CaregiverHomeFragment : Fragment() {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         findNavController().navigate(
-                            R.id.roleSelectFragment,
+                            R.id.startupGateFragment,
                             null,
                             androidx.navigation.NavOptions.Builder()
-                                .setPopUpTo(R.id.roleSelectFragment, false)
+                                .setPopUpTo(R.id.caregiverHomeFragment, true)
                                 .setLaunchSingleTop(true)
                                 .build()
                         )
                     }, {
                         findNavController().navigate(
-                            R.id.roleSelectFragment,
+                            R.id.startupGateFragment,
                             null,
                             androidx.navigation.NavOptions.Builder()
-                                .setPopUpTo(R.id.roleSelectFragment, false)
+                                .setPopUpTo(R.id.caregiverHomeFragment, true)
                                 .setLaunchSingleTop(true)
                                 .build()
                         )

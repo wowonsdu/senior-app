@@ -4,7 +4,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.toCompletable
+import zdrowy.senior.io.data.firestore.toSingle
 import zdrowy.senior.io.domain.user.UserProfileRepository
 import zdrowy.senior.io.domain.user.UserRole
 
@@ -48,5 +50,17 @@ class FirestoreUserProfileRepository : UserProfileRepository {
             }
             null
         }.toCompletable()
+    }
+
+    override fun getCurrentUserRole(): Single<UserRole> {
+        val user = auth.currentUser ?: return Single.error(IllegalStateException("Not authenticated"))
+        val doc = firestore.collection("users").document(user.uid)
+        return doc.get()
+            .toSingle()
+            .map { snapshot ->
+                val raw = snapshot.getString("role") ?: throw IllegalStateException("User role missing")
+                runCatching { UserRole.valueOf(raw) }
+                    .getOrElse { throw IllegalStateException("Invalid role: $raw") }
+            }
     }
 }

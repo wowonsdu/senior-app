@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -42,9 +43,23 @@ class PatientHomeFragment : Fragment() {
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({
-                            findNavController().navigate(R.id.action_patientHome_to_roleSelect)
+                            findNavController().navigate(
+                                R.id.startupGateFragment,
+                                null,
+                                NavOptions.Builder()
+                                    .setPopUpTo(R.id.patientHomeFragment, true)
+                                    .setLaunchSingleTop(true)
+                                    .build()
+                            )
                         }, {
-                            findNavController().navigate(R.id.action_patientHome_to_roleSelect)
+                            findNavController().navigate(
+                                R.id.startupGateFragment,
+                                null,
+                                NavOptions.Builder()
+                                    .setPopUpTo(R.id.patientHomeFragment, true)
+                                    .setLaunchSingleTop(true)
+                                    .build()
+                            )
                         })
                 )
                 true

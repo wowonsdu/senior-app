@@ -2,7 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/roleSelectFragment">
+    app:startDestination="@id/startupGateFragment">
+
+    <fragment
+        android:id="@+id/startupGateFragment"
+        android:name="zdrowy.senior.io.ui.auth.StartupGateFragment"
+        android:label="@string/role_select_app_name"
+        tools:layout="@layout/fragment_startup_gate" />
 
     <fragment
         android:id="@+id/roleSelectFragment"
