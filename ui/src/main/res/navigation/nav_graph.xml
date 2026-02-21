@@ -253,13 +253,13 @@
             app:destination="@id/patientPersonalDataDialogFragment" />
         <action
             android:id="@+id/action_patientSettings_to_addDisease"
-            app:destination="@id/patientAddDiseaseDialogFragment" />
+            app:destination="@id/patientAddDiseaseFragment" />
         <action
             android:id="@+id/action_patientSettings_to_addMed"
             app:destination="@id/patientAddMedFragment" />
         <action
             android:id="@+id/action_patientSettings_to_editDisease"
-            app:destination="@id/patientEditDiseaseDialogFragment" />
+            app:destination="@id/patientEditDiseaseFragment" />
         <action
             android:id="@+id/action_patientSettings_to_editMed"
             app:destination="@id/patientEditMedFragment" />
@@ -274,11 +274,11 @@
         android:label="@string/patient_personal_title"
         tools:layout="@layout/dialog_patient_personal_data" />
 
-    <dialog
-        android:id="@+id/patientAddDiseaseDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientAddDiseaseDialogFragment"
+    <fragment
+        android:id="@+id/patientAddDiseaseFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAddDiseaseFragment"
         android:label="@string/patient_add_disease_title"
-        tools:layout="@layout/dialog_patient_add_disease" />
+        tools:layout="@layout/fragment_patient_add_disease" />
 
     <fragment
         android:id="@+id/patientAddMedFragment"
@@ -286,15 +286,15 @@
         android:label="@string/patient_add_med_title"
         tools:layout="@layout/fragment_patient_add_med" />
 
-    <dialog
-        android:id="@+id/patientEditDiseaseDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientEditDiseaseDialogFragment"
+    <fragment
+        android:id="@+id/patientEditDiseaseFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientEditDiseaseFragment"
         android:label="@string/patient_edit_disease_title"
-        tools:layout="@layout/dialog_patient_add_disease">
+        tools:layout="@layout/fragment_patient_edit_disease">
         <argument
             android:name="diseaseId"
             app:argType="string" />
-    </dialog>
+    </fragment>
 
     <fragment
         android:id="@+id/patientEditMedFragment"
