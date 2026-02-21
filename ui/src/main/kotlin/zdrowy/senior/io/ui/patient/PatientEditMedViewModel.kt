@@ -29,10 +29,9 @@ class PatientEditMedViewModel(
             observeMedications()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .map { list -> list.firstOrNull { it.id == medicationId } }
-                .distinctUntilChanged()
-                .subscribe({ med ->
-                    _medication.value = med
+                .subscribe({ list ->
+                    val next = list.firstOrNull { it.id == medicationId }
+                    if (_medication.value != next) _medication.value = next
                 }, {
                     _medication.value = null
                 })
@@ -62,4 +61,3 @@ class PatientEditMedViewModel(
         super.onCleared()
     }
 }
-
