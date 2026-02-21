@@ -5,6 +5,8 @@ import org.koin.dsl.module
 import zdrowy.senior.io.data.agent.FirestoreAccessCodeRepository
 import zdrowy.senior.io.data.agent.FirestoreAgentRepository
 import zdrowy.senior.io.data.alert.FirestoreAlertRepository
+import zdrowy.senior.io.data.carelink.FirestoreCareLinkRepository
+import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementRepository
 import zdrowy.senior.io.data.notification.NoOpNotificationRepository
 import zdrowy.senior.io.data.settings.FirestoreSettingsRepository
@@ -29,6 +31,10 @@ import zdrowy.senior.io.domain.alert.UpdateAlertChannelsUseCase
 import zdrowy.senior.io.domain.alert.UpdateAlertConfigUseCase
 import zdrowy.senior.io.domain.alert.UpdateCriticalThresholdsUseCase
 import zdrowy.senior.io.domain.alert.UpdateSpikeRulesUseCase
+import zdrowy.senior.io.domain.carelink.CareLinkRepository
+import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
+import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
+import zdrowy.senior.io.domain.carelink.ObserveCareLinksUseCase
 import zdrowy.senior.io.domain.history.GetHistoryFiltersUseCase
 import zdrowy.senior.io.domain.history.GetMeasurementChartDataUseCase
 import zdrowy.senior.io.domain.history.GetMeasurementHistoryUseCase
@@ -59,6 +65,16 @@ import zdrowy.senior.io.domain.settings.UpdateDiseaseUseCase
 import zdrowy.senior.io.domain.settings.UpdateMedicationUseCase
 import zdrowy.senior.io.domain.settings.UpsertPersonalDataUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
+import zdrowy.senior.io.domain.user.ActivePatientContext
+import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
+import zdrowy.senior.io.domain.user.CurrentUserRoleContext
+import zdrowy.senior.io.domain.user.GetCurrentUserRoleUseCase
+import zdrowy.senior.io.domain.user.InMemoryActivePatientContext
+import zdrowy.senior.io.domain.user.InMemoryCurrentUserRoleContext
+import zdrowy.senior.io.domain.user.ObserveActivePatientUseCase
+import zdrowy.senior.io.domain.user.ObserveCurrentUserRoleUseCase
+import zdrowy.senior.io.domain.user.SetActivePatientUseCase
+import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.UserProfileRepository
 import zdrowy.senior.io.data.user.FirestoreUserProfileRepository
 import zdrowy.senior.io.ui.patient.PatientAgentsViewModel
@@ -107,6 +123,10 @@ val domainModule = module {
     factory { UpdateAlertChannelsUseCase(get()) }
     factory { UpdateAlertCaregiversUseCase(get()) }
 
+    factory { ObserveCareLinksUseCase(get()) }
+    factory { GenerateCareLinkCodeUseCase(get()) }
+    factory { ConsumeCareLinkCodeUseCase(get()) }
+
     factory { GetPersonalDataUseCase(get()) }
     factory { GetSettingsOverviewUseCase(get()) }
     factory { UpsertPersonalDataUseCase(get()) }
@@ -124,15 +144,26 @@ val domainModule = module {
     factory { ToggleMedicationNotificationsUseCase(get()) }
 
     factory { EnsureUserProfileUseCase(get()) }
+    factory { SetCurrentUserRoleUseCase(get()) }
+    factory { ObserveCurrentUserRoleUseCase(get()) }
+    factory { GetCurrentUserRoleUseCase(get()) }
+    factory { SetActivePatientUseCase(get()) }
+    factory { ClearActivePatientUseCase(get()) }
+    factory { ObserveActivePatientUseCase(get()) }
 }
 
 val dataModule = module {
-    single<MeasurementRepository> { FirestoreMeasurementRepository() }
-    single<AgentRepository> { FirestoreAgentRepository() }
-    single<AccessCodeRepository> { FirestoreAccessCodeRepository() }
+    single<ActivePatientContext> { InMemoryActivePatientContext() }
+    single<CurrentUserRoleContext> { InMemoryCurrentUserRoleContext() }
+    single { PatientUidProvider(get()) }
+
+    single<MeasurementRepository> { FirestoreMeasurementRepository(get()) }
+    single<AgentRepository> { FirestoreAgentRepository(get()) }
+    single<AccessCodeRepository> { FirestoreAccessCodeRepository(get()) }
+    single<CareLinkRepository> { FirestoreCareLinkRepository(get()) }
     single<NotificationRepository> { NoOpNotificationRepository() }
-    single<AlertRepository> { FirestoreAlertRepository() }
-    single<SettingsRepository> { FirestoreSettingsRepository() }
+    single<AlertRepository> { FirestoreAlertRepository(get()) }
+    single<SettingsRepository> { FirestoreSettingsRepository(get()) }
 
     single<UserProfileRepository> { FirestoreUserProfileRepository() }
 }
