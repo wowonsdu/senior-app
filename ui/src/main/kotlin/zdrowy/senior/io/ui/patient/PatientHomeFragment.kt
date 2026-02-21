@@ -102,11 +102,23 @@ class PatientHomeFragment : Fragment() {
             binding.patientHomeProfileName.text = state.fullName
             binding.patientHomeProfilePhone.text = state.phone
             binding.patientHomeAvatar.text = state.avatar
-            binding.patientHomeProfileActionContainer.isVisible = state.showChevron
+            binding.patientHomeProfileActionContainer.isVisible =
+                state.action != PatientHomeHeaderAction.NONE
+            binding.patientHomeProfileAction.setImageResource(state.actionIconRes)
         }
         viewModel.navTarget.observe(viewLifecycleOwner) { target ->
             if (target == PatientHomeNavTarget.CAREGIVER_LINK) {
                 findNavController().navigate(R.id.action_patientHome_to_caregiverLink)
+            }
+            if (target == PatientHomeNavTarget.CAREGIVER_HOME) {
+                findNavController().navigate(
+                    R.id.caregiverHomeFragment,
+                    null,
+                    NavOptions.Builder()
+                        .setPopUpTo(R.id.patientHomeFragment, true)
+                        .setLaunchSingleTop(true)
+                        .build()
+                )
             }
             if (target != null) viewModel.onNavigationHandled()
         }

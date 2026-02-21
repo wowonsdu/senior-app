@@ -218,3 +218,4 @@ Zasady etapu:
 - [x] Podopieczni: formularz dodaj + kod + kopiuj
 - [x] Auth pacjenta: login z kodem (consume careLink + prefill danych)
 - [x] Podopieczni: powiaz pacjenta kodem w formularzu
+- [x] Monitor zdrowia: powrot do wyboru pacjenta (ikona wyjscia)

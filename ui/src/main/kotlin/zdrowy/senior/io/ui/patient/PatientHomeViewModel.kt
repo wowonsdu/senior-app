@@ -73,8 +73,14 @@ class PatientHomeViewModel(
     }
 
     fun onHeaderClicked() {
-        if (_headerState.value?.canNavigateToLink == true) {
-            _navTarget.value = PatientHomeNavTarget.CAREGIVER_LINK
+        when (_headerState.value?.action ?: PatientHomeHeaderAction.NONE) {
+            PatientHomeHeaderAction.LINK_CAREGIVER -> {
+                _navTarget.value = PatientHomeNavTarget.CAREGIVER_LINK
+            }
+            PatientHomeHeaderAction.BACK_TO_CAREGIVER -> {
+                _navTarget.value = PatientHomeNavTarget.CAREGIVER_HOME
+            }
+            PatientHomeHeaderAction.NONE -> Unit
         }
     }
 
@@ -97,14 +103,23 @@ class PatientHomeViewModel(
         } else {
             R.string.patient_home_profile_label
         }
-        val showChevron = role == UserRole.CAREGIVER
+        val action = if (role == UserRole.CAREGIVER) {
+            PatientHomeHeaderAction.BACK_TO_CAREGIVER
+        } else {
+            PatientHomeHeaderAction.NONE
+        }
+        val actionIconRes = if (role == UserRole.CAREGIVER) {
+            R.drawable.ic_exit_door
+        } else {
+            R.drawable.ic_chevron_down
+        }
         return PatientHomeHeaderUiState(
             labelRes = labelRes,
             fullName = if (fullName.isBlank()) "-" else fullName,
             phone = phone,
             avatar = initials(firstName, lastName),
-            showChevron = showChevron,
-            canNavigateToLink = false
+            action = action,
+            actionIconRes = actionIconRes
         )
     }
 
@@ -114,8 +129,8 @@ class PatientHomeViewModel(
             fullName = "-",
             phone = "-",
             avatar = "?",
-            showChevron = true,
-            canNavigateToLink = true
+            action = PatientHomeHeaderAction.LINK_CAREGIVER,
+            actionIconRes = R.drawable.ic_chevron_down
         )
     }
 
@@ -125,8 +140,8 @@ class PatientHomeViewModel(
             fullName = "-",
             phone = "-",
             avatar = "?",
-            showChevron = false,
-            canNavigateToLink = false
+            action = PatientHomeHeaderAction.NONE,
+            actionIconRes = R.drawable.ic_chevron_down
         )
     }
 
