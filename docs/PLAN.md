@@ -188,3 +188,4 @@ Zasady etapu:
 - [x] 10.5 UI: CaregiverLinkFragment + nawigacja do Patient flow
 - [x] 10.6 UI: wejście pacjenta do linkowania + zapis roli po loginie
 - [x] 10.7 Hotfix: opiekun po loginie -> PatientHome (bez link screen)
+- [x] 10.8 Hotfix: RoleSelect (zalogowany) -> Monitor Zdrowia

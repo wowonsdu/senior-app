@@ -37,7 +37,7 @@ class RoleSelectFragment : Fragment() {
         binding.roleSelectCaregiverCard.setOnClickListener {
             if (auth.currentUser != null) {
                 findNavController().navigate(
-                    R.id.caregiverHomeFragment,
+                    R.id.patientHomeFragment,
                     null,
                     PhoneAuthUi.navOptionsPopToRoleSelect()
                 )
