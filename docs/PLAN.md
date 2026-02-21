@@ -174,7 +174,7 @@ Zasady etapu:
 - [ ] 9.11 Ekran: Patient Home (kafelki pomiarow)
 - [x] 9.11.1 Patient Home: managed user state (domain/data)
 - [x] 9.11.2 Patient Home: header UI (label/chevron + dane z Firestore)
-- [ ] 9.11.3 Patient Home: brak active patient -> CTA do CaregiverLink
+- [x] 9.11.3 Patient Home: brak active patient -> CTA do CaregiverLink
 - [ ] 9.11.4 Patient Home: smoke test (pacjent/opiekun)
 - [ ] 9.12 Ekran: Alerts Overview + Config
 - [ ] 9.13 Auth: SMS verify (patient/caregiver) — VM + UI models + data binding

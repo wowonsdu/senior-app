@@ -7,5 +7,6 @@ data class PatientHomeHeaderUiState(
     val fullName: String,
     val phone: String,
     val avatar: String,
-    val showChevron: Boolean
+    val showChevron: Boolean,
+    val canNavigateToLink: Boolean
 )

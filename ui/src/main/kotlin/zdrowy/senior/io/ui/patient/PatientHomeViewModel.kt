@@ -26,6 +26,8 @@ class PatientHomeViewModel(
     val recentMeasurements: LiveData<List<Measurement>> = _recentMeasurements
     private val _headerState = MutableLiveData<PatientHomeHeaderUiState>()
     val headerState: LiveData<PatientHomeHeaderUiState> = _headerState
+    private val _navTarget = MutableLiveData<PatientHomeNavTarget?>()
+    val navTarget: LiveData<PatientHomeNavTarget?> = _navTarget
     private var started = false
 
     fun start() {
@@ -64,6 +66,16 @@ class PatientHomeViewModel(
         )
     }
 
+    fun onHeaderClicked() {
+        if (_headerState.value?.canNavigateToLink == true) {
+            _navTarget.value = PatientHomeNavTarget.CAREGIVER_LINK
+        }
+    }
+
+    fun onNavigationHandled() {
+        _navTarget.value = null
+    }
+
     override fun onCleared() {
         disposables.clear()
         super.onCleared()
@@ -85,7 +97,8 @@ class PatientHomeViewModel(
             fullName = if (fullName.isBlank()) "-" else fullName,
             phone = phone,
             avatar = initials(firstName, lastName),
-            showChevron = showChevron
+            showChevron = showChevron,
+            canNavigateToLink = false
         )
     }
 
@@ -95,7 +108,8 @@ class PatientHomeViewModel(
             fullName = "-",
             phone = "-",
             avatar = "?",
-            showChevron = true
+            showChevron = true,
+            canNavigateToLink = true
         )
     }
 
@@ -105,7 +119,8 @@ class PatientHomeViewModel(
             fullName = "-",
             phone = "-",
             avatar = "?",
-            showChevron = false
+            showChevron = false,
+            canNavigateToLink = false
         )
     }
 
