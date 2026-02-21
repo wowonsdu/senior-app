@@ -59,7 +59,7 @@ class CaregiverLinkViewModel(
                     } else {
                         CareLinkCodeType.PATIENT_TO_CAREGIVER
                     }
-                    generateCareLinkCode(type, 3600)
+                    generateCareLinkCode(type, 3600, null)
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ code ->

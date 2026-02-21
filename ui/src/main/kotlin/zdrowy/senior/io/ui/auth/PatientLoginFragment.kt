@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.android.ext.android.inject
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientLoginBinding
+import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
 import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.UserRole
@@ -32,6 +33,7 @@ class PatientLoginFragment : Fragment() {
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
     private val ensureUserProfile: EnsureUserProfileUseCase by inject()
     private val setCurrentUserRole: SetCurrentUserRoleUseCase by inject()
+    private val consumeCareLinkCode: ConsumeCareLinkCodeUseCase by inject()
     private val disposables = CompositeDisposable()
 
     override fun onCreateView(
@@ -60,6 +62,7 @@ class PatientLoginFragment : Fragment() {
     }
 
     private fun startPhoneVerification() {
+        val pendingCode = readCareLinkCodeOrNull() ?: return
         val phoneRaw = binding.patientLoginPhoneInput.editText?.text?.toString()?.trim().orEmpty()
         val phoneE164 = normalizePhoneNumberPl(phoneRaw)
         if (phoneE164 == null) {
@@ -80,6 +83,13 @@ class PatientLoginFragment : Fragment() {
                             disposables.add(
                                 ensureUserProfile(UserRole.PATIENT)
                                     .andThen(setCurrentUserRole(UserRole.PATIENT))
+                                    .andThen(
+                                        if (pendingCode.isNotBlank()) {
+                                            consumeCareLinkCode(pendingCode).ignoreElement()
+                                        } else {
+                                            io.reactivex.rxjava3.core.Completable.complete()
+                                        }
+                                    )
                                     .subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe({
@@ -120,7 +130,8 @@ class PatientLoginFragment : Fragment() {
                     R.id.action_patientLogin_to_patientSmsVerify,
                     bundleOf(
                         PhoneAuthUi.ARG_VERIFICATION_ID to verificationId,
-                        PhoneAuthUi.ARG_PHONE_E164 to phoneE164
+                        PhoneAuthUi.ARG_PHONE_E164 to phoneE164,
+                        PhoneAuthUi.ARG_PENDING_CARE_LINK_CODE to pendingCode
                     )
                 )
             }
@@ -134,5 +145,21 @@ class PatientLoginFragment : Fragment() {
             .build()
 
         PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun readCareLinkCodeOrNull(): String? {
+        val raw = binding.patientLoginAccessCode.text?.toString()?.trim().orEmpty()
+        if (raw.isBlank()) {
+            binding.patientLoginCodeInput.error = null
+            return ""
+        }
+        val digits = raw.filter { it.isDigit() }
+        return if (digits.length == 6) {
+            binding.patientLoginCodeInput.error = null
+            digits
+        } else {
+            binding.patientLoginCodeInput.error = "Kod musi miec 6 cyfr"
+            null
+        }
     }
 }

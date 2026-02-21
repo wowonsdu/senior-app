@@ -3,6 +3,7 @@ package zdrowy.senior.io.data.carelink
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
@@ -98,6 +99,14 @@ class FirestoreCareLinkRepository(
             val type = runCatching { CareLinkCodeType.valueOf(typeRaw) }
                 .getOrElse { throw InvalidCodeException("Nieprawidlowy typ kodu") }
 
+            val draft = CareLinkDraft(
+                firstName = snapshot.getString("draftFirstName").orEmpty(),
+                lastName = snapshot.getString("draftLastName").orEmpty(),
+                pesel = snapshot.getString("draftPesel").orEmpty(),
+                phoneNumber = snapshot.getString("draftPhoneNumber").orEmpty(),
+                address = snapshot.getString("draftAddress").orEmpty()
+            )
+
             val (patientUid, caregiverUid) = when (type) {
                 CareLinkCodeType.PATIENT_TO_CAREGIVER -> {
                     val patientUid = snapshot.getString("patientUid").orEmpty()
@@ -127,6 +136,23 @@ class FirestoreCareLinkRepository(
                         "createdAt" to FieldValue.serverTimestamp()
                     )
                 )
+            }
+
+            if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
+                val draftPayload = mutableMapOf<String, Any>()
+                if (draft.firstName.isNotBlank()) draftPayload["firstName"] = draft.firstName
+                if (draft.lastName.isNotBlank()) draftPayload["lastName"] = draft.lastName
+                if (draft.pesel.isNotBlank()) draftPayload["pesel"] = draft.pesel
+                if (draft.phoneNumber.isNotBlank()) draftPayload["phoneNumber"] = draft.phoneNumber
+                if (draft.address.isNotBlank()) draftPayload["address"] = draft.address
+                if (draftPayload.isNotEmpty()) {
+                    draftPayload["updatedAt"] = FieldValue.serverTimestamp()
+                    val personalDoc = firestore.collection(FirestorePaths.USERS)
+                        .document(patientUid)
+                        .collection(FirestorePaths.SETTINGS)
+                        .document(FirestorePaths.PERSONAL_DATA)
+                    tx.set(personalDoc, draftPayload, SetOptions.merge())
+                }
             }
 
             tx.delete(doc)
