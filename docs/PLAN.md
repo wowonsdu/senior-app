@@ -182,7 +182,7 @@ Zasady etapu:
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
-- [ ] 10.2 Data: FirestoreCareLinkRepository + kody linkowania
+ - [x] 10.2 Data: FirestoreCareLinkRepository + kody linkowania
 - [ ] 10.3 Data: PatientUidProvider + Firestore repo na patientUid
 - [ ] 10.4 DI: wiring careLinks + konteksty + repo
 - [ ] 10.5 UI: CaregiverLinkFragment + nawigacja do Patient flow
