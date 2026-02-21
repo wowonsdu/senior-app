@@ -81,7 +81,7 @@ class CaregiverSmsVerifyFragment : Fragment() {
                             .doFinally { binding.caregiverSmsConfirm.isEnabled = true }
                             .subscribe({
                                 findNavController().navigate(
-                                    R.id.caregiverLinkFragment,
+                                    R.id.patientHomeFragment,
                                     null,
                                     PhoneAuthUi.navOptionsPopToRoleSelect()
                                 )
