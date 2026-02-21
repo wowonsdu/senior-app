@@ -8,14 +8,21 @@ import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientHomeBinding
+import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
+import org.koin.android.ext.android.inject
 
 class PatientHomeFragment : Fragment() {
     private var _binding: FragmentPatientHomeBinding? = null
     private val binding get() = _binding!!
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val viewModel: PatientHomeViewModel by viewModel()
+    private val clearActivePatient: ClearActivePatientUseCase by inject()
+    private val disposables = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,7 +33,16 @@ class PatientHomeFragment : Fragment() {
         binding.patientHomeToolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.patient_home_logout) {
                 auth.signOut()
-                findNavController().navigate(R.id.action_patientHome_to_roleSelect)
+                disposables.add(
+                    clearActivePatient()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            findNavController().navigate(R.id.action_patientHome_to_roleSelect)
+                        }, {
+                            findNavController().navigate(R.id.action_patientHome_to_roleSelect)
+                        })
+                )
                 true
             } else {
                 false
@@ -65,6 +81,7 @@ class PatientHomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        disposables.clear()
         _binding = null
         super.onDestroyView()
     }

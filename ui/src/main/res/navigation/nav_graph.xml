@@ -205,6 +205,9 @@
         <action
             android:id="@+id/action_patientAgents_to_editDoctor"
             app:destination="@id/patientEditDoctorDialogFragment" />
+        <action
+            android:id="@+id/action_patientAgents_to_caregiverLink"
+            app:destination="@id/caregiverLinkFragment" />
     </fragment>
 
     <dialog

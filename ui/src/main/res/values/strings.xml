@@ -144,6 +144,7 @@
     <string name="patient_agents_empty_doctors_body">Kliknij przycisk ponizej, aby dodac pierwszego lekarza</string>
     <string name="patient_agents_add_agent_tile">Dodaj Agenta</string>
     <string name="patient_agents_add_doctor_tile">Dodaj Lekarza</string>
+    <string name="patient_agents_link_caregiver_tile">Powiaz opiekuna (kod)</string>
 
     <string name="patient_add_agent_title">Dodaj opiekuna</string>
     <string name="patient_add_agent_subtitle">Wpisz dane nowego opiekuna</string>
