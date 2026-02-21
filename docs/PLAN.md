@@ -127,7 +127,7 @@ Zasady etapu:
 
 ## Meta — Standard formularzy (dialog -> fragment)
 - [x] `AGENTS.md`: standard budowy formularzy (scroll + VM + DI + observe, przyklad commita)
-- [ ] Skill: `formularz` (workflow + przyklad commita + szablon plikow)
+- [x] Skill: `formularz` (workflow + przyklad commita + szablon plikow)
 
 ## Etap 6 — Firebase Auth (SMS / numer telefonu)
 - [x] Plan: subplany w `docs/plan/MAIN-PLAN-firebase-phone-auth.md`
