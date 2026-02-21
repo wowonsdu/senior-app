@@ -64,6 +64,8 @@
 
     <string name="patient_home_title">Monitor Zdrowia</string>
     <string name="patient_home_profile_label">Zarzadzasz danymi dla:</string>
+    <string name="patient_home_profile_label_patient">Witaj</string>
+    <string name="patient_home_profile_label_missing_patient">Brak wybranego pacjenta</string>
     <string name="patient_home_profile_name">Janina Kowalska</string>
     <string name="patient_home_profile_phone">234342434</string>
     <string name="patient_home_profile_avatar">JK</string>

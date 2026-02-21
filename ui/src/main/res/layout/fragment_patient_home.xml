@@ -97,6 +97,7 @@
                     </LinearLayout>
 
                     <FrameLayout
+                        android:id="@+id/patient_home_profile_action_container"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
                         android:background="@drawable/bg_circle_primary">

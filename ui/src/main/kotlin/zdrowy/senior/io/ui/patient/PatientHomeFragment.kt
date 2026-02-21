@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
@@ -77,7 +78,15 @@ class PatientHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.start()
         viewModel.loadRecent()
+        viewModel.headerState.observe(viewLifecycleOwner) { state ->
+            binding.patientHomeProfileLabel.setText(state.labelRes)
+            binding.patientHomeProfileName.text = state.fullName
+            binding.patientHomeProfilePhone.text = state.phone
+            binding.patientHomeAvatar.text = state.avatar
+            binding.patientHomeProfileActionContainer.isVisible = state.showChevron
+        }
     }
 
     override fun onDestroyView() {
