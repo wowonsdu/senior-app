@@ -50,6 +50,10 @@
     <string name="caregiver_dependents_select">WYBIERZ</string>
     <string name="caregiver_add_dependent_title">Dodaj podopiecznego</string>
     <string name="caregiver_add_dependent_subtitle">Wpisz dane nowego podopiecznego</string>
+    <string name="caregiver_add_dependent_link_header">Mam kod pacjenta</string>
+    <string name="caregiver_add_dependent_link_code_hint">Kod dostepu (6 cyfr)</string>
+    <string name="caregiver_add_dependent_link_action">Powiaz pacjenta</string>
+    <string name="caregiver_add_dependent_form_header">lub wpisz dane nowego podopiecznego</string>
     <string name="caregiver_add_dependent_first_name_hint">Imie</string>
     <string name="caregiver_add_dependent_last_name_hint">Nazwisko</string>
     <string name="caregiver_add_dependent_pesel_hint">PESEL</string>

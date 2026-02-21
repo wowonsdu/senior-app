@@ -38,6 +38,9 @@ class CaregiverAddDependentFragment : Fragment() {
         binding.caregiverAddDependentSave.setOnClickListener {
             generateCode()
         }
+        binding.caregiverAddDependentLink.setOnClickListener {
+            consumeCode()
+        }
         binding.caregiverAddDependentCopy.setOnClickListener {
             copyCode()
         }
@@ -48,6 +51,15 @@ class CaregiverAddDependentFragment : Fragment() {
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             binding.caregiverAddDependentPhoneInput.error = message
+        }
+        viewModel.linkError.observe(viewLifecycleOwner) { message ->
+            binding.caregiverAddDependentLinkCodeInput.error = message
+        }
+        viewModel.linkSuccess.observe(viewLifecycleOwner) { success ->
+            if (success == true) {
+                findNavController().popBackStack()
+                viewModel.onLinkHandled()
+            }
         }
     }
 
@@ -76,6 +88,17 @@ class CaregiverAddDependentFragment : Fragment() {
             address = address
         )
         viewModel.generateCode(draft)
+    }
+
+    private fun consumeCode() {
+        val raw = binding.caregiverAddDependentLinkCode.text?.toString()?.trim().orEmpty()
+        val digits = raw.filter { it.isDigit() }
+        if (digits.length != 6) {
+            binding.caregiverAddDependentLinkCodeInput.error = "Kod musi miec 6 cyfr"
+            return
+        }
+        binding.caregiverAddDependentLinkCodeInput.error = null
+        viewModel.consumeCode(digits)
     }
 
     private fun validateNotBlank(

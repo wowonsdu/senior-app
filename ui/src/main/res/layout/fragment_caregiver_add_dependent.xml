@@ -39,6 +39,53 @@
             android:orientation="vertical"
             android:padding="@dimen/spacing_l">
 
+            <TextView
+                android:id="@+id/caregiver_add_dependent_link_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/caregiver_add_dependent_link_header"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_text_primary" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/caregiver_add_dependent_link_code_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/caregiver_add_dependent_link_code_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/caregiver_add_dependent_link_code"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/caregiver_add_dependent_link"
+                style="@style/Widget.Senior.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_m"
+                android:text="@string/caregiver_add_dependent_link_action" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:background="@color/senior_outline" />
+
+            <TextView
+                android:id="@+id/caregiver_add_dependent_form_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:text="@string/caregiver_add_dependent_form_header"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_text_primary" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/caregiver_add_dependent_first_name_input"
                 style="@style/Widget.Senior.TextInputLayout"
