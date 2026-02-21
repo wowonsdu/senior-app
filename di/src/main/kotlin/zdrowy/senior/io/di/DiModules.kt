@@ -77,6 +77,7 @@ import zdrowy.senior.io.domain.user.SetActivePatientUseCase
 import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.UserProfileRepository
 import zdrowy.senior.io.data.user.FirestoreUserProfileRepository
+import zdrowy.senior.io.ui.caregiver.CaregiverLinkViewModel
 import zdrowy.senior.io.ui.patient.PatientAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientAlertsViewModel
 import zdrowy.senior.io.ui.patient.PatientHistoryViewModel
@@ -173,6 +174,7 @@ val uiModule = module {
 }
 
 val viewModelModule = module {
+    viewModel { CaregiverLinkViewModel(get(), get(), get(), get(), get()) }
     viewModel { PatientHistoryViewModel(get(), get(), get()) }
     viewModel { PatientAgentsViewModel(get()) }
     viewModel { PatientAlertsViewModel(get()) }

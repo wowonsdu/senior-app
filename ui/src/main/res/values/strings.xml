@@ -29,6 +29,16 @@
     <string name="caregiver_login_subtitle">Wprowadz swoje dane</string>
     <string name="login_phone_tip_caregiver">Numer telefonu: Wyslemy Ci kod SMS</string>
     <string name="login_code_tip_caregiver">Kod dostepu: Otrzymany od pacjenta</string>
+    <string name="caregiver_link_title">Powiaz konto</string>
+    <string name="caregiver_link_subtitle">Polacz pacjenta i opiekuna kodem</string>
+    <string name="caregiver_link_have_code">Mam kod</string>
+    <string name="caregiver_link_code_hint">Kod dostepu (6 cyfr)</string>
+    <string name="caregiver_link_cancel">Anuluj</string>
+    <string name="caregiver_link_connect">Polacz</string>
+    <string name="caregiver_link_generate_title">Moj kod</string>
+    <string name="caregiver_link_code_placeholder">------</string>
+    <string name="caregiver_link_generate">Wygeneruj kod</string>
+    <string name="caregiver_link_copy">Kopiuj kod</string>
 
     <string name="sms_verify_title">Zaloguj sie</string>
     <string name="sms_verify_header">Wpisz kod z SMS</string>

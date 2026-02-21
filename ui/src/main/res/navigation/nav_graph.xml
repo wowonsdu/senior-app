@@ -316,13 +316,27 @@
         android:id="@+id/caregiverSmsVerifyFragment"
         android:name="zdrowy.senior.io.ui.auth.CaregiverSmsVerifyFragment"
         android:label="@string/role_select_app_name"
-        tools:layout="@layout/fragment_caregiver_sms_verify" />
+        tools:layout="@layout/fragment_caregiver_sms_verify">
+        <action
+            android:id="@+id/action_caregiverSmsVerify_to_caregiverLink"
+            app:destination="@id/caregiverLinkFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/caregiverHomeFragment"
         android:name="zdrowy.senior.io.ui.caregiver.CaregiverHomeFragment"
         android:label="@string/role_select_app_name"
         tools:layout="@layout/fragment_caregiver_home" />
+
+    <fragment
+        android:id="@+id/caregiverLinkFragment"
+        android:name="zdrowy.senior.io.ui.caregiver.CaregiverLinkFragment"
+        android:label="@string/caregiver_link_title"
+        tools:layout="@layout/fragment_caregiver_link">
+        <action
+            android:id="@+id/action_caregiverLink_to_patientHome"
+            app:destination="@id/patientHomeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/devHubFragment"
