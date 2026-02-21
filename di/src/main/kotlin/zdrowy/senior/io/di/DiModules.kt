@@ -9,7 +9,9 @@ import zdrowy.senior.io.data.carelink.FirestoreCareLinkRepository
 import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementRepository
 import zdrowy.senior.io.data.notification.NoOpNotificationRepository
+import zdrowy.senior.io.data.settings.FirestorePersonalDataByUidRepository
 import zdrowy.senior.io.data.settings.FirestoreSettingsRepository
+import zdrowy.senior.io.data.user.FirebaseCurrentUserUidProvider
 import zdrowy.senior.io.domain.agent.AccessCodeRepository
 import zdrowy.senior.io.domain.agent.AddAgentUseCase
 import zdrowy.senior.io.domain.agent.AddDoctorUseCase
@@ -56,7 +58,9 @@ import zdrowy.senior.io.domain.settings.ListDiseasesUseCase
 import zdrowy.senior.io.domain.settings.ListMedicationsUseCase
 import zdrowy.senior.io.domain.settings.ObserveDiseasesUseCase
 import zdrowy.senior.io.domain.settings.ObserveMedicationsUseCase
+import zdrowy.senior.io.domain.settings.ObservePersonalDataByUidUseCase
 import zdrowy.senior.io.domain.settings.ObservePersonalDataUseCase
+import zdrowy.senior.io.domain.settings.PersonalDataByUidRepository
 import zdrowy.senior.io.domain.settings.RemoveDiseaseUseCase
 import zdrowy.senior.io.domain.settings.RemoveMedicationUseCase
 import zdrowy.senior.io.domain.settings.SettingsRepository
@@ -67,12 +71,14 @@ import zdrowy.senior.io.domain.settings.UpsertPersonalDataUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
 import zdrowy.senior.io.domain.user.ActivePatientContext
 import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
+import zdrowy.senior.io.domain.user.CurrentUserUidProvider
 import zdrowy.senior.io.domain.user.CurrentUserRoleContext
 import zdrowy.senior.io.domain.user.GetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.InMemoryActivePatientContext
 import zdrowy.senior.io.domain.user.InMemoryCurrentUserRoleContext
 import zdrowy.senior.io.domain.user.ObserveActivePatientUseCase
 import zdrowy.senior.io.domain.user.ObserveCurrentUserRoleUseCase
+import zdrowy.senior.io.domain.user.ObserveManagedUserUidStateUseCase
 import zdrowy.senior.io.domain.user.SetActivePatientUseCase
 import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.UserProfileRepository
@@ -132,6 +138,7 @@ val domainModule = module {
     factory { GetSettingsOverviewUseCase(get()) }
     factory { UpsertPersonalDataUseCase(get()) }
     factory { ObservePersonalDataUseCase(get()) }
+    factory { ObservePersonalDataByUidUseCase(get()) }
     factory { ObserveDiseasesUseCase(get()) }
     factory { ObserveMedicationsUseCase(get()) }
     factory { AddDiseaseUseCase(get()) }
@@ -151,11 +158,13 @@ val domainModule = module {
     factory { SetActivePatientUseCase(get()) }
     factory { ClearActivePatientUseCase(get()) }
     factory { ObserveActivePatientUseCase(get()) }
+    factory { ObserveManagedUserUidStateUseCase(get(), get(), get()) }
 }
 
 val dataModule = module {
     single<ActivePatientContext> { InMemoryActivePatientContext() }
     single<CurrentUserRoleContext> { InMemoryCurrentUserRoleContext() }
+    single<CurrentUserUidProvider> { FirebaseCurrentUserUidProvider() }
     single { PatientUidProvider(get()) }
 
     single<MeasurementRepository> { FirestoreMeasurementRepository(get()) }
@@ -165,6 +174,7 @@ val dataModule = module {
     single<NotificationRepository> { NoOpNotificationRepository() }
     single<AlertRepository> { FirestoreAlertRepository(get()) }
     single<SettingsRepository> { FirestoreSettingsRepository(get()) }
+    single<PersonalDataByUidRepository> { FirestorePersonalDataByUidRepository() }
 
     single<UserProfileRepository> { FirestoreUserProfileRepository() }
 }
