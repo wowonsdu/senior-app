@@ -60,7 +60,7 @@ Zasady etapu:
 - [x] Moje ustawienia: odswiezanie po edycji + QA
 - [x] Choroby: migracja "Dodaj/Edytuj" do fragmentow (zamiast dialogow)
 - [x] Choroby: VM/DI dla add/edit (Rx na Schedulers.io) + powrot popBackStack
-- [ ] Choroby: cleanup dialogow + usuniecie FragmentResult refresh
+- [x] Choroby: cleanup dialogow + usuniecie FragmentResult refresh
 - [ ] Choroby: smoke check fragmentow (dodaj/edytuj/usun) + odswiezanie listy przez observe
 - [x] Alerty i powiadomienia (przeglad)
 - [x] Alerty i powiadomienia (pelna konfiguracja)
