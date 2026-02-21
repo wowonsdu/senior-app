@@ -14,8 +14,15 @@ import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import org.koin.android.ext.android.inject
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientLoginBinding
+import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
+import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
+import zdrowy.senior.io.domain.user.UserRole
 import java.util.concurrent.TimeUnit
 
 class PatientLoginFragment : Fragment() {
@@ -23,6 +30,9 @@ class PatientLoginFragment : Fragment() {
     private val binding get() = _binding!!
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
+    private val ensureUserProfile: EnsureUserProfileUseCase by inject()
+    private val setCurrentUserRole: SetCurrentUserRoleUseCase by inject()
+    private val disposables = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +54,7 @@ class PatientLoginFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        disposables.clear()
         _binding = null
         super.onDestroyView()
     }
@@ -66,11 +77,22 @@ class PatientLoginFragment : Fragment() {
                     .addOnCompleteListener { task ->
                         binding.patientLoginContinue.isEnabled = true
                         if (task.isSuccessful) {
-                            // Skip SMS screen if auto-verified.
-                            findNavController().navigate(
-                                R.id.patientHomeFragment,
-                                null,
-                                PhoneAuthUi.navOptionsPopToRoleSelect()
+                            disposables.add(
+                                ensureUserProfile(UserRole.PATIENT)
+                                    .andThen(setCurrentUserRole(UserRole.PATIENT))
+                                    .subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe({
+                                        findNavController().navigate(
+                                            R.id.patientHomeFragment,
+                                            null,
+                                            PhoneAuthUi.navOptionsPopToRoleSelect()
+                                        )
+                                    }, { error ->
+                                        auth.signOut()
+                                        binding.patientLoginPhoneInput.error =
+                                            "Nie mozna ustawic roli konta: ${error.message ?: "blad"}"
+                                    })
                             )
                         } else {
                             binding.patientLoginPhoneInput.error = "Nie udalo sie zalogowac"

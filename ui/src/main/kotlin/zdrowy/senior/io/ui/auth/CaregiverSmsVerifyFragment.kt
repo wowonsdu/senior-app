@@ -14,7 +14,9 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.android.ext.android.inject
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentCaregiverSmsVerifyBinding
+import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
+import zdrowy.senior.io.domain.user.SetActivePatientUseCase
 import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.UserRole
 
@@ -24,6 +26,8 @@ class CaregiverSmsVerifyFragment : Fragment() {
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val ensureUserProfile: EnsureUserProfileUseCase by inject()
     private val setCurrentUserRole: SetCurrentUserRoleUseCase by inject()
+    private val consumeCareLinkCode: ConsumeCareLinkCodeUseCase by inject()
+    private val setActivePatient: SetActivePatientUseCase by inject()
     private val disposables = CompositeDisposable()
 
     override fun onCreateView(
@@ -68,6 +72,7 @@ class CaregiverSmsVerifyFragment : Fragment() {
         }
 
         binding.caregiverSmsConfirm.isEnabled = false
+        val pendingCode = arguments?.getString(PhoneAuthUi.ARG_PENDING_CARE_LINK_CODE).orEmpty()
 
         val credential = PhoneAuthProvider.getCredential(verificationId, code)
         auth.signInWithCredential(credential)
@@ -76,6 +81,14 @@ class CaregiverSmsVerifyFragment : Fragment() {
                     disposables.add(
                         ensureUserProfile(UserRole.CAREGIVER)
                             .andThen(setCurrentUserRole(UserRole.CAREGIVER))
+                            .andThen(
+                                if (pendingCode.isNotBlank()) {
+                                    consumeCareLinkCode(pendingCode)
+                                        .flatMapCompletable { link -> setActivePatient(link.patientUid) }
+                                } else {
+                                    io.reactivex.rxjava3.core.Completable.complete()
+                                }
+                            )
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .doFinally { binding.caregiverSmsConfirm.isEnabled = true }

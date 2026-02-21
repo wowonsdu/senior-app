@@ -14,8 +14,17 @@ import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import org.koin.android.ext.android.inject
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentCaregiverLoginBinding
+import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
+import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
+import zdrowy.senior.io.domain.user.SetActivePatientUseCase
+import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
+import zdrowy.senior.io.domain.user.UserRole
 import java.util.concurrent.TimeUnit
 
 class CaregiverLoginFragment : Fragment() {
@@ -23,6 +32,11 @@ class CaregiverLoginFragment : Fragment() {
     private val binding get() = _binding!!
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
+    private val ensureUserProfile: EnsureUserProfileUseCase by inject()
+    private val setCurrentUserRole: SetCurrentUserRoleUseCase by inject()
+    private val consumeCareLinkCode: ConsumeCareLinkCodeUseCase by inject()
+    private val setActivePatient: SetActivePatientUseCase by inject()
+    private val disposables = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,11 +54,13 @@ class CaregiverLoginFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        disposables.clear()
         _binding = null
         super.onDestroyView()
     }
 
     private fun startPhoneVerification() {
+        val pendingCode = readCareLinkCodeOrNull() ?: return
         val phoneRaw = binding.caregiverLoginPhoneInput.editText?.text?.toString()?.trim().orEmpty()
         val phoneE164 = normalizePhoneNumberPl(phoneRaw)
         if (phoneE164 == null) {
@@ -62,11 +78,7 @@ class CaregiverLoginFragment : Fragment() {
                     .addOnCompleteListener { task ->
                         binding.caregiverLoginContinue.isEnabled = true
                         if (task.isSuccessful) {
-                            findNavController().navigate(
-                                R.id.caregiverHomeFragment,
-                                null,
-                                PhoneAuthUi.navOptionsPopToRoleSelect()
-                            )
+                            handleLoginSuccess(pendingCode)
                         } else {
                             binding.caregiverLoginPhoneInput.error = "Nie udalo sie zalogowac"
                         }
@@ -92,7 +104,8 @@ class CaregiverLoginFragment : Fragment() {
                     R.id.action_caregiverLogin_to_caregiverSmsVerify,
                     bundleOf(
                         PhoneAuthUi.ARG_VERIFICATION_ID to verificationId,
-                        PhoneAuthUi.ARG_PHONE_E164 to phoneE164
+                        PhoneAuthUi.ARG_PHONE_E164 to phoneE164,
+                        PhoneAuthUi.ARG_PENDING_CARE_LINK_CODE to pendingCode
                     )
                 )
             }
@@ -106,5 +119,49 @@ class CaregiverLoginFragment : Fragment() {
             .build()
 
         PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun handleLoginSuccess(pendingCode: String) {
+        disposables.add(
+            ensureUserProfile(UserRole.CAREGIVER)
+                .andThen(setCurrentUserRole(UserRole.CAREGIVER))
+                .andThen(
+                    if (pendingCode.isNotBlank()) {
+                        consumeCareLinkCode(pendingCode)
+                            .flatMapCompletable { link -> setActivePatient(link.patientUid) }
+                    } else {
+                        io.reactivex.rxjava3.core.Completable.complete()
+                    }
+                )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    findNavController().navigate(
+                        R.id.patientHomeFragment,
+                        null,
+                        PhoneAuthUi.navOptionsPopToRoleSelect()
+                    )
+                }, { error ->
+                    auth.signOut()
+                    binding.caregiverLoginPhoneInput.error =
+                        "Nie mozna ustawic roli konta: ${error.message ?: "blad"}"
+                })
+        )
+    }
+
+    private fun readCareLinkCodeOrNull(): String? {
+        val raw = binding.caregiverLoginAccessCode.text?.toString()?.trim().orEmpty()
+        if (raw.isBlank()) {
+            binding.caregiverLoginCodeInput.error = null
+            return ""
+        }
+        val digits = raw.filter { it.isDigit() }
+        return if (digits.length == 6) {
+            binding.caregiverLoginCodeInput.error = null
+            digits
+        } else {
+            binding.caregiverLoginCodeInput.error = "Kod musi miec 6 cyfr"
+            null
+        }
     }
 }
