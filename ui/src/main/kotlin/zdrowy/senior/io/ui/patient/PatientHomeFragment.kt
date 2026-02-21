@@ -15,6 +15,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientHomeBinding
 import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
+import zdrowy.senior.io.domain.user.ClearCurrentUserRoleUseCase
 import org.koin.android.ext.android.inject
 
 class PatientHomeFragment : Fragment() {
@@ -23,6 +24,7 @@ class PatientHomeFragment : Fragment() {
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val viewModel: PatientHomeViewModel by viewModel()
     private val clearActivePatient: ClearActivePatientUseCase by inject()
+    private val clearCurrentUserRole: ClearCurrentUserRoleUseCase by inject()
     private val disposables = CompositeDisposable()
 
     override fun onCreateView(
@@ -36,6 +38,7 @@ class PatientHomeFragment : Fragment() {
                 auth.signOut()
                 disposables.add(
                     clearActivePatient()
+                        .andThen(clearCurrentUserRole())
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({

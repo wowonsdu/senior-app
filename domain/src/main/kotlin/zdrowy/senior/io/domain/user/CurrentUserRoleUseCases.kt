@@ -13,7 +13,7 @@ class SetCurrentUserRoleUseCase(
 class ObserveCurrentUserRoleUseCase(
     private val context: CurrentUserRoleContext
 ) {
-    operator fun invoke(): Observable<UserRole> = context.observeRole()
+    operator fun invoke(): Observable<UserRole?> = context.observeRole()
 }
 
 class GetCurrentUserRoleUseCase(
@@ -27,4 +27,10 @@ class GetCurrentUserRoleUseCase(
             Single.error(IllegalStateException("User role not set"))
         }
     }
+}
+
+class ClearCurrentUserRoleUseCase(
+    private val context: CurrentUserRoleContext
+) {
+    operator fun invoke(): Completable = context.clearRole()
 }

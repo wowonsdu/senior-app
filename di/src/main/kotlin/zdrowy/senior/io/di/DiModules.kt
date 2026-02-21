@@ -1,5 +1,6 @@
 ﻿package zdrowy.senior.io.di
 
+import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import zdrowy.senior.io.data.agent.FirestoreAccessCodeRepository
@@ -12,6 +13,8 @@ import zdrowy.senior.io.data.notification.NoOpNotificationRepository
 import zdrowy.senior.io.data.settings.FirestorePersonalDataByUidRepository
 import zdrowy.senior.io.data.settings.FirestoreSettingsRepository
 import zdrowy.senior.io.data.user.FirebaseCurrentUserUidProvider
+import zdrowy.senior.io.data.user.SharedPrefsActivePatientContext
+import zdrowy.senior.io.data.user.SharedPrefsCurrentUserRoleContext
 import zdrowy.senior.io.domain.agent.AccessCodeRepository
 import zdrowy.senior.io.domain.agent.AddAgentUseCase
 import zdrowy.senior.io.domain.agent.AddDoctorUseCase
@@ -71,11 +74,10 @@ import zdrowy.senior.io.domain.settings.UpsertPersonalDataUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
 import zdrowy.senior.io.domain.user.ActivePatientContext
 import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
+import zdrowy.senior.io.domain.user.ClearCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.CurrentUserUidProvider
 import zdrowy.senior.io.domain.user.CurrentUserRoleContext
 import zdrowy.senior.io.domain.user.GetCurrentUserRoleUseCase
-import zdrowy.senior.io.domain.user.InMemoryActivePatientContext
-import zdrowy.senior.io.domain.user.InMemoryCurrentUserRoleContext
 import zdrowy.senior.io.domain.user.ObserveActivePatientUseCase
 import zdrowy.senior.io.domain.user.ObserveCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.ObserveManagedUserUidStateUseCase
@@ -155,6 +157,7 @@ val domainModule = module {
     factory { SetCurrentUserRoleUseCase(get()) }
     factory { ObserveCurrentUserRoleUseCase(get()) }
     factory { GetCurrentUserRoleUseCase(get()) }
+    factory { ClearCurrentUserRoleUseCase(get()) }
     factory { SetActivePatientUseCase(get()) }
     factory { ClearActivePatientUseCase(get()) }
     factory { ObserveActivePatientUseCase(get()) }
@@ -162,8 +165,8 @@ val domainModule = module {
 }
 
 val dataModule = module {
-    single<ActivePatientContext> { InMemoryActivePatientContext() }
-    single<CurrentUserRoleContext> { InMemoryCurrentUserRoleContext() }
+    single<ActivePatientContext> { SharedPrefsActivePatientContext(androidContext()) }
+    single<CurrentUserRoleContext> { SharedPrefsCurrentUserRoleContext(androidContext()) }
     single<CurrentUserUidProvider> { FirebaseCurrentUserUidProvider() }
     single { PatientUidProvider(get()) }
 
