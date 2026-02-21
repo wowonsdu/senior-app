@@ -250,7 +250,7 @@
         tools:layout="@layout/fragment_patient_settings">
         <action
             android:id="@+id/action_patientSettings_to_personalData"
-            app:destination="@id/patientPersonalDataDialogFragment" />
+            app:destination="@id/patientPersonalDataFragment" />
         <action
             android:id="@+id/action_patientSettings_to_addDisease"
             app:destination="@id/patientAddDiseaseFragment" />
@@ -268,11 +268,11 @@
             app:destination="@id/patientAlertsOverviewFragment" />
     </fragment>
 
-    <dialog
-        android:id="@+id/patientPersonalDataDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientPersonalDataDialogFragment"
+    <fragment
+        android:id="@+id/patientPersonalDataFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientPersonalDataFragment"
         android:label="@string/patient_personal_title"
-        tools:layout="@layout/dialog_patient_personal_data" />
+        tools:layout="@layout/fragment_patient_personal_data" />
 
     <fragment
         android:id="@+id/patientAddDiseaseFragment"
