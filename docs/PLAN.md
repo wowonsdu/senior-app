@@ -196,3 +196,9 @@ Zasady etapu:
 - [x] 10.9 Hotfix: login opiekuna z kodem pacjenta -> auto-link + Monitor
 - [x] 10.10 Hotfix: careLinks get bez null error w rules
 - [x] 10.11 Hotfix: careLinks get allow for exists()
+
+## Etap 11 — Synchronizacja/obserwowanie pomiarow
+- [x] Plan: MAIN-PLAN-synchronizacja-obserwowanie-pomiarow
+- [ ] Observe: PatientHistory (lista + wykres) na Observable
+- [ ] Cleanup: usuniecie history_refresh + notify w dialogach
+- [ ] Walidacja: smoke test live update (pacjent/opiekun)
