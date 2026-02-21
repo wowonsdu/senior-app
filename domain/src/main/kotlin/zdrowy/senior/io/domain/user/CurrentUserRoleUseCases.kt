@@ -13,7 +13,7 @@ class SetCurrentUserRoleUseCase(
 class ObserveCurrentUserRoleUseCase(
     private val context: CurrentUserRoleContext
 ) {
-    operator fun invoke(): Observable<UserRole?> = context.observeRole()
+    operator fun invoke(): Observable<UserRoleState> = context.observeRole()
 }
 
 class GetCurrentUserRoleUseCase(

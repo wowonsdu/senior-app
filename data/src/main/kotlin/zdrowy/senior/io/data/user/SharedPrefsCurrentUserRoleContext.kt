@@ -7,35 +7,40 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import zdrowy.senior.io.domain.user.CurrentUserRoleContext
 import zdrowy.senior.io.domain.user.UserRole
+import zdrowy.senior.io.domain.user.UserRoleState
 
 class SharedPrefsCurrentUserRoleContext(
     appContext: Context
 ) : CurrentUserRoleContext {
     private val prefs: SharedPreferences =
         appContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    private val subject = BehaviorSubject.createDefault(readRole())
+    private val subject = BehaviorSubject.createDefault(readState())
 
-    override fun getRole(): UserRole? = subject.value
+    override fun getRole(): UserRole? {
+        val state = subject.value
+        return if (state is UserRoleState.Available) state.role else null
+    }
 
-    override fun observeRole(): Observable<UserRole?> = subject.hide()
+    override fun observeRole(): Observable<UserRoleState> = subject.hide()
 
     override fun setRole(role: UserRole): Completable {
         return Completable.fromAction {
             prefs.edit().putString(KEY_ROLE, role.name).apply()
-            subject.onNext(role)
+            subject.onNext(UserRoleState.Available(role))
         }
     }
 
     override fun clearRole(): Completable {
         return Completable.fromAction {
             prefs.edit().remove(KEY_ROLE).apply()
-            subject.onNext(null)
+            subject.onNext(UserRoleState.Missing)
         }
     }
 
-    private fun readRole(): UserRole? {
-        val raw = prefs.getString(KEY_ROLE, null) ?: return null
-        return runCatching { UserRole.valueOf(raw) }.getOrNull()
+    private fun readState(): UserRoleState {
+        val raw = prefs.getString(KEY_ROLE, null) ?: return UserRoleState.Missing
+        val role = runCatching { UserRole.valueOf(raw) }.getOrNull()
+        return if (role == null) UserRoleState.Missing else UserRoleState.Available(role)
     }
 
     private companion object {
