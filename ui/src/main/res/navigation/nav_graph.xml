@@ -265,7 +265,7 @@
             app:destination="@id/patientEditMedFragment" />
         <action
             android:id="@+id/action_patientSettings_to_alertsOverview"
-            app:destination="@id/patientAlertsOverviewFragment" />
+            app:destination="@id/patientAlertsConfigFragment" />
     </fragment>
 
     <fragment
