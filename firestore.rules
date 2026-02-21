@@ -1,20 +1,51 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function careLinkId(patientUid, caregiverUid) {
+      return patientUid + "_" + caregiverUid;
+    }
+
+    function isCaregiverOf(patientUid) {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/careLinks/$(careLinkId(patientUid, request.auth.uid)));
+    }
+
     match /users/{uid} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
+      allow read, write: if isSignedIn() && (request.auth.uid == uid || isCaregiverOf(uid));
 
       match /{document=**} {
-        allow read, write: if request.auth != null && request.auth.uid == uid;
+        allow read, write: if isSignedIn() && (request.auth.uid == uid || isCaregiverOf(uid));
       }
     }
 
+    match /careLinks/{linkId} {
+      allow read: if isSignedIn()
+        && (resource.data.patientUid == request.auth.uid || resource.data.caregiverUid == request.auth.uid);
+
+      allow create: if isSignedIn()
+        && request.resource.data.patientUid is string
+        && request.resource.data.caregiverUid is string
+        && linkId == careLinkId(request.resource.data.patientUid, request.resource.data.caregiverUid)
+        && (request.auth.uid == request.resource.data.patientUid
+            || request.auth.uid == request.resource.data.caregiverUid);
+
+      allow update, delete: if isSignedIn()
+        && (resource.data.patientUid == request.auth.uid || resource.data.caregiverUid == request.auth.uid)
+        && request.resource.data.patientUid == resource.data.patientUid
+        && request.resource.data.caregiverUid == resource.data.caregiverUid
+        && linkId == careLinkId(resource.data.patientUid, resource.data.caregiverUid);
+    }
+
     match /accessCodes/{code} {
-      allow create: if request.auth != null;
-      allow get: if request.auth != null;
+      allow create: if isSignedIn();
+      allow get: if isSignedIn();
       allow list: if false;
-      allow update, delete: if request.auth != null;
+      allow update: if false;
+      allow delete: if isSignedIn();
     }
   }
 }
-

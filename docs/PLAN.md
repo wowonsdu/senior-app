@@ -146,6 +146,7 @@ Zasady etapu:
 - [x] Instrukcja uruchomienia emulatora Firestore
 - [x] Plan: model danych Firestore (master + subplany w `docs/plan/MAIN-PLAN-firestore-user-data-model.md`)
 - [x] Firestore: rules + indexes + wiring w `firebase.json`
+- [x] Firestore: careLinks (pacjent↔opiekun) rules + indexy
 - [x] Firestore: users/{uid} + bootstrap roli (PATIENT/CAREGIVER)
 - [x] Migracja: SettingsRepository (InMemory -> Firestore)
 - [x] Migracja: MeasurementRepository (InMemory -> Firestore)

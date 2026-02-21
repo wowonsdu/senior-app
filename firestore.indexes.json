@@ -7,8 +7,23 @@
         { "fieldPath": "type", "order": "ASCENDING" },
         { "fieldPath": "timestampMs", "order": "DESCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "careLinks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "caregiverUid", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "careLinks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "patientUid", "order": "ASCENDING" },
+        { "fieldPath": "status", "order": "ASCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []
 }
-
