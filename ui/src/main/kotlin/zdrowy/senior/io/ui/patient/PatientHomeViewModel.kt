@@ -7,8 +7,8 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
-import zdrowy.senior.io.domain.measurement.GetRecentMeasurementsUseCase
 import zdrowy.senior.io.domain.measurement.Measurement
+import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsUseCase
 import zdrowy.senior.io.domain.settings.ObservePersonalDataByUidUseCase
 import zdrowy.senior.io.domain.settings.PersonalData
 import zdrowy.senior.io.domain.user.ManagedUserUidState
@@ -17,7 +17,7 @@ import zdrowy.senior.io.domain.user.UserRole
 import zdrowy.senior.io.ui.R
 
 class PatientHomeViewModel(
-    private val getRecentMeasurements: GetRecentMeasurementsUseCase,
+    private val observeRecentMeasurements: ObserveRecentMeasurementsUseCase,
     private val observeManagedUserUidState: ObserveManagedUserUidStateUseCase,
     private val observePersonalDataByUid: ObservePersonalDataByUidUseCase
 ) : ViewModel() {
@@ -52,16 +52,22 @@ class PatientHomeViewModel(
                     _headerState.value = fallbackHeaderState()
                 })
         )
-    }
-
-    fun loadRecent(limit: Int = 4) {
         disposables.add(
-            getRecentMeasurements(limit)
+            observeManagedUserUidState()
                 .subscribeOn(Schedulers.io())
+                .switchMap { state ->
+                    when (state) {
+                        is ManagedUserUidState.Available ->
+                            observeRecentMeasurements(4)
+                        ManagedUserUidState.MissingActivePatient ->
+                            Observable.just(emptyList())
+                    }
+                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ measurements ->
                     _recentMeasurements.value = measurements
                 }, {
+                    _recentMeasurements.value = emptyList()
                 })
         )
     }

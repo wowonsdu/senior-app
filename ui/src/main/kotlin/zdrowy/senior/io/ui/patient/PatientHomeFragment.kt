@@ -103,7 +103,6 @@ class PatientHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.start()
-        viewModel.loadRecent()
         viewModel.headerState.observe(viewLifecycleOwner) { state ->
             binding.patientHomeProfileLabel.setText(state.labelRes)
             binding.patientHomeProfileName.text = state.fullName
