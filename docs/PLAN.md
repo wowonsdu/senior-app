@@ -179,3 +179,11 @@ Zasady etapu:
 - [x] 9.16 Alerty i powiadomienia: cleanup + spłaszczenie (1 ekran) + rename Config -> Alerts
 - [x] 9.17 Alerty: chevron zwija/rozwija kartę konfiguracji (cukier)
 - [x] 9.18 Alerty: dodaj konfiguracje (insulina/cisnienie/tetno) + animacje chevronu
+
+## Etap 10 — Opiekun: link + ActivePatient (test realtime)
+- [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
+- [ ] 10.2 Data: FirestoreCareLinkRepository + kody linkowania
+- [ ] 10.3 Data: PatientUidProvider + Firestore repo na patientUid
+- [ ] 10.4 DI: wiring careLinks + konteksty + repo
+- [ ] 10.5 UI: CaregiverLinkFragment + nawigacja do Patient flow
+- [ ] 10.6 UI: wejście pacjenta do linkowania + zapis roli po loginie
