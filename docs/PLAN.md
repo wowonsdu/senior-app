@@ -190,3 +190,4 @@ Zasady etapu:
 - [x] 10.7 Hotfix: opiekun po loginie -> PatientHome (bez link screen)
 - [x] 10.8 Hotfix: RoleSelect (zalogowany) -> Monitor Zdrowia
 - [x] 10.9 Hotfix: login opiekuna z kodem pacjenta -> auto-link + Monitor
+- [x] 10.10 Hotfix: careLinks get bez null error w rules
