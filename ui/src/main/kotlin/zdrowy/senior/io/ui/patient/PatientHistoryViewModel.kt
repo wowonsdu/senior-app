@@ -5,12 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.SerialDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.history.ChartSeries
 import zdrowy.senior.io.domain.history.GetHistoryFiltersUseCase
-import zdrowy.senior.io.domain.history.GetMeasurementChartDataUseCase
-import zdrowy.senior.io.domain.history.GetMeasurementHistoryUseCase
 import zdrowy.senior.io.domain.history.HistoryFilterState
+import zdrowy.senior.io.domain.measurement.ObserveMeasurementChartDataUseCase
+import zdrowy.senior.io.domain.measurement.ObserveMeasurementHistoryUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementType
 import zdrowy.senior.io.ui.R
 import java.text.SimpleDateFormat
@@ -18,11 +19,13 @@ import java.util.Date
 import java.util.Locale
 
 class PatientHistoryViewModel(
-    private val getMeasurementHistory: GetMeasurementHistoryUseCase,
-    private val getMeasurementChartData: GetMeasurementChartDataUseCase,
+    private val observeMeasurementHistory: ObserveMeasurementHistoryUseCase,
+    private val observeMeasurementChartData: ObserveMeasurementChartDataUseCase,
     private val getHistoryFilters: GetHistoryFiltersUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
+    private val historyDisposable = SerialDisposable()
+    private val chartDisposable = SerialDisposable()
 
     private val _measurements = MutableLiveData<List<PatientMeasurementItemUi>>()
     val measurements: LiveData<List<PatientMeasurementItemUi>> = _measurements
@@ -33,6 +36,10 @@ class PatientHistoryViewModel(
     private val _filters = MutableLiveData<HistoryFilterState>()
     val filters: LiveData<HistoryFilterState> = _filters
 
+    init {
+        disposables.addAll(historyDisposable, chartDisposable)
+    }
+
     fun load() {
         disposables.add(
             getHistoryFilters()
@@ -41,8 +48,8 @@ class PatientHistoryViewModel(
                 .subscribe({ state ->
                     val selected = state.selectedTypes.ifEmpty { MeasurementType.values().toList() }
                     _filters.value = state.copy(selectedTypes = selected)
-                    loadHistory(selected)
-                    loadChart(selected)
+                    observeHistory(selected)
+                    observeChart(selected)
                 }, {
                 })
         )
@@ -54,13 +61,13 @@ class PatientHistoryViewModel(
         if (current != null) {
             _filters.value = current.copy(selectedTypes = types)
         }
-        loadHistory(types)
-        loadChart(types)
+        observeHistory(types)
+        observeChart(types)
     }
 
-    private fun loadHistory(types: List<MeasurementType>) {
-        disposables.add(
-            getMeasurementHistory(types, null)
+    private fun observeHistory(types: List<MeasurementType>) {
+        historyDisposable.set(
+            observeMeasurementHistory(types, null)
                 .subscribeOn(Schedulers.io())
                 .map { items ->
                     val formatter = SimpleDateFormat("dd.MM HH:mm", Locale.getDefault())
@@ -97,9 +104,9 @@ class PatientHistoryViewModel(
         )
     }
 
-    private fun loadChart(types: List<MeasurementType>) {
-        disposables.add(
-            getMeasurementChartData(types, null)
+    private fun observeChart(types: List<MeasurementType>) {
+        chartDisposable.set(
+            observeMeasurementChartData(types, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ series ->
