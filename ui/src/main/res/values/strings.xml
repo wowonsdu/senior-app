@@ -272,10 +272,8 @@
     <string name="alerts_overview_body_spike">Nastapila gwaltowna zmiana w ostatnich pomiarach.</string>
     <string name="alerts_overview_save">ZAPISZ USTAWIENIA</string>
 
-    <string name="patient_alerts_overview_title">Alerty i powiadomienia</string>
-    <string name="patient_alerts_overview_subtitle">Przeglad i wyjasnienie alertow</string>
-    <string name="patient_alerts_config_title">Alerty i powiadomienia</string>
-    <string name="patient_alerts_config_subtitle">Konfiguracja wartosci krytycznych</string>
+    <string name="patient_alerts_title">Alerty i powiadomienia</string>
+    <string name="patient_alerts_subtitle">Konfiguracja wartosci krytycznych</string>
     <string name="patient_alerts_config_section_critical">Wartosci krytyczne</string>
     <string name="patient_alerts_config_section_spike">Gwałtowne zmiany</string>
     <string name="patient_alerts_config_section_channels">Kanaly powiadomien</string>
@@ -303,8 +301,6 @@
     <string name="patient_alerts_config_caregivers_deselect_all">Odznacz wszystkich</string>
     <string name="patient_alerts_config_agent_name">Janek, Syn</string>
     <string name="patient_alerts_config_agent_phone">Tel: 692 56 070</string>
-    <string name="patient_alerts_config_save">Zapisz ustawienia</string>
-
     <string name="alert_item_title_sugar">Poziom cukru</string>
     <string name="alert_item_subtitle_sugar">Glikemia - poziom glukozy we krwi</string>
     <string name="alert_item_title_insulin">Dawka insuliny</string>

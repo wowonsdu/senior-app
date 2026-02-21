@@ -6,7 +6,7 @@
     android:background="@color/senior_bg">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/patient_alerts_config_toolbar"
+        android:id="@+id/patient_alerts_toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/senior_warning"
@@ -15,19 +15,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:navigationIcon="@android:drawable/ic_media_previous"
         app:navigationIconTint="@color/white"
-        app:title="@string/patient_alerts_config_title"
-        app:subtitle="@string/patient_alerts_config_subtitle"
+        app:title="@string/patient_alerts_title"
+        app:subtitle="@string/patient_alerts_subtitle"
         app:titleTextAppearance="@style/TextAppearance.Senior.BodyLarge"
         app:subtitleTextAppearance="@style/TextAppearance.Senior.Caption"
         app:subtitleTextColor="@color/white"
         app:titleTextColor="@color/white" />
 
     <ScrollView
-        android:id="@+id/patient_alerts_config_scroll"
+        android:id="@+id/patient_alerts_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/patient_alerts_config_toolbar"
+        app:layout_constraintTop_toBottomOf="@id/patient_alerts_toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

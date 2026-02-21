@@ -175,4 +175,4 @@ Zasady etapu:
 - [ ] 9.13 Auth: SMS verify (patient/caregiver) — VM + UI models + data binding
 - [x] 9.14 Alerty i powiadomienia: plan (docs/plan) + wpis do PLAN.md
 - [x] 9.15 Alerty i powiadomienia: nawigacja z ustawien -> config (bez overview)
-- [ ] 9.16 Alerty i powiadomienia: cleanup + spłaszczenie (1 ekran) + rename Config -> Alerts
+- [x] 9.16 Alerty i powiadomienia: cleanup + spłaszczenie (1 ekran) + rename Config -> Alerts

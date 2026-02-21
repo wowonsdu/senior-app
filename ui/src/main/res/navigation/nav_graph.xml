@@ -264,8 +264,8 @@
             android:id="@+id/action_patientSettings_to_editMed"
             app:destination="@id/patientEditMedFragment" />
         <action
-            android:id="@+id/action_patientSettings_to_alertsOverview"
-            app:destination="@id/patientAlertsConfigFragment" />
+            android:id="@+id/action_patientSettings_to_patientAlerts"
+            app:destination="@id/patientAlertsFragment" />
     </fragment>
 
     <fragment
@@ -307,20 +307,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/patientAlertsOverviewFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientAlertsOverviewFragment"
-        android:label="@string/patient_alerts_overview_title"
-        tools:layout="@layout/fragment_patient_alerts_overview">
-        <action
-            android:id="@+id/action_alertsOverview_to_alertsConfig"
-            app:destination="@id/patientAlertsConfigFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/patientAlertsConfigFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientAlertsConfigFragment"
-        android:label="@string/patient_alerts_config_title"
-        tools:layout="@layout/fragment_patient_alerts_config" />
+        android:id="@+id/patientAlertsFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAlertsFragment"
+        android:label="@string/patient_alerts_title"
+        tools:layout="@layout/fragment_patient_alerts" />
 
     <fragment
         android:id="@+id/caregiverSmsVerifyFragment"

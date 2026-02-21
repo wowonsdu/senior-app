@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
-import zdrowy.senior.io.ui.databinding.FragmentPatientAlertsConfigBinding
+import zdrowy.senior.io.ui.databinding.FragmentPatientAlertsBinding
 
-class PatientAlertsConfigFragment : Fragment() {
-    private var _binding: FragmentPatientAlertsConfigBinding? = null
+class PatientAlertsFragment : Fragment() {
+    private var _binding: FragmentPatientAlertsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: PatientAlertsViewModel by viewModel()
 
@@ -19,8 +19,8 @@ class PatientAlertsConfigFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPatientAlertsConfigBinding.inflate(inflater, container, false)
-        binding.patientAlertsConfigToolbar.setNavigationOnClickListener {
+        _binding = FragmentPatientAlertsBinding.inflate(inflater, container, false)
+        binding.patientAlertsToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
         return binding.root
