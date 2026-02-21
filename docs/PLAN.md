@@ -200,5 +200,6 @@ Zasady etapu:
 ## Etap 11 — Synchronizacja/obserwowanie pomiarow
 - [x] Plan: MAIN-PLAN-synchronizacja-obserwowanie-pomiarow
 - [x] Observe: PatientHistory (lista + wykres) na Observable
+- [x] Fix: obserwacje niezalezne od filtrow (listen all + local filter)
 - [x] Cleanup: usuniecie history_refresh + notify w dialogach
 - [ ] Walidacja: smoke test live update (pacjent/opiekun)

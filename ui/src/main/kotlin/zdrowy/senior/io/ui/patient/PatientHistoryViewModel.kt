@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.history.ChartSeries
 import zdrowy.senior.io.domain.history.GetHistoryFiltersUseCase
 import zdrowy.senior.io.domain.history.HistoryFilterState
+import zdrowy.senior.io.domain.measurement.Measurement
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementChartDataUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementHistoryUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementType
@@ -26,6 +27,9 @@ class PatientHistoryViewModel(
     private val disposables = CompositeDisposable()
     private val historyDisposable = SerialDisposable()
     private val chartDisposable = SerialDisposable()
+    private var selectedTypes: List<MeasurementType> = emptyList()
+    private var latestMeasurements: List<Measurement> = emptyList()
+    private var latestSeries: List<ChartSeries> = emptyList()
 
     private val _measurements = MutableLiveData<List<PatientMeasurementItemUi>>()
     val measurements: LiveData<List<PatientMeasurementItemUi>> = _measurements
@@ -41,15 +45,17 @@ class PatientHistoryViewModel(
     }
 
     fun load() {
+        observeHistoryAll()
+        observeChartAll()
         disposables.add(
             getHistoryFilters()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ state ->
                     val selected = state.selectedTypes.ifEmpty { MeasurementType.values().toList() }
+                    selectedTypes = selected
                     _filters.value = state.copy(selectedTypes = selected)
-                    observeHistory(selected)
-                    observeChart(selected)
+                    publishFiltered()
                 }, {
                 })
         )
@@ -61,59 +67,66 @@ class PatientHistoryViewModel(
         if (current != null) {
             _filters.value = current.copy(selectedTypes = types)
         }
-        observeHistory(types)
-        observeChart(types)
+        selectedTypes = types
+        publishFiltered()
     }
 
-    private fun observeHistory(types: List<MeasurementType>) {
+    private fun observeHistoryAll() {
         historyDisposable.set(
-            observeMeasurementHistory(types, null)
+            observeMeasurementHistory(null, null)
                 .subscribeOn(Schedulers.io())
-                .map { items ->
-                    val formatter = SimpleDateFormat("dd.MM HH:mm", Locale.getDefault())
-                    items.map { measurement ->
-                        val title = when (measurement.type) {
-                            MeasurementType.PRESSURE -> {
-                                val systolic = measurement.systolic ?: 0
-                                val diastolic = measurement.diastolic ?: 0
-                                "Cisnienie: ${systolic}/${diastolic} mmHg"
-                            }
-                            MeasurementType.SUGAR -> "Cukier: ${measurement.value ?: 0.0} mg/dl"
-                            MeasurementType.INSULIN -> "Insulina: ${measurement.value ?: 0.0} j."
-                            MeasurementType.PULSE -> "Tetno: ${measurement.value ?: 0.0} bpm"
-                        }
-                        PatientMeasurementItemUi(
-                            id = measurement.id,
-                            title = title,
-                            subtitle = formatter.format(Date(measurement.timestamp)),
-                            iconRes = iconFor(measurement.type),
-                            iconTintRes = tintFor(measurement.type),
-                            type = measurement.type,
-                            timestamp = measurement.timestamp,
-                            value = measurement.value,
-                            systolic = measurement.systolic,
-                            diastolic = measurement.diastolic
-                        )
-                    }
-                }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ items ->
-                    _measurements.value = items
+                    latestMeasurements = items
+                    publishFiltered()
                 }, {
                 })
         )
     }
 
-    private fun observeChart(types: List<MeasurementType>) {
+    private fun observeChartAll() {
         chartDisposable.set(
-            observeMeasurementChartData(types, null)
+            observeMeasurementChartData(null, null)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ series ->
-                    _chartSeries.value = series
+                    latestSeries = series
+                    publishFiltered()
                 }, {
                 })
         )
+    }
+
+    private fun publishFiltered() {
+        val activeTypes = selectedTypes.ifEmpty { MeasurementType.values().toList() }
+        val formatter = SimpleDateFormat("dd.MM HH:mm", Locale.getDefault())
+        _measurements.value = latestMeasurements
+            .filter { activeTypes.contains(it.type) }
+            .map { measurement ->
+                val title = when (measurement.type) {
+                    MeasurementType.PRESSURE -> {
+                        val systolic = measurement.systolic ?: 0
+                        val diastolic = measurement.diastolic ?: 0
+                        "Cisnienie: ${systolic}/${diastolic} mmHg"
+                    }
+                    MeasurementType.SUGAR -> "Cukier: ${measurement.value ?: 0.0} mg/dl"
+                    MeasurementType.INSULIN -> "Insulina: ${measurement.value ?: 0.0} j."
+                    MeasurementType.PULSE -> "Tetno: ${measurement.value ?: 0.0} bpm"
+                }
+                PatientMeasurementItemUi(
+                    id = measurement.id,
+                    title = title,
+                    subtitle = formatter.format(Date(measurement.timestamp)),
+                    iconRes = iconFor(measurement.type),
+                    iconTintRes = tintFor(measurement.type),
+                    type = measurement.type,
+                    timestamp = measurement.timestamp,
+                    value = measurement.value,
+                    systolic = measurement.systolic,
+                    diastolic = measurement.diastolic
+                )
+            }
+        _chartSeries.value = latestSeries.filter { activeTypes.contains(it.type) }
     }
 
     override fun onCleared() {
