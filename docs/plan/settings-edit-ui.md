@@ -13,7 +13,7 @@
 ## Deliverables
 - `PatientEditDiseaseFragment` + layout.
 - `PatientEditMedFragment` + layout.
-- Aktualizacja `PatientPersonalDataDialogFragment` do trybu edycji i prefill.
+- Aktualizacja `PatientPersonalDataFragment` do trybu edycji i prefill.
 - Aktualizacja `PatientSettingsUiState` i `PatientSettingsFragment` do nowego modelu.
 - Zmiany w adapterach (klik w item).
 - Akcje nawigacji z argumentami `diseaseId` / `medicationId`.
@@ -26,7 +26,7 @@
 - [x] Dodac "Usun" w dialogach edycji chorob/lekow i obsluzyc `Remove*UseCase`.
 - [x] Ustawic tap na `patient_settings_personal` jako wejscie do edycji danych osobowych.
 - [x] Zaktualizowac `PatientSettingsUiState` oraz `PatientSettingsFragment` do `firstName/lastName`.
-- [x] Zaktualizowac `PatientPersonalDataDialogFragment` (prefill + zapis `firstName/lastName`).
+- [x] Zaktualizowac `PatientPersonalDataFragment` (prefill + zapis `firstName/lastName`).
 - [x] Zaktualizowac stringi tytulow/CTA ("Edytuj chorobe", "Edytuj lek", "Usun").
 - [x] Zaktualizowac `docs/PLAN.md` i zrobic commit opisujacy etap.
 

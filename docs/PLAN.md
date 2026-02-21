@@ -60,7 +60,7 @@ Zasady etapu:
 - [x] Moje ustawienia: odswiezanie po edycji + QA
 - [x] Dane osobowe: migracja dialog -> fragment (scroll)
 - [x] Dane osobowe: VM/DI (Rx na Schedulers.io) + prefill przez observe
-- [ ] Dane osobowe: cleanup dialogu + usuniecie FragmentResult
+- [x] Dane osobowe: cleanup dialogu + usuniecie FragmentResult
 - [ ] Dane osobowe: smoke check fragmentu + odswiezanie przez observe
 - [x] Choroby: migracja "Dodaj/Edytuj" do fragmentow (zamiast dialogow)
 - [x] Choroby: VM/DI dla add/edit (Rx na Schedulers.io) + powrot popBackStack
