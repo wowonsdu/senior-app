@@ -48,6 +48,19 @@
     <string name="caregiver_dependents_header">Wybierz osobe, aby zarzadzac jej danymi zdrowotnymi:</string>
     <string name="caregiver_dependents_add">+ DODAJ NOWEGO PODOPIECZNEGO</string>
     <string name="caregiver_dependents_select">WYBIERZ</string>
+    <string name="caregiver_add_dependent_title">Dodaj podopiecznego</string>
+    <string name="caregiver_add_dependent_subtitle">Wpisz dane nowego podopiecznego</string>
+    <string name="caregiver_add_dependent_first_name_hint">Imie</string>
+    <string name="caregiver_add_dependent_last_name_hint">Nazwisko</string>
+    <string name="caregiver_add_dependent_pesel_hint">PESEL</string>
+    <string name="caregiver_add_dependent_phone_hint">Telefon</string>
+    <string name="caregiver_add_dependent_address_hint">Adres</string>
+    <string name="caregiver_add_dependent_cancel">Anuluj</string>
+    <string name="caregiver_add_dependent_save">Zapisz</string>
+    <string name="caregiver_add_dependent_code_title">Kod dostepu</string>
+    <string name="caregiver_add_dependent_code_placeholder">------</string>
+    <string name="caregiver_add_dependent_copy">Kopiuj kod</string>
+    <string name="caregiver_add_dependent_code_info">Zapisz ten kod. Podopieczny uzyje go przy pierwszym logowaniu.</string>
 
     <string name="sms_verify_title">Zaloguj sie</string>
     <string name="sms_verify_header">Wpisz kod z SMS</string>

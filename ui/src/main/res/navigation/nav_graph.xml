@@ -338,6 +338,12 @@
         tools:layout="@layout/fragment_caregiver_home" />
 
     <fragment
+        android:id="@+id/caregiverAddDependentFragment"
+        android:name="zdrowy.senior.io.ui.caregiver.CaregiverAddDependentFragment"
+        android:label="@string/caregiver_add_dependent_title"
+        tools:layout="@layout/fragment_caregiver_add_dependent" />
+
+    <fragment
         android:id="@+id/caregiverLinkFragment"
         android:name="zdrowy.senior.io.ui.caregiver.CaregiverLinkFragment"
         android:label="@string/caregiver_link_title"

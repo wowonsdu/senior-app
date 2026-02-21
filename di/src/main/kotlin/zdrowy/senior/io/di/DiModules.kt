@@ -88,6 +88,7 @@ import zdrowy.senior.io.domain.user.UserProfileRepository
 import zdrowy.senior.io.data.user.FirestoreUserProfileRepository
 import zdrowy.senior.io.ui.caregiver.CaregiverLinkViewModel
 import zdrowy.senior.io.ui.caregiver.CaregiverDependentsViewModel
+import zdrowy.senior.io.ui.caregiver.CaregiverAddDependentViewModel
 import zdrowy.senior.io.ui.auth.StartupGateViewModel
 import zdrowy.senior.io.ui.patient.PatientAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientAlertsViewModel
@@ -194,6 +195,7 @@ val viewModelModule = module {
     viewModel { StartupGateViewModel(get()) }
     viewModel { CaregiverLinkViewModel(get(), get(), get(), get(), get()) }
     viewModel { CaregiverDependentsViewModel(get(), get(), get()) }
+    viewModel { CaregiverAddDependentViewModel(get()) }
     viewModel { PatientHistoryViewModel(get(), get(), get()) }
     viewModel { PatientAgentsViewModel(get()) }
     viewModel { PatientAlertsViewModel(get()) }

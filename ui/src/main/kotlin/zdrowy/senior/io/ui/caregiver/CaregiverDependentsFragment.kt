@@ -32,6 +32,9 @@ class CaregiverDependentsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.caregiverDependentsList.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.caregiverDependentsList.adapter = adapter
+        binding.caregiverDependentsAdd.setOnClickListener {
+            requireParentFragment().findNavController().navigate(R.id.caregiverAddDependentFragment)
+        }
 
         viewModel.start()
         viewModel.dependents.observe(viewLifecycleOwner) { items ->

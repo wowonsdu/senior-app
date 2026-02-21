@@ -10,6 +10,7 @@ import zdrowy.senior.io.data.firestore.toSingle
 import zdrowy.senior.io.domain.carelink.CareLink
 import zdrowy.senior.io.domain.carelink.CareLinkCode
 import zdrowy.senior.io.domain.carelink.CareLinkCodeType
+import zdrowy.senior.io.domain.carelink.CareLinkDraft
 import zdrowy.senior.io.domain.carelink.CareLinkRepository
 import zdrowy.senior.io.domain.carelink.CareLinkStatus
 import zdrowy.senior.io.domain.user.CurrentUserRoleContext
@@ -66,7 +67,8 @@ class FirestoreCareLinkRepository(
 
     override fun generateLinkCode(
         type: CareLinkCodeType,
-        ttlSeconds: Long
+        ttlSeconds: Long,
+        draft: CareLinkDraft?
     ): Single<CareLinkCode> {
         val uid = requireUid()
         val expiresAtMs = System.currentTimeMillis() + ttlSeconds * 1000
@@ -74,7 +76,8 @@ class FirestoreCareLinkRepository(
             remainingAttempts = 8,
             ownerUid = uid,
             expiresAtMs = expiresAtMs,
-            type = type
+            type = type,
+            draft = draft
         )
     }
 
@@ -135,7 +138,8 @@ class FirestoreCareLinkRepository(
         remainingAttempts: Int,
         ownerUid: String,
         expiresAtMs: Long,
-        type: CareLinkCodeType
+        type: CareLinkCodeType,
+        draft: CareLinkDraft?
     ): Single<CareLinkCode> {
         if (remainingAttempts <= 0) {
             return Single.error(IllegalStateException("Unable to generate unique access code"))
@@ -159,6 +163,13 @@ class FirestoreCareLinkRepository(
                 CareLinkCodeType.PATIENT_TO_CAREGIVER -> payload["patientUid"] = ownerUid
                 CareLinkCodeType.CAREGIVER_TO_PATIENT -> payload["caregiverUid"] = ownerUid
             }
+            if (draft != null) {
+                if (draft.firstName.isNotBlank()) payload["draftFirstName"] = draft.firstName
+                if (draft.lastName.isNotBlank()) payload["draftLastName"] = draft.lastName
+                if (draft.pesel.isNotBlank()) payload["draftPesel"] = draft.pesel
+                if (draft.phoneNumber.isNotBlank()) payload["draftPhoneNumber"] = draft.phoneNumber
+                if (draft.address.isNotBlank()) payload["draftAddress"] = draft.address
+            }
 
             tx.set(doc, payload)
             true
@@ -171,7 +182,8 @@ class FirestoreCareLinkRepository(
                         remainingAttempts = remainingAttempts - 1,
                         ownerUid = ownerUid,
                         expiresAtMs = expiresAtMs,
-                        type = type
+                        type = type,
+                        draft = draft
                     )
                 } else {
                     Single.error(error)
