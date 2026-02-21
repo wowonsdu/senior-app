@@ -95,7 +95,10 @@ Zasady etapu:
 - [x] Plan: MAIN-PLAN-dodawanie-leku + subplany
 - [x] UI: dawka jako input, czestotliwosc 0..10, dynamiczne godziny
 - [x] Logika: dynamiczne godziny + walidacja + zapis/prefill schedule
-- [ ] Walidacja: smoke check dialogow i odswiezania listy
+- [ ] Migracja: "Dodaj lek" i "Edytuj lek" jako fragmenty ze scrollem (zamiast dialogow)
+- [ ] VM/DI: PatientAddMedViewModel + PatientEditMedViewModel (Rx na Schedulers.io)
+- [ ] Cleanup: usuniecie dialogow + usuniecie recznego refresh (FragmentResult)
+- [ ] Walidacja: smoke check fragmentow (dodaj/edytuj/usun; 0/1/10) + odswiezanie listy przez observe
 
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)
 
