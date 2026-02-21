@@ -210,3 +210,10 @@ Zasady etapu:
 - [x] Fix: obserwacje niezalezne od filtrow (listen all + local filter)
 - [x] Cleanup: usuniecie history_refresh + notify w dialogach
 - [ ] Walidacja: smoke test live update (pacjent/opiekun)
+
+## Etap 12 — Opiekun: Panel (taby) + Podopieczni
+- [ ] Panel opiekuna: routing (login + startup gate) + nav_graph
+- [ ] Panel opiekuna: UI tabs (TabLayout + ViewPager2) + placeholdery
+- [ ] Podopieczni: lista careLinks (kafelki) + wybór pacjenta
+- [ ] Podopieczni: formularz dodaj + kod + kopiuj
+- [ ] Auth pacjenta: login z kodem (consume careLink + prefill danych)
