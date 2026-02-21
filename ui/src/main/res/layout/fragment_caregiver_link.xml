@@ -90,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_marginTop="@dimen/spacing_l"
-                android:background="@color/senior_border" />
+                android:background="@color/senior_outline" />
 
             <TextView
                 android:id="@+id/caregiver_link_section_generate"
