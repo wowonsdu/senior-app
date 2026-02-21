@@ -100,6 +100,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_alerts_header_sugar"
                 style="@style/Widget.Senior.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,6 +145,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/patient_alerts_chevron_sugar"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:contentDescription="@null"
@@ -154,6 +156,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_alerts_config_sugar"
                 style="@style/Widget.Senior.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -627,6 +630,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_alerts_header_insulin"
                 style="@style/Widget.Senior.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -671,6 +675,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/patient_alerts_chevron_insulin"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:contentDescription="@null"
@@ -680,6 +685,117 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_alerts_config_insulin"
+                style="@style/Widget.Senior.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_l">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_s"
+                            android:text="@string/patient_alerts_config_enable_insulin"
+                            android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                            android:textColor="@color/senior_text_primary" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_m"
+                        android:text="@string/patient_alerts_config_section_critical"
+                        android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                        android:textColor="@color/senior_primary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_s"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Senior.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/input_height_compact"
+                            android:layout_weight="1"
+                            android:hint="@string/patient_alerts_config_low_hint"
+                            app:suffixText="j.">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/Widget.Senior.TextInputEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:inputType="number"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Senior.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/input_height_compact"
+                            android:layout_marginStart="@dimen/spacing_s"
+                            android:layout_weight="1"
+                            android:hint="@string/patient_alerts_config_high_hint"
+                            app:suffixText="j.">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/Widget.Senior.TextInputEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:inputType="number"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/patient_alerts_config_critical_low_caption"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/senior_text_tertiary" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/patient_alerts_config_critical_high_caption"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/senior_text_tertiary" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_alerts_header_pressure"
                 style="@style/Widget.Senior.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -724,6 +840,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/patient_alerts_chevron_pressure"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:contentDescription="@null"
@@ -733,6 +850,94 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_alerts_config_pressure"
+                style="@style/Widget.Senior.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_l">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_s"
+                            android:text="@string/patient_alerts_config_enable_pressure"
+                            android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                            android:textColor="@color/senior_text_primary" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_m"
+                        android:text="@string/patient_alerts_config_section_critical"
+                        android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                        android:textColor="@color/senior_primary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_s"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Senior.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/input_height_compact"
+                            android:layout_weight="1"
+                            android:hint="@string/patient_alerts_config_low_hint"
+                            app:suffixText="mmHg">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/Widget.Senior.TextInputEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:inputType="number"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Senior.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/input_height_compact"
+                            android:layout_marginStart="@dimen/spacing_s"
+                            android:layout_weight="1"
+                            android:hint="@string/patient_alerts_config_high_hint"
+                            app:suffixText="mmHg">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/Widget.Senior.TextInputEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:inputType="number"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_alerts_header_pulse"
                 style="@style/Widget.Senior.Card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -777,11 +982,99 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/patient_alerts_chevron_pulse"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:contentDescription="@null"
                         android:src="@drawable/ic_chevron_down"
                         android:tint="@color/white" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/patient_alerts_config_pulse"
+                style="@style/Widget.Senior.Card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:visibility="gone"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_l">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.switchmaterial.SwitchMaterial
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:checked="true" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_s"
+                            android:text="@string/patient_alerts_config_enable_pulse"
+                            android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                            android:textColor="@color/senior_text_primary" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_m"
+                        android:text="@string/patient_alerts_config_section_critical"
+                        android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                        android:textColor="@color/senior_primary" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_s"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Senior.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/input_height_compact"
+                            android:layout_weight="1"
+                            android:hint="@string/patient_alerts_config_low_hint"
+                            app:suffixText="bpm">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/Widget.Senior.TextInputEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:inputType="number"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.Senior.TextInputLayout"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/input_height_compact"
+                            android:layout_marginStart="@dimen/spacing_s"
+                            android:layout_weight="1"
+                            android:hint="@string/patient_alerts_config_high_hint"
+                            app:suffixText="bpm">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                style="@style/Widget.Senior.TextInputEditText"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:inputType="number"
+                                android:textSize="14sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 

@@ -278,6 +278,9 @@
     <string name="patient_alerts_config_section_spike">Gwałtowne zmiany</string>
     <string name="patient_alerts_config_section_channels">Kanaly powiadomien</string>
     <string name="patient_alerts_config_enable_sugar">Wlacz alerty dla poziomu cukru</string>
+    <string name="patient_alerts_config_enable_insulin">Wlacz alerty dla dawki insuliny</string>
+    <string name="patient_alerts_config_enable_pressure">Wlacz alerty dla cisnienia krwi</string>
+    <string name="patient_alerts_config_enable_pulse">Wlacz alerty dla tetna</string>
     <string name="patient_alerts_config_low_hint">Krytycznie niska</string>
     <string name="patient_alerts_config_high_hint">Krytycznie wysoka</string>
     <string name="patient_alerts_config_critical_low_caption">Wartosc ponizej tej granicy</string>
