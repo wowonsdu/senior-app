@@ -58,6 +58,10 @@ Zasady etapu:
 - [x] Dodaj lek (dialog)
 - [x] Moje ustawienia: edycja chorob/lekow/danych
 - [x] Moje ustawienia: odswiezanie po edycji + QA
+- [ ] Dane osobowe: migracja dialog -> fragment (scroll)
+- [ ] Dane osobowe: VM/DI (Rx na Schedulers.io) + prefill przez observe
+- [ ] Dane osobowe: cleanup dialogu + usuniecie FragmentResult
+- [ ] Dane osobowe: smoke check fragmentu + odswiezanie przez observe
 - [x] Choroby: migracja "Dodaj/Edytuj" do fragmentow (zamiast dialogow)
 - [x] Choroby: VM/DI dla add/edit (Rx na Schedulers.io) + powrot popBackStack
 - [x] Choroby: cleanup dialogow + usuniecie FragmentResult refresh
