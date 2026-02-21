@@ -256,13 +256,13 @@
             app:destination="@id/patientAddDiseaseDialogFragment" />
         <action
             android:id="@+id/action_patientSettings_to_addMed"
-            app:destination="@id/patientAddMedDialogFragment" />
+            app:destination="@id/patientAddMedFragment" />
         <action
             android:id="@+id/action_patientSettings_to_editDisease"
             app:destination="@id/patientEditDiseaseDialogFragment" />
         <action
             android:id="@+id/action_patientSettings_to_editMed"
-            app:destination="@id/patientEditMedDialogFragment" />
+            app:destination="@id/patientEditMedFragment" />
         <action
             android:id="@+id/action_patientSettings_to_alertsOverview"
             app:destination="@id/patientAlertsOverviewFragment" />
@@ -280,11 +280,11 @@
         android:label="@string/patient_add_disease_title"
         tools:layout="@layout/dialog_patient_add_disease" />
 
-    <dialog
-        android:id="@+id/patientAddMedDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientAddMedDialogFragment"
+    <fragment
+        android:id="@+id/patientAddMedFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAddMedFragment"
         android:label="@string/patient_add_med_title"
-        tools:layout="@layout/dialog_patient_add_med" />
+        tools:layout="@layout/fragment_patient_add_med" />
 
     <dialog
         android:id="@+id/patientEditDiseaseDialogFragment"
@@ -296,15 +296,15 @@
             app:argType="string" />
     </dialog>
 
-    <dialog
-        android:id="@+id/patientEditMedDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientEditMedDialogFragment"
+    <fragment
+        android:id="@+id/patientEditMedFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientEditMedFragment"
         android:label="@string/patient_edit_med_title"
-        tools:layout="@layout/dialog_patient_add_med">
+        tools:layout="@layout/fragment_patient_edit_med">
         <argument
             android:name="medicationId"
             app:argType="string" />
-    </dialog>
+    </fragment>
 
     <fragment
         android:id="@+id/patientAlertsOverviewFragment"

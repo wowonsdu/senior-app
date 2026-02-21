@@ -247,6 +247,8 @@
     <string name="patient_add_med_cancel">Anuluj</string>
     <string name="patient_add_med_save">Zapisz</string>
     <string name="patient_edit_med_title">Edytuj lek</string>
+    <string name="patient_edit_med_delete_title">Usun lek?</string>
+    <string name="patient_edit_med_delete_message">Ta operacja jest nieodwracalna.</string>
 
     <string-array name="patient_add_med_frequency_options">
         <item>0</item>

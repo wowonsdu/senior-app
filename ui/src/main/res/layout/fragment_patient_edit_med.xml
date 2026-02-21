@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/senior_bg">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/patient_edit_med_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/senior_magenta"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:navigationIcon="@android:drawable/ic_media_previous"
+        app:navigationIconTint="@color/white"
+        app:title="@string/patient_edit_med_title"
+        app:subtitle="@string/patient_add_med_subtitle"
+        app:titleTextAppearance="@style/TextAppearance.Senior.BodyLarge"
+        app:subtitleTextAppearance="@style/TextAppearance.Senior.Caption"
+        app:subtitleTextColor="@color/white"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
+        android:id="@+id/patient_edit_med_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/patient_edit_med_toolbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_l">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_edit_med_name_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/patient_add_med_name_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_edit_med_name"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_edit_med_dose_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/patient_add_med_dose_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_edit_med_dose"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_edit_med_frequency_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/patient_add_med_frequency_hint"
+                app:endIconMode="dropdown_menu">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/patient_edit_med_frequency"
+                    style="@style/Widget.Senior.AutoCompleteTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/patient_edit_med_times_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/patient_edit_med_notify"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_s"
+                    android:text="@string/patient_add_med_notify"
+                    android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                    android:textColor="@color/senior_text_primary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/patient_edit_med_delete"
+                    style="@style/Widget.Senior.Button.Danger"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/patient_edit_remove" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/patient_edit_med_save"
+                    style="@style/Widget.Senior.Button.Primary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_s"
+                    android:layout_weight="1"
+                    android:text="@string/patient_add_med_save" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
