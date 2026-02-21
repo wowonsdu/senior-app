@@ -97,7 +97,7 @@ Zasady etapu:
 - [x] Logika: dynamiczne godziny + walidacja + zapis/prefill schedule
 - [x] Migracja: "Dodaj lek" i "Edytuj lek" jako fragmenty ze scrollem (zamiast dialogow)
 - [x] VM/DI: PatientAddMedViewModel + PatientEditMedViewModel (Rx na Schedulers.io)
-- [ ] Cleanup: usuniecie dialogow + usuniecie recznego refresh (FragmentResult)
+- [x] Cleanup: usuniecie dialogow + usuniecie recznego refresh (FragmentResult)
 - [ ] Walidacja: smoke check fragmentow (dodaj/edytuj/usun; 0/1/10) + odswiezanie listy przez observe
 
 ## Etap 5 — Opiekun + Wizyty (pelna funkcjonalnosc)

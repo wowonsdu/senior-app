@@ -12,7 +12,7 @@
 
 ## Deliverables
 - `PatientEditDiseaseDialogFragment` + layout.
-- `PatientEditMedDialogFragment` + layout.
+- `PatientEditMedFragment` + layout.
 - Aktualizacja `PatientPersonalDataDialogFragment` do trybu edycji i prefill.
 - Aktualizacja `PatientSettingsUiState` i `PatientSettingsFragment` do nowego modelu.
 - Zmiany w adapterach (klik w item).

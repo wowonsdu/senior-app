@@ -66,12 +66,6 @@ class PatientSettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.startSettingsObservation()
-        parentFragmentManager.setFragmentResultListener(
-            SETTINGS_REFRESH_REQUEST_KEY,
-            viewLifecycleOwner
-        ) { _, _ ->
-            viewModel.load()
-        }
         viewModel.uiState.observe(viewLifecycleOwner) { state ->
             binding.patientSettingsPersonalName.text = state.personalFullName
             binding.patientSettingsPersonalPesel.text = "PESEL: ${state.personalData.pesel}"
