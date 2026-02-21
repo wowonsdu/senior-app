@@ -68,6 +68,8 @@ import zdrowy.senior.io.ui.patient.PatientHomeViewModel
 import zdrowy.senior.io.ui.patient.PatientMeasurementDialogViewModel
 import zdrowy.senior.io.ui.patient.PatientNotifyAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientAddMedViewModel
+import zdrowy.senior.io.ui.patient.PatientAddDiseaseViewModel
+import zdrowy.senior.io.ui.patient.PatientEditDiseaseViewModel
 import zdrowy.senior.io.ui.patient.PatientEditMedViewModel
 import zdrowy.senior.io.ui.patient.PatientSettingsViewModel
 
@@ -146,6 +148,8 @@ val viewModelModule = module {
     viewModel { PatientSettingsViewModel(get(), get(), get(), get(), get()) }
     viewModel { PatientMeasurementDialogViewModel(get(), get(), get(), get(), get()) }
     viewModel { PatientNotifyAgentsViewModel(get(), get()) }
+    viewModel { PatientAddDiseaseViewModel(get()) }
+    viewModel { PatientEditDiseaseViewModel(get(), get(), get()) }
     viewModel { PatientAddMedViewModel(get()) }
     viewModel { PatientEditMedViewModel(get(), get(), get()) }
 }
