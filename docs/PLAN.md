@@ -176,3 +176,4 @@ Zasady etapu:
 - [x] 9.14 Alerty i powiadomienia: plan (docs/plan) + wpis do PLAN.md
 - [x] 9.15 Alerty i powiadomienia: nawigacja z ustawien -> config (bez overview)
 - [x] 9.16 Alerty i powiadomienia: cleanup + spłaszczenie (1 ekran) + rename Config -> Alerts
+- [x] 9.17 Alerty: chevron zwija/rozwija kartę konfiguracji (cukier)
