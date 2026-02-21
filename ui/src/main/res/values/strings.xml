@@ -45,6 +45,9 @@
     <string name="caregiver_tab_dependents">Podopieczni</string>
     <string name="caregiver_tab_visits">Wizyty</string>
     <string name="caregiver_placeholder_soon">Wkrotce</string>
+    <string name="caregiver_dependents_header">Wybierz osobe, aby zarzadzac jej danymi zdrowotnymi:</string>
+    <string name="caregiver_dependents_add">+ DODAJ NOWEGO PODOPIECZNEGO</string>
+    <string name="caregiver_dependents_select">WYBIERZ</string>
 
     <string name="sms_verify_title">Zaloguj sie</string>
     <string name="sms_verify_header">Wpisz kod z SMS</string>

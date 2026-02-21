@@ -214,6 +214,6 @@ Zasady etapu:
 ## Etap 12 — Opiekun: Panel (taby) + Podopieczni
 - [x] Panel opiekuna: routing (login + startup gate) + nav_graph
 - [x] Panel opiekuna: UI tabs (TabLayout + ViewPager2) + placeholdery
-- [ ] Podopieczni: lista careLinks (kafelki) + wybór pacjenta
+- [x] Podopieczni: lista careLinks (kafelki) + wybór pacjenta
 - [ ] Podopieczni: formularz dodaj + kod + kopiuj
 - [ ] Auth pacjenta: login z kodem (consume careLink + prefill danych)
