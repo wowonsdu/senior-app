@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -157,7 +156,7 @@ class PatientSugarDialogFragment : DialogFragment() {
                 type = MeasurementType.SUGAR,
                 value = value,
                 timestamp = timestamp,
-                onDone = { notifyHistoryChangedAndDismiss() }
+                onDone = { dismiss() }
             )
         } else {
             viewModel.addSimpleMeasurement(
@@ -165,17 +164,12 @@ class PatientSugarDialogFragment : DialogFragment() {
                 value = value,
                 timestamp = timestamp,
                 source = MeasurementSource.MANUAL,
-                onDone = { notifyHistoryChangedAndDismiss() }
+                onDone = { dismiss() }
             )
         }
     }
 
     private fun deleteMeasurement(id: String) {
-        viewModel.deleteMeasurement(id) { notifyHistoryChangedAndDismiss() }
-    }
-
-    private fun notifyHistoryChangedAndDismiss() {
-        parentFragmentManager.setFragmentResult("history_refresh", bundleOf())
-        dismiss()
+        viewModel.deleteMeasurement(id) { dismiss() }
     }
 }

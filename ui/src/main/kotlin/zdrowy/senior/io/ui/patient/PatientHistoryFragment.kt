@@ -105,13 +105,6 @@ class PatientHistoryFragment : Fragment() {
             tile.card.setOnClickListener { toggleType(type) }
         }
 
-        parentFragmentManager.setFragmentResultListener(
-            "history_refresh",
-            viewLifecycleOwner
-        ) { _, _ ->
-            viewModel.setSelectedTypes(selectedTypes.toList())
-        }
-
         setupChart()
         viewModel.load()
         viewModel.measurements.observe(viewLifecycleOwner) { items ->
