@@ -110,6 +110,13 @@
     <string name="patient_home_tile_pulse">Tetno</string>
     <string name="patient_home_tile_history">Historia Pomiarow</string>
     <string name="patient_home_tile_settings">Ustawienia</string>
+    <string name="patient_home_voice_title">Wprowadz glosowo</string>
+    <string name="patient_home_voice_not_available">Rozpoznawanie mowy niedostepne</string>
+    <string name="patient_home_voice_permission_denied">Brak dostepu do mikrofonu</string>
+    <string name="patient_home_voice_error">Nie udalo sie rozpoznac mowy</string>
+    <string name="patient_home_voice_empty">Nie rozpoznano pomiarow</string>
+    <string name="patient_home_voice_saved">Zapisano: %1$s</string>
+    <string name="patient_home_voice_skipped">Pominieto: %1$s</string>
 
     <string name="patient_notify_agents_title">Powiadom agentow</string>
     <string name="patient_notify_agents_subtitle">Wpisz wiadomosc dla opiekunow</string>

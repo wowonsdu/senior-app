@@ -1,9 +1,18 @@
 package zdrowy.senior.io.ui.patient
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.speech.RecognitionListener
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,9 +24,11 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientHomeBinding
+import zdrowy.senior.io.domain.measurement.MeasurementType
 import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
 import zdrowy.senior.io.domain.user.ClearCurrentUserRoleUseCase
 import org.koin.android.ext.android.inject
+import java.util.Locale
 
 class PatientHomeFragment : Fragment() {
     private var _binding: FragmentPatientHomeBinding? = null
@@ -27,6 +38,17 @@ class PatientHomeFragment : Fragment() {
     private val clearActivePatient: ClearActivePatientUseCase by inject()
     private val clearCurrentUserRole: ClearCurrentUserRoleUseCase by inject()
     private val disposables = CompositeDisposable()
+    private var speechRecognizer: SpeechRecognizer? = null
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            startSpeechToTextInternal()
+        } else {
+            showToast(getString(R.string.patient_home_voice_permission_denied))
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -85,6 +107,9 @@ class PatientHomeFragment : Fragment() {
         binding.patientHomeTileSettings.setOnClickListener {
             findNavController().navigate(R.id.action_patientHome_to_patientSettings)
         }
+        binding.patientHomeVoiceCard.setOnClickListener {
+            startSpeechToText()
+        }
         binding.patientHomeProfile.setOnClickListener {
             viewModel.onHeaderClicked()
         }
@@ -115,11 +140,110 @@ class PatientHomeFragment : Fragment() {
             }
             if (target != null) viewModel.onNavigationHandled()
         }
+        viewModel.voiceSummary.observe(viewLifecycleOwner) { summary ->
+            if (summary == null) return@observe
+            showVoiceSummary(summary)
+            viewModel.onVoiceSummaryHandled()
+        }
     }
 
     override fun onDestroyView() {
+        speechRecognizer?.stopListening()
+        speechRecognizer?.destroy()
+        speechRecognizer = null
         disposables.clear()
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun startSpeechToText() {
+        if (!SpeechRecognizer.isRecognitionAvailable(requireContext())) {
+            showToast(getString(R.string.patient_home_voice_not_available))
+            return
+        }
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.RECORD_AUDIO
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            startSpeechToTextInternal()
+        } else {
+            requestPermissionLauncher.launch(Manifest.permission.RECORD_AUDIO)
+        }
+    }
+
+    private fun startSpeechToTextInternal() {
+        if (speechRecognizer == null) {
+            speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
+            speechRecognizer?.setRecognitionListener(object : RecognitionListener {
+                override fun onReadyForSpeech(params: Bundle?) = Unit
+                override fun onBeginningOfSpeech() = Unit
+                override fun onRmsChanged(rmsdB: Float) = Unit
+                override fun onBufferReceived(buffer: ByteArray?) = Unit
+                override fun onEndOfSpeech() = Unit
+                override fun onError(error: Int) {
+                    showToast(getString(R.string.patient_home_voice_error))
+                }
+                override fun onPartialResults(partialResults: Bundle?) = Unit
+                override fun onResults(results: Bundle?) {
+                    handleSpeechResults(results)
+                }
+                override fun onEvent(eventType: Int, params: Bundle?) = Unit
+            })
+        }
+
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, false)
+        }
+        speechRecognizer?.stopListening()
+        speechRecognizer?.startListening(intent)
+    }
+
+    private fun handleSpeechResults(results: Bundle?) {
+        val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+        val text = matches?.firstOrNull()?.trim().orEmpty()
+        if (text.isBlank()) {
+            showToast(getString(R.string.patient_home_voice_empty))
+            return
+        }
+        viewModel.onVoiceText(text)
+    }
+
+    private fun showVoiceSummary(summary: VoiceSaveSummary) {
+        val saved = summary.savedTypes
+            .map { typeLabel(it) }
+            .filter { it.isNotBlank() }
+        val skipped = summary.skippedTypes
+            .map { typeLabel(it) }
+            .filter { it.isNotBlank() }
+
+        if (saved.isEmpty() && skipped.isEmpty()) {
+            showToast(getString(R.string.patient_home_voice_empty))
+            return
+        }
+
+        val parts = mutableListOf<String>()
+        if (saved.isNotEmpty()) {
+            parts += getString(R.string.patient_home_voice_saved, saved.joinToString(", "))
+        }
+        if (skipped.isNotEmpty()) {
+            parts += getString(R.string.patient_home_voice_skipped, skipped.joinToString(", "))
+        }
+        showToast(parts.joinToString(". "))
+    }
+
+    private fun typeLabel(type: MeasurementType): String {
+        return when (type) {
+            MeasurementType.SUGAR -> getString(R.string.patient_home_tile_sugar)
+            MeasurementType.INSULIN -> getString(R.string.patient_home_tile_insulin)
+            MeasurementType.PRESSURE -> getString(R.string.patient_home_tile_pressure)
+            MeasurementType.PULSE -> getString(R.string.patient_home_tile_pulse)
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 }

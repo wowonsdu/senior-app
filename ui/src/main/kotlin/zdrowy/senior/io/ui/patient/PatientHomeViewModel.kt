@@ -3,12 +3,19 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
+import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.Measurement
+import zdrowy.senior.io.domain.measurement.MeasurementSource
+import zdrowy.senior.io.domain.measurement.MeasurementType
 import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsUseCase
+import zdrowy.senior.io.domain.measurement.ParseVoiceMeasurementsUseCase
+import zdrowy.senior.io.domain.measurement.ParsedVoiceMeasurement
 import zdrowy.senior.io.domain.settings.ObservePersonalDataByUidUseCase
 import zdrowy.senior.io.domain.settings.PersonalData
 import zdrowy.senior.io.domain.user.ManagedUserUidState
@@ -19,7 +26,10 @@ import zdrowy.senior.io.ui.R
 class PatientHomeViewModel(
     private val observeRecentMeasurements: ObserveRecentMeasurementsUseCase,
     private val observeManagedUserUidState: ObserveManagedUserUidStateUseCase,
-    private val observePersonalDataByUid: ObservePersonalDataByUidUseCase
+    private val observePersonalDataByUid: ObservePersonalDataByUidUseCase,
+    private val parseVoiceMeasurements: ParseVoiceMeasurementsUseCase,
+    private val addMeasurement: AddMeasurementUseCase,
+    private val addBloodPressureMeasurement: AddBloodPressureMeasurementUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val _recentMeasurements = MutableLiveData<List<Measurement>>()
@@ -28,6 +38,8 @@ class PatientHomeViewModel(
     val headerState: LiveData<PatientHomeHeaderUiState> = _headerState
     private val _navTarget = MutableLiveData<PatientHomeNavTarget?>()
     val navTarget: LiveData<PatientHomeNavTarget?> = _navTarget
+    private val _voiceSummary = MutableLiveData<VoiceSaveSummary?>()
+    val voiceSummary: LiveData<VoiceSaveSummary?> = _voiceSummary
     private var started = false
 
     fun start() {
@@ -88,9 +100,67 @@ class PatientHomeViewModel(
         _navTarget.value = null
     }
 
+    fun onVoiceText(text: String) {
+        val result = parseVoiceMeasurements(text)
+        val savedTypes = result.measurements.map { it.type }.distinct()
+        val skippedTypes = result.skippedTypes.distinct()
+
+        if (result.measurements.isEmpty()) {
+            _voiceSummary.value = VoiceSaveSummary(savedTypes, skippedTypes)
+            return
+        }
+
+        val timestamp = System.currentTimeMillis()
+        val tasks = result.measurements.mapNotNull { measurement ->
+            buildSaveTask(measurement, timestamp)
+        }
+        val save = if (tasks.isEmpty()) {
+            Completable.complete()
+        } else {
+            Completable.merge(tasks)
+        }
+        disposables.add(
+            save.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _voiceSummary.value = VoiceSaveSummary(savedTypes, skippedTypes)
+                }, {
+                    _voiceSummary.value = VoiceSaveSummary(savedTypes, skippedTypes)
+                })
+        )
+    }
+
+    fun onVoiceSummaryHandled() {
+        _voiceSummary.value = null
+    }
+
     override fun onCleared() {
         disposables.clear()
         super.onCleared()
+    }
+
+    private fun buildSaveTask(
+        measurement: ParsedVoiceMeasurement,
+        timestamp: Long
+    ): Completable? {
+        return if (measurement.type == MeasurementType.PRESSURE) {
+            val systolic = measurement.systolic ?: return null
+            val diastolic = measurement.diastolic ?: return null
+            addBloodPressureMeasurement(
+                systolic = systolic,
+                diastolic = diastolic,
+                timestamp = timestamp,
+                source = MeasurementSource.VOICE
+            ).ignoreElement()
+        } else {
+            val value = measurement.value ?: return null
+            addMeasurement(
+                type = measurement.type,
+                value = value,
+                timestamp = timestamp,
+                source = MeasurementSource.VOICE
+            ).ignoreElement()
+        }
     }
 
     private fun mapHeaderState(role: UserRole, data: PersonalData): PatientHomeHeaderUiState {

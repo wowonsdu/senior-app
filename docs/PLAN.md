@@ -232,4 +232,4 @@ Zasady etapu:
 ## Etap 13 — Speech to Text (monitor zdrowia)
 - [x] STT: plan (docs/plan/MAIN-PLAN-obsluga-speech-to-text.md)
 - [x] STT: parser domenowy (voice parse)
-- [ ] STT: Patient Home — wprowadzanie glosowe + zapis
+- [x] STT: Patient Home — wprowadzanie glosowe + zapis
