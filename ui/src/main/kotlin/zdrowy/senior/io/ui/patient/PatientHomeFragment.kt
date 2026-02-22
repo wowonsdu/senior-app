@@ -49,6 +49,7 @@ class PatientHomeFragment : Fragment() {
     private val disposables = CompositeDisposable()
     private var speechRecognizer: SpeechRecognizer? = null
     private var recordingAnimator: ObjectAnimator? = null
+    private var lastTranscript: String = ""
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -184,6 +185,7 @@ class PatientHomeFragment : Fragment() {
     }
 
     private fun startSpeechToTextInternal() {
+        lastTranscript = ""
         if (speechRecognizer == null) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
             speechRecognizer?.setRecognitionListener(object : RecognitionListener {
@@ -243,6 +245,11 @@ class PatientHomeFragment : Fragment() {
         val text = matches?.firstOrNull()?.trim().orEmpty()
         if (text.isBlank()) {
             if (!isFinal) return
+            val fallback = lastTranscript.trim()
+            if (fallback.isNotBlank()) {
+                viewModel.onVoiceText(fallback)
+                return
+            }
             showToast(getString(R.string.patient_home_voice_empty))
             clearTranscript()
             return
@@ -320,11 +327,13 @@ class PatientHomeFragment : Fragment() {
     }
 
     private fun updateTranscript(text: String) {
+        lastTranscript = text
         binding.patientHomeVoiceTranscriptCard.isVisible = true
         binding.patientHomeVoiceTranscriptText.text = text
     }
 
     private fun clearTranscript() {
+        lastTranscript = ""
         binding.patientHomeVoiceTranscriptCard.isVisible = false
     }
 
