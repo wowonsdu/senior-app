@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import zdrowy.senior.io.domain.carelink.CareLinkDraft
+import zdrowy.senior.io.ui.auth.normalizePhoneNumberPl
 import zdrowy.senior.io.ui.databinding.FragmentCaregiverAddDependentBinding
 
 class CaregiverAddDependentFragment : Fragment() {
@@ -79,12 +80,18 @@ class CaregiverAddDependentFragment : Fragment() {
         if (!validateNotBlank(binding.caregiverAddDependentLastName, lastName)) return
         if (!validateNotBlank(binding.caregiverAddDependentPesel, pesel)) return
         if (!validateNotBlank(binding.caregiverAddDependentPhone, phone)) return
+        val phoneE164 = normalizePhoneNumberPl(phone)
+        if (phoneE164 == null) {
+            binding.caregiverAddDependentPhoneInput.error = "Podaj numer w formacie +48..."
+            return
+        }
+        binding.caregiverAddDependentPhoneInput.error = null
 
         val draft = CareLinkDraft(
             firstName = firstName,
             lastName = lastName,
             pesel = pesel,
-            phoneNumber = phone,
+            phoneNumber = phoneE164,
             address = address
         )
         viewModel.generateCode(draft)

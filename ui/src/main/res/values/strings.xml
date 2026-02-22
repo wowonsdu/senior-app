@@ -2,10 +2,10 @@
     <string name="role_select_title">Wybierz role</string>
     <string name="role_select_app_name">Zdrowie dla Seniorow</string>
     <string name="role_select_question">Kim jestes?</string>
-    <string name="role_select_patient">Pacjent</string>
-    <string name="role_select_patient_subtitle">Bede dodawac swoje pomiary zdrowotne</string>
+    <string name="role_select_patient">Podopieczny</string>
+    <string name="role_select_patient_subtitle">Będę dodawać swoje pomiary</string>
     <string name="role_select_caregiver">Opiekun</string>
-    <string name="role_select_caregiver_subtitle">Bede monitorowac zdrowie pacjenta</string>
+    <string name="role_select_caregiver_subtitle">Będę monitorować zdrowie podopiecznego</string>
     <string name="role_select_footer">Aplikacja stworzona z mysla o seniorach</string>
     <string name="role_select_version">Wersja 1.0.0 - 2026</string>
     <string name="role_select_dev_skip">WEJDZ BEZ LOGOWANIA</string>

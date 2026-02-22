@@ -218,5 +218,6 @@ Zasady etapu:
 - [x] Podopieczni: formularz dodaj + kod + kopiuj
 - [x] Auth pacjenta: login z kodem (consume careLink + prefill danych)
 - [x] Auth pacjenta: auto-SMS po kodzie (bez wpisywania telefonu)
+- [x] Auth pacjenta: draft w accessCodeDrafts + rules (wrazliwe dane po phone-auth)
 - [x] Podopieczni: powiaz pacjenta kodem w formularzu
 - [x] Monitor zdrowia: powrot do wyboru pacjenta (ikona wyjscia)

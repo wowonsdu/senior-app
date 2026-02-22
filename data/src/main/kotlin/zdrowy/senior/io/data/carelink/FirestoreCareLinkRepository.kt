@@ -9,8 +9,8 @@ import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
 import zdrowy.senior.io.data.firestore.toSingle
 import zdrowy.senior.io.domain.carelink.CareLink
-import zdrowy.senior.io.domain.carelink.CareLinkCodeInfo
 import zdrowy.senior.io.domain.carelink.CareLinkCode
+import zdrowy.senior.io.domain.carelink.CareLinkCodeInfo
 import zdrowy.senior.io.domain.carelink.CareLinkCodeType
 import zdrowy.senior.io.domain.carelink.CareLinkDraft
 import zdrowy.senior.io.domain.carelink.CareLinkRepository
@@ -127,13 +127,11 @@ class FirestoreCareLinkRepository(
             val type = runCatching { CareLinkCodeType.valueOf(typeRaw) }
                 .getOrElse { throw InvalidCodeException("Nieprawidlowy typ kodu") }
 
-            val draft = CareLinkDraft(
-                firstName = snapshot.getString("draftFirstName").orEmpty(),
-                lastName = snapshot.getString("draftLastName").orEmpty(),
-                pesel = snapshot.getString("draftPesel").orEmpty(),
-                phoneNumber = snapshot.getString("draftPhoneNumber").orEmpty(),
-                address = snapshot.getString("draftAddress").orEmpty()
-            )
+            var draftFirstName = snapshot.getString("draftFirstName").orEmpty()
+            var draftLastName = snapshot.getString("draftLastName").orEmpty()
+            var draftPesel = snapshot.getString("draftPesel").orEmpty()
+            val draftPhone = snapshot.getString("draftPhoneNumber").orEmpty()
+            var draftAddress = snapshot.getString("draftAddress").orEmpty()
 
             val (patientUid, caregiverUid) = when (type) {
                 CareLinkCodeType.PATIENT_TO_CAREGIVER -> {
@@ -149,6 +147,25 @@ class FirestoreCareLinkRepository(
                     uid to caregiverUid
                 }
             }
+
+            if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
+                val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
+                val draftSnapshot = tx.get(draftDoc)
+                if (draftSnapshot.exists()) {
+                    draftFirstName = draftSnapshot.getString("draftFirstName").orEmpty()
+                    draftLastName = draftSnapshot.getString("draftLastName").orEmpty()
+                    draftPesel = draftSnapshot.getString("draftPesel").orEmpty()
+                    draftAddress = draftSnapshot.getString("draftAddress").orEmpty()
+                }
+            }
+
+            val draft = CareLinkDraft(
+                firstName = draftFirstName,
+                lastName = draftLastName,
+                pesel = draftPesel,
+                phoneNumber = draftPhone,
+                address = draftAddress
+            )
 
             val linkId = "${patientUid}_${caregiverUid}"
             val linkDoc = firestore.collection(FirestorePaths.CARE_LINKS).document(linkId)
@@ -184,6 +201,10 @@ class FirestoreCareLinkRepository(
             }
 
             tx.delete(doc)
+            if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
+                val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
+                tx.delete(draftDoc)
+            }
             CareLink(patientUid = patientUid, caregiverUid = caregiverUid, status = CareLinkStatus.ACTIVE)
         }.toSingle()
     }
@@ -217,15 +238,23 @@ class FirestoreCareLinkRepository(
                 CareLinkCodeType.PATIENT_TO_CAREGIVER -> payload["patientUid"] = ownerUid
                 CareLinkCodeType.CAREGIVER_TO_PATIENT -> payload["caregiverUid"] = ownerUid
             }
-            if (draft != null) {
-                if (draft.firstName.isNotBlank()) payload["draftFirstName"] = draft.firstName
-                if (draft.lastName.isNotBlank()) payload["draftLastName"] = draft.lastName
-                if (draft.pesel.isNotBlank()) payload["draftPesel"] = draft.pesel
-                if (draft.phoneNumber.isNotBlank()) payload["draftPhoneNumber"] = draft.phoneNumber
-                if (draft.address.isNotBlank()) payload["draftAddress"] = draft.address
-            }
+            val draftPhone = draft?.phoneNumber?.trim().orEmpty()
+            if (draftPhone.isNotBlank()) payload["draftPhoneNumber"] = draftPhone
 
             tx.set(doc, payload)
+
+            if (draft != null && type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
+                val draftPayload = mutableMapOf<String, Any>()
+                if (draft.firstName.isNotBlank()) draftPayload["draftFirstName"] = draft.firstName
+                if (draft.lastName.isNotBlank()) draftPayload["draftLastName"] = draft.lastName
+                if (draft.pesel.isNotBlank()) draftPayload["draftPesel"] = draft.pesel
+                if (draft.address.isNotBlank()) draftPayload["draftAddress"] = draft.address
+                if (draftPhone.isNotBlank()) draftPayload["phoneNumberE164"] = draftPhone
+                if (draftPayload.isNotEmpty()) {
+                    val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
+                    tx.set(draftDoc, draftPayload)
+                }
+            }
             true
         }
             .toSingle()

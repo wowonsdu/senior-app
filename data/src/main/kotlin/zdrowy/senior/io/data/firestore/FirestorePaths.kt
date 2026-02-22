@@ -12,4 +12,5 @@ internal object FirestorePaths {
     const val CARE_LINKS = "careLinks"
 
     const val ACCESS_CODES = "accessCodes"
+    const val ACCESS_CODE_DRAFTS = "accessCodeDrafts"
 }
