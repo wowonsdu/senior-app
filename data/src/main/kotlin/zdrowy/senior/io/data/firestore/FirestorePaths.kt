@@ -7,6 +7,7 @@ internal object FirestorePaths {
     const val DISEASES = "diseases"
     const val MEDICATIONS = "medications"
     const val MEASUREMENTS = "measurements"
+    const val MEASUREMENT_READ_STATES = "measurementReadStates"
     const val CONTACTS = "contacts"
     const val ALERTS = "alerts"
     const val CARE_LINKS = "careLinks"

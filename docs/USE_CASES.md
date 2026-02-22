@@ -148,6 +148,18 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Wyjscie: `Unit`.
   - Repo: `CaregiverRepository`.
 
+- UC-CARE-09 ObserveMeasurementReadState
+  - Cel: realtime obserwacja stanu odczytu pomiarow dla opiekuna i pacjenta.
+  - Wejscie: `patientUid`.
+  - Wyjscie: `Observable<MeasurementReadState>`.
+  - Repo: `MeasurementReadStateRepository`.
+
+- UC-CARE-10 SetMeasurementReadState
+  - Cel: zapis znacznika ostatnio przeczytanego pomiaru.
+  - Wejscie: `patientUid`, `timestampMs`.
+  - Wyjscie: `Unit`.
+  - Repo: `MeasurementReadStateRepository`.
+
 ## Alerty i powiadomienia
 - UC-ALERT-01 GetAlertConfig
   - Cel: pobranie konfiguracji alertow.

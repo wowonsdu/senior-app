@@ -9,6 +9,7 @@ import zdrowy.senior.io.data.alert.FirestoreAlertRepository
 import zdrowy.senior.io.data.carelink.FirestoreCareLinkRepository
 import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementRepository
+import zdrowy.senior.io.data.measurement.FirestoreMeasurementReadStateRepository
 import zdrowy.senior.io.data.notification.NoOpNotificationRepository
 import zdrowy.senior.io.data.settings.FirestorePersonalDataByUidRepository
 import zdrowy.senior.io.data.settings.FirestoreSettingsRepository
@@ -48,10 +49,13 @@ import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.DeleteMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.GetRecentMeasurementsUseCase
+import zdrowy.senior.io.domain.measurement.MeasurementReadStateRepository
 import zdrowy.senior.io.domain.measurement.MeasurementRepository
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementChartDataUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementHistoryUseCase
+import zdrowy.senior.io.domain.measurement.ObserveMeasurementReadStateUseCase
 import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsUseCase
+import zdrowy.senior.io.domain.measurement.SetMeasurementReadStateUseCase
 import zdrowy.senior.io.domain.measurement.UpdateBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.UpdateMeasurementUseCase
 import zdrowy.senior.io.domain.settings.AddDiseaseUseCase
@@ -118,6 +122,8 @@ val domainModule = module {
     factory { ObserveRecentMeasurementsUseCase(get()) }
     factory { ObserveMeasurementHistoryUseCase(get()) }
     factory { ObserveMeasurementChartDataUseCase(get()) }
+    factory { ObserveMeasurementReadStateUseCase(get()) }
+    factory { SetMeasurementReadStateUseCase(get()) }
 
     factory { AddAgentUseCase(get()) }
     factory { AddDoctorUseCase(get()) }
@@ -179,6 +185,7 @@ val dataModule = module {
     single { PatientUidProvider(get()) }
 
     single<MeasurementRepository> { FirestoreMeasurementRepository(get()) }
+    single<MeasurementReadStateRepository> { FirestoreMeasurementReadStateRepository(get()) }
     single<AgentRepository> { FirestoreAgentRepository(get()) }
     single<AccessCodeRepository> { FirestoreAccessCodeRepository(get()) }
     single<CareLinkRepository> { FirestoreCareLinkRepository(get()) }
