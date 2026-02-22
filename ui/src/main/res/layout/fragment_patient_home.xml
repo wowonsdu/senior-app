@@ -138,54 +138,79 @@
                         android:gravity="center"
                         android:orientation="vertical">
 
-                        <ImageView
-                            android:id="@+id/patient_home_voice_icon"
-                            android:layout_width="72dp"
-                            android:layout_height="72dp"
-                            android:background="@drawable/bg_mic_circle"
-                            android:contentDescription="@null"
-                            android:src="@android:drawable/ic_btn_speak_now"
-                            android:tint="@color/black" />
+                        <FrameLayout
+                            android:layout_width="88dp"
+                            android:layout_height="88dp"
+                            android:layout_gravity="center">
 
-                        <TextView
-                            android:id="@+id/patient_home_voice_label"
+                            <com.google.android.material.progressindicator.CircularProgressIndicator
+                                android:id="@+id/patient_home_voice_progress"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:visibility="gone"
+                                app:indicatorSize="88dp"
+                                app:trackThickness="3dp"
+                                app:indicatorColor="@color/senior_danger"
+                                app:trackColor="@android:color/transparent"
+                                app:indeterminate="true" />
+
+                            <ImageView
+                                android:id="@+id/patient_home_voice_icon"
+                                android:layout_width="72dp"
+                                android:layout_height="72dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/bg_mic_circle"
+                                android:contentDescription="@null"
+                                android:src="@android:drawable/ic_btn_speak_now"
+                                android:tint="@color/black" />
+                        </FrameLayout>
+
+                        <FrameLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_s"
-                            android:text="@string/patient_home_voice_title"
-                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                            android:textColor="@color/senior_text_primary"
-                            android:textStyle="bold" />
-                    </LinearLayout>
+                            android:layout_marginTop="@dimen/spacing_s">
 
-                    <LinearLayout
-                        android:id="@+id/patient_home_voice_recording_badge"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|end"
-                        android:background="@drawable/bg_recording_badge"
-                        android:gravity="center_vertical"
-                        android:paddingStart="@dimen/spacing_s"
-                        android:paddingEnd="@dimen/spacing_s"
-                        android:paddingTop="@dimen/spacing_xs"
-                        android:paddingBottom="@dimen/spacing_xs"
-                        android:visibility="gone">
+                            <TextView
+                                android:id="@+id/patient_home_voice_label"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="@string/patient_home_voice_title"
+                                android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                                android:textColor="@color/senior_text_primary"
+                                android:textStyle="bold" />
 
-                        <View
-                            android:id="@+id/patient_home_voice_recording_dot"
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:layout_marginEnd="@dimen/spacing_xs"
-                            android:background="@drawable/bg_recording_dot" />
+                            <LinearLayout
+                                android:id="@+id/patient_home_voice_recording_badge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@drawable/bg_recording_badge"
+                                android:gravity="center_vertical"
+                                android:paddingStart="@dimen/spacing_s"
+                                android:paddingEnd="@dimen/spacing_s"
+                                android:paddingTop="@dimen/spacing_xs"
+                                android:paddingBottom="@dimen/spacing_xs"
+                                android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/patient_home_voice_recording_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/patient_home_voice_recording"
-                            android:textAppearance="@style/TextAppearance.Senior.Caption"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
+                                <View
+                                    android:id="@+id/patient_home_voice_recording_dot"
+                                    android:layout_width="8dp"
+                                    android:layout_height="8dp"
+                                    android:layout_marginEnd="@dimen/spacing_xs"
+                                    android:background="@drawable/bg_recording_dot" />
+
+                                <TextView
+                                    android:id="@+id/patient_home_voice_recording_label"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/patient_home_voice_recording"
+                                    android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </FrameLayout>
                     </LinearLayout>
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>

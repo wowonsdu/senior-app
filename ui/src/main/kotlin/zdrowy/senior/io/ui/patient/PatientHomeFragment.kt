@@ -33,6 +33,13 @@ import org.koin.android.ext.android.inject
 import java.util.Locale
 
 class PatientHomeFragment : Fragment() {
+    private companion object {
+        private const val DEFAULT_POSSIBLY_COMPLETE_SILENCE_MS = 1500
+        private const val DEFAULT_COMPLETE_SILENCE_MS = 1000
+        private const val DEFAULT_MINIMUM_LENGTH_MS = 1500
+        private const val LISTEN_EXTENSION_MS = 5000
+    }
+
     private var _binding: FragmentPatientHomeBinding? = null
     private val binding get() = _binding!!
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
@@ -212,6 +219,18 @@ class PatientHomeFragment : Fragment() {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
             putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+            putExtra(
+                RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS,
+                DEFAULT_POSSIBLY_COMPLETE_SILENCE_MS + LISTEN_EXTENSION_MS
+            )
+            putExtra(
+                RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS,
+                DEFAULT_COMPLETE_SILENCE_MS + LISTEN_EXTENSION_MS
+            )
+            putExtra(
+                RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS,
+                DEFAULT_MINIMUM_LENGTH_MS + LISTEN_EXTENSION_MS
+            )
         }
         setRecordingActive(true)
         showListeningPlaceholder()
@@ -266,7 +285,9 @@ class PatientHomeFragment : Fragment() {
     }
 
     private fun setRecordingActive(isActive: Boolean) {
+        binding.patientHomeVoiceLabel.isVisible = !isActive
         binding.patientHomeVoiceRecordingBadge.isVisible = isActive
+        binding.patientHomeVoiceProgress.isVisible = isActive
         if (isActive) {
             startRecordingAnimation()
         } else {

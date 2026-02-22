@@ -234,3 +234,4 @@ Zasady etapu:
 - [x] STT: parser domenowy (voice parse)
 - [x] STT: Patient Home — wprowadzanie glosowe + zapis
 - [x] STT: Patient Home — indikator nagrywania + okienko tekstu
+- [x] STT: Patient Home — badge w miejscu tytulu + ring + dluzsze sluchanie
