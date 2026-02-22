@@ -237,3 +237,4 @@ Zasady etapu:
 - [x] STT: Patient Home — badge w miejscu tytulu + ring + dluzsze sluchanie
 - [x] STT: dialogi pomiarow — wskazniki + wspolny layout voice
 - [x] STT: dialogi pomiarow — ukryj mic w edycji
+- [x] STT: wskaznik nagrywania trzyma do finalnego wyniku

@@ -121,7 +121,7 @@ class PatientInsulinDialogFragment : DialogFragment() {
                 override fun onRmsChanged(rmsdB: Float) = Unit
                 override fun onBufferReceived(buffer: ByteArray?) = Unit
                 override fun onEndOfSpeech() {
-                    setRecordingActive(false)
+                    Unit
                 }
                 override fun onError(error: Int) {
                     setRecordingActive(false)

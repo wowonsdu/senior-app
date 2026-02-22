@@ -201,7 +201,7 @@ class PatientHomeFragment : Fragment() {
                 override fun onRmsChanged(rmsdB: Float) = Unit
                 override fun onBufferReceived(buffer: ByteArray?) = Unit
                 override fun onEndOfSpeech() {
-                    setRecordingActive(false)
+                    Unit
                 }
                 override fun onError(error: Int) {
                     setRecordingActive(false)
@@ -212,7 +212,6 @@ class PatientHomeFragment : Fragment() {
                     handleSpeechResults(partialResults, isFinal = false)
                 }
                 override fun onResults(results: Bundle?) {
-                    setRecordingActive(false)
                     handleSpeechResults(results, isFinal = true)
                 }
                 override fun onEvent(eventType: Int, params: Bundle?) = Unit
@@ -249,15 +248,18 @@ class PatientHomeFragment : Fragment() {
             if (!isFinal) return
             val fallback = lastTranscript.trim()
             if (fallback.isNotBlank()) {
+                setRecordingActive(false)
                 viewModel.onVoiceText(fallback)
                 return
             }
             showToast(getString(R.string.patient_home_voice_empty))
             clearTranscript()
+            setRecordingActive(false)
             return
         }
         updateTranscript(text)
         if (!isFinal) return
+        setRecordingActive(false)
         viewModel.onVoiceText(text)
     }
 
