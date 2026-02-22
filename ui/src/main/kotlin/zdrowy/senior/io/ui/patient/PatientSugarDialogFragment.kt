@@ -28,6 +28,7 @@ class PatientSugarDialogFragment : DialogFragment() {
     private companion object {
         private const val SPEECH_SILENCE_WINDOW_MS = 10_000
         private const val SPEECH_MINIMUM_LENGTH_MS = 1500
+        private const val SPEECH_START_TIMEOUT_MS = 10_000
     }
 
     private var _binding: DialogPatientSugarBinding? = null
@@ -35,6 +36,8 @@ class PatientSugarDialogFragment : DialogFragment() {
     private var speechRecognizer: SpeechRecognizer? = null
     private var recordingAnimator: ObjectAnimator? = null
     private var isEditMode: Boolean = false
+    private var sessionStartAtMs: Long = 0L
+    private var hasSpeechStarted: Boolean = false
     private val viewModel: PatientMeasurementDialogViewModel by viewModel()
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -106,7 +109,11 @@ class PatientSugarDialogFragment : DialogFragment() {
         }
     }
 
-    private fun startSpeechToTextInternal() {
+    private fun startSpeechToTextInternal(isRestart: Boolean = false) {
+        if (!isRestart) {
+            sessionStartAtMs = System.currentTimeMillis()
+            hasSpeechStarted = false
+        }
         if (speechRecognizer == null) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
             speechRecognizer?.setRecognitionListener(object : RecognitionListener {
@@ -114,6 +121,7 @@ class PatientSugarDialogFragment : DialogFragment() {
                     setRecordingActive(true)
                 }
                 override fun onBeginningOfSpeech() {
+                    hasSpeechStarted = true
                     setRecordingActive(true)
                 }
                 override fun onRmsChanged(rmsdB: Float) = Unit
@@ -122,6 +130,10 @@ class PatientSugarDialogFragment : DialogFragment() {
                     Unit
                 }
                 override fun onError(error: Int) {
+                    if (shouldRestartOnTimeout(error)) {
+                        startSpeechToTextInternal(isRestart = true)
+                        return
+                    }
                     setRecordingActive(false)
                 }
                 override fun onPartialResults(partialResults: Bundle?) {
@@ -168,6 +180,13 @@ class PatientSugarDialogFragment : DialogFragment() {
     private fun extractFirstNumber(text: String): String {
         val match = Regex("\\d+(?:[\\.,]\\d+)?").find(text)
         return match?.value?.replace(',', '.') ?: text
+    }
+
+    private fun shouldRestartOnTimeout(error: Int): Boolean {
+        if (error != SpeechRecognizer.ERROR_SPEECH_TIMEOUT) return false
+        if (hasSpeechStarted) return false
+        val elapsed = System.currentTimeMillis() - sessionStartAtMs
+        return elapsed < SPEECH_START_TIMEOUT_MS
     }
 
     private fun setRecordingActive(isActive: Boolean) {

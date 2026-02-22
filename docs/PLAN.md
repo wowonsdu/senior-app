@@ -236,7 +236,8 @@ Zasady etapu:
 - [x] STT: Patient Home — indikator nagrywania + okienko tekstu
 - [x] STT: Patient Home — badge w miejscu tytulu + ring + dluzsze sluchanie
 - [x] STT: dialogi pomiarow — wskazniki + wspolny layout voice
-- [x] STT: dialogi pomiarow — ukryj mic w edycji
-- [x] STT: wskaznik nagrywania trzyma do finalnego wyniku
-- [x] STT: Patient Home — 10s okno ciszy na kolejne pomiary
-- [x] STT: dialogi pomiarow — 10s okno ciszy
+ - [x] STT: dialogi pomiarow — ukryj mic w edycji
+ - [x] STT: wskaznik nagrywania trzyma do finalnego wyniku
+ - [x] STT: Patient Home — 10s okno ciszy na kolejne pomiary
+ - [x] STT: dialogi pomiarow — 10s okno ciszy
+ - [x] STT: wydluz start nasluchu (restart timeout)

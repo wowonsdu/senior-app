@@ -37,6 +37,7 @@ class PatientHomeFragment : Fragment() {
     private companion object {
         private const val SPEECH_SILENCE_WINDOW_MS = 10_000
         private const val SPEECH_MINIMUM_LENGTH_MS = 1500
+        private const val SPEECH_START_TIMEOUT_MS = 10_000
     }
 
     private var _binding: FragmentPatientHomeBinding? = null
@@ -49,6 +50,8 @@ class PatientHomeFragment : Fragment() {
     private var speechRecognizer: SpeechRecognizer? = null
     private var recordingAnimator: ObjectAnimator? = null
     private var lastTranscript: String = ""
+    private var sessionStartAtMs: Long = 0L
+    private var hasSpeechStarted: Boolean = false
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -183,8 +186,12 @@ class PatientHomeFragment : Fragment() {
         }
     }
 
-    private fun startSpeechToTextInternal() {
+    private fun startSpeechToTextInternal(isRestart: Boolean = false) {
         lastTranscript = ""
+        if (!isRestart) {
+            sessionStartAtMs = System.currentTimeMillis()
+            hasSpeechStarted = false
+        }
         if (speechRecognizer == null) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
             speechRecognizer?.setRecognitionListener(object : RecognitionListener {
@@ -193,6 +200,7 @@ class PatientHomeFragment : Fragment() {
                     showListeningPlaceholder()
                 }
                 override fun onBeginningOfSpeech() {
+                    hasSpeechStarted = true
                     setRecordingActive(true)
                     showListeningPlaceholder()
                 }
@@ -202,6 +210,10 @@ class PatientHomeFragment : Fragment() {
                     Unit
                 }
                 override fun onError(error: Int) {
+                    if (shouldRestartOnTimeout(error)) {
+                        startSpeechToTextInternal(isRestart = true)
+                        return
+                    }
                     setRecordingActive(false)
                     Timber.w("SpeechRecognizer error=%d", error)
                     showToast(getString(R.string.patient_home_voice_error))
@@ -337,6 +349,13 @@ class PatientHomeFragment : Fragment() {
     private fun clearTranscript() {
         lastTranscript = ""
         binding.patientHomeVoiceTranscriptCard.isVisible = false
+    }
+
+    private fun shouldRestartOnTimeout(error: Int): Boolean {
+        if (error != SpeechRecognizer.ERROR_SPEECH_TIMEOUT) return false
+        if (hasSpeechStarted) return false
+        val elapsed = System.currentTimeMillis() - sessionStartAtMs
+        return elapsed < SPEECH_START_TIMEOUT_MS
     }
 
     private fun showToast(message: String) {
