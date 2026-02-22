@@ -38,7 +38,9 @@ class PatientHomeFragment : Fragment() {
         private const val SPEECH_SILENCE_WINDOW_MS = 10_000
         private const val SPEECH_MINIMUM_LENGTH_MS = 1500
         private const val SPEECH_START_TIMEOUT_MS = 20_000
-        private const val SPEECH_RESTART_DELAY_MS = 250L
+        private const val SPEECH_RETRY_DELAY_INITIAL_MS = 1500L
+        private const val SPEECH_RETRY_DELAY_STEP_MS = 1000L
+        private const val SPEECH_RETRY_DELAY_MAX_MS = 5000L
     }
 
     private var _binding: FragmentPatientHomeBinding? = null
@@ -54,6 +56,7 @@ class PatientHomeFragment : Fragment() {
     private var sessionStartAtMs: Long = 0L
     private var hasSpeechStarted: Boolean = false
     private var listenAttemptToken: Int = 0
+    private var retryDelayMs: Long = SPEECH_RETRY_DELAY_INITIAL_MS
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -194,6 +197,7 @@ class PatientHomeFragment : Fragment() {
             lastTranscript = ""
             sessionStartAtMs = System.currentTimeMillis()
             hasSpeechStarted = false
+            retryDelayMs = SPEECH_RETRY_DELAY_INITIAL_MS
         }
         if (speechRecognizer == null) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
@@ -204,6 +208,7 @@ class PatientHomeFragment : Fragment() {
                 }
                 override fun onBeginningOfSpeech() {
                     hasSpeechStarted = true
+                    retryDelayMs = SPEECH_RETRY_DELAY_INITIAL_MS
                     setRecordingActive(true)
                     showListeningPlaceholder()
                 }
@@ -214,7 +219,7 @@ class PatientHomeFragment : Fragment() {
                 }
                 override fun onError(error: Int) {
                     if (shouldRetryNoSpeech(error)) {
-                        startSpeechToTextInternal(isRestart = true, delayMs = SPEECH_RESTART_DELAY_MS)
+                        scheduleRetry()
                         return
                     }
                     setRecordingActive(false)
@@ -279,7 +284,7 @@ class PatientHomeFragment : Fragment() {
                 return
             }
             if (shouldRetryNoSpeech(null)) {
-                startSpeechToTextInternal(isRestart = true, delayMs = SPEECH_RESTART_DELAY_MS)
+                scheduleRetry()
                 return
             }
             setRecordingActive(false)
@@ -287,6 +292,7 @@ class PatientHomeFragment : Fragment() {
             return
         }
         hasSpeechStarted = true
+        retryDelayMs = SPEECH_RETRY_DELAY_INITIAL_MS
         updateTranscript(text)
         if (!isFinal) return
         setRecordingActive(false)
@@ -382,6 +388,13 @@ class PatientHomeFragment : Fragment() {
         if (error != null && !isNoSpeechError(error)) return false
         val elapsed = System.currentTimeMillis() - sessionStartAtMs
         return elapsed < SPEECH_START_TIMEOUT_MS
+    }
+
+    private fun scheduleRetry() {
+        val delay = retryDelayMs
+        retryDelayMs = (retryDelayMs + SPEECH_RETRY_DELAY_STEP_MS)
+            .coerceAtMost(SPEECH_RETRY_DELAY_MAX_MS)
+        startSpeechToTextInternal(isRestart = true, delayMs = delay)
     }
 
     private fun showNoSpeechHint() {

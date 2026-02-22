@@ -29,7 +29,9 @@ class PatientInsulinDialogFragment : DialogFragment() {
         private const val SPEECH_SILENCE_WINDOW_MS = 10_000
         private const val SPEECH_MINIMUM_LENGTH_MS = 1500
         private const val SPEECH_START_TIMEOUT_MS = 20_000
-        private const val SPEECH_RESTART_DELAY_MS = 250L
+        private const val SPEECH_RETRY_DELAY_INITIAL_MS = 1500L
+        private const val SPEECH_RETRY_DELAY_STEP_MS = 1000L
+        private const val SPEECH_RETRY_DELAY_MAX_MS = 5000L
     }
 
     private var _binding: DialogPatientInsulinBinding? = null
@@ -40,6 +42,7 @@ class PatientInsulinDialogFragment : DialogFragment() {
     private var sessionStartAtMs: Long = 0L
     private var hasSpeechStarted: Boolean = false
     private var listenAttemptToken: Int = 0
+    private var retryDelayMs: Long = SPEECH_RETRY_DELAY_INITIAL_MS
     private val viewModel: PatientMeasurementDialogViewModel by viewModel()
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -116,6 +119,7 @@ class PatientInsulinDialogFragment : DialogFragment() {
         if (!isRestart) {
             sessionStartAtMs = System.currentTimeMillis()
             hasSpeechStarted = false
+            retryDelayMs = SPEECH_RETRY_DELAY_INITIAL_MS
         }
         if (speechRecognizer == null) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
@@ -125,6 +129,7 @@ class PatientInsulinDialogFragment : DialogFragment() {
                 }
                 override fun onBeginningOfSpeech() {
                     hasSpeechStarted = true
+                    retryDelayMs = SPEECH_RETRY_DELAY_INITIAL_MS
                     setRecordingActive(true)
                 }
                 override fun onRmsChanged(rmsdB: Float) = Unit
@@ -134,7 +139,7 @@ class PatientInsulinDialogFragment : DialogFragment() {
                 }
                 override fun onError(error: Int) {
                     if (shouldRetryNoSpeech(error)) {
-                        startSpeechToTextInternal(isRestart = true, delayMs = SPEECH_RESTART_DELAY_MS)
+                        scheduleRetry()
                         return
                     }
                     setRecordingActive(false)
@@ -150,7 +155,7 @@ class PatientInsulinDialogFragment : DialogFragment() {
                     val text = matches?.firstOrNull()?.trim().orEmpty()
                     if (text.isBlank()) {
                         if (shouldRetryNoSpeech(null)) {
-                            startSpeechToTextInternal(isRestart = true, delayMs = SPEECH_RESTART_DELAY_MS)
+                            scheduleRetry()
                             return
                         }
                         setRecordingActive(false)
@@ -158,6 +163,7 @@ class PatientInsulinDialogFragment : DialogFragment() {
                         return
                     }
                     hasSpeechStarted = true
+                    retryDelayMs = SPEECH_RETRY_DELAY_INITIAL_MS
                     setRecordingActive(false)
                     setTextFromResults(results)
                 }
@@ -228,6 +234,13 @@ class PatientInsulinDialogFragment : DialogFragment() {
     private fun showNoSpeechHint() {
         binding.insulinDialogVoice.voiceInputLabel.text =
             getString(R.string.voice_input_no_speech_hint)
+    }
+
+    private fun scheduleRetry() {
+        val delay = retryDelayMs
+        retryDelayMs = (retryDelayMs + SPEECH_RETRY_DELAY_STEP_MS)
+            .coerceAtMost(SPEECH_RETRY_DELAY_MAX_MS)
+        startSpeechToTextInternal(isRestart = true, delayMs = delay)
     }
 
     private fun setRecordingActive(isActive: Boolean) {
