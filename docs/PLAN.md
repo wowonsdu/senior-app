@@ -221,3 +221,4 @@ Zasady etapu:
 - [x] Auth pacjenta: draft w accessCodeDrafts + rules (wrazliwe dane po phone-auth)
 - [x] Podopieczni: powiaz pacjenta kodem w formularzu
 - [x] Monitor zdrowia: powrot do wyboru pacjenta (ikona wyjscia)
+- [x] Monitor zdrowia: exit door jak system back (powrot do podopieczni)
