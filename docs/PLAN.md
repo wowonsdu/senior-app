@@ -171,12 +171,15 @@ Zasady etapu:
 - [ ] 9.8 Dialogi: Access Code (agent/doctor)
 - [ ] 9.9 Ekran: Patient History (lista + wykres)
 - [ ] 9.10 Dialogi: Measurements (cukier/insulina/cisnienie/tetno)
+- [ ] 9.10.1 Measurements: voice input — retry (error 5/6/7) + 20s na start mowy
+- [ ] 9.10.2 Measurements: voice input — hint po ciszy + bezpieczny restart (cancel + delay)
 - [ ] 9.11 Ekran: Patient Home (kafelki pomiarow)
 - [x] 9.11.1 Patient Home: managed user state (domain/data)
 - [x] 9.11.2 Patient Home: header UI (label/chevron + dane z Firestore)
 - [x] 9.11.3 Patient Home: brak active patient -> CTA do CaregiverLink
 - [ ] 9.11.4 Patient Home: smoke test (pacjent/opiekun)
 - [x] 9.11.5 Patient Home: ukryj powiadomienia/pomoc + kafelki Historia/Ustawienia + wejscie do Agentow z Ustawien
+- [ ] 9.11.6 Patient Home: voice input — retry (error 5/6/7) + 20s na start mowy + hint po ciszy
 - [ ] 9.12 Ekran: Alerts Overview + Config
 - [ ] 9.13 Auth: SMS verify (patient/caregiver) — VM + UI models + data binding
 - [x] 9.14 Alerty i powiadomienia: plan (docs/plan) + wpis do PLAN.md
