@@ -30,6 +30,7 @@ import zdrowy.senior.io.domain.measurement.MeasurementType
 import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
 import zdrowy.senior.io.domain.user.ClearCurrentUserRoleUseCase
 import org.koin.android.ext.android.inject
+import timber.log.Timber
 import java.util.Locale
 
 class PatientHomeFragment : Fragment() {
@@ -204,6 +205,7 @@ class PatientHomeFragment : Fragment() {
                 }
                 override fun onError(error: Int) {
                     setRecordingActive(false)
+                    Timber.w("SpeechRecognizer error=%d", error)
                     showToast(getString(R.string.patient_home_voice_error))
                 }
                 override fun onPartialResults(partialResults: Bundle?) {
