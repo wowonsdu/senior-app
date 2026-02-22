@@ -36,6 +36,7 @@ class PatientSugarDialogFragment : DialogFragment() {
     private val binding get() = _binding!!
     private var speechRecognizer: SpeechRecognizer? = null
     private var recordingAnimator: ObjectAnimator? = null
+    private var isEditMode: Boolean = false
     private val viewModel: PatientMeasurementDialogViewModel by viewModel()
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -50,12 +51,14 @@ class PatientSugarDialogFragment : DialogFragment() {
         _binding = DialogPatientSugarBinding.inflate(LayoutInflater.from(context))
         val measurementId = arguments?.getString(ARG_MEASUREMENT_ID)
         val editMode = !measurementId.isNullOrBlank()
+        isEditMode = editMode
         binding.sugarDialogClose.setOnClickListener { dismiss() }
         binding.sugarDialogCancel.setOnClickListener { dismiss() }
         binding.sugarDialogSave.setOnClickListener { saveMeasurement() }
         binding.sugarDialogVoice.voiceInputMic.setOnClickListener {
             startSpeechToText()
         }
+        binding.sugarDialogVoice.root.visibility = if (editMode) View.GONE else View.VISIBLE
         binding.sugarDialogDelete.visibility = if (editMode) View.VISIBLE else View.GONE
         if (editMode) {
             val value = arguments?.getFloat(ARG_MEASUREMENT_VALUE) ?: 0f
@@ -74,8 +77,10 @@ class PatientSugarDialogFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.root.post {
-            startSpeechToText()
+        if (!isEditMode) {
+            binding.root.post {
+                startSpeechToText()
+            }
         }
     }
 

@@ -35,6 +35,7 @@ class PatientPressureDialogFragment : DialogFragment() {
     private val binding get() = _binding!!
     private var speechRecognizer: SpeechRecognizer? = null
     private var recordingAnimator: ObjectAnimator? = null
+    private var isEditMode: Boolean = false
     private val viewModel: PatientMeasurementDialogViewModel by viewModel()
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -49,12 +50,14 @@ class PatientPressureDialogFragment : DialogFragment() {
         _binding = DialogPatientPressureBinding.inflate(LayoutInflater.from(context))
         val measurementId = arguments?.getString(ARG_MEASUREMENT_ID)
         val editMode = !measurementId.isNullOrBlank()
+        isEditMode = editMode
         binding.pressureDialogClose.setOnClickListener { dismiss() }
         binding.pressureDialogCancel.setOnClickListener { dismiss() }
         binding.pressureDialogSave.setOnClickListener { saveMeasurement() }
         binding.pressureDialogVoice.voiceInputMic.setOnClickListener {
             startSpeechToText()
         }
+        binding.pressureDialogVoice.root.visibility = if (editMode) View.GONE else View.VISIBLE
         binding.pressureDialogDelete.visibility = if (editMode) View.VISIBLE else View.GONE
         if (editMode) {
             val systolic = arguments?.getInt(ARG_MEASUREMENT_SYSTOLIC) ?: 0
@@ -73,8 +76,10 @@ class PatientPressureDialogFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        binding.root.post {
-            startSpeechToText()
+        if (!isEditMode) {
+            binding.root.post {
+                startSpeechToText()
+            }
         }
     }
 
