@@ -35,10 +35,8 @@ import java.util.Locale
 
 class PatientHomeFragment : Fragment() {
     private companion object {
-        private const val DEFAULT_POSSIBLY_COMPLETE_SILENCE_MS = 1500
-        private const val DEFAULT_COMPLETE_SILENCE_MS = 1000
-        private const val DEFAULT_MINIMUM_LENGTH_MS = 1500
-        private const val LISTEN_EXTENSION_MS = 5000
+        private const val SPEECH_SILENCE_WINDOW_MS = 10_000
+        private const val SPEECH_MINIMUM_LENGTH_MS = 1500
     }
 
     private var _binding: FragmentPatientHomeBinding? = null
@@ -224,15 +222,15 @@ class PatientHomeFragment : Fragment() {
             putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
             putExtra(
                 RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS,
-                DEFAULT_POSSIBLY_COMPLETE_SILENCE_MS + LISTEN_EXTENSION_MS
+                SPEECH_SILENCE_WINDOW_MS
             )
             putExtra(
                 RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS,
-                DEFAULT_COMPLETE_SILENCE_MS + LISTEN_EXTENSION_MS
+                SPEECH_SILENCE_WINDOW_MS
             )
             putExtra(
                 RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS,
-                DEFAULT_MINIMUM_LENGTH_MS + LISTEN_EXTENSION_MS
+                SPEECH_MINIMUM_LENGTH_MS
             )
         }
         setRecordingActive(true)
