@@ -54,6 +54,7 @@ import zdrowy.senior.io.domain.measurement.MeasurementByUidRepository
 import zdrowy.senior.io.domain.measurement.MarkMeasurementReadUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementReadStateRepository
 import zdrowy.senior.io.domain.measurement.MeasurementRepository
+import zdrowy.senior.io.domain.measurement.ParseVoiceMeasurementsUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementChartDataUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementHistoryUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementReadStateUseCase
@@ -124,6 +125,7 @@ val domainModule = module {
     factory { GetMeasurementHistoryUseCase(get()) }
     factory { GetMeasurementChartDataUseCase(get()) }
     factory { GetHistoryFiltersUseCase(get()) }
+    factory { ParseVoiceMeasurementsUseCase() }
     factory { ObserveRecentMeasurementsUseCase(get()) }
     factory { ObserveRecentMeasurementsByUidUseCase(get()) }
     factory { ObserveMeasurementHistoryUseCase(get()) }
