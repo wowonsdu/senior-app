@@ -39,6 +39,7 @@ import zdrowy.senior.io.domain.alert.UpdateSpikeRulesUseCase
 import zdrowy.senior.io.domain.carelink.CareLinkRepository
 import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
 import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
+import zdrowy.senior.io.domain.carelink.GetCareLinkCodeInfoUseCase
 import zdrowy.senior.io.domain.carelink.ObserveCareLinksUseCase
 import zdrowy.senior.io.domain.history.GetHistoryFiltersUseCase
 import zdrowy.senior.io.domain.history.GetMeasurementChartDataUseCase
@@ -90,6 +91,7 @@ import zdrowy.senior.io.ui.caregiver.CaregiverLinkViewModel
 import zdrowy.senior.io.ui.caregiver.CaregiverDependentsViewModel
 import zdrowy.senior.io.ui.caregiver.CaregiverAddDependentViewModel
 import zdrowy.senior.io.ui.auth.StartupGateViewModel
+import zdrowy.senior.io.ui.auth.PatientLoginViewModel
 import zdrowy.senior.io.ui.patient.PatientAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientAlertsViewModel
 import zdrowy.senior.io.ui.patient.PatientHistoryViewModel
@@ -138,6 +140,7 @@ val domainModule = module {
 
     factory { ObserveCareLinksUseCase(get()) }
     factory { GenerateCareLinkCodeUseCase(get()) }
+    factory { GetCareLinkCodeInfoUseCase(get()) }
     factory { ConsumeCareLinkCodeUseCase(get()) }
 
     factory { GetPersonalDataUseCase(get()) }
@@ -193,6 +196,7 @@ val uiModule = module {
 
 val viewModelModule = module {
     viewModel { StartupGateViewModel(get()) }
+    viewModel { PatientLoginViewModel(get()) }
     viewModel { CaregiverLinkViewModel(get(), get(), get(), get(), get()) }
     viewModel { CaregiverDependentsViewModel(get(), get(), get()) }
     viewModel { CaregiverAddDependentViewModel(get(), get()) }

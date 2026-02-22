@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
 import zdrowy.senior.io.data.firestore.toSingle
 import zdrowy.senior.io.domain.carelink.CareLink
+import zdrowy.senior.io.domain.carelink.CareLinkCodeInfo
 import zdrowy.senior.io.domain.carelink.CareLinkCode
 import zdrowy.senior.io.domain.carelink.CareLinkCodeType
 import zdrowy.senior.io.domain.carelink.CareLinkDraft
@@ -80,6 +81,33 @@ class FirestoreCareLinkRepository(
             type = type,
             draft = draft
         )
+    }
+
+    override fun getLinkCodeInfo(code: String): Single<CareLinkCodeInfo> {
+        val doc = firestore.collection(FirestorePaths.ACCESS_CODES).document(code)
+        return doc.get()
+            .toSingle()
+            .map { snapshot ->
+                if (!snapshot.exists()) throw InvalidCodeException("Brak kodu")
+
+                val expiresAtMs = (snapshot.get("expiresAtMs") as? Number)?.toLong()
+                if (expiresAtMs != null && System.currentTimeMillis() > expiresAtMs) {
+                    throw InvalidCodeException("Kod wygasl")
+                }
+
+                val typeRaw = snapshot.getString("type").orEmpty()
+                val type = runCatching { CareLinkCodeType.valueOf(typeRaw) }
+                    .getOrElse { throw InvalidCodeException("Nieprawidlowy typ kodu") }
+
+                val draftPhone = snapshot.getString("draftPhoneNumber").orEmpty()
+
+                CareLinkCodeInfo(
+                    code = code,
+                    type = type,
+                    expiresAtMs = expiresAtMs,
+                    draftPhoneNumber = draftPhone
+                )
+            }
     }
 
     override fun consumeLinkCode(code: String): Single<CareLink> {

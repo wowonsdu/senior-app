@@ -10,5 +10,6 @@ interface CareLinkRepository {
         ttlSeconds: Long,
         draft: CareLinkDraft? = null
     ): Single<CareLinkCode>
+    fun getLinkCodeInfo(code: String): Single<CareLinkCodeInfo>
     fun consumeLinkCode(code: String): Single<CareLink>
 }
