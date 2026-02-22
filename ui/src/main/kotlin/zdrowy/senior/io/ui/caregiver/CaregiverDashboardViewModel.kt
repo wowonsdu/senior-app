@@ -9,9 +9,10 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.measurement.Measurement
 import zdrowy.senior.io.domain.measurement.MeasurementType
+import zdrowy.senior.io.domain.measurement.MarkMeasurementReadUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementReadStateUseCase
 import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsUseCase
-import zdrowy.senior.io.domain.measurement.SetMeasurementReadStateUseCase
+import zdrowy.senior.io.domain.measurement.SetReadMeasurementsUseCase
 import zdrowy.senior.io.domain.settings.ObservePersonalDataByUidUseCase
 import zdrowy.senior.io.domain.settings.PersonalData
 import zdrowy.senior.io.domain.user.ManagedUserUidState
@@ -26,7 +27,8 @@ class CaregiverDashboardViewModel(
     private val observeManagedUserUidState: ObserveManagedUserUidStateUseCase,
     private val observeRecentMeasurements: ObserveRecentMeasurementsUseCase,
     private val observeMeasurementReadState: ObserveMeasurementReadStateUseCase,
-    private val setMeasurementReadState: SetMeasurementReadStateUseCase,
+    private val markMeasurementRead: MarkMeasurementReadUseCase,
+    private val setReadMeasurements: SetReadMeasurementsUseCase,
     private val observePersonalDataByUid: ObservePersonalDataByUidUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
@@ -60,7 +62,7 @@ class CaregiverDashboardViewModel(
                                 DashboardData(
                                     patientUid = state.uid,
                                     measurements = measurements,
-                                    lastReadAtMs = readState.lastReadAtMs,
+                                    readIds = readState.readMeasurementIds,
                                     patientName = mapPatientName(personalData),
                                     missingPatient = false
                                 )
@@ -72,7 +74,7 @@ class CaregiverDashboardViewModel(
                                 DashboardData(
                                     patientUid = "",
                                     measurements = emptyList(),
-                                    lastReadAtMs = 0L,
+                                    readIds = emptySet(),
                                     patientName = "-",
                                     missingPatient = true
                                 )
@@ -85,14 +87,14 @@ class CaregiverDashboardViewModel(
                     applyData(data)
                 }, {
                     applyData(
-                        DashboardData(
-                            patientUid = currentPatientUid.orEmpty(),
-                            measurements = emptyList(),
-                            lastReadAtMs = 0L,
-                            patientName = "-",
-                            missingPatient = missingPatient
-                        )
+                    DashboardData(
+                        patientUid = currentPatientUid.orEmpty(),
+                        measurements = emptyList(),
+                        readIds = emptySet(),
+                        patientName = "-",
+                        missingPatient = missingPatient
                     )
+                )
                 })
         )
     }
@@ -106,7 +108,7 @@ class CaregiverDashboardViewModel(
     fun markRead(item: CaregiverMeasurementNotificationUi) {
         val uid = currentPatientUid ?: return
         disposables.add(
-            setMeasurementReadState(uid, item.timestamp)
+            markMeasurementRead(uid, item.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({}, {})
@@ -115,9 +117,10 @@ class CaregiverDashboardViewModel(
 
     fun markAllRead() {
         val uid = currentPatientUid ?: return
-        val latestTimestamp = latestMeasurements.maxOfOrNull { it.timestamp } ?: return
+        val ids = latestMeasurements.map { it.id }.filter { it.isNotBlank() }
+        if (ids.isEmpty()) return
         disposables.add(
-            setMeasurementReadState(uid, latestTimestamp)
+            setReadMeasurements(uid, ids)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({}, {})
@@ -132,7 +135,7 @@ class CaregiverDashboardViewModel(
     private fun applyData(data: DashboardData) {
         latestMeasurements = data.measurements
         missingPatient = data.missingPatient
-        val items = mapItems(data.patientName, data.measurements, data.lastReadAtMs)
+        val items = mapItems(data.patientName, data.measurements, data.readIds)
         latestNewItems = items.first
         latestReadItems = items.second
         publishState()
@@ -150,11 +153,11 @@ class CaregiverDashboardViewModel(
     private fun mapItems(
         patientName: String,
         measurements: List<Measurement>,
-        lastReadAtMs: Long
+        readIds: Set<String>
     ): Pair<List<CaregiverMeasurementNotificationUi>, List<CaregiverMeasurementNotificationUi>> {
         val formatter = SimpleDateFormat("dd.MM HH:mm", Locale.getDefault())
         val items = measurements.map { measurement ->
-            val isRead = measurement.timestamp <= lastReadAtMs
+            val isRead = readIds.contains(measurement.id)
             CaregiverMeasurementNotificationUi(
                 id = measurement.id,
                 patientName = patientName,
@@ -235,7 +238,7 @@ class CaregiverDashboardViewModel(
     private data class DashboardData(
         val patientUid: String,
         val measurements: List<Measurement>,
-        val lastReadAtMs: Long,
+        val readIds: Set<String>,
         val patientName: String,
         val missingPatient: Boolean
     )

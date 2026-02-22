@@ -38,8 +38,13 @@ class CaregiverMeasurementNotificationsAdapter(
                 context,
                 if (item.isRead) R.color.senior_surface else R.color.senior_warning_bg
             )
+            val strokeColor = ContextCompat.getColor(
+                context,
+                if (item.isRead) R.color.senior_outline else R.color.senior_warning_outline
+            )
 
             binding.caregiverMeasurementCard.setCardBackgroundColor(cardColor)
+            binding.caregiverMeasurementCard.strokeColor = strokeColor
             binding.caregiverMeasurementIconCard.setCardBackgroundColor(iconColor)
             binding.caregiverMeasurementIcon.setImageResource(item.iconRes)
             binding.caregiverMeasurementTypeChip.setCardBackgroundColor(chipColor)
@@ -49,9 +54,13 @@ class CaregiverMeasurementNotificationsAdapter(
             binding.caregiverMeasurementValue.text = item.valueLabel
             binding.caregiverMeasurementTime.text = item.timeLabel
 
-            binding.caregiverMeasurementAction.visibility = if (item.isRead) View.GONE else View.VISIBLE
-            binding.caregiverMeasurementAction.setOnClickListener {
-                onMarkRead(item)
+            binding.caregiverMeasurementCheckbox.setOnCheckedChangeListener(null)
+            binding.caregiverMeasurementCheckbox.isChecked = false
+            binding.caregiverMeasurementCheckbox.visibility = if (item.isRead) View.GONE else View.VISIBLE
+            binding.caregiverMeasurementCheckbox.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    onMarkRead(item)
+                }
             }
         }
     }

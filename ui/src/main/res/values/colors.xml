@@ -7,6 +7,7 @@
     <color name="senior_danger">#E53935</color>
     <color name="senior_warning">#FB8C00</color>
     <color name="senior_warning_bg">#FFF3CC</color>
+    <color name="senior_warning_outline">#F2C66D</color>
     <color name="senior_info">#1E88E5</color>
     <color name="senior_purple">#8E24AA</color>
     <color name="senior_magenta">#E91E63</color>

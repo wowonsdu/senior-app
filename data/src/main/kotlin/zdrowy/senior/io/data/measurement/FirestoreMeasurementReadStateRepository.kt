@@ -29,16 +29,17 @@ class FirestoreMeasurementReadStateRepository(
                     if (!emitter.isDisposed) emitter.onError(error)
                     return@addSnapshotListener
                 }
-                val lastReadAt = snapshot?.getLong("lastReadAtMs") ?: 0L
+                val rawIds = snapshot?.get("readMeasurementIds") as? List<*>
+                val ids = rawIds?.mapNotNull { it as? String }?.toSet().orEmpty()
                 if (!emitter.isDisposed) {
-                    emitter.onNext(MeasurementReadState(patientUid, lastReadAt))
+                    emitter.onNext(MeasurementReadState(patientUid, ids))
                 }
             }
             emitter.setCancellable { registration.remove() }
         }
     }
 
-    override fun setLastReadAt(patientUid: String, timestampMs: Long): Completable {
+    override fun markMeasurementRead(patientUid: String, measurementId: String): Completable {
         val caregiverUid = currentUserUidProvider.requireUid()
         val doc = firestore.collection(FirestorePaths.USERS)
             .document(caregiverUid)
@@ -47,7 +48,23 @@ class FirestoreMeasurementReadStateRepository(
 
         val payload = mapOf(
             "patientUid" to patientUid,
-            "lastReadAtMs" to timestampMs,
+            "readMeasurementIds" to FieldValue.arrayUnion(measurementId),
+            "updatedAt" to FieldValue.serverTimestamp()
+        )
+
+        return doc.set(payload, SetOptions.merge()).toCompletable()
+    }
+
+    override fun setReadMeasurements(patientUid: String, measurementIds: List<String>): Completable {
+        val caregiverUid = currentUserUidProvider.requireUid()
+        val doc = firestore.collection(FirestorePaths.USERS)
+            .document(caregiverUid)
+            .collection(FirestorePaths.MEASUREMENT_READ_STATES)
+            .document(patientUid)
+
+        val payload = mapOf(
+            "patientUid" to patientUid,
+            "readMeasurementIds" to measurementIds.distinct(),
             "updatedAt" to FieldValue.serverTimestamp()
         )
 

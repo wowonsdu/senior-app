@@ -154,9 +154,15 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Wyjscie: `Observable<MeasurementReadState>`.
   - Repo: `MeasurementReadStateRepository`.
 
-- UC-CARE-10 SetMeasurementReadState
-  - Cel: zapis znacznika ostatnio przeczytanego pomiaru.
-  - Wejscie: `patientUid`, `timestampMs`.
+- UC-CARE-10 MarkMeasurementRead
+  - Cel: oznaczenie pojedynczego pomiaru jako przeczytany.
+  - Wejscie: `patientUid`, `measurementId`.
+  - Wyjscie: `Unit`.
+  - Repo: `MeasurementReadStateRepository`.
+
+- UC-CARE-11 SetReadMeasurements
+  - Cel: zapis listy przeczytanych pomiarow (np. "Oznacz wszystkie").
+  - Wejscie: `patientUid`, `measurementIds`.
   - Wyjscie: `Unit`.
   - Repo: `MeasurementReadStateRepository`.
 

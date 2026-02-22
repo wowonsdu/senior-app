@@ -7,15 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/spacing_s"
-    android:clickable="false"
-    android:focusable="false"
-    app:cardBackgroundColor="@color/senior_warning_bg">
+    app:cardBackgroundColor="@color/senior_warning_bg"
+    app:strokeColor="@color/senior_warning_outline"
+    app:strokeWidth="@dimen/stroke_width">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:padding="@dimen/spacing_m">
 
         <com.google.android.material.card.MaterialCardView
@@ -25,86 +23,97 @@
             android:layout_height="40dp"
             app:cardBackgroundColor="@color/senior_primary"
             app:cardCornerRadius="20dp"
-            app:cardElevation="0dp">
+            app:cardElevation="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/caregiver_measurement_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+        <ImageView
+            android:id="@+id/caregiver_measurement_icon"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:tint="@color/white"
+            app:layout_constraintTop_toTopOf="@id/caregiver_measurement_icon_card"
+            app:layout_constraintBottom_toBottomOf="@id/caregiver_measurement_icon_card"
+            app:layout_constraintStart_toStartOf="@id/caregiver_measurement_icon_card"
+            app:layout_constraintEnd_toEndOf="@id/caregiver_measurement_icon_card" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/caregiver_measurement_type_chip"
+            style="@style/Widget.Senior.Card"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            app:cardBackgroundColor="@color/senior_primary"
+            app:cardElevation="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/caregiver_measurement_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:contentDescription="@null"
-                android:tint="@color/white" />
+                android:paddingStart="@dimen/spacing_s"
+                android:paddingEnd="@dimen/spacing_s"
+                android:textAppearance="@style/TextAppearance.Senior.Caption"
+                android:textColor="@color/white" />
         </com.google.android.material.card.MaterialCardView>
 
-        <LinearLayout
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/caregiver_measurement_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/caregiver_dashboard_mark_read"
+            android:buttonTint="@color/senior_primary"
+            android:layout_marginTop="@dimen/spacing_s"
+            app:layout_constraintTop_toBottomOf="@id/caregiver_measurement_type_chip"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/caregiver_measurement_end_barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="start"
+            app:constraint_referenced_ids="caregiver_measurement_type_chip,caregiver_measurement_checkbox" />
+
+        <TextView
+            android:id="@+id/caregiver_measurement_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_m"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+            android:textColor="@color/senior_text_primary"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/caregiver_measurement_icon_card"
+            app:layout_constraintEnd_toStartOf="@id/caregiver_measurement_end_barrier"
+            app:layout_constraintTop_toTopOf="@id/caregiver_measurement_type_chip" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/caregiver_measurement_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                    android:textColor="@color/senior_text_primary"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/caregiver_measurement_type_chip"
-                    style="@style/Widget.Senior.Card"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    app:cardBackgroundColor="@color/senior_primary"
-                    app:cardElevation="0dp">
-
-                    <TextView
-                        android:id="@+id/caregiver_measurement_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingStart="@dimen/spacing_s"
-                        android:paddingEnd="@dimen/spacing_s"
-                        android:textAppearance="@style/TextAppearance.Senior.Caption"
-                        android:textColor="@color/white" />
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/caregiver_measurement_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:textAppearance="@style/TextAppearance.Senior.Caption"
-                android:textColor="@color/senior_text_secondary" />
-
-            <TextView
-                android:id="@+id/caregiver_measurement_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:textAppearance="@style/TextAppearance.Senior.Caption"
-                android:textColor="@color/senior_text_tertiary" />
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/caregiver_measurement_action"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/caregiver_measurement_value"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_s"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:minHeight="0dp"
-            android:text="@string/caregiver_dashboard_mark_read"
-            android:textAllCaps="false" />
-    </LinearLayout>
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textAppearance="@style/TextAppearance.Senior.Caption"
+            android:textColor="@color/senior_text_secondary"
+            app:layout_constraintStart_toEndOf="@id/caregiver_measurement_icon_card"
+            app:layout_constraintEnd_toStartOf="@id/caregiver_measurement_end_barrier"
+            app:layout_constraintTop_toBottomOf="@id/caregiver_measurement_name" />
+
+        <TextView
+            android:id="@+id/caregiver_measurement_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textAppearance="@style/TextAppearance.Senior.Caption"
+            android:textColor="@color/senior_text_tertiary"
+            app:layout_constraintStart_toEndOf="@id/caregiver_measurement_icon_card"
+            app:layout_constraintEnd_toStartOf="@id/caregiver_measurement_end_barrier"
+            app:layout_constraintTop_toBottomOf="@id/caregiver_measurement_value" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

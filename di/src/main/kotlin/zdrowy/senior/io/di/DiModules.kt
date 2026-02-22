@@ -49,13 +49,14 @@ import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.DeleteMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.GetRecentMeasurementsUseCase
+import zdrowy.senior.io.domain.measurement.MarkMeasurementReadUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementReadStateRepository
 import zdrowy.senior.io.domain.measurement.MeasurementRepository
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementChartDataUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementHistoryUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementReadStateUseCase
 import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsUseCase
-import zdrowy.senior.io.domain.measurement.SetMeasurementReadStateUseCase
+import zdrowy.senior.io.domain.measurement.SetReadMeasurementsUseCase
 import zdrowy.senior.io.domain.measurement.UpdateBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.UpdateMeasurementUseCase
 import zdrowy.senior.io.domain.settings.AddDiseaseUseCase
@@ -124,7 +125,8 @@ val domainModule = module {
     factory { ObserveMeasurementHistoryUseCase(get()) }
     factory { ObserveMeasurementChartDataUseCase(get()) }
     factory { ObserveMeasurementReadStateUseCase(get()) }
-    factory { SetMeasurementReadStateUseCase(get()) }
+    factory { MarkMeasurementReadUseCase(get()) }
+    factory { SetReadMeasurementsUseCase(get()) }
 
     factory { AddAgentUseCase(get()) }
     factory { AddDoctorUseCase(get()) }
@@ -208,7 +210,7 @@ val viewModelModule = module {
     viewModel { CaregiverLinkViewModel(get(), get(), get(), get(), get()) }
     viewModel { CaregiverDependentsViewModel(get(), get(), get()) }
     viewModel { CaregiverAddDependentViewModel(get(), get()) }
-    viewModel { CaregiverDashboardViewModel(get(), get(), get(), get(), get()) }
+    viewModel { CaregiverDashboardViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { PatientHistoryViewModel(get(), get(), get()) }
     viewModel { PatientAgentsViewModel(get()) }
     viewModel { PatientAlertsViewModel(get()) }

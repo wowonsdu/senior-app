@@ -5,5 +5,6 @@ import io.reactivex.rxjava3.core.Observable
 
 interface MeasurementReadStateRepository {
     fun observeReadState(patientUid: String): Observable<MeasurementReadState>
-    fun setLastReadAt(patientUid: String, timestampMs: Long): Completable
+    fun markMeasurementRead(patientUid: String, measurementId: String): Completable
+    fun setReadMeasurements(patientUid: String, measurementIds: List<String>): Completable
 }
