@@ -228,3 +228,8 @@ Zasady etapu:
 - [x] Opiekun: dashboard — nowe pomiary (domain/data/DI)
 - [x] Opiekun: dashboard — nowe pomiary (UI/VM)
 - [ ] Opiekun: dashboard — nowe pomiary (smoke)
+
+## Etap 13 — Speech to Text (monitor zdrowia)
+- [x] STT: plan (docs/plan/MAIN-PLAN-obsluga-speech-to-text.md)
+- [ ] STT: parser domenowy (voice parse)
+- [ ] STT: Patient Home — wprowadzanie glosowe + zapis
