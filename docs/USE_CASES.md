@@ -166,6 +166,12 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Wyjscie: `Unit`.
   - Repo: `MeasurementReadStateRepository`.
 
+- UC-CARE-12 ObserveRecentMeasurementsByUid
+  - Cel: realtime obserwacja ostatnich pomiarow dla wskazanego pacjenta.
+  - Wejscie: `patientUid`, `limit`, opcjonalnie `types`.
+  - Wyjscie: `Observable<List<Measurement>>`.
+  - Repo: `MeasurementByUidRepository`.
+
 ## Alerty i powiadomienia
 - UC-ALERT-01 GetAlertConfig
   - Cel: pobranie konfiguracji alertow.

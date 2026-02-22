@@ -8,6 +8,7 @@ import zdrowy.senior.io.data.agent.FirestoreAgentRepository
 import zdrowy.senior.io.data.alert.FirestoreAlertRepository
 import zdrowy.senior.io.data.carelink.FirestoreCareLinkRepository
 import zdrowy.senior.io.data.firestore.PatientUidProvider
+import zdrowy.senior.io.data.measurement.FirestoreMeasurementByUidRepository
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementRepository
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementReadStateRepository
 import zdrowy.senior.io.data.notification.NoOpNotificationRepository
@@ -49,12 +50,14 @@ import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.DeleteMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.GetRecentMeasurementsUseCase
+import zdrowy.senior.io.domain.measurement.MeasurementByUidRepository
 import zdrowy.senior.io.domain.measurement.MarkMeasurementReadUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementReadStateRepository
 import zdrowy.senior.io.domain.measurement.MeasurementRepository
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementChartDataUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementHistoryUseCase
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementReadStateUseCase
+import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsByUidUseCase
 import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsUseCase
 import zdrowy.senior.io.domain.measurement.SetReadMeasurementsUseCase
 import zdrowy.senior.io.domain.measurement.UpdateBloodPressureMeasurementUseCase
@@ -122,6 +125,7 @@ val domainModule = module {
     factory { GetMeasurementChartDataUseCase(get()) }
     factory { GetHistoryFiltersUseCase(get()) }
     factory { ObserveRecentMeasurementsUseCase(get()) }
+    factory { ObserveRecentMeasurementsByUidUseCase(get()) }
     factory { ObserveMeasurementHistoryUseCase(get()) }
     factory { ObserveMeasurementChartDataUseCase(get()) }
     factory { ObserveMeasurementReadStateUseCase(get()) }
@@ -188,6 +192,7 @@ val dataModule = module {
     single { PatientUidProvider(get()) }
 
     single<MeasurementRepository> { FirestoreMeasurementRepository(get()) }
+    single<MeasurementByUidRepository> { FirestoreMeasurementByUidRepository() }
     single<MeasurementReadStateRepository> { FirestoreMeasurementReadStateRepository(get()) }
     single<AgentRepository> { FirestoreAgentRepository(get()) }
     single<AccessCodeRepository> { FirestoreAccessCodeRepository(get()) }

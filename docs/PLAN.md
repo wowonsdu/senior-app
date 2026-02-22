@@ -222,6 +222,9 @@ Zasady etapu:
 - [x] Podopieczni: powiaz pacjenta kodem w formularzu
 - [x] Monitor zdrowia: powrot do wyboru pacjenta (ikona wyjscia)
 - [x] Monitor zdrowia: exit door jak system back (powrot do podopieczni)
+- [x] Opiekun: badge nowych pomiarow (domain/data/DI)
+- [ ] Opiekun: badge nowych pomiarow (UI/VM)
+- [ ] Opiekun: badge nowych pomiarow (smoke)
 - [x] Opiekun: dashboard — nowe pomiary (domain/data/DI)
 - [x] Opiekun: dashboard — nowe pomiary (UI/VM)
 - [ ] Opiekun: dashboard — nowe pomiary (smoke)
