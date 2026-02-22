@@ -142,7 +142,7 @@ class PatientPressureDialogFragment : DialogFragment() {
                         return
                     }
                     setRecordingActive(false)
-                    if (!hasSpeechStarted && isNoSpeechError(error)) {
+                    if (!hasSpeechStarted && (isNoSpeechError(error) || error == SpeechRecognizer.ERROR_NO_MATCH)) {
                         showNoSpeechHint()
                     }
                 }
@@ -153,10 +153,6 @@ class PatientPressureDialogFragment : DialogFragment() {
                     val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                     val text = matches?.firstOrNull()?.trim().orEmpty()
                     if (text.isBlank()) {
-                        if (shouldRetryNoSpeech(null)) {
-                            scheduleRetry()
-                            return
-                        }
                         setRecordingActive(false)
                         showNoSpeechHint()
                         return
@@ -225,13 +221,12 @@ class PatientPressureDialogFragment : DialogFragment() {
 
     private fun isNoSpeechError(error: Int): Boolean {
         return error == SpeechRecognizer.ERROR_CLIENT ||
-            error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT ||
-            error == SpeechRecognizer.ERROR_NO_MATCH
+            error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT
     }
 
-    private fun shouldRetryNoSpeech(error: Int?): Boolean {
+    private fun shouldRetryNoSpeech(error: Int): Boolean {
         if (hasSpeechStarted) return false
-        if (error != null && !isNoSpeechError(error)) return false
+        if (!isNoSpeechError(error)) return false
         val elapsed = System.currentTimeMillis() - sessionStartAtMs
         return elapsed < SPEECH_START_TIMEOUT_MS
     }
