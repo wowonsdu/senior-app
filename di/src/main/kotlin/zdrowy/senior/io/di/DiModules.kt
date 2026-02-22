@@ -96,6 +96,7 @@ import zdrowy.senior.io.ui.caregiver.CaregiverDependentsViewModel
 import zdrowy.senior.io.ui.caregiver.CaregiverAddDependentViewModel
 import zdrowy.senior.io.ui.auth.StartupGateViewModel
 import zdrowy.senior.io.ui.auth.PatientLoginViewModel
+import zdrowy.senior.io.ui.caregiver.CaregiverDashboardViewModel
 import zdrowy.senior.io.ui.patient.PatientAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientAlertsViewModel
 import zdrowy.senior.io.ui.patient.PatientHistoryViewModel
@@ -207,6 +208,7 @@ val viewModelModule = module {
     viewModel { CaregiverLinkViewModel(get(), get(), get(), get(), get()) }
     viewModel { CaregiverDependentsViewModel(get(), get(), get()) }
     viewModel { CaregiverAddDependentViewModel(get(), get()) }
+    viewModel { CaregiverDashboardViewModel(get(), get(), get(), get(), get()) }
     viewModel { PatientHistoryViewModel(get(), get(), get()) }
     viewModel { PatientAgentsViewModel(get()) }
     viewModel { PatientAlertsViewModel(get()) }
