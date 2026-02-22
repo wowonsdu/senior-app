@@ -1,6 +1,7 @@
 package zdrowy.senior.io.ui.caregiver
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -30,6 +31,9 @@ class CaregiverDependentsAdapter(
             binding.caregiverDependentName.text = item.fullName
             binding.caregiverDependentPhone.text = item.phone
             binding.caregiverDependentSelect.setOnClickListener { onSelect(item) }
+            val unread = item.unreadCount
+            binding.caregiverDependentBell.visibility = if (unread > 0) View.VISIBLE else View.GONE
+            binding.caregiverDependentBadge.text = unread.toString()
         }
     }
 

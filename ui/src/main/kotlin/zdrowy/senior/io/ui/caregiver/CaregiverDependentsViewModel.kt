@@ -8,6 +8,10 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.carelink.ObserveCareLinksUseCase
+import zdrowy.senior.io.domain.measurement.Measurement
+import zdrowy.senior.io.domain.measurement.MeasurementReadState
+import zdrowy.senior.io.domain.measurement.ObserveMeasurementReadStateUseCase
+import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsByUidUseCase
 import zdrowy.senior.io.domain.settings.ObservePersonalDataByUidUseCase
 import zdrowy.senior.io.domain.settings.PersonalData
 import zdrowy.senior.io.domain.user.SetActivePatientUseCase
@@ -16,6 +20,8 @@ import zdrowy.senior.io.ui.caregiver.model.CaregiverDependentTileUiModel
 class CaregiverDependentsViewModel(
     private val observeCareLinks: ObserveCareLinksUseCase,
     private val observePersonalDataByUid: ObservePersonalDataByUidUseCase,
+    private val observeRecentMeasurementsByUid: ObserveRecentMeasurementsByUidUseCase,
+    private val observeMeasurementReadState: ObserveMeasurementReadStateUseCase,
     private val setActivePatient: SetActivePatientUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
@@ -35,9 +41,16 @@ class CaregiverDependentsViewModel(
                     val patientUids = links.map { it.patientUid }.distinct()
                     if (patientUids.isEmpty()) return@switchMap Observable.just(emptyList())
                     val observers = patientUids.map { uid ->
-                        observePersonalDataByUid(uid)
-                            .map { data -> mapItem(uid, data) }
-                            .onErrorReturnItem(fallbackItem(uid))
+                        Observable.combineLatest(
+                            observePersonalDataByUid(uid)
+                                .onErrorReturnItem(fallbackPersonalData()),
+                            observeMeasurementReadState(uid)
+                                .onErrorReturnItem(MeasurementReadState(uid, emptySet())),
+                            observeRecentMeasurementsByUid(uid, MEASUREMENTS_LIMIT)
+                                .onErrorReturnItem(emptyList())
+                        ) { data, readState, measurements ->
+                            mapItem(uid, data as PersonalData, readState as MeasurementReadState, measurements as List<Measurement>)
+                        }.onErrorReturnItem(fallbackItem(uid))
                     }
                     Observable.combineLatest(observers) { items ->
                         items.map { it as CaregiverDependentTileUiModel }
@@ -74,16 +87,24 @@ class CaregiverDependentsViewModel(
         super.onCleared()
     }
 
-    private fun mapItem(uid: String, data: PersonalData): CaregiverDependentTileUiModel {
+    private fun mapItem(
+        uid: String,
+        data: PersonalData,
+        readState: MeasurementReadState,
+        measurements: List<Measurement>
+    ): CaregiverDependentTileUiModel {
         val firstName = data.firstName.trim()
         val lastName = data.lastName.trim()
         val fullName = listOf(firstName, lastName).filter { it.isNotBlank() }.joinToString(" ")
         val phone = data.phoneNumber.trim().ifBlank { "-" }
+        val readIds = readState.readMeasurementIds
+        val unreadCount = measurements.count { !readIds.contains(it.id) }
         return CaregiverDependentTileUiModel(
             uid = uid,
             fullName = if (fullName.isBlank()) "-" else fullName,
             phone = phone,
-            avatar = initials(firstName, lastName)
+            avatar = initials(firstName, lastName),
+            unreadCount = unreadCount
         )
     }
 
@@ -92,7 +113,19 @@ class CaregiverDependentsViewModel(
             uid = uid,
             fullName = "-",
             phone = "-",
-            avatar = "?"
+            avatar = "?",
+            unreadCount = 0
+        )
+    }
+
+    private fun fallbackPersonalData(): PersonalData {
+        return PersonalData(
+            firstName = "",
+            lastName = "",
+            pesel = "",
+            phoneNumber = "",
+            email = "",
+            address = ""
         )
     }
 
@@ -104,5 +137,9 @@ class CaregiverDependentsViewModel(
             if (last != null) append(last)
         }
         return if (value.isBlank()) "?" else value
+    }
+
+    private companion object {
+        private const val MEASUREMENTS_LIMIT = 50
     }
 }
