@@ -171,8 +171,8 @@ Zasady etapu:
 - [ ] 9.8 Dialogi: Access Code (agent/doctor)
 - [ ] 9.9 Ekran: Patient History (lista + wykres)
 - [ ] 9.10 Dialogi: Measurements (cukier/insulina/cisnienie/tetno)
-- [ ] 9.10.1 Measurements: voice input — retry (error 5/6/7) + 20s na start mowy
-- [ ] 9.10.2 Measurements: voice input — hint po ciszy + bezpieczny restart (cancel + delay)
+- [x] 9.10.1 Measurements: voice input — retry (error 5/6/7) + 20s na start mowy
+- [x] 9.10.2 Measurements: voice input — hint po ciszy + bezpieczny restart (cancel + delay)
 - [ ] 9.11 Ekran: Patient Home (kafelki pomiarow)
 - [x] 9.11.1 Patient Home: managed user state (domain/data)
 - [x] 9.11.2 Patient Home: header UI (label/chevron + dane z Firestore)
