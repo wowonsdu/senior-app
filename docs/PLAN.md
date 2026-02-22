@@ -233,3 +233,4 @@ Zasady etapu:
 - [x] STT: plan (docs/plan/MAIN-PLAN-obsluga-speech-to-text.md)
 - [x] STT: parser domenowy (voice parse)
 - [x] STT: Patient Home — wprowadzanie glosowe + zapis
+- [x] STT: Patient Home — indikator nagrywania + okienko tekstu

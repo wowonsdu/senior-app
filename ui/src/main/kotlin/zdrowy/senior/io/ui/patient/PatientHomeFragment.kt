@@ -1,6 +1,7 @@
 package zdrowy.senior.io.ui.patient
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.view.animation.LinearInterpolator
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -39,6 +41,7 @@ class PatientHomeFragment : Fragment() {
     private val clearCurrentUserRole: ClearCurrentUserRoleUseCase by inject()
     private val disposables = CompositeDisposable()
     private var speechRecognizer: SpeechRecognizer? = null
+    private var recordingAnimator: ObjectAnimator? = null
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -151,6 +154,7 @@ class PatientHomeFragment : Fragment() {
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
         speechRecognizer = null
+        stopRecordingAnimation()
         disposables.clear()
         _binding = null
         super.onDestroyView()
@@ -176,17 +180,29 @@ class PatientHomeFragment : Fragment() {
         if (speechRecognizer == null) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
             speechRecognizer?.setRecognitionListener(object : RecognitionListener {
-                override fun onReadyForSpeech(params: Bundle?) = Unit
-                override fun onBeginningOfSpeech() = Unit
+                override fun onReadyForSpeech(params: Bundle?) {
+                    setRecordingActive(true)
+                    showListeningPlaceholder()
+                }
+                override fun onBeginningOfSpeech() {
+                    setRecordingActive(true)
+                    showListeningPlaceholder()
+                }
                 override fun onRmsChanged(rmsdB: Float) = Unit
                 override fun onBufferReceived(buffer: ByteArray?) = Unit
-                override fun onEndOfSpeech() = Unit
+                override fun onEndOfSpeech() {
+                    setRecordingActive(false)
+                }
                 override fun onError(error: Int) {
+                    setRecordingActive(false)
                     showToast(getString(R.string.patient_home_voice_error))
                 }
-                override fun onPartialResults(partialResults: Bundle?) = Unit
+                override fun onPartialResults(partialResults: Bundle?) {
+                    handleSpeechResults(partialResults, isFinal = false)
+                }
                 override fun onResults(results: Bundle?) {
-                    handleSpeechResults(results)
+                    setRecordingActive(false)
+                    handleSpeechResults(results, isFinal = true)
                 }
                 override fun onEvent(eventType: Int, params: Bundle?) = Unit
             })
@@ -195,19 +211,25 @@ class PatientHomeFragment : Fragment() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, false)
+            putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
         }
+        setRecordingActive(true)
+        showListeningPlaceholder()
         speechRecognizer?.stopListening()
         speechRecognizer?.startListening(intent)
     }
 
-    private fun handleSpeechResults(results: Bundle?) {
+    private fun handleSpeechResults(results: Bundle?, isFinal: Boolean) {
         val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
         val text = matches?.firstOrNull()?.trim().orEmpty()
         if (text.isBlank()) {
+            if (!isFinal) return
             showToast(getString(R.string.patient_home_voice_empty))
+            clearTranscript()
             return
         }
+        updateTranscript(text)
+        if (!isFinal) return
         viewModel.onVoiceText(text)
     }
 
@@ -241,6 +263,48 @@ class PatientHomeFragment : Fragment() {
             MeasurementType.PRESSURE -> getString(R.string.patient_home_tile_pressure)
             MeasurementType.PULSE -> getString(R.string.patient_home_tile_pulse)
         }
+    }
+
+    private fun setRecordingActive(isActive: Boolean) {
+        binding.patientHomeVoiceRecordingBadge.isVisible = isActive
+        if (isActive) {
+            startRecordingAnimation()
+        } else {
+            stopRecordingAnimation()
+        }
+    }
+
+    private fun startRecordingAnimation() {
+        val dot = binding.patientHomeVoiceRecordingDot
+        if (recordingAnimator == null) {
+            recordingAnimator = ObjectAnimator.ofFloat(dot, View.ALPHA, 1f, 0.2f).apply {
+                duration = 600
+                repeatMode = ObjectAnimator.REVERSE
+                repeatCount = ObjectAnimator.INFINITE
+                interpolator = LinearInterpolator()
+            }
+        }
+        recordingAnimator?.start()
+    }
+
+    private fun stopRecordingAnimation() {
+        recordingAnimator?.cancel()
+        binding.patientHomeVoiceRecordingDot.alpha = 1f
+    }
+
+    private fun showListeningPlaceholder() {
+        binding.patientHomeVoiceTranscriptCard.isVisible = true
+        binding.patientHomeVoiceTranscriptText.text =
+            getString(R.string.patient_home_voice_transcript_placeholder)
+    }
+
+    private fun updateTranscript(text: String) {
+        binding.patientHomeVoiceTranscriptCard.isVisible = true
+        binding.patientHomeVoiceTranscriptText.text = text
+    }
+
+    private fun clearTranscript() {
+        binding.patientHomeVoiceTranscriptCard.isVisible = false
     }
 
     private fun showToast(message: String) {

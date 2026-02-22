@@ -111,6 +111,9 @@
     <string name="patient_home_tile_history">Historia Pomiarow</string>
     <string name="patient_home_tile_settings">Ustawienia</string>
     <string name="patient_home_voice_title">Wprowadz glosowo</string>
+    <string name="patient_home_voice_recording">Nagrywanie...</string>
+    <string name="patient_home_voice_transcript_title">Rozpoznany tekst</string>
+    <string name="patient_home_voice_transcript_placeholder">Slucham...</string>
     <string name="patient_home_voice_not_available">Rozpoznawanie mowy niedostepne</string>
     <string name="patient_home_voice_permission_denied">Brak dostepu do mikrofonu</string>
     <string name="patient_home_voice_error">Nie udalo sie rozpoznac mowy</string>
