@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.rxjava)
     implementation(libs.rxkotlin)
     implementation(libs.rxandroid)
+    implementation(libs.timber)
     implementation(libs.koin.android)
     implementation(libs.mpandroidchart)
     implementation(platform(libs.firebase.bom))
