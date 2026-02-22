@@ -118,6 +118,7 @@
     <string name="patient_home_voice_permission_denied">Brak dostepu do mikrofonu</string>
     <string name="patient_home_voice_error">Nie udalo sie rozpoznac mowy</string>
     <string name="patient_home_voice_empty">Nie rozpoznano pomiarow</string>
+    <string name="voice_input_no_speech_hint">Nie wykryto mowy. Dotknij mikrofonu, aby sprobowac ponownie.</string>
     <string name="patient_home_voice_saved">Zapisano: %1$s</string>
     <string name="patient_home_voice_skipped">Pominieto: %1$s</string>
 

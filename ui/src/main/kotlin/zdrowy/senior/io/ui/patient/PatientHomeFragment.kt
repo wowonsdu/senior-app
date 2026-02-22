@@ -37,7 +37,8 @@ class PatientHomeFragment : Fragment() {
     private companion object {
         private const val SPEECH_SILENCE_WINDOW_MS = 10_000
         private const val SPEECH_MINIMUM_LENGTH_MS = 1500
-        private const val SPEECH_START_TIMEOUT_MS = 10_000
+        private const val SPEECH_START_TIMEOUT_MS = 20_000
+        private const val SPEECH_RESTART_DELAY_MS = 250L
     }
 
     private var _binding: FragmentPatientHomeBinding? = null
@@ -52,6 +53,7 @@ class PatientHomeFragment : Fragment() {
     private var lastTranscript: String = ""
     private var sessionStartAtMs: Long = 0L
     private var hasSpeechStarted: Boolean = false
+    private var listenAttemptToken: Int = 0
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -161,6 +163,7 @@ class PatientHomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
+        listenAttemptToken++
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
         speechRecognizer = null
@@ -186,9 +189,9 @@ class PatientHomeFragment : Fragment() {
         }
     }
 
-    private fun startSpeechToTextInternal(isRestart: Boolean = false) {
-        lastTranscript = ""
+    private fun startSpeechToTextInternal(isRestart: Boolean = false, delayMs: Long = 0L) {
         if (!isRestart) {
+            lastTranscript = ""
             sessionStartAtMs = System.currentTimeMillis()
             hasSpeechStarted = false
         }
@@ -210,12 +213,16 @@ class PatientHomeFragment : Fragment() {
                     Unit
                 }
                 override fun onError(error: Int) {
-                    if (shouldRestartOnTimeout(error)) {
-                        startSpeechToTextInternal(isRestart = true)
+                    if (shouldRetryNoSpeech(error)) {
+                        startSpeechToTextInternal(isRestart = true, delayMs = SPEECH_RESTART_DELAY_MS)
                         return
                     }
                     setRecordingActive(false)
                     Timber.w("SpeechRecognizer error=%d", error)
+                    if (!hasSpeechStarted && isNoSpeechError(error)) {
+                        showNoSpeechHint()
+                        return
+                    }
                     showToast(getString(R.string.patient_home_voice_error))
                 }
                 override fun onPartialResults(partialResults: Bundle?) {
@@ -247,8 +254,17 @@ class PatientHomeFragment : Fragment() {
         }
         setRecordingActive(true)
         showListeningPlaceholder()
-        speechRecognizer?.stopListening()
-        speechRecognizer?.startListening(intent)
+        speechRecognizer?.cancel()
+        val token = ++listenAttemptToken
+        val start = Runnable {
+            if (token != listenAttemptToken) return@Runnable
+            speechRecognizer?.startListening(intent)
+        }
+        if (delayMs > 0) {
+            binding.root.postDelayed(start, delayMs)
+        } else {
+            binding.root.post(start)
+        }
     }
 
     private fun handleSpeechResults(results: Bundle?, isFinal: Boolean) {
@@ -262,11 +278,15 @@ class PatientHomeFragment : Fragment() {
                 viewModel.onVoiceText(fallback)
                 return
             }
-            showToast(getString(R.string.patient_home_voice_empty))
-            clearTranscript()
+            if (shouldRetryNoSpeech(null)) {
+                startSpeechToTextInternal(isRestart = true, delayMs = SPEECH_RESTART_DELAY_MS)
+                return
+            }
             setRecordingActive(false)
+            showNoSpeechHint()
             return
         }
+        hasSpeechStarted = true
         updateTranscript(text)
         if (!isFinal) return
         setRecordingActive(false)
@@ -351,11 +371,23 @@ class PatientHomeFragment : Fragment() {
         binding.patientHomeVoiceTranscriptCard.isVisible = false
     }
 
-    private fun shouldRestartOnTimeout(error: Int): Boolean {
-        if (error != SpeechRecognizer.ERROR_SPEECH_TIMEOUT) return false
+    private fun isNoSpeechError(error: Int): Boolean {
+        return error == SpeechRecognizer.ERROR_CLIENT ||
+            error == SpeechRecognizer.ERROR_SPEECH_TIMEOUT ||
+            error == SpeechRecognizer.ERROR_NO_MATCH
+    }
+
+    private fun shouldRetryNoSpeech(error: Int?): Boolean {
         if (hasSpeechStarted) return false
+        if (error != null && !isNoSpeechError(error)) return false
         val elapsed = System.currentTimeMillis() - sessionStartAtMs
         return elapsed < SPEECH_START_TIMEOUT_MS
+    }
+
+    private fun showNoSpeechHint() {
+        binding.patientHomeVoiceTranscriptCard.isVisible = true
+        binding.patientHomeVoiceTranscriptText.text =
+            getString(R.string.voice_input_no_speech_hint)
     }
 
     private fun showToast(message: String) {
