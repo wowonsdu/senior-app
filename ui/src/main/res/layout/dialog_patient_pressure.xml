@@ -105,16 +105,12 @@
         android:textAppearance="@style/TextAppearance.Senior.Caption"
         android:textColor="@color/senior_text_tertiary" />
 
-    <ImageButton
-        android:id="@+id/pressure_dialog_mic"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="@dimen/spacing_m"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/bg_mic_circle"
-        android:contentDescription="@null"
-        android:src="@android:drawable/ic_btn_speak_now"
-        android:tint="@color/black" />
+    <include
+        android:id="@+id/pressure_dialog_voice"
+        layout="@layout/include_voice_recording_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/pressure_dialog_delete"

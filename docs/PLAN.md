@@ -235,3 +235,4 @@ Zasady etapu:
 - [x] STT: Patient Home — wprowadzanie glosowe + zapis
 - [x] STT: Patient Home — indikator nagrywania + okienko tekstu
 - [x] STT: Patient Home — badge w miejscu tytulu + ring + dluzsze sluchanie
+- [x] STT: dialogi pomiarow — wskazniki + wspolny layout voice

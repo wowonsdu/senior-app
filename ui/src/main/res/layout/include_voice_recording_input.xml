@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="88dp"
+        android:layout_height="88dp">
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/voice_input_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="gone"
+            app:indicatorSize="88dp"
+            app:trackThickness="3dp"
+            app:indicatorColor="@color/senior_danger"
+            app:trackColor="@android:color/transparent" />
+
+        <ImageButton
+            android:id="@+id/voice_input_mic"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_mic_circle"
+            android:contentDescription="@null"
+            android:src="@android:drawable/ic_btn_speak_now"
+            android:tint="@color/black" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s">
+
+        <TextView
+            android:id="@+id/voice_input_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/patient_home_voice_title"
+            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+            android:textColor="@color/senior_text_primary"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/voice_input_badge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_recording_badge"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/spacing_s"
+            android:paddingEnd="@dimen/spacing_s"
+            android:paddingTop="@dimen/spacing_xs"
+            android:paddingBottom="@dimen/spacing_xs"
+            android:visibility="gone">
+
+            <View
+                android:id="@+id/voice_input_badge_dot"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:layout_marginEnd="@dimen/spacing_xs"
+                android:background="@drawable/bg_recording_dot" />
+
+            <TextView
+                android:id="@+id/voice_input_badge_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/patient_home_voice_recording"
+                android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

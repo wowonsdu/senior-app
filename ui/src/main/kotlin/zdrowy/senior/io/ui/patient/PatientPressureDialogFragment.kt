@@ -1,6 +1,7 @@
 package zdrowy.senior.io.ui.patient
 
 import android.Manifest
+import android.animation.ObjectAnimator
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,8 +11,10 @@ import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.LinearInterpolator
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,9 +24,17 @@ import zdrowy.senior.io.domain.measurement.MeasurementSource
 import java.util.Locale
 
 class PatientPressureDialogFragment : DialogFragment() {
+    private companion object {
+        private const val DEFAULT_POSSIBLY_COMPLETE_SILENCE_MS = 1500
+        private const val DEFAULT_COMPLETE_SILENCE_MS = 1000
+        private const val DEFAULT_MINIMUM_LENGTH_MS = 1500
+        private const val LISTEN_EXTENSION_MS = 5000
+    }
+
     private var _binding: DialogPatientPressureBinding? = null
     private val binding get() = _binding!!
     private var speechRecognizer: SpeechRecognizer? = null
+    private var recordingAnimator: ObjectAnimator? = null
     private val viewModel: PatientMeasurementDialogViewModel by viewModel()
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -41,7 +52,7 @@ class PatientPressureDialogFragment : DialogFragment() {
         binding.pressureDialogClose.setOnClickListener { dismiss() }
         binding.pressureDialogCancel.setOnClickListener { dismiss() }
         binding.pressureDialogSave.setOnClickListener { saveMeasurement() }
-        binding.pressureDialogMic.setOnClickListener {
+        binding.pressureDialogVoice.voiceInputMic.setOnClickListener {
             startSpeechToText()
         }
         binding.pressureDialogDelete.visibility = if (editMode) View.VISIBLE else View.GONE
@@ -71,6 +82,7 @@ class PatientPressureDialogFragment : DialogFragment() {
         speechRecognizer?.stopListening()
         speechRecognizer?.destroy()
         speechRecognizer = null
+        stopRecordingAnimation()
         _binding = null
         super.onDestroyView()
     }
@@ -94,16 +106,25 @@ class PatientPressureDialogFragment : DialogFragment() {
         if (speechRecognizer == null) {
             speechRecognizer = SpeechRecognizer.createSpeechRecognizer(requireContext())
             speechRecognizer?.setRecognitionListener(object : RecognitionListener {
-                override fun onReadyForSpeech(params: Bundle?) = Unit
-                override fun onBeginningOfSpeech() = Unit
+                override fun onReadyForSpeech(params: Bundle?) {
+                    setRecordingActive(true)
+                }
+                override fun onBeginningOfSpeech() {
+                    setRecordingActive(true)
+                }
                 override fun onRmsChanged(rmsdB: Float) = Unit
                 override fun onBufferReceived(buffer: ByteArray?) = Unit
-                override fun onEndOfSpeech() = Unit
-                override fun onError(error: Int) = Unit
+                override fun onEndOfSpeech() {
+                    setRecordingActive(false)
+                }
+                override fun onError(error: Int) {
+                    setRecordingActive(false)
+                }
                 override fun onPartialResults(partialResults: Bundle?) {
                     setTextFromResults(partialResults)
                 }
                 override fun onResults(results: Bundle?) {
+                    setRecordingActive(false)
                     setTextFromResults(results)
                 }
                 override fun onEvent(eventType: Int, params: Bundle?) = Unit
@@ -114,7 +135,20 @@ class PatientPressureDialogFragment : DialogFragment() {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
             putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true)
+            putExtra(
+                RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS,
+                DEFAULT_POSSIBLY_COMPLETE_SILENCE_MS + LISTEN_EXTENSION_MS
+            )
+            putExtra(
+                RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS,
+                DEFAULT_COMPLETE_SILENCE_MS + LISTEN_EXTENSION_MS
+            )
+            putExtra(
+                RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS,
+                DEFAULT_MINIMUM_LENGTH_MS + LISTEN_EXTENSION_MS
+            )
         }
+        setRecordingActive(true)
         speechRecognizer?.startListening(intent)
     }
 
@@ -136,6 +170,35 @@ class PatientPressureDialogFragment : DialogFragment() {
         return Regex("\\d+(?:[\\.,]\\d+)?").findAll(text)
             .map { it.value.replace(',', '.') }
             .toList()
+    }
+
+    private fun setRecordingActive(isActive: Boolean) {
+        binding.pressureDialogVoice.voiceInputLabel.isVisible = !isActive
+        binding.pressureDialogVoice.voiceInputBadge.isVisible = isActive
+        binding.pressureDialogVoice.voiceInputProgress.isVisible = isActive
+        if (isActive) {
+            startRecordingAnimation()
+        } else {
+            stopRecordingAnimation()
+        }
+    }
+
+    private fun startRecordingAnimation() {
+        val dot = binding.pressureDialogVoice.voiceInputBadgeDot
+        if (recordingAnimator == null) {
+            recordingAnimator = ObjectAnimator.ofFloat(dot, View.ALPHA, 1f, 0.2f).apply {
+                duration = 600
+                repeatMode = ObjectAnimator.REVERSE
+                repeatCount = ObjectAnimator.INFINITE
+                interpolator = LinearInterpolator()
+            }
+        }
+        recordingAnimator?.start()
+    }
+
+    private fun stopRecordingAnimation() {
+        recordingAnimator?.cancel()
+        binding.pressureDialogVoice.voiceInputBadgeDot.alpha = 1f
     }
 
     private fun saveMeasurement() {
