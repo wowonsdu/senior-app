@@ -196,7 +196,7 @@ Zasady etapu:
 - [x] 9.21 Alerty: cisnienie — repo (Firestore/dummy) konfiguracji SYS/DIA + kategorie
 - [x] 9.22 Alerty: alertEvents — domena/data + FirestorePaths
 - [x] 9.23 Alerty: pomiar cisnienia -> generuj alertEvents (krytyczne/kategoria/spike + cooldown)
-- [ ] 9.24 Alerty: UI — konfiguracja cisnienia (pola + zapis + ObserveAlertConfig)
+- [x] 9.24 Alerty: UI — konfiguracja cisnienia (pola + zapis + ObserveAlertConfig)
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
