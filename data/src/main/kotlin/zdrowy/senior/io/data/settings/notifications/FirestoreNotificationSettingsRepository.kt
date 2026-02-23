@@ -24,6 +24,10 @@ class FirestoreNotificationSettingsRepository(
     private val defaultPressureSystolicMax = 129.0
     private val defaultPressureDiastolicMin = 60.0
     private val defaultPressureDiastolicMax = 84.0
+    private val defaultSugarMin = 70.0
+    private val defaultSugarMax = 125.0
+    private val defaultPulseMin = 60.0
+    private val defaultPulseMax = 100.0
 
     override fun getNotificationSettings(): Single<NotificationSettings> {
         val uid = requireUid()
@@ -264,8 +268,8 @@ class FirestoreNotificationSettingsRepository(
         NotificationSettings(alerts = MeasurementType.values().map { defaultSetting(it) })
 
     private fun defaultSetting(type: MeasurementType): AlertSetting =
-        if (type == MeasurementType.PRESSURE) {
-            AlertSetting(
+        when (type) {
+            MeasurementType.PRESSURE -> AlertSetting(
                 type = type,
                 enabled = true,
                 min = null,
@@ -279,8 +283,27 @@ class FirestoreNotificationSettingsRepository(
                 diastolicMin = defaultPressureDiastolicMin,
                 diastolicMax = defaultPressureDiastolicMax
             )
-        } else {
-            AlertSetting(
+            MeasurementType.SUGAR -> AlertSetting(
+                type = type,
+                enabled = true,
+                min = defaultSugarMin,
+                max = defaultSugarMax,
+                spikePercent = 20,
+                windowCount = 3,
+                channels = setOf(AlertChannel.APP),
+                caregiverIds = emptyList()
+            )
+            MeasurementType.PULSE -> AlertSetting(
+                type = type,
+                enabled = true,
+                min = defaultPulseMin,
+                max = defaultPulseMax,
+                spikePercent = 20,
+                windowCount = 3,
+                channels = setOf(AlertChannel.APP),
+                caregiverIds = emptyList()
+            )
+            else -> AlertSetting(
                 type = type,
                 enabled = true,
                 min = null,
