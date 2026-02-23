@@ -221,6 +221,7 @@ Zasady etapu:
 - [x] 9.46 Alerty: defaults — seed channels + progi w Firestore
 - [x] 9.47 Alerty: walidacja — assembleDebug
 - [x] 9.48 Alerty: defaults — progi cukru/tetna (normy)
+- [x] 9.49 Alerty: seed defaults po rejestracji (personalData + notifications)
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
