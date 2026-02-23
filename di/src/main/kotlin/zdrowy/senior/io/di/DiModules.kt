@@ -89,6 +89,7 @@ import zdrowy.senior.io.domain.settings.notifications.UpdateBloodPressureCritica
 import zdrowy.senior.io.domain.settings.notifications.UpdateCriticalThresholdsUseCase
 import zdrowy.senior.io.domain.settings.notifications.UpdateNotificationSettingsUseCase
 import zdrowy.senior.io.domain.settings.notifications.UpdateSpikeRulesUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateSugarDropRulesUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
 import zdrowy.senior.io.domain.user.EnsureCurrentUserRoleLoadedUseCase
 import zdrowy.senior.io.domain.user.ActivePatientContext
@@ -160,6 +161,7 @@ val domainModule = module {
     factory { UpdateCriticalThresholdsUseCase(get()) }
     factory { UpdateBloodPressureCriticalThresholdsUseCase(get()) }
     factory { UpdateSpikeRulesUseCase(get()) }
+    factory { UpdateSugarDropRulesUseCase(get()) }
     factory { UpdateAlertChannelsUseCase(get()) }
     factory { UpdateAlertCaregiversUseCase(get()) }
 

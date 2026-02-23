@@ -14,6 +14,7 @@ interface NotificationSettingsRepository {
     fun setAlertEnabled(type: MeasurementType, enabled: Boolean): Completable
     fun updateCriticalThresholds(type: MeasurementType, min: Double?, max: Double?): Completable
     fun updateSpikeRules(type: MeasurementType, percent: Int, windowCount: Int): Completable
+    fun updateSugarDropRules(dropDelta: Double?, dropWindowMinutes: Int?): Completable
     fun updateAlertChannels(type: MeasurementType, channels: Set<AlertChannel>): Completable
     fun updateAlertCaregivers(type: MeasurementType, caregiverIds: List<String>): Completable
 
@@ -24,4 +25,3 @@ interface NotificationSettingsRepository {
         diastolicMax: Double?
     ): Completable
 }
-

@@ -9,6 +9,8 @@ data class AlertSetting(
     val max: Double?,
     val spikePercent: Int,
     val windowCount: Int,
+    val dropDelta: Double? = null,
+    val dropWindowMinutes: Int? = null,
     val channels: Set<AlertChannel>,
     val caregiverIds: List<String>,
     val systolicMin: Double? = null,
