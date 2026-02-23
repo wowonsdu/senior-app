@@ -10,8 +10,9 @@
 
 ## Deliverables
 - `users/{uid}/settings/notifications`:
-  - `alerts.{measurementType}.enabled/min/max/spikePercent/windowCount/channels/caregiverUids`
-  - `alerts.PRESSURE.systolicMin/systolicMax/diastolicMin/diastolicMax` (+ kompatybilne `min/max` jako SYS)
+  - non-pressure: `alerts.{measurementType}.enabled/min/max/spikePercent/windowCount/channels/caregiverUids`
+  - `alerts.PRESSURE.systolicMin/systolicMax/diastolicMin/diastolicMax` (bez `min/max`)
+  - `alerts.SUGAR.dropDelta/dropWindowMinutes`
 
 ## Implementation Checklist
 - [ ] Odczyt nowego dokumentu `settings/notifications`.

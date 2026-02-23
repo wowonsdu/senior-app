@@ -217,6 +217,7 @@ Zasady etapu:
 - [x] 9.42 Alerty: domain/data — sugar drop + pressure bez min/max
 - [x] 9.43 Alerty: auto-save — pressure/sugar/pulse (debounce)
 - [x] 9.44 Alerty: walidacja — assembleDebug
+- [x] 9.45 Alerty: docs — pressure bez min/max + sugar drop fields
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case

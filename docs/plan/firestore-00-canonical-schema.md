@@ -19,7 +19,7 @@
 - [ ] Pacjent: `settings/personalData`, `diseases/*`, `medications/*`.
 - [ ] Pacjent: `measurements/*` (`timestampMs`, `type`, `value/systolic/diastolic`, `source`).
 - [ ] Pacjent: `contacts/*` (CAREGEIVER/DOCTOR + `linkedUid?`).
-- [ ] Pacjent: `settings/notifications` (`alerts.{measurementType}`: enabled/min/max/spike/window/channels/caregiverUids + pola ciśnienia SYS/DIA).
+- [ ] Pacjent: `settings/notifications` (non-pressure: `alerts.{measurementType}` enabled/min/max/spike/window/channels/caregiverUids; PRESSURE: systolic/diastolic).
 - [ ] Opiekun: `careLinks` po obu stronach (denormalizacja).
 - [ ] Kody: `accessCodes/{code}` (TTL, consumedAt, patientUid, contactId).
 
