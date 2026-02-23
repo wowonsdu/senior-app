@@ -15,6 +15,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import zdrowy.senior.io.ui.databinding.FragmentPatientAlertsBinding
 import zdrowy.senior.io.ui.R
+import zdrowy.senior.io.domain.measurement.MeasurementType
+import zdrowy.senior.io.ui.views.AlertNotificationsConfigView
 
 class PatientAlertsFragment : Fragment() {
     private var _binding: FragmentPatientAlertsBinding? = null
@@ -47,6 +49,7 @@ class PatientAlertsFragment : Fragment() {
 
         setupChevronToggles()
         setupPressureConfigUi()
+        setupNotificationsConfigUi()
         viewModel.start()
     }
 
@@ -92,7 +95,7 @@ class PatientAlertsFragment : Fragment() {
 
     private fun setupPressureConfigUi() {
         binding.patientAlertsPressureEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
-            viewModel.setPressureEnabled(isChecked)
+            viewModel.setEnabled(MeasurementType.PRESSURE, isChecked)
         }
 
         binding.patientAlertsPressureSaveButton.setOnClickListener {
@@ -117,7 +120,7 @@ class PatientAlertsFragment : Fragment() {
             binding.patientAlertsPressureEnabledSwitch.setOnCheckedChangeListener(null)
             binding.patientAlertsPressureEnabledSwitch.isChecked = ui.enabled
             binding.patientAlertsPressureEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
-                viewModel.setPressureEnabled(isChecked)
+                viewModel.setEnabled(MeasurementType.PRESSURE, isChecked)
             }
 
             setIfNotFocused(binding.patientAlertsPressureSysLow, ui.systolicMin?.toInt()?.toString())
@@ -134,6 +137,45 @@ class PatientAlertsFragment : Fragment() {
             }
             if (ok != null) viewModel.onSaveResultHandled()
         }
+    }
+
+    private fun setupNotificationsConfigUi() {
+        bindNotificationsCallbacks(binding.patientAlertsNotificationsSugar, MeasurementType.SUGAR)
+        bindNotificationsCallbacks(binding.patientAlertsNotificationsInsulin, MeasurementType.INSULIN)
+        bindNotificationsCallbacks(binding.patientAlertsNotificationsPressure, MeasurementType.PRESSURE)
+        bindNotificationsCallbacks(binding.patientAlertsNotificationsPulse, MeasurementType.PULSE)
+
+        viewModel.notifications.observe(viewLifecycleOwner) { map ->
+            renderNotifications(binding.patientAlertsNotificationsSugar, map[MeasurementType.SUGAR])
+            renderNotifications(binding.patientAlertsNotificationsInsulin, map[MeasurementType.INSULIN])
+            renderNotifications(binding.patientAlertsNotificationsPressure, map[MeasurementType.PRESSURE])
+            renderNotifications(binding.patientAlertsNotificationsPulse, map[MeasurementType.PULSE])
+        }
+    }
+
+    private fun bindNotificationsCallbacks(view: AlertNotificationsConfigView, type: MeasurementType) {
+        view.onChannelToggle = { channel, enabled -> viewModel.toggleChannel(type, channel, enabled) }
+        view.onEnableAllChannels = { viewModel.enableAllChannels(type) }
+        view.onDisableAllChannels = { viewModel.disableAllChannels(type) }
+
+        view.onCaregiverToggle = { id, enabled -> viewModel.toggleCaregiver(type, id, enabled) }
+        view.onSelectAllCaregivers = { viewModel.selectAllCaregivers(type) }
+        view.onDeselectAllCaregivers = { viewModel.deselectAllCaregivers(type) }
+    }
+
+    private fun renderNotifications(view: AlertNotificationsConfigView, ui: AlertNotificationsUi?) {
+        if (ui == null) return
+        view.renderChannels(ui.channels)
+        view.renderCaregivers(
+            ui.caregivers.map {
+                AlertNotificationsConfigView.CaregiverToggleUi(
+                    id = it.id,
+                    fullName = it.fullName,
+                    phone = it.phone,
+                    selected = it.selected
+                )
+            }
+        )
     }
 
     private fun validatePressure(

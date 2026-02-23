@@ -172,7 +172,7 @@ class FirestoreAlertRepository(
             val max = if (isPressure) systolicMax else rawMax
             val spikePercent = ((doc?.get("spikePercent") as? Number)?.toInt()) ?: 20
             val windowCount = ((doc?.get("windowCount") as? Number)?.toInt()) ?: 3
-            val channels = parseChannels(doc?.get("channels"))
+            val channels = if (doc?.contains("channels") == true) parseChannels(doc.get("channels")) else null
             val caregiverUids = parseStringList(doc?.get("caregiverUids"))
 
             AlertSetting(
@@ -182,7 +182,7 @@ class FirestoreAlertRepository(
                 max = max,
                 spikePercent = spikePercent,
                 windowCount = windowCount,
-                channels = if (channels.isEmpty()) setOf(AlertChannel.APP) else channels,
+                channels = channels ?: setOf(AlertChannel.APP),
                 caregiverIds = caregiverUids,
                 systolicMin = systolicMin,
                 systolicMax = systolicMax,
