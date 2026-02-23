@@ -20,9 +20,9 @@ class TriggerBloodPressureAlertEventUseCase(
         timestamp: Long
     ): Completable {
         return alertRepository.getAlertConfig()
-            .map { config -> config.settings.firstOrNull { it.type == MeasurementType.PRESSURE } }
+            .map { config -> config.settings.first { it.type == MeasurementType.PRESSURE } }
             .flatMapCompletable { setting ->
-                if (setting == null || !setting.enabled) return@flatMapCompletable Completable.complete()
+                if (!setting.enabled) return@flatMapCompletable Completable.complete()
 
                 val classification = classifyBloodPressure(
                     systolic = systolic,
@@ -77,10 +77,10 @@ class TriggerBloodPressureAlertEventUseCase(
                         else -> null
                     }
 
-                    val draft = severity?.let {
+                    val draft = severity?.let { resolvedSeverity ->
                         AlertEventDraft(
                             type = MeasurementType.PRESSURE,
-                            severity = it,
+                            severity = resolvedSeverity,
                             measurementId = measurementId,
                             reasons = allReasons,
                             bloodPressure = BloodPressureEventData(
@@ -92,13 +92,18 @@ class TriggerBloodPressureAlertEventUseCase(
                         )
                     }
 
-                    draft
-                }.flatMapCompletable { draft ->
+                    DraftCandidate(draft)
+                }.flatMapCompletable { candidate ->
+                    val draft = candidate.draft
                     if (draft == null) Completable.complete()
                     else alertEventRepository.addEvent(draft).ignoreElement()
                 }
             }
     }
+
+    private data class DraftCandidate(
+        val draft: AlertEventDraft?
+    )
 
     private fun spikeReasonsSingle(
         setting: AlertSetting,
@@ -134,4 +139,3 @@ class TriggerBloodPressureAlertEventUseCase(
         return pct >= percent.toDouble()
     }
 }
-

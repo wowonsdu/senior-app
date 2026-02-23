@@ -16,6 +16,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import zdrowy.senior.io.ui.databinding.FragmentPatientAlertsBinding
 import zdrowy.senior.io.domain.measurement.BloodPressureSeverity
+import zdrowy.senior.io.ui.R
 
 class PatientAlertsFragment : Fragment() {
     private var _binding: FragmentPatientAlertsBinding? = null
