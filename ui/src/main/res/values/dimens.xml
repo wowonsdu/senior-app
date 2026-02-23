@@ -16,5 +16,5 @@
     <dimen name="card_elevation">2dp</dimen>
     <dimen name="stroke_width">1dp</dimen>
     <dimen name="tile_height">120dp</dimen>
-    <dimen name="input_height_compact">48dp</dimen>
+    <dimen name="input_height_compact">56dp</dimen>
 </resources>
