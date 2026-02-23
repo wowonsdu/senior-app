@@ -201,7 +201,7 @@ Zasady etapu:
 - [x] 9.26 Alerty: cleanup — usun prog kategorii/cooldown (UI/domain/data/DI)
 - [x] 9.27 Alerty: UI — reusable sekcja kanaly + opiekunowie (dla kazdego typu)
 - [x] 9.28 Alerty: VM/DI — per typ kanaly + opiekunowie (ObserveAlertConfig + ObserveAgents)
-- [ ] 9.29 Alerty: alertEvents — ATTENTION po progach, CRITICAL po spike + klasyfikacja jako metadata
+- [x] 9.29 Alerty: alertEvents — ATTENTION po progach, CRITICAL po spike + klasyfikacja jako metadata
 - [ ] 9.30 Alerty: smoke — aktualizacja skryptu settings+alerts
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)

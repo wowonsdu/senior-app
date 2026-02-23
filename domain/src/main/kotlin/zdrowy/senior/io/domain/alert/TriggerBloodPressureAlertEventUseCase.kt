@@ -29,13 +29,13 @@ class TriggerBloodPressureAlertEventUseCase(
                     diastolic = diastolic
                 )
 
-                val criticalReasons = buildList {
+                val thresholdReasons = buildList {
                     val sysMin = setting.systolicMin ?: setting.min
                     val sysMax = setting.systolicMax ?: setting.max
-                    if (sysMin != null && systolic < sysMin) add("CRITICAL_SYS_LOW")
-                    if (sysMax != null && systolic > sysMax) add("CRITICAL_SYS_HIGH")
-                    if (setting.diastolicMin != null && diastolic < setting.diastolicMin) add("CRITICAL_DIA_LOW")
-                    if (setting.diastolicMax != null && diastolic > setting.diastolicMax) add("CRITICAL_DIA_HIGH")
+                    if (sysMin != null && systolic < sysMin) add("THRESHOLD_SYS_LOW")
+                    if (sysMax != null && systolic > sysMax) add("THRESHOLD_SYS_HIGH")
+                    if (setting.diastolicMin != null && diastolic < setting.diastolicMin) add("THRESHOLD_DIA_LOW")
+                    if (setting.diastolicMax != null && diastolic > setting.diastolicMax) add("THRESHOLD_DIA_HIGH")
                 }
 
                 val spikeReasonsSingle = spikeReasonsSingle(
@@ -46,8 +46,12 @@ class TriggerBloodPressureAlertEventUseCase(
                 )
 
                 spikeReasonsSingle.map { spikeReasons ->
-                    val allReasons = criticalReasons + spikeReasons
-                    val severity = if (allReasons.isNotEmpty()) AlertSeverity.CRITICAL else null
+                    val allReasons = thresholdReasons + spikeReasons
+                    val severity = when {
+                        spikeReasons.isNotEmpty() -> AlertSeverity.CRITICAL
+                        thresholdReasons.isNotEmpty() -> AlertSeverity.ATTENTION
+                        else -> null
+                    }
 
                     val draft = severity?.let { resolvedSeverity ->
                         AlertEventDraft(
