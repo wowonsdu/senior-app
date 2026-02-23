@@ -31,7 +31,7 @@ class FirestoreNotificationSettingsRepository(
                 if (snapshot.exists() && alerts != null) {
                     Single.just(parseSnapshot(snapshot.get("alerts")))
                 } else {
-                    migrateFromLegacy(uid)
+                    Single.just(defaultSettings())
                 }
             }
     }
@@ -119,34 +119,6 @@ class FirestoreNotificationSettingsRepository(
         }
     }
 
-    private fun migrateFromLegacy(uid: String): Single<NotificationSettings> {
-        val legacyCol = firestore.collection(FirestorePaths.USERS)
-            .document(uid)
-            .collection(FirestorePaths.ALERTS)
-
-        return legacyCol.get()
-            .toSingle()
-            .map { snapshot ->
-                val byType = snapshot.documents.associateBy { it.id }
-                val settings = MeasurementType.values().map { type ->
-                    val doc = byType[type.name]
-                    buildLegacySetting(type, doc?.data)
-                }
-                NotificationSettings(alerts = settings)
-            }
-            .flatMap { settings ->
-                val doc = newDoc(uid)
-                doc.set(
-                    mapOf(
-                        "alerts" to buildAlertsMap(settings),
-                        "migratedFromLegacyAt" to FieldValue.serverTimestamp(),
-                        "updatedAt" to FieldValue.serverTimestamp()
-                    ),
-                    SetOptions.merge()
-                ).toCompletable().andThen(Single.just(settings))
-            }
-    }
-
     private fun setAlertFields(type: MeasurementType, fields: Map<String, Any?>): Completable {
         val uid = requireUid()
         val doc = newDoc(uid)
@@ -187,39 +159,6 @@ class FirestoreNotificationSettingsRepository(
     }
 
     private fun buildNewSetting(type: MeasurementType, raw: Map<*, *>?): AlertSetting {
-        if (raw == null) return defaultSetting(type)
-        val enabled = raw["enabled"] as? Boolean ?: true
-        val rawMin = parseDouble(raw["min"])
-        val rawMax = parseDouble(raw["max"])
-        val isPressure = type == MeasurementType.PRESSURE
-        val systolicMin = if (isPressure) parseDouble(raw["systolicMin"]) ?: rawMin else null
-        val systolicMax = if (isPressure) parseDouble(raw["systolicMax"]) ?: rawMax else null
-        val diastolicMin = if (isPressure) parseDouble(raw["diastolicMin"]) else null
-        val diastolicMax = if (isPressure) parseDouble(raw["diastolicMax"]) else null
-        val min = if (isPressure) systolicMin else rawMin
-        val max = if (isPressure) systolicMax else rawMax
-        val spikePercent = (raw["spikePercent"] as? Number)?.toInt() ?: 20
-        val windowCount = (raw["windowCount"] as? Number)?.toInt() ?: 3
-        val channels = if (raw.containsKey("channels")) parseChannels(raw["channels"]) else null
-        val caregiverUids = parseStringList(raw["caregiverUids"])
-
-        return AlertSetting(
-            type = type,
-            enabled = enabled,
-            min = min,
-            max = max,
-            spikePercent = spikePercent,
-            windowCount = windowCount,
-            channels = channels ?: setOf(AlertChannel.APP),
-            caregiverIds = caregiverUids,
-            systolicMin = systolicMin,
-            systolicMax = systolicMax,
-            diastolicMin = diastolicMin,
-            diastolicMax = diastolicMax
-        )
-    }
-
-    private fun buildLegacySetting(type: MeasurementType, raw: Map<String, Any?>?): AlertSetting {
         if (raw == null) return defaultSetting(type)
         val enabled = raw["enabled"] as? Boolean ?: true
         val rawMin = parseDouble(raw["min"])

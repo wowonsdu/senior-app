@@ -10,7 +10,6 @@ internal object FirestorePaths {
     const val MEASUREMENTS = "measurements"
     const val MEASUREMENT_READ_STATES = "measurementReadStates"
     const val CONTACTS = "contacts"
-    const val ALERTS = "alerts"
     const val ALERT_EVENTS = "alertEvents"
     const val CARE_LINKS = "careLinks"
 

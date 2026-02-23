@@ -151,7 +151,7 @@ Zasady etapu:
 - [x] Migracja: SettingsRepository (InMemory -> Firestore)
 - [x] Migracja: MeasurementRepository (InMemory -> Firestore)
 - [x] Migracja: AgentRepository + AccessCodeRepository (InMemory -> Firestore)
-- [x] Migracja: AlertRepository (InMemory -> Firestore)
+- [x] Migracja: NotificationSettingsRepository (Firestore settings/notifications)
 - [x] Migracja: DI przełączone na Firestore repozytoria
 
 ## Etap 8 — Realtime: PersonalData (watcher)
@@ -207,11 +207,12 @@ Zasady etapu:
 - [x] 9.32 UI: input_height_compact — fix obcietych tekstow w polach
 - [x] 9.33 Alerty: plan — config -> users/{uid}/settings/notifications (docs/plan) + wpis do PLAN.md
 - [x] 9.34 Alerty: domain — NotificationSettings (settings usera) + use case'y
-- [x] 9.35 Alerty: data — Firestore repo configu w users/{uid}/settings/notifications + migracja z /alerts
+- [x] 9.35 Alerty: data — Firestore repo configu w users/{uid}/settings/notifications
 - [x] 9.36 Alerty: DI/UI — przepiecie na NotificationSettings + cleanup starego configu
 - [x] 9.37 Alerty: walidacja — assembleDebug + test
 - [x] 9.38 Alerty: docs — aktualizacja USE_CASES + Firestore schema (settings/notifications)
 - [x] 9.39 Alerty: fix — update pol per-typ bez nadpisywania mapy alerts
+- [x] 9.40 Alerty: cleanup — usuniecie legacy /alerts i migracji
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
