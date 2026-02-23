@@ -20,6 +20,14 @@ import zdrowy.senior.io.domain.alert.UpdateAlertChannelsUseCase
 import zdrowy.senior.io.domain.alert.UpdateBloodPressureCriticalThresholdsUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementType
 
+// Domyślne granice "prawidłowego" ciśnienia (office, ESC/ESH):
+// - hipotonia często: <90/<60
+// - górna granica "normal": <130/<85
+private const val DEFAULT_SYS_MIN = 90.0
+private const val DEFAULT_SYS_MAX = 129.0
+private const val DEFAULT_DIA_MIN = 60.0
+private const val DEFAULT_DIA_MAX = 84.0
+
 class PatientAlertsViewModel(
     private val observeAlertConfig: ObserveAlertConfigUseCase,
     private val setAlertEnabled: SetAlertEnabledUseCase,
@@ -80,12 +88,22 @@ class PatientAlertsViewModel(
                     val pressureUi = if (setting == null) {
                         PressureAlertConfigUi.fallback()
                     } else {
+                        val sysMin = setting.systolicMin ?: setting.min
+                        val sysMax = setting.systolicMax ?: setting.max
+                        val diaMin = setting.diastolicMin
+                        val diaMax = setting.diastolicMax
+
+                        val resolvedSysMin = if (sysMin == null && sysMax == null) DEFAULT_SYS_MIN else sysMin
+                        val resolvedSysMax = if (sysMin == null && sysMax == null) DEFAULT_SYS_MAX else sysMax
+                        val resolvedDiaMin = if (diaMin == null && diaMax == null) DEFAULT_DIA_MIN else diaMin
+                        val resolvedDiaMax = if (diaMin == null && diaMax == null) DEFAULT_DIA_MAX else diaMax
+
                         PressureAlertConfigUi(
                             enabled = setting.enabled,
-                            systolicMin = setting.systolicMin ?: setting.min,
-                            systolicMax = setting.systolicMax ?: setting.max,
-                            diastolicMin = setting.diastolicMin,
-                            diastolicMax = setting.diastolicMax
+                            systolicMin = resolvedSysMin,
+                            systolicMax = resolvedSysMax,
+                            diastolicMin = resolvedDiaMin,
+                            diastolicMax = resolvedDiaMax
                         )
                     }
 
@@ -215,10 +233,10 @@ data class PressureAlertConfigUi(
     companion object {
         fun fallback(): PressureAlertConfigUi = PressureAlertConfigUi(
             enabled = true,
-            systolicMin = null,
-            systolicMax = null,
-            diastolicMin = null,
-            diastolicMax = null
+            systolicMin = DEFAULT_SYS_MIN,
+            systolicMax = DEFAULT_SYS_MAX,
+            diastolicMin = DEFAULT_DIA_MIN,
+            diastolicMax = DEFAULT_DIA_MAX
         )
     }
 }

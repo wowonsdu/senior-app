@@ -347,6 +347,8 @@
 
     <string name="patient_alerts_config_low_hint">Krytycznie niska</string>
     <string name="patient_alerts_config_high_hint">Krytycznie wysoka</string>
+    <string name="patient_alerts_config_low_short_hint">Niska</string>
+    <string name="patient_alerts_config_high_short_hint">Wysoka</string>
     <string name="patient_alerts_config_critical_low_caption">Wartosc ponizej tej granicy</string>
     <string name="patient_alerts_config_critical_high_caption">Wartosc powyzej tej granicy</string>
     <string name="patient_alerts_config_spike_toggle">Monitoruj gwaltowne zmiany</string>

@@ -203,6 +203,7 @@ Zasady etapu:
 - [x] 9.28 Alerty: VM/DI — per typ kanaly + opiekunowie (ObserveAlertConfig + ObserveAgents)
 - [x] 9.29 Alerty: alertEvents — ATTENTION po progach, CRITICAL po spike + klasyfikacja jako metadata
 - [x] 9.30 Alerty: smoke — aktualizacja skryptu settings+alerts
+- [x] 9.31 Alerty: cisnienie — domyslne progi (norma) + UI (hinty nie uciete)
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case

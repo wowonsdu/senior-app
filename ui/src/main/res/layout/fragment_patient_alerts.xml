@@ -642,7 +642,7 @@
                             android:layout_width="0dp"
                             android:layout_height="@dimen/input_height_compact"
                             android:layout_weight="1"
-                            android:hint="@string/patient_alerts_config_low_hint"
+                            android:hint="@string/patient_alerts_config_low_short_hint"
                             app:suffixText="mmHg">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -662,7 +662,7 @@
                             android:layout_height="@dimen/input_height_compact"
                             android:layout_marginStart="@dimen/spacing_s"
                             android:layout_weight="1"
-                            android:hint="@string/patient_alerts_config_high_hint"
+                            android:hint="@string/patient_alerts_config_high_short_hint"
                             app:suffixText="mmHg">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -674,6 +674,29 @@
                                 android:inputType="number"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/patient_alerts_config_critical_low_caption"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/senior_text_tertiary" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/patient_alerts_config_critical_high_caption"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/senior_text_tertiary" />
                     </LinearLayout>
 
                     <TextView
@@ -696,7 +719,7 @@
                             android:layout_width="0dp"
                             android:layout_height="@dimen/input_height_compact"
                             android:layout_weight="1"
-                            android:hint="@string/patient_alerts_config_low_hint"
+                            android:hint="@string/patient_alerts_config_low_short_hint"
                             app:suffixText="mmHg">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -716,7 +739,7 @@
                             android:layout_height="@dimen/input_height_compact"
                             android:layout_marginStart="@dimen/spacing_s"
                             android:layout_weight="1"
-                            android:hint="@string/patient_alerts_config_high_hint"
+                            android:hint="@string/patient_alerts_config_high_short_hint"
                             app:suffixText="mmHg">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -728,6 +751,29 @@
                                 android:inputType="number"
                                 android:textSize="14sp" />
                         </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/patient_alerts_config_critical_low_caption"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/senior_text_tertiary" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/patient_alerts_config_critical_high_caption"
+                            android:textAppearance="@style/TextAppearance.Senior.Caption"
+                            android:textColor="@color/senior_text_tertiary" />
                     </LinearLayout>
 
                     <com.google.android.material.button.MaterialButton
