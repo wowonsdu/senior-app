@@ -141,33 +141,21 @@ try {
   }
   Wait-ForId "${PackageId}:id/patient_settings_alerts" 10 "07-settings" | Out-Null
   Tap-ById "${PackageId}:id/patient_settings_alerts" "07-settings"
-  $aXml = Wait-ForId "${PackageId}:id/patient_alerts_overview_toolbar" 10 "08-alerts-overview"
-  Assert-True (Contains-Text $aXml "patient_alerts_list") "Alerts list not present"
+  Wait-ForId "${PackageId}:id/patient_alerts_toolbar" 10 "08-alerts" | Out-Null
+  Wait-ForId "${PackageId}:id/patient_alerts_notifications_sugar" 10 "08-alerts" | Out-Null
+  Pass "TC-NAV-ALERTS"
 
-  # Regression: mojibake separator from earlier runs should be gone.
-  $badSep = ([string][char]226) + ([string][char]8364) + ([string][char]728)  # "â€˘"
-  Assert-True (-not (Contains-Text $aXml $badSep)) "Found mojibake separator 'â€˘' in alerts overview"
-  Pass "TC-ALERT-OVERVIEW-SEPARATOR"
-
-  Tap-ById "${PackageId}:id/alerts_overview_save" "09-alerts-config-open"
-  $cXml = Wait-ForId "${PackageId}:id/patient_alerts_config_toolbar" 10 "09-alerts-config"
-  Assert-Text $cXml "Konfiguracja wartosci krytycznych"
-  Assert-Text $cXml "Wartosci krytyczne"
-  Assert-Text $cXml "Krytycznie niska"
-  Assert-Text $cXml "Krytycznie wysoka"
-  Assert-Text $cXml "Zmiana (%)"
-  Assert-Text $cXml "W ciagu pomiarow"
-
-  # Scroll down to channels section to assert labels.
+  # Scroll down to notifications section to assert labels.
   Swipe 540 2000 540 600 400
-  $c2 = Dump-Ui "10-alerts-config-scroll"
+  $c2 = Dump-Ui "09-alerts-scroll"
   Assert-Text $c2 "Kanaly powiadomien"
   Assert-Text $c2 "Wlacz wszystkie"
   Assert-Text $c2 "Wylacz wszystkie"
   Assert-Text $c2 "SMS"
   Assert-Text $c2 "Email"
   Assert-Text $c2 "W aplikacji"
-  Pass "TC-ALERT-CONFIG-TEXTS"
+  Assert-Text $c2 "Powiadomienia dla opiekunow"
+  Pass "TC-ALERTS-NOTIFICATIONS-TEXTS"
 } catch {
   $msg = $_.Exception.Message
   Fail "SMOKE" $msg
@@ -175,3 +163,4 @@ try {
   $results | ForEach-Object { Write-Output $_ }
   if ($results | Where-Object { $_ -like "FAIL*" }) { exit 1 } else { exit 0 }
 }
+
