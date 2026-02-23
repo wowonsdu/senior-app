@@ -219,6 +219,7 @@ Zasady etapu:
 - [x] 9.44 Alerty: walidacja — assembleDebug
 - [x] 9.45 Alerty: docs — pressure bez min/max + sugar drop fields
 - [x] 9.46 Alerty: defaults — seed channels + progi w Firestore
+- [x] 9.47 Alerty: walidacja — assembleDebug
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
