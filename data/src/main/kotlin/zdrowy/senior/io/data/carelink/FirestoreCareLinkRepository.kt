@@ -15,6 +15,7 @@ import zdrowy.senior.io.domain.carelink.CareLinkCodeType
 import zdrowy.senior.io.domain.carelink.CareLinkDraft
 import zdrowy.senior.io.domain.carelink.CareLinkRepository
 import zdrowy.senior.io.domain.carelink.CareLinkStatus
+import zdrowy.senior.io.domain.agent.AgentRole
 import zdrowy.senior.io.domain.user.CurrentUserRoleContext
 import zdrowy.senior.io.domain.user.UserRole
 import kotlin.random.Random
@@ -205,6 +206,7 @@ class FirestoreCareLinkRepository(
                 val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
                 tx.delete(draftDoc)
             }
+            ensureCaregiverContact(tx, patientUid, caregiverUid)
             CareLink(patientUid = patientUid, caregiverUid = caregiverUid, status = CareLinkStatus.ACTIVE)
         }.toSingle()
     }
@@ -280,6 +282,52 @@ class FirestoreCareLinkRepository(
 
     private fun requireRole(): UserRole {
         return roleContext.getRole() ?: throw IllegalStateException("User role not set")
+    }
+
+    private fun ensureCaregiverContact(
+        tx: com.google.firebase.firestore.Transaction,
+        patientUid: String,
+        caregiverUid: String
+    ) {
+        val caregiverDoc = firestore.collection(FirestorePaths.USERS).document(caregiverUid)
+        val caregiverSnapshot = tx.get(caregiverDoc)
+        val caregiverPersonalDoc = caregiverDoc
+            .collection(FirestorePaths.SETTINGS)
+            .document(FirestorePaths.PERSONAL_DATA)
+        val caregiverPersonalSnapshot = tx.get(caregiverPersonalDoc)
+
+        val firstName = caregiverPersonalSnapshot.getString("firstName").orEmpty()
+        val lastName = caregiverPersonalSnapshot.getString("lastName").orEmpty()
+        val combinedName = listOf(firstName, lastName).filter { it.isNotBlank() }.joinToString(" ")
+        val phonePersonal = caregiverPersonalSnapshot.getString("phoneNumber").orEmpty()
+        val phoneProfile = caregiverSnapshot.getString("phoneNumberE164").orEmpty()
+        val phone = phonePersonal.ifBlank { phoneProfile }
+        val email = caregiverPersonalSnapshot.getString("email").orEmpty()
+        val fullName = when {
+            combinedName.isNotBlank() -> combinedName
+            phone.isNotBlank() -> phone
+            else -> "Opiekun"
+        }
+
+        val contactDoc = firestore.collection(FirestorePaths.USERS)
+            .document(patientUid)
+            .collection(FirestorePaths.CONTACTS)
+            .document(caregiverUid)
+
+        tx.set(
+            contactDoc,
+            mapOf(
+                "fullName" to fullName,
+                "role" to AgentRole.CAREGIVER.name,
+                "phone" to phone,
+                "email" to email,
+                "specialization" to null,
+                "linkedUid" to caregiverUid,
+                "createdAt" to FieldValue.serverTimestamp(),
+                "updatedAt" to FieldValue.serverTimestamp()
+            ),
+            SetOptions.merge()
+        )
     }
 
     private class CodeCollisionException : RuntimeException()
