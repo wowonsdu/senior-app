@@ -209,6 +209,7 @@ Zasady etapu:
 - [x] 9.34 Alerty: domain — NotificationSettings (settings usera) + use case'y
 - [x] 9.35 Alerty: data — Firestore repo configu w users/{uid}/settings/notifications + migracja z /alerts
 - [x] 9.36 Alerty: DI/UI — przepiecie na NotificationSettings + cleanup starego configu
+- [x] 9.37 Alerty: walidacja — assembleDebug + test
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
