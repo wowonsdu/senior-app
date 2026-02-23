@@ -205,6 +205,7 @@ Zasady etapu:
 - [x] 9.30 Alerty: smoke — aktualizacja skryptu settings+alerts
 - [x] 9.31 Alerty: cisnienie — domyslne progi (norma) + UI (hinty nie uciete)
 - [x] 9.32 UI: input_height_compact — fix obcietych tekstow w polach
+- [x] 9.33 Alerty: plan — config -> users/{uid}/settings/notifications (docs/plan) + wpis do PLAN.md
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
