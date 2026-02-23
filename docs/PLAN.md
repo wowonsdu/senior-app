@@ -213,6 +213,7 @@ Zasady etapu:
 - [x] 9.38 Alerty: docs — aktualizacja USE_CASES + Firestore schema (settings/notifications)
 - [x] 9.39 Alerty: fix — update pol per-typ bez nadpisywania mapy alerts
 - [x] 9.40 Alerty: cleanup — usuniecie legacy /alerts i migracji
+- [x] 9.41 Alerty: UI — ids + copy (cukier spadek/okno) + bez przycisku zapisu
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
