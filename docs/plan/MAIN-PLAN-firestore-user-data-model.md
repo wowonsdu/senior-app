@@ -6,7 +6,7 @@ Cel: przygotować kanoniczny model danych Firestore (pod pacjenta i opiekuna) or
 - Jedno konto Firebase Auth (`uid`) ma jedną stałą rolę: `PATIENT` albo `CAREGIVER`.
 - Struktura bazowa: `users/{uid}` + subkolekcje.
 - Kontakty pacjenta (opiekun/lekarz) są hybrydą: kontakt może nie mieć konta, a opcjonalnie ma `linkedUid`.
-- Alerty: `users/{patientUid}/alerts/{measurementType}` (1 doc per typ).
+- Alerty: `users/{uid}/settings/notifications` (1 doc, `alerts.{measurementType}.*`).
 - Pomiary: `timestampMs` jako `Long` (ms).
 
 ## Etap 0 — Kanoniczny schemat i mapowania

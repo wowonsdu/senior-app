@@ -1,20 +1,24 @@
-# Firestore — patient alerts plan
+# Firestore — alerty (config w settings/notifications)
 
 ## Scope
-- Mapowanie `AlertRepository` na dokumenty per-typ pomiaru.
+- Konfiguracja alertów jako ustawienia użytkownika: `users/{uid}/settings/notifications`.
+- Jeden dokument z mapą `alerts.{measurementType}.*` zamiast subkolekcji per-typ.
+- Migracja/seed ze starej ścieżki `users/{uid}/alerts/{measurementType}`.
 
 ## Modules And Layers
-- domain: `AlertRepository`, `AlertSetting`, `AlertChannel`
-- data: `FirestoreAlertRepository`
+- domain: `NotificationSettingsRepository`, `NotificationSettings`, `AlertSetting`, `AlertChannel`
+- data: `FirestoreNotificationSettingsRepository`
 
 ## Deliverables
-- `users/{patientUid}/alerts/{measurementType}` (1 doc per typ).
-- Update’y cząstkowe bez potrzeby przepisywania całej konfiguracji.
+- `users/{uid}/settings/notifications`:
+  - `alerts.{measurementType}.enabled/min/max/spikePercent/windowCount/channels/caregiverUids`
+  - `alerts.PRESSURE.systolicMin/systolicMax/diastolicMin/diastolicMax` (+ kompatybilne `min/max` jako SYS)
 
 ## Implementation Checklist
-- [ ] getAlertConfig(): złożyć `AlertConfig` dla wszystkich typów (fallback do defaultów).
-- [ ] setAlertEnabled/updateCriticalThresholds/updateSpikeRules/updateAlertChannels/updateAlertCaregivers → update jednego doc.
+- [ ] Odczyt nowego doc + fallback do `/alerts/*` + seed (migracja) do `settings/notifications`.
+- [ ] Update per-typ (merge) bez nadpisywania innych typów.
+- [ ] Obserwacja snapshotów nowego dokumentu.
 
 ## Validation
-- [ ] Emulator: zmiana jednego typu nie nadpisuje innych.
+- [ ] Emulator: po wejściu w ekran konfiguracji doc `settings/notifications` istnieje i aktualizuje się po zmianach.
 

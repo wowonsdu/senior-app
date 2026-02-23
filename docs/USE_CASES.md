@@ -173,41 +173,41 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Repo: `MeasurementByUidRepository`.
 
 ## Alerty i powiadomienia
-- UC-ALERT-01 GetAlertConfig
+- UC-ALERT-01 GetNotificationSettings
   - Cel: pobranie konfiguracji alertow.
   - Wejscie: brak.
-  - Wyjscie: `AlertConfig`.
-  - Repo: `AlertRepository`.
-- UC-ALERT-02 UpdateAlertConfig
+  - Wyjscie: `NotificationSettings`.
+  - Repo: `NotificationSettingsRepository`.
+- UC-ALERT-02 UpdateNotificationSettings
   - Cel: zapis konfiguracji alertow.
-  - Wejscie: `AlertConfig`.
+  - Wejscie: `NotificationSettings`.
   - Wyjscie: `Unit`.
-  - Repo: `AlertRepository`.
+  - Repo: `NotificationSettingsRepository`.
 - UC-ALERT-03 SetAlertEnabled
   - Cel: wlacz/wyłącz alert dla typu pomiaru.
   - Wejscie: `type`, `enabled`.
   - Wyjscie: `Unit`.
-  - Repo: `AlertRepository`.
+  - Repo: `NotificationSettingsRepository`.
 - UC-ALERT-04 UpdateCriticalThresholds
   - Cel: ustawienie progow krytycznych.
   - Wejscie: `type`, `min`, `max`.
   - Wyjscie: `Unit`.
-  - Repo: `AlertRepository`.
+  - Repo: `NotificationSettingsRepository`.
 - UC-ALERT-05 UpdateSpikeRules
   - Cel: ustawienie progu gwaltownej zmiany.
   - Wejscie: `type`, `percent`, `windowCount`.
   - Wyjscie: `Unit`.
-  - Repo: `AlertRepository`.
+  - Repo: `NotificationSettingsRepository`.
 - UC-ALERT-06 UpdateAlertChannels
   - Cel: ustawienie kanalow powiadomien (SMS/email/app).
   - Wejscie: `type`, `channels`.
   - Wyjscie: `Unit`.
-  - Repo: `AlertRepository`.
+  - Repo: `NotificationSettingsRepository`.
 - UC-ALERT-07 UpdateAlertCaregivers
   - Cel: przypisanie opiekunow do alertu.
   - Wejscie: `type`, `caregiverIds`.
   - Wyjscie: `Unit`.
-  - Repo: `AlertRepository`.
+  - Repo: `NotificationSettingsRepository`.
 
 ## Wizyty
 - UC-VISIT-01 AddVisit
