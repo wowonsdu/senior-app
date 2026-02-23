@@ -171,6 +171,7 @@ class FirestoreCareLinkRepository(
             val linkId = "${patientUid}_${caregiverUid}"
             val linkDoc = firestore.collection(FirestorePaths.CARE_LINKS).document(linkId)
             val linkSnapshot = tx.get(linkDoc)
+            val caregiverContactPayload = buildCaregiverContactPayload(tx, caregiverUid)
             if (!linkSnapshot.exists()) {
                 tx.set(
                     linkDoc,
@@ -201,12 +202,17 @@ class FirestoreCareLinkRepository(
                 }
             }
 
+            val contactDoc = firestore.collection(FirestorePaths.USERS)
+                .document(patientUid)
+                .collection(FirestorePaths.CONTACTS)
+                .document(caregiverUid)
+            tx.set(contactDoc, caregiverContactPayload, SetOptions.merge())
+
             tx.delete(doc)
             if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
                 val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
                 tx.delete(draftDoc)
             }
-            ensureCaregiverContact(tx, patientUid, caregiverUid)
             CareLink(patientUid = patientUid, caregiverUid = caregiverUid, status = CareLinkStatus.ACTIVE)
         }.toSingle()
     }
@@ -284,11 +290,10 @@ class FirestoreCareLinkRepository(
         return roleContext.getRole() ?: throw IllegalStateException("User role not set")
     }
 
-    private fun ensureCaregiverContact(
+    private fun buildCaregiverContactPayload(
         tx: com.google.firebase.firestore.Transaction,
-        patientUid: String,
         caregiverUid: String
-    ) {
+    ): Map<String, Any?> {
         val caregiverDoc = firestore.collection(FirestorePaths.USERS).document(caregiverUid)
         val caregiverSnapshot = tx.get(caregiverDoc)
         val caregiverPersonalDoc = caregiverDoc
@@ -309,24 +314,15 @@ class FirestoreCareLinkRepository(
             else -> "Opiekun"
         }
 
-        val contactDoc = firestore.collection(FirestorePaths.USERS)
-            .document(patientUid)
-            .collection(FirestorePaths.CONTACTS)
-            .document(caregiverUid)
-
-        tx.set(
-            contactDoc,
-            mapOf(
-                "fullName" to fullName,
-                "role" to AgentRole.CAREGIVER.name,
-                "phone" to phone,
-                "email" to email,
-                "specialization" to null,
-                "linkedUid" to caregiverUid,
-                "createdAt" to FieldValue.serverTimestamp(),
-                "updatedAt" to FieldValue.serverTimestamp()
-            ),
-            SetOptions.merge()
+        return mapOf(
+            "fullName" to fullName,
+            "role" to AgentRole.CAREGIVER.name,
+            "phone" to phone,
+            "email" to email,
+            "specialization" to null,
+            "linkedUid" to caregiverUid,
+            "createdAt" to FieldValue.serverTimestamp(),
+            "updatedAt" to FieldValue.serverTimestamp()
         )
     }
 

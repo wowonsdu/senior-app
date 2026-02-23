@@ -223,6 +223,7 @@ Zasady etapu:
 - [x] 9.48 Alerty: defaults — progi cukru/tetna (normy)
 - [x] 9.49 Alerty: seed defaults po rejestracji (personalData + notifications)
 - [x] 9.50 CareLink: auto-dodanie opiekuna do kontaktow pacjenta
+- [x] 9.51 CareLink: transaction reads before writes (fix)
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
