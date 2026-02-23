@@ -207,6 +207,7 @@ Zasady etapu:
 - [x] 9.32 UI: input_height_compact — fix obcietych tekstow w polach
 - [x] 9.33 Alerty: plan — config -> users/{uid}/settings/notifications (docs/plan) + wpis do PLAN.md
 - [x] 9.34 Alerty: domain — NotificationSettings (settings usera) + use case'y
+- [x] 9.35 Alerty: data — Firestore repo configu w users/{uid}/settings/notifications + migracja z /alerts
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
