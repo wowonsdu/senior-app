@@ -71,10 +71,10 @@ class FirestoreAlertEventRepository(
 
         return query.get()
             .toSingle()
-            .map { snapshot -> snapshot.documents.firstOrNull() }
-            .flatMapMaybe { doc ->
-                val event = doc?.toAlertEventOrNull()
-                if (event != null) Maybe.just(event) else Maybe.empty()
+            .flatMapMaybe { snapshot ->
+                val doc = snapshot.documents.firstOrNull() ?: return@flatMapMaybe Maybe.empty()
+                val event = doc.toAlertEventOrNull() ?: return@flatMapMaybe Maybe.empty()
+                Maybe.just(event)
             }
     }
 
