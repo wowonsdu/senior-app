@@ -4,23 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.SerialDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.alert.ObserveAlertConfigUseCase
 import zdrowy.senior.io.domain.alert.SetAlertEnabledUseCase
-import zdrowy.senior.io.domain.alert.UpdateBloodPressureCategoryRulesUseCase
 import zdrowy.senior.io.domain.alert.UpdateBloodPressureCriticalThresholdsUseCase
-import zdrowy.senior.io.domain.measurement.BloodPressureSeverity
-import zdrowy.senior.io.domain.measurement.BloodPressureStandard
 import zdrowy.senior.io.domain.measurement.MeasurementType
 
 class PatientAlertsViewModel(
     private val observeAlertConfig: ObserveAlertConfigUseCase,
     private val setAlertEnabled: SetAlertEnabledUseCase,
-    private val updateBloodPressureCriticalThresholds: UpdateBloodPressureCriticalThresholdsUseCase,
-    private val updateBloodPressureCategoryRules: UpdateBloodPressureCategoryRulesUseCase
+    private val updateBloodPressureCriticalThresholds: UpdateBloodPressureCriticalThresholdsUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val configDisposable = SerialDisposable()
@@ -49,11 +44,7 @@ class PatientAlertsViewModel(
                             systolicMin = setting.systolicMin ?: setting.min,
                             systolicMax = setting.systolicMax ?: setting.max,
                             diastolicMin = setting.diastolicMin,
-                            diastolicMax = setting.diastolicMax,
-                            categoryEnabled = setting.categoryEnabled,
-                            categoryThreshold = setting.categoryThreshold,
-                            categoryCooldownMinutes = setting.categoryCooldownMinutes,
-                            standard = setting.bpStandard
+                            diastolicMax = setting.diastolicMax
                         )
                     }
                 }
@@ -78,28 +69,15 @@ class PatientAlertsViewModel(
         systolicMin: Double?,
         systolicMax: Double?,
         diastolicMin: Double?,
-        diastolicMax: Double?,
-        categoryEnabled: Boolean,
-        categoryThreshold: BloodPressureSeverity,
-        categoryCooldownMinutes: Int,
-        standard: BloodPressureStandard = BloodPressureStandard.ESC_ESH_OFFICE
+        diastolicMax: Double?
     ) {
-        val save = Completable.concatArray(
+        disposables.add(
             updateBloodPressureCriticalThresholds(
                 systolicMin = systolicMin,
                 systolicMax = systolicMax,
                 diastolicMin = diastolicMin,
                 diastolicMax = diastolicMax
-            ),
-            updateBloodPressureCategoryRules(
-                enabled = categoryEnabled,
-                threshold = categoryThreshold,
-                cooldownMinutes = categoryCooldownMinutes,
-                standard = standard
-            )
-        )
-        disposables.add(
-            save.subscribeOn(Schedulers.io())
+            ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     _saveResult.value = true
@@ -124,11 +102,7 @@ data class PressureAlertConfigUi(
     val systolicMin: Double?,
     val systolicMax: Double?,
     val diastolicMin: Double?,
-    val diastolicMax: Double?,
-    val categoryEnabled: Boolean,
-    val categoryThreshold: BloodPressureSeverity,
-    val categoryCooldownMinutes: Int,
-    val standard: BloodPressureStandard
+    val diastolicMax: Double?
 ) {
     companion object {
         fun fallback(): PressureAlertConfigUi = PressureAlertConfigUi(
@@ -136,11 +110,7 @@ data class PressureAlertConfigUi(
             systolicMin = null,
             systolicMax = null,
             diastolicMin = null,
-            diastolicMax = null,
-            categoryEnabled = true,
-            categoryThreshold = BloodPressureSeverity.HTN1,
-            categoryCooldownMinutes = 60,
-            standard = BloodPressureStandard.ESC_ESH_OFFICE
+            diastolicMax = null
         )
     }
 }

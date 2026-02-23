@@ -26,8 +26,7 @@ class TriggerBloodPressureAlertEventUseCase(
 
                 val classification = classifyBloodPressure(
                     systolic = systolic,
-                    diastolic = diastolic,
-                    standard = setting.bpStandard
+                    diastolic = diastolic
                 )
 
                 val criticalReasons = buildList {
@@ -46,36 +45,9 @@ class TriggerBloodPressureAlertEventUseCase(
                     diastolic = diastolic
                 )
 
-                val lastAttentionCreatedAtSingle = alertEventRepository
-                    .getLastEvent(MeasurementType.PRESSURE, AlertSeverity.ATTENTION)
-                    .map { event -> event.createdAt ?: 0L }
-                    .defaultIfEmpty(0L)
-
-                Single.zip(
-                    spikeReasonsSingle,
-                    lastAttentionCreatedAtSingle
-                ) { spikeReasons, lastAttentionCreatedAt ->
-                    val now = System.currentTimeMillis()
-
-                    val categoryReached = setting.categoryEnabled &&
-                        classification.severity.ordinal >= setting.categoryThreshold.ordinal
-                    val cooldownMs = setting.categoryCooldownMinutes.coerceAtLeast(0) * 60_000L
-                    val categoryAllowed = categoryReached && (
-                        lastAttentionCreatedAt <= 0L || cooldownMs == 0L || now - lastAttentionCreatedAt >= cooldownMs
-                    )
-                    val categoryReasons = if (categoryAllowed) {
-                        listOf("CATEGORY_${classification.severity.name}")
-                    } else {
-                        emptyList()
-                    }
-
-                    val allReasons = criticalReasons + spikeReasons + categoryReasons
-                    val isCritical = criticalReasons.isNotEmpty() || spikeReasons.isNotEmpty()
-                    val severity = when {
-                        isCritical -> AlertSeverity.CRITICAL
-                        categoryReasons.isNotEmpty() -> AlertSeverity.ATTENTION
-                        else -> null
-                    }
+                spikeReasonsSingle.map { spikeReasons ->
+                    val allReasons = criticalReasons + spikeReasons
+                    val severity = if (allReasons.isNotEmpty()) AlertSeverity.CRITICAL else null
 
                     val draft = severity?.let { resolvedSeverity ->
                         AlertEventDraft(

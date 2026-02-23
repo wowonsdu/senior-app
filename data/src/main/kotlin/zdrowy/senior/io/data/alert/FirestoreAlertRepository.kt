@@ -14,8 +14,6 @@ import zdrowy.senior.io.domain.alert.AlertChannel
 import zdrowy.senior.io.domain.alert.AlertConfig
 import zdrowy.senior.io.domain.alert.AlertRepository
 import zdrowy.senior.io.domain.alert.AlertSetting
-import zdrowy.senior.io.domain.measurement.BloodPressureSeverity
-import zdrowy.senior.io.domain.measurement.BloodPressureStandard
 import zdrowy.senior.io.domain.measurement.MeasurementType
 
 class FirestoreAlertRepository(
@@ -78,10 +76,6 @@ class FirestoreAlertRepository(
                     "systolicMax" to (if (isPressure) (setting.systolicMax ?: setting.max) else null),
                     "diastolicMin" to (if (isPressure) setting.diastolicMin else null),
                     "diastolicMax" to (if (isPressure) setting.diastolicMax else null),
-                    "categoryEnabled" to (if (isPressure) setting.categoryEnabled else null),
-                    "categoryThreshold" to (if (isPressure) setting.categoryThreshold.name else null),
-                    "categoryCooldownMinutes" to (if (isPressure) setting.categoryCooldownMinutes else null),
-                    "bpStandard" to (if (isPressure) setting.bpStandard.name else null),
                     "spikePercent" to setting.spikePercent,
                     "windowCount" to setting.windowCount,
                     "channels" to setting.channels.map { it.name },
@@ -133,22 +127,6 @@ class FirestoreAlertRepository(
         )
     }
 
-    override fun updateBloodPressureCategoryRules(
-        enabled: Boolean,
-        threshold: BloodPressureSeverity,
-        cooldownMinutes: Int,
-        standard: BloodPressureStandard
-    ): Completable {
-        return setFields(
-            MeasurementType.PRESSURE,
-            mapOf(
-                "categoryEnabled" to enabled,
-                "categoryThreshold" to threshold.name,
-                "categoryCooldownMinutes" to cooldownMinutes,
-                "bpStandard" to standard.name
-            )
-        )
-    }
 
     private fun setFields(type: MeasurementType, fields: Map<String, Any?>): Completable {
         val uid = requireUid()
@@ -178,16 +156,6 @@ class FirestoreAlertRepository(
 
     private fun parseInt(raw: Any?): Int? = (raw as? Number)?.toInt()
 
-    private fun parseBpSeverity(raw: Any?): BloodPressureSeverity? {
-        val name = raw as? String ?: return null
-        return runCatching { BloodPressureSeverity.valueOf(name) }.getOrNull()
-    }
-
-    private fun parseBpStandard(raw: Any?): BloodPressureStandard? {
-        val name = raw as? String ?: return null
-        return runCatching { BloodPressureStandard.valueOf(name) }.getOrNull()
-    }
-
     private fun buildAlertConfig(documents: List<com.google.firebase.firestore.DocumentSnapshot>): AlertConfig {
         val byType = documents.associateBy { it.id }
         val settings = MeasurementType.values().map { type ->
@@ -207,23 +175,6 @@ class FirestoreAlertRepository(
             val channels = parseChannels(doc?.get("channels"))
             val caregiverUids = parseStringList(doc?.get("caregiverUids"))
 
-            val categoryEnabled = if (isPressure) (doc?.getBoolean("categoryEnabled") ?: true) else false
-            val categoryThreshold = if (isPressure) {
-                parseBpSeverity(doc?.get("categoryThreshold")) ?: BloodPressureSeverity.HTN1
-            } else {
-                BloodPressureSeverity.HTN1
-            }
-            val categoryCooldownMinutes = if (isPressure) {
-                parseInt(doc?.get("categoryCooldownMinutes")) ?: 60
-            } else {
-                60
-            }
-            val bpStandard = if (isPressure) {
-                parseBpStandard(doc?.get("bpStandard")) ?: BloodPressureStandard.ESC_ESH_OFFICE
-            } else {
-                BloodPressureStandard.ESC_ESH_OFFICE
-            }
-
             AlertSetting(
                 type = type,
                 enabled = enabled,
@@ -236,11 +187,7 @@ class FirestoreAlertRepository(
                 systolicMin = systolicMin,
                 systolicMax = systolicMax,
                 diastolicMin = diastolicMin,
-                diastolicMax = diastolicMax,
-                categoryEnabled = categoryEnabled,
-                categoryThreshold = categoryThreshold,
-                categoryCooldownMinutes = categoryCooldownMinutes,
-                bpStandard = bpStandard
+                diastolicMax = diastolicMax
             )
         }
         return AlertConfig(settings = settings)

@@ -341,14 +341,6 @@
 
     <string name="patient_alerts_pressure_sys_label">Skurczowe (SYS)</string>
     <string name="patient_alerts_pressure_dia_label">Rozkurczowe (DIA)</string>
-    <string name="patient_alerts_pressure_category_section">Kategorie wg norm (ESC/ESH)</string>
-    <string name="patient_alerts_pressure_category_enabled">Powiadamiaj gdy kategoria jest wysoka</string>
-    <string name="patient_alerts_pressure_category_threshold_hint">Prog kategorii</string>
-    <string name="patient_alerts_pressure_category_cooldown_hint">Nie czesciej niz raz na</string>
-    <string name="patient_alerts_pressure_category_opt_high_normal">Wysokie prawidlowe</string>
-    <string name="patient_alerts_pressure_category_opt_htn1">Nadcisnienie 1</string>
-    <string name="patient_alerts_pressure_category_opt_htn2">Nadcisnienie 2</string>
-    <string name="patient_alerts_pressure_category_opt_htn3">Nadcisnienie 3</string>
     <string name="patient_alerts_pressure_save">ZAPISZ USTAWIENIA CISNIENIA</string>
     <string name="patient_alerts_pressure_toast_saved">Ustawienia cisnienia zapisane</string>
     <string name="patient_alerts_pressure_toast_save_error">Nie udalo sie zapisac ustawien cisnienia</string>

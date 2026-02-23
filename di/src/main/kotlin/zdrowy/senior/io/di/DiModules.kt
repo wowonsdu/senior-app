@@ -42,7 +42,6 @@ import zdrowy.senior.io.domain.alert.TriggerBloodPressureAlertEventUseCase
 import zdrowy.senior.io.domain.alert.UpdateAlertCaregiversUseCase
 import zdrowy.senior.io.domain.alert.UpdateAlertChannelsUseCase
 import zdrowy.senior.io.domain.alert.UpdateAlertConfigUseCase
-import zdrowy.senior.io.domain.alert.UpdateBloodPressureCategoryRulesUseCase
 import zdrowy.senior.io.domain.alert.UpdateBloodPressureCriticalThresholdsUseCase
 import zdrowy.senior.io.domain.alert.UpdateCriticalThresholdsUseCase
 import zdrowy.senior.io.domain.alert.UpdateSpikeRulesUseCase
@@ -160,7 +159,6 @@ val domainModule = module {
     factory { SetAlertEnabledUseCase(get()) }
     factory { UpdateCriticalThresholdsUseCase(get()) }
     factory { UpdateBloodPressureCriticalThresholdsUseCase(get()) }
-    factory { UpdateBloodPressureCategoryRulesUseCase(get()) }
     factory { UpdateSpikeRulesUseCase(get()) }
     factory { UpdateAlertChannelsUseCase(get()) }
     factory { UpdateAlertCaregiversUseCase(get()) }
@@ -238,7 +236,7 @@ val viewModelModule = module {
     viewModel { CaregiverDashboardViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { PatientHistoryViewModel(get(), get(), get()) }
     viewModel { PatientAgentsViewModel(get()) }
-    viewModel { PatientAlertsViewModel(get(), get(), get(), get()) }
+    viewModel { PatientAlertsViewModel(get(), get(), get()) }
     viewModel { PatientHomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel { PatientSettingsViewModel(get(), get(), get(), get(), get()) }
     viewModel { PatientMeasurementDialogViewModel(get(), get(), get(), get(), get(), get()) }

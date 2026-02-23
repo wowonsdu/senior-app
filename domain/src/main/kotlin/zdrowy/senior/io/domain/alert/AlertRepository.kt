@@ -3,8 +3,6 @@
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import zdrowy.senior.io.domain.measurement.BloodPressureSeverity
-import zdrowy.senior.io.domain.measurement.BloodPressureStandard
 import zdrowy.senior.io.domain.measurement.MeasurementType
 
 interface AlertRepository {
@@ -22,12 +20,5 @@ interface AlertRepository {
         systolicMax: Double?,
         diastolicMin: Double?,
         diastolicMax: Double?
-    ): Completable
-
-    fun updateBloodPressureCategoryRules(
-        enabled: Boolean,
-        threshold: BloodPressureSeverity,
-        cooldownMinutes: Int,
-        standard: BloodPressureStandard
     ): Completable
 }
