@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.disposables.SerialDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.PublishSubject
 import zdrowy.senior.io.domain.agent.Agent
 import zdrowy.senior.io.domain.agent.AgentRole
 import zdrowy.senior.io.domain.agent.ObserveAgentsUseCase
@@ -18,7 +19,10 @@ import zdrowy.senior.io.domain.settings.notifications.SetAlertEnabledUseCase
 import zdrowy.senior.io.domain.settings.notifications.UpdateAlertCaregiversUseCase
 import zdrowy.senior.io.domain.settings.notifications.UpdateAlertChannelsUseCase
 import zdrowy.senior.io.domain.settings.notifications.UpdateBloodPressureCriticalThresholdsUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateCriticalThresholdsUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateSugarDropRulesUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementType
+import java.util.concurrent.TimeUnit
 
 // Domyślne granice "prawidłowego" ciśnienia (office, ESC/ESH):
 // - hipotonia często: <90/<60
@@ -32,26 +36,35 @@ class PatientAlertsViewModel(
     private val observeNotificationSettings: ObserveNotificationSettingsUseCase,
     private val setAlertEnabled: SetAlertEnabledUseCase,
     private val updateBloodPressureCriticalThresholds: UpdateBloodPressureCriticalThresholdsUseCase,
+    private val updateCriticalThresholds: UpdateCriticalThresholdsUseCase,
+    private val updateSugarDropRules: UpdateSugarDropRulesUseCase,
     private val updateAlertChannels: UpdateAlertChannelsUseCase,
     private val updateAlertCaregivers: UpdateAlertCaregiversUseCase,
     private val observeAgents: ObserveAgentsUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val configDisposable = SerialDisposable()
+    private val pressureDrafts = PublishSubject.create<PressureDraft>()
+    private val sugarDrafts = PublishSubject.create<SugarDraft>()
+    private val pulseDrafts = PublishSubject.create<PulseDraft>()
     private var latestSettings: Map<MeasurementType, AlertSetting> = emptyMap()
     private var latestCaregivers: List<Agent> = emptyList()
 
     private val _pressureConfig = MutableLiveData<PressureAlertConfigUi>()
     val pressureConfig: LiveData<PressureAlertConfigUi> = _pressureConfig
 
+    private val _sugarConfig = MutableLiveData<SugarAlertConfigUi>()
+    val sugarConfig: LiveData<SugarAlertConfigUi> = _sugarConfig
+
+    private val _pulseConfig = MutableLiveData<PulseAlertConfigUi>()
+    val pulseConfig: LiveData<PulseAlertConfigUi> = _pulseConfig
+
     private val _notifications = MutableLiveData<Map<MeasurementType, AlertNotificationsUi>>()
     val notifications: LiveData<Map<MeasurementType, AlertNotificationsUi>> = _notifications
 
-    private val _saveResult = MutableLiveData<Boolean?>()
-    val saveResult: LiveData<Boolean?> = _saveResult
-
     init {
         disposables.add(configDisposable)
+        bindAutoSave()
     }
 
     fun start() {
@@ -88,8 +101,8 @@ class PatientAlertsViewModel(
                     val pressureUi = if (setting == null) {
                         PressureAlertConfigUi.fallback()
                     } else {
-                        val sysMin = setting.systolicMin ?: setting.min
-                        val sysMax = setting.systolicMax ?: setting.max
+                        val sysMin = setting.systolicMin
+                        val sysMax = setting.systolicMax
                         val diaMin = setting.diastolicMin
                         val diaMax = setting.diastolicMax
 
@@ -107,12 +120,35 @@ class PatientAlertsViewModel(
                         )
                     }
 
-                    Pair(pressureUi, notifications)
+                    val sugarSetting = settings.alerts.firstOrNull { it.type == MeasurementType.SUGAR }
+                    val sugarUi = SugarAlertConfigUi(
+                        enabled = sugarSetting?.enabled ?: true,
+                        min = sugarSetting?.min,
+                        max = sugarSetting?.max,
+                        dropDelta = sugarSetting?.dropDelta,
+                        dropWindowMinutes = sugarSetting?.dropWindowMinutes
+                    )
+
+                    val pulseSetting = settings.alerts.firstOrNull { it.type == MeasurementType.PULSE }
+                    val pulseUi = PulseAlertConfigUi(
+                        enabled = pulseSetting?.enabled ?: true,
+                        min = pulseSetting?.min,
+                        max = pulseSetting?.max
+                    )
+
+                    AlertsUiSnapshot(
+                        pressure = pressureUi,
+                        sugar = sugarUi,
+                        pulse = pulseUi,
+                        notifications = notifications
+                    )
                 }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ (pressure, notifications) ->
-                    _pressureConfig.value = pressure
-                    _notifications.value = notifications
+                .subscribe({ snapshot ->
+                    _pressureConfig.value = snapshot.pressure
+                    _sugarConfig.value = snapshot.sugar
+                    _pulseConfig.value = snapshot.pulse
+                    _notifications.value = snapshot.notifications
                 }, {
                 })
         )
@@ -191,30 +227,70 @@ class PatientAlertsViewModel(
         )
     }
 
-    fun savePressureConfig(
+    fun onPressureFieldsChanged(
         systolicMin: Double?,
         systolicMax: Double?,
         diastolicMin: Double?,
         diastolicMax: Double?
     ) {
-        disposables.add(
-            updateBloodPressureCriticalThresholds(
-                systolicMin = systolicMin,
-                systolicMax = systolicMax,
-                diastolicMin = diastolicMin,
-                diastolicMax = diastolicMax
-            ).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    _saveResult.value = true
-                }, {
-                    _saveResult.value = false
-                })
-        )
+        pressureDrafts.onNext(PressureDraft(systolicMin, systolicMax, diastolicMin, diastolicMax))
     }
 
-    fun onSaveResultHandled() {
-        _saveResult.value = null
+    fun onSugarFieldsChanged(
+        min: Double?,
+        max: Double?,
+        dropDelta: Double?,
+        dropWindowMinutes: Int?
+    ) {
+        sugarDrafts.onNext(SugarDraft(min, max, dropDelta, dropWindowMinutes))
+    }
+
+    fun onPulseFieldsChanged(min: Double?, max: Double?) {
+        pulseDrafts.onNext(PulseDraft(min, max))
+    }
+
+    private fun bindAutoSave() {
+        disposables.add(
+            pressureDrafts
+                .debounce(600, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .flatMapCompletable { draft ->
+                    updateBloodPressureCriticalThresholds(
+                        systolicMin = draft.systolicMin,
+                        systolicMax = draft.systolicMax,
+                        diastolicMin = draft.diastolicMin,
+                        diastolicMax = draft.diastolicMax
+                    ).subscribeOn(Schedulers.io())
+                }
+                .subscribe({}, {})
+        )
+        disposables.add(
+            sugarDrafts
+                .debounce(600, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .flatMapCompletable { draft ->
+                    updateCriticalThresholds(
+                        MeasurementType.SUGAR,
+                        draft.min,
+                        draft.max
+                    ).andThen(updateSugarDropRules(draft.dropDelta, draft.dropWindowMinutes))
+                        .subscribeOn(Schedulers.io())
+                }
+                .subscribe({}, {})
+        )
+        disposables.add(
+            pulseDrafts
+                .debounce(600, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .flatMapCompletable { draft ->
+                    updateCriticalThresholds(
+                        MeasurementType.PULSE,
+                        draft.min,
+                        draft.max
+                    ).subscribeOn(Schedulers.io())
+                }
+                .subscribe({}, {})
+        )
     }
 
     override fun onCleared() {
@@ -222,6 +298,32 @@ class PatientAlertsViewModel(
         super.onCleared()
     }
 }
+
+private data class AlertsUiSnapshot(
+    val pressure: PressureAlertConfigUi,
+    val sugar: SugarAlertConfigUi,
+    val pulse: PulseAlertConfigUi,
+    val notifications: Map<MeasurementType, AlertNotificationsUi>
+)
+
+private data class PressureDraft(
+    val systolicMin: Double?,
+    val systolicMax: Double?,
+    val diastolicMin: Double?,
+    val diastolicMax: Double?
+)
+
+private data class SugarDraft(
+    val min: Double?,
+    val max: Double?,
+    val dropDelta: Double?,
+    val dropWindowMinutes: Int?
+)
+
+private data class PulseDraft(
+    val min: Double?,
+    val max: Double?
+)
 
 data class PressureAlertConfigUi(
     val enabled: Boolean,
@@ -240,6 +342,20 @@ data class PressureAlertConfigUi(
         )
     }
 }
+
+data class SugarAlertConfigUi(
+    val enabled: Boolean,
+    val min: Double?,
+    val max: Double?,
+    val dropDelta: Double?,
+    val dropWindowMinutes: Int?
+)
+
+data class PulseAlertConfigUi(
+    val enabled: Boolean,
+    val min: Double?,
+    val max: Double?
+)
 
 data class AlertNotificationsUi(
     val enabled: Boolean,

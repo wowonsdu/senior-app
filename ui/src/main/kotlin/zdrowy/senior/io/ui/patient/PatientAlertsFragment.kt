@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.core.view.isVisible
+import androidx.core.widget.doAfterTextChanged
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
@@ -27,6 +27,9 @@ class PatientAlertsFragment : Fragment() {
     private var isInsulinExpanded: Boolean = false
     private var isPressureExpanded: Boolean = false
     private var isPulseExpanded: Boolean = false
+    private var suppressPressureInput = false
+    private var suppressSugarInput = false
+    private var suppressPulseInput = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +51,9 @@ class PatientAlertsFragment : Fragment() {
         isPulseExpanded = savedInstanceState?.getBoolean(KEY_PULSE_EXPANDED) ?: false
 
         setupChevronToggles()
+        setupSugarConfigUi()
         setupPressureConfigUi()
+        setupPulseConfigUi()
         setupNotificationsConfigUi()
         viewModel.start()
     }
@@ -98,17 +103,18 @@ class PatientAlertsFragment : Fragment() {
             viewModel.setEnabled(MeasurementType.PRESSURE, isChecked)
         }
 
-        binding.patientAlertsPressureSaveButton.setOnClickListener {
-            clearErrors()
+        fun onPressureChanged() {
+            if (suppressPressureInput) return
+            clearPressureErrors()
             val sysLow = parseNullableDouble(binding.patientAlertsPressureSysLow)
             val sysHigh = parseNullableDouble(binding.patientAlertsPressureSysHigh)
             val diaLow = parseNullableDouble(binding.patientAlertsPressureDiaLow)
             val diaHigh = parseNullableDouble(binding.patientAlertsPressureDiaHigh)
 
             val ok = validatePressure(sysLow, sysHigh, diaLow, diaHigh)
-            if (!ok) return@setOnClickListener
+            if (!ok) return
 
-            viewModel.savePressureConfig(
+            viewModel.onPressureFieldsChanged(
                 systolicMin = sysLow,
                 systolicMax = sysHigh,
                 diastolicMin = diaLow,
@@ -116,7 +122,13 @@ class PatientAlertsFragment : Fragment() {
             )
         }
 
+        binding.patientAlertsPressureSysLow.doAfterTextChanged { onPressureChanged() }
+        binding.patientAlertsPressureSysHigh.doAfterTextChanged { onPressureChanged() }
+        binding.patientAlertsPressureDiaLow.doAfterTextChanged { onPressureChanged() }
+        binding.patientAlertsPressureDiaHigh.doAfterTextChanged { onPressureChanged() }
+
         viewModel.pressureConfig.observe(viewLifecycleOwner) { ui ->
+            suppressPressureInput = true
             binding.patientAlertsPressureEnabledSwitch.setOnCheckedChangeListener(null)
             binding.patientAlertsPressureEnabledSwitch.isChecked = ui.enabled
             binding.patientAlertsPressureEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -127,15 +139,96 @@ class PatientAlertsFragment : Fragment() {
             setIfNotFocused(binding.patientAlertsPressureSysHigh, ui.systolicMax?.toInt()?.toString())
             setIfNotFocused(binding.patientAlertsPressureDiaLow, ui.diastolicMin?.toInt()?.toString())
             setIfNotFocused(binding.patientAlertsPressureDiaHigh, ui.diastolicMax?.toInt()?.toString())
+            suppressPressureInput = false
+        }
+    }
+
+    private fun setupSugarConfigUi() {
+        binding.patientAlertsSugarEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setEnabled(MeasurementType.SUGAR, isChecked)
         }
 
-        viewModel.saveResult.observe(viewLifecycleOwner) { ok ->
-            when (ok) {
-                true -> Toast.makeText(requireContext(), getString(R.string.patient_alerts_pressure_toast_saved), Toast.LENGTH_SHORT).show()
-                false -> Toast.makeText(requireContext(), getString(R.string.patient_alerts_pressure_toast_save_error), Toast.LENGTH_SHORT).show()
-                null -> Unit
+        fun onSugarChanged() {
+            if (suppressSugarInput) return
+            clearSugarErrors()
+            val low = parseNullableDouble(binding.patientAlertsSugarLow)
+            val high = parseNullableDouble(binding.patientAlertsSugarHigh)
+            val dropDelta = parseNullableDouble(binding.patientAlertsSugarDropDelta)
+            val dropWindow = parseNullableInt(binding.patientAlertsSugarDropWindow)
+
+            val ok = validatePair(
+                low = low,
+                high = high,
+                lowLayout = binding.patientAlertsSugarLowLayout,
+                highLayout = binding.patientAlertsSugarHighLayout
+            )
+            if (!ok) return
+
+            viewModel.onSugarFieldsChanged(
+                min = low,
+                max = high,
+                dropDelta = dropDelta,
+                dropWindowMinutes = dropWindow
+            )
+        }
+
+        binding.patientAlertsSugarLow.doAfterTextChanged { onSugarChanged() }
+        binding.patientAlertsSugarHigh.doAfterTextChanged { onSugarChanged() }
+        binding.patientAlertsSugarDropDelta.doAfterTextChanged { onSugarChanged() }
+        binding.patientAlertsSugarDropWindow.doAfterTextChanged { onSugarChanged() }
+
+        viewModel.sugarConfig.observe(viewLifecycleOwner) { ui ->
+            suppressSugarInput = true
+            binding.patientAlertsSugarEnabledSwitch.setOnCheckedChangeListener(null)
+            binding.patientAlertsSugarEnabledSwitch.isChecked = ui.enabled
+            binding.patientAlertsSugarEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.setEnabled(MeasurementType.SUGAR, isChecked)
             }
-            if (ok != null) viewModel.onSaveResultHandled()
+
+            setIfNotFocused(binding.patientAlertsSugarLow, ui.min?.toInt()?.toString())
+            setIfNotFocused(binding.patientAlertsSugarHigh, ui.max?.toInt()?.toString())
+            setIfNotFocused(binding.patientAlertsSugarDropDelta, ui.dropDelta?.toInt()?.toString())
+            setIfNotFocused(binding.patientAlertsSugarDropWindow, ui.dropWindowMinutes?.toString())
+            suppressSugarInput = false
+        }
+    }
+
+    private fun setupPulseConfigUi() {
+        binding.patientAlertsPulseEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.setEnabled(MeasurementType.PULSE, isChecked)
+        }
+
+        fun onPulseChanged() {
+            if (suppressPulseInput) return
+            clearPulseErrors()
+            val low = parseNullableDouble(binding.patientAlertsPulseLow)
+            val high = parseNullableDouble(binding.patientAlertsPulseHigh)
+
+            val ok = validatePair(
+                low = low,
+                high = high,
+                lowLayout = binding.patientAlertsPulseLowLayout,
+                highLayout = binding.patientAlertsPulseHighLayout
+            )
+            if (!ok) return
+
+            viewModel.onPulseFieldsChanged(min = low, max = high)
+        }
+
+        binding.patientAlertsPulseLow.doAfterTextChanged { onPulseChanged() }
+        binding.patientAlertsPulseHigh.doAfterTextChanged { onPulseChanged() }
+
+        viewModel.pulseConfig.observe(viewLifecycleOwner) { ui ->
+            suppressPulseInput = true
+            binding.patientAlertsPulseEnabledSwitch.setOnCheckedChangeListener(null)
+            binding.patientAlertsPulseEnabledSwitch.isChecked = ui.enabled
+            binding.patientAlertsPulseEnabledSwitch.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.setEnabled(MeasurementType.PULSE, isChecked)
+            }
+
+            setIfNotFocused(binding.patientAlertsPulseLow, ui.min?.toInt()?.toString())
+            setIfNotFocused(binding.patientAlertsPulseHigh, ui.max?.toInt()?.toString())
+            suppressPulseInput = false
         }
     }
 
@@ -230,17 +323,33 @@ class PatientAlertsFragment : Fragment() {
         return false
     }
 
-    private fun clearErrors() {
+    private fun clearPressureErrors() {
         binding.patientAlertsPressureSysLowLayout.error = null
         binding.patientAlertsPressureSysHighLayout.error = null
         binding.patientAlertsPressureDiaLowLayout.error = null
         binding.patientAlertsPressureDiaHighLayout.error = null
     }
 
+    private fun clearSugarErrors() {
+        binding.patientAlertsSugarLowLayout.error = null
+        binding.patientAlertsSugarHighLayout.error = null
+    }
+
+    private fun clearPulseErrors() {
+        binding.patientAlertsPulseLowLayout.error = null
+        binding.patientAlertsPulseHighLayout.error = null
+    }
+
     private fun parseNullableDouble(edit: TextInputEditText): Double? {
         val text = edit.text?.toString()?.trim().orEmpty()
         if (text.isBlank()) return null
         return text.toDoubleOrNull()
+    }
+
+    private fun parseNullableInt(edit: TextInputEditText): Int? {
+        val text = edit.text?.toString()?.trim().orEmpty()
+        if (text.isBlank()) return null
+        return text.toIntOrNull()
     }
 
     private fun setIfNotFocused(edit: TextInputEditText, value: String?) {
