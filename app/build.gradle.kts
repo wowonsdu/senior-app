@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.google.services)
 }
 
 android {
@@ -20,11 +19,11 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("boolean", "USE_FIREBASE_AUTH_EMULATOR", "false")
+            buildConfigField("boolean", "USE_FIREBASE_AUTH_EMULATOR", "true")
             buildConfigField("String", "FIREBASE_AUTH_EMULATOR_HOST", "\"10.0.2.2\"")
             buildConfigField("int", "FIREBASE_AUTH_EMULATOR_PORT", "9098")
 
-            buildConfigField("boolean", "USE_FIREBASE_FIRESTORE_EMULATOR", "false")
+            buildConfigField("boolean", "USE_FIREBASE_FIRESTORE_EMULATOR", "true")
             buildConfigField("String", "FIREBASE_FIRESTORE_EMULATOR_HOST", "\"10.0.2.2\"")
             buildConfigField("int", "FIREBASE_FIRESTORE_EMULATOR_PORT", "8082")
         }
