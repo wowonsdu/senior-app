@@ -8,6 +8,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import zdrowy.senior.io.domain.alert.TriggerBloodPressureAlertEventUseCase
 import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.Measurement
@@ -29,7 +30,8 @@ class PatientHomeViewModel(
     private val observePersonalDataByUid: ObservePersonalDataByUidUseCase,
     private val parseVoiceMeasurements: ParseVoiceMeasurementsUseCase,
     private val addMeasurement: AddMeasurementUseCase,
-    private val addBloodPressureMeasurement: AddBloodPressureMeasurementUseCase
+    private val addBloodPressureMeasurement: AddBloodPressureMeasurementUseCase,
+    private val triggerBloodPressureAlertEvent: TriggerBloodPressureAlertEventUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val _recentMeasurements = MutableLiveData<List<Measurement>>()
@@ -151,7 +153,10 @@ class PatientHomeViewModel(
                 diastolic = diastolic,
                 timestamp = timestamp,
                 source = MeasurementSource.VOICE
-            ).ignoreElement()
+            ).flatMapCompletable { id ->
+                triggerBloodPressureAlertEvent(id, systolic, diastolic, timestamp)
+                    .onErrorComplete()
+            }
         } else {
             val value = measurement.value ?: return null
             addMeasurement(

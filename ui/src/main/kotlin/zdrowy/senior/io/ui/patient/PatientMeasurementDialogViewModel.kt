@@ -2,8 +2,10 @@ package zdrowy.senior.io.ui.patient
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import zdrowy.senior.io.domain.alert.TriggerBloodPressureAlertEventUseCase
 import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.DeleteMeasurementUseCase
@@ -15,6 +17,7 @@ import zdrowy.senior.io.domain.measurement.UpdateMeasurementUseCase
 class PatientMeasurementDialogViewModel(
     private val addMeasurement: AddMeasurementUseCase,
     private val addBloodPressure: AddBloodPressureMeasurementUseCase,
+    private val triggerBloodPressureAlertEvent: TriggerBloodPressureAlertEventUseCase,
     private val updateMeasurement: UpdateMeasurementUseCase,
     private val updateBloodPressure: UpdateBloodPressureMeasurementUseCase,
     private val deleteMeasurement: DeleteMeasurementUseCase
@@ -45,6 +48,11 @@ class PatientMeasurementDialogViewModel(
     ) {
         disposables.add(
             addBloodPressure(systolic, diastolic, timestamp, source)
+                .flatMap { measurementId ->
+                    triggerBloodPressureAlertEvent(measurementId, systolic, diastolic, timestamp)
+                        .onErrorComplete()
+                        .andThen(Single.just(measurementId))
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ onDone() }, { onDone() })
