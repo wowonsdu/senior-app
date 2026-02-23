@@ -4,9 +4,11 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.data.firestore.FirestorePaths
+import zdrowy.senior.io.data.firestore.toCompletable
 import zdrowy.senior.io.data.firestore.toSingle
 import zdrowy.senior.io.domain.carelink.CareLink
 import zdrowy.senior.io.domain.carelink.CareLinkCode
@@ -171,7 +173,6 @@ class FirestoreCareLinkRepository(
             val linkId = "${patientUid}_${caregiverUid}"
             val linkDoc = firestore.collection(FirestorePaths.CARE_LINKS).document(linkId)
             val linkSnapshot = tx.get(linkDoc)
-            val caregiverContactPayload = buildCaregiverContactPayload(tx, caregiverUid)
             if (!linkSnapshot.exists()) {
                 tx.set(
                     linkDoc,
@@ -202,12 +203,6 @@ class FirestoreCareLinkRepository(
                 }
             }
 
-            val contactDoc = firestore.collection(FirestorePaths.USERS)
-                .document(patientUid)
-                .collection(FirestorePaths.CONTACTS)
-                .document(caregiverUid)
-            tx.set(contactDoc, caregiverContactPayload, SetOptions.merge())
-
             tx.delete(doc)
             if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
                 val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
@@ -215,6 +210,28 @@ class FirestoreCareLinkRepository(
             }
             CareLink(patientUid = patientUid, caregiverUid = caregiverUid, status = CareLinkStatus.ACTIVE)
         }.toSingle()
+    }
+
+    override fun ensureCaregiverContact(caregiverUid: String): Completable {
+        if (caregiverUid.isBlank()) return Completable.complete()
+        val uid = requireUid()
+        val doc = firestore.collection(FirestorePaths.USERS)
+            .document(uid)
+            .collection(FirestorePaths.CONTACTS)
+            .document(caregiverUid)
+        return doc.set(
+            mapOf(
+                "fullName" to "Opiekun",
+                "role" to AgentRole.CAREGIVER.name,
+                "phone" to "",
+                "email" to "",
+                "specialization" to null,
+                "linkedUid" to caregiverUid,
+                "createdAt" to FieldValue.serverTimestamp(),
+                "updatedAt" to FieldValue.serverTimestamp()
+            ),
+            SetOptions.merge()
+        ).toCompletable()
     }
 
     private fun createUniqueCode(
@@ -290,41 +307,6 @@ class FirestoreCareLinkRepository(
         return roleContext.getRole() ?: throw IllegalStateException("User role not set")
     }
 
-    private fun buildCaregiverContactPayload(
-        tx: com.google.firebase.firestore.Transaction,
-        caregiverUid: String
-    ): Map<String, Any?> {
-        val caregiverDoc = firestore.collection(FirestorePaths.USERS).document(caregiverUid)
-        val caregiverSnapshot = tx.get(caregiverDoc)
-        val caregiverPersonalDoc = caregiverDoc
-            .collection(FirestorePaths.SETTINGS)
-            .document(FirestorePaths.PERSONAL_DATA)
-        val caregiverPersonalSnapshot = tx.get(caregiverPersonalDoc)
-
-        val firstName = caregiverPersonalSnapshot.getString("firstName").orEmpty()
-        val lastName = caregiverPersonalSnapshot.getString("lastName").orEmpty()
-        val combinedName = listOf(firstName, lastName).filter { it.isNotBlank() }.joinToString(" ")
-        val phonePersonal = caregiverPersonalSnapshot.getString("phoneNumber").orEmpty()
-        val phoneProfile = caregiverSnapshot.getString("phoneNumberE164").orEmpty()
-        val phone = phonePersonal.ifBlank { phoneProfile }
-        val email = caregiverPersonalSnapshot.getString("email").orEmpty()
-        val fullName = when {
-            combinedName.isNotBlank() -> combinedName
-            phone.isNotBlank() -> phone
-            else -> "Opiekun"
-        }
-
-        return mapOf(
-            "fullName" to fullName,
-            "role" to AgentRole.CAREGIVER.name,
-            "phone" to phone,
-            "email" to email,
-            "specialization" to null,
-            "linkedUid" to caregiverUid,
-            "createdAt" to FieldValue.serverTimestamp(),
-            "updatedAt" to FieldValue.serverTimestamp()
-        )
-    }
 
     private class CodeCollisionException : RuntimeException()
 

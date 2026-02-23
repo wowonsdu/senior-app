@@ -1,5 +1,6 @@
 package zdrowy.senior.io.domain.carelink
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
 
@@ -12,4 +13,5 @@ interface CareLinkRepository {
     ): Single<CareLinkCode>
     fun getLinkCodeInfo(code: String): Single<CareLinkCodeInfo>
     fun consumeLinkCode(code: String): Single<CareLink>
+    fun ensureCaregiverContact(caregiverUid: String): Completable
 }

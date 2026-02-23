@@ -37,6 +37,7 @@ import zdrowy.senior.io.domain.alert.ObserveRecentAlertEventsUseCase
 import zdrowy.senior.io.domain.alert.TriggerBloodPressureAlertEventUseCase
 import zdrowy.senior.io.domain.carelink.CareLinkRepository
 import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
+import zdrowy.senior.io.domain.carelink.EnsureCaregiverContactUseCase
 import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
 import zdrowy.senior.io.domain.carelink.GetCareLinkCodeInfoUseCase
 import zdrowy.senior.io.domain.carelink.ObserveCareLinksUseCase
@@ -174,6 +175,7 @@ val domainModule = module {
     factory { GenerateCareLinkCodeUseCase(get()) }
     factory { GetCareLinkCodeInfoUseCase(get()) }
     factory { ConsumeCareLinkCodeUseCase(get()) }
+    factory { EnsureCaregiverContactUseCase(get()) }
 
     factory { GetPersonalDataUseCase(get()) }
     factory { GetSettingsOverviewUseCase(get()) }
