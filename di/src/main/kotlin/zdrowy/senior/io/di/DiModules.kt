@@ -5,7 +5,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import zdrowy.senior.io.data.agent.FirestoreAccessCodeRepository
 import zdrowy.senior.io.data.agent.FirestoreAgentRepository
-import zdrowy.senior.io.data.alert.FirestoreAlertRepository
 import zdrowy.senior.io.data.alert.FirestoreAlertEventRepository
 import zdrowy.senior.io.data.carelink.FirestoreCareLinkRepository
 import zdrowy.senior.io.data.firestore.PatientUidProvider
@@ -15,6 +14,7 @@ import zdrowy.senior.io.data.measurement.FirestoreMeasurementReadStateRepository
 import zdrowy.senior.io.data.notification.NoOpNotificationRepository
 import zdrowy.senior.io.data.settings.FirestorePersonalDataByUidRepository
 import zdrowy.senior.io.data.settings.FirestoreSettingsRepository
+import zdrowy.senior.io.data.settings.notifications.FirestoreNotificationSettingsRepository
 import zdrowy.senior.io.data.user.FirebaseCurrentUserUidProvider
 import zdrowy.senior.io.data.user.SharedPrefsActivePatientContext
 import zdrowy.senior.io.data.user.SharedPrefsCurrentUserRoleContext
@@ -30,21 +30,11 @@ import zdrowy.senior.io.domain.agent.ObserveAgentsUseCase
 import zdrowy.senior.io.domain.agent.RemoveAgentUseCase
 import zdrowy.senior.io.domain.agent.SendAccessCodeSmsUseCase
 import zdrowy.senior.io.domain.agent.UpdateAgentUseCase
-import zdrowy.senior.io.domain.alert.AlertRepository
 import zdrowy.senior.io.domain.alert.AlertEventRepository
 import zdrowy.senior.io.domain.alert.AddAlertEventUseCase
 import zdrowy.senior.io.domain.alert.GetLastAlertEventUseCase
 import zdrowy.senior.io.domain.alert.ObserveRecentAlertEventsUseCase
-import zdrowy.senior.io.domain.alert.GetAlertConfigUseCase
-import zdrowy.senior.io.domain.alert.ObserveAlertConfigUseCase
-import zdrowy.senior.io.domain.alert.SetAlertEnabledUseCase
 import zdrowy.senior.io.domain.alert.TriggerBloodPressureAlertEventUseCase
-import zdrowy.senior.io.domain.alert.UpdateAlertCaregiversUseCase
-import zdrowy.senior.io.domain.alert.UpdateAlertChannelsUseCase
-import zdrowy.senior.io.domain.alert.UpdateAlertConfigUseCase
-import zdrowy.senior.io.domain.alert.UpdateBloodPressureCriticalThresholdsUseCase
-import zdrowy.senior.io.domain.alert.UpdateCriticalThresholdsUseCase
-import zdrowy.senior.io.domain.alert.UpdateSpikeRulesUseCase
 import zdrowy.senior.io.domain.carelink.CareLinkRepository
 import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
 import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
@@ -89,6 +79,16 @@ import zdrowy.senior.io.domain.settings.ToggleMedicationNotificationsUseCase
 import zdrowy.senior.io.domain.settings.UpdateDiseaseUseCase
 import zdrowy.senior.io.domain.settings.UpdateMedicationUseCase
 import zdrowy.senior.io.domain.settings.UpsertPersonalDataUseCase
+import zdrowy.senior.io.domain.settings.notifications.GetNotificationSettingsUseCase
+import zdrowy.senior.io.domain.settings.notifications.NotificationSettingsRepository
+import zdrowy.senior.io.domain.settings.notifications.ObserveNotificationSettingsUseCase
+import zdrowy.senior.io.domain.settings.notifications.SetAlertEnabledUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateAlertCaregiversUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateAlertChannelsUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateBloodPressureCriticalThresholdsUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateCriticalThresholdsUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateNotificationSettingsUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateSpikeRulesUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
 import zdrowy.senior.io.domain.user.EnsureCurrentUserRoleLoadedUseCase
 import zdrowy.senior.io.domain.user.ActivePatientContext
@@ -153,9 +153,9 @@ val domainModule = module {
     factory { SendAccessCodeSmsUseCase(get()) }
     factory { NotifyAgentsUseCase(get()) }
 
-    factory { GetAlertConfigUseCase(get()) }
-    factory { ObserveAlertConfigUseCase(get()) }
-    factory { UpdateAlertConfigUseCase(get()) }
+    factory { GetNotificationSettingsUseCase(get()) }
+    factory { ObserveNotificationSettingsUseCase(get()) }
+    factory { UpdateNotificationSettingsUseCase(get()) }
     factory { SetAlertEnabledUseCase(get()) }
     factory { UpdateCriticalThresholdsUseCase(get()) }
     factory { UpdateBloodPressureCriticalThresholdsUseCase(get()) }
@@ -215,7 +215,7 @@ val dataModule = module {
     single<AccessCodeRepository> { FirestoreAccessCodeRepository(get()) }
     single<CareLinkRepository> { FirestoreCareLinkRepository(get()) }
     single<NotificationRepository> { NoOpNotificationRepository() }
-    single<AlertRepository> { FirestoreAlertRepository(get()) }
+    single<NotificationSettingsRepository> { FirestoreNotificationSettingsRepository(get()) }
     single<AlertEventRepository> { FirestoreAlertEventRepository(get()) }
     single<SettingsRepository> { FirestoreSettingsRepository(get()) }
     single<PersonalDataByUidRepository> { FirestorePersonalDataByUidRepository() }

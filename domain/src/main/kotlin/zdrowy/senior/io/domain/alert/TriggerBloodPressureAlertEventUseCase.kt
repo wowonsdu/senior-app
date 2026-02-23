@@ -5,10 +5,11 @@ import io.reactivex.rxjava3.core.Single
 import zdrowy.senior.io.domain.measurement.ClassifyBloodPressureUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementRepository
 import zdrowy.senior.io.domain.measurement.MeasurementType
+import zdrowy.senior.io.domain.settings.notifications.NotificationSettingsRepository
 import kotlin.math.abs
 
 class TriggerBloodPressureAlertEventUseCase(
-    private val alertRepository: AlertRepository,
+    private val notificationSettingsRepository: NotificationSettingsRepository,
     private val alertEventRepository: AlertEventRepository,
     private val measurementRepository: MeasurementRepository,
     private val classifyBloodPressure: ClassifyBloodPressureUseCase
@@ -19,8 +20,8 @@ class TriggerBloodPressureAlertEventUseCase(
         diastolic: Int,
         timestamp: Long
     ): Completable {
-        return alertRepository.getAlertConfig()
-            .map { config -> config.settings.first { it.type == MeasurementType.PRESSURE } }
+        return notificationSettingsRepository.getNotificationSettings()
+            .map { settings -> settings.alerts.first { it.type == MeasurementType.PRESSURE } }
             .flatMapCompletable { setting ->
                 if (!setting.enabled) return@flatMapCompletable Completable.complete()
 

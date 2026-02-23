@@ -13,11 +13,11 @@ import zdrowy.senior.io.domain.agent.AgentRole
 import zdrowy.senior.io.domain.agent.ObserveAgentsUseCase
 import zdrowy.senior.io.domain.alert.AlertChannel
 import zdrowy.senior.io.domain.alert.AlertSetting
-import zdrowy.senior.io.domain.alert.ObserveAlertConfigUseCase
-import zdrowy.senior.io.domain.alert.SetAlertEnabledUseCase
-import zdrowy.senior.io.domain.alert.UpdateAlertCaregiversUseCase
-import zdrowy.senior.io.domain.alert.UpdateAlertChannelsUseCase
-import zdrowy.senior.io.domain.alert.UpdateBloodPressureCriticalThresholdsUseCase
+import zdrowy.senior.io.domain.settings.notifications.ObserveNotificationSettingsUseCase
+import zdrowy.senior.io.domain.settings.notifications.SetAlertEnabledUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateAlertCaregiversUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateAlertChannelsUseCase
+import zdrowy.senior.io.domain.settings.notifications.UpdateBloodPressureCriticalThresholdsUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementType
 
 // Domyślne granice "prawidłowego" ciśnienia (office, ESC/ESH):
@@ -29,7 +29,7 @@ private const val DEFAULT_DIA_MIN = 60.0
 private const val DEFAULT_DIA_MAX = 84.0
 
 class PatientAlertsViewModel(
-    private val observeAlertConfig: ObserveAlertConfigUseCase,
+    private val observeNotificationSettings: ObserveNotificationSettingsUseCase,
     private val setAlertEnabled: SetAlertEnabledUseCase,
     private val updateBloodPressureCriticalThresholds: UpdateBloodPressureCriticalThresholdsUseCase,
     private val updateAlertChannels: UpdateAlertChannelsUseCase,
@@ -57,12 +57,12 @@ class PatientAlertsViewModel(
     fun start() {
         configDisposable.set(
             Observable.combineLatest(
-                observeAlertConfig(),
+                observeNotificationSettings(),
                 observeAgents().map { agents -> agents.filter { it.role == AgentRole.CAREGIVER } }
-            ) { config, caregivers -> Pair(config, caregivers) }
+            ) { settings, caregivers -> Pair(settings, caregivers) }
                 .subscribeOn(Schedulers.io())
-                .map { (config, caregivers) ->
-                    latestSettings = config.settings.associateBy { it.type }
+                .map { (settings, caregivers) ->
+                    latestSettings = settings.alerts.associateBy { it.type }
                     latestCaregivers = caregivers
 
                     val notifications = MeasurementType.values().associateWith { type ->
@@ -84,7 +84,7 @@ class PatientAlertsViewModel(
                         )
                     }
 
-                    val setting = config.settings.firstOrNull { it.type == MeasurementType.PRESSURE }
+                    val setting = settings.alerts.firstOrNull { it.type == MeasurementType.PRESSURE }
                     val pressureUi = if (setting == null) {
                         PressureAlertConfigUi.fallback()
                     } else {
