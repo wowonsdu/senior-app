@@ -197,6 +197,12 @@ Zasady etapu:
 - [x] 9.22 Alerty: alertEvents — domena/data + FirestorePaths
 - [x] 9.23 Alerty: pomiar cisnienia -> generuj alertEvents (krytyczne/kategoria/spike + cooldown)
 - [x] 9.24 Alerty: UI — konfiguracja cisnienia (pola + zapis + ObserveAlertConfig)
+- [x] 9.25 Alerty: plan — reusable kanaly + opiekunowie per typ (bez progu kategorii)
+- [ ] 9.26 Alerty: cleanup — usun prog kategorii/cooldown (UI/domain/data/DI)
+- [ ] 9.27 Alerty: UI — reusable sekcja kanaly + opiekunowie (dla kazdego typu)
+- [ ] 9.28 Alerty: VM/DI — per typ kanaly + opiekunowie (ObserveAlertConfig + ObserveAgents)
+- [ ] 9.29 Alerty: alertEvents — ATTENTION po progach, CRITICAL po spike + klasyfikacja jako metadata
+- [ ] 9.30 Alerty: smoke — aktualizacja skryptu settings+alerts
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
