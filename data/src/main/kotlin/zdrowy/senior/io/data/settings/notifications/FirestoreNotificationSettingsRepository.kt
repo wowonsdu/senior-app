@@ -20,6 +20,10 @@ class FirestoreNotificationSettingsRepository(
     private val uidProvider: PatientUidProvider
 ) : NotificationSettingsRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val defaultPressureSystolicMin = 90.0
+    private val defaultPressureSystolicMax = 129.0
+    private val defaultPressureDiastolicMin = 60.0
+    private val defaultPressureDiastolicMax = 84.0
 
     override fun getNotificationSettings(): Single<NotificationSettings> {
         val uid = requireUid()
@@ -31,7 +35,14 @@ class FirestoreNotificationSettingsRepository(
                 if (snapshot.exists() && alerts != null) {
                     Single.just(parseSnapshot(snapshot.get("alerts")))
                 } else {
-                    Single.just(defaultSettings())
+                    val defaults = defaultSettings()
+                    doc.set(
+                        mapOf(
+                            "alerts" to buildAlertsMap(defaults),
+                            "updatedAt" to FieldValue.serverTimestamp()
+                        ),
+                        SetOptions.merge()
+                    ).toCompletable().andThen(Single.just(defaults))
                 }
             }
     }
@@ -121,7 +132,15 @@ class FirestoreNotificationSettingsRepository(
                     return@addSnapshotListener
                 }
                 if (snapshot == null || !snapshot.exists()) {
-                    if (!emitter.isDisposed) emitter.onNext(defaultSettings())
+                    val defaults = defaultSettings()
+                    doc.set(
+                        mapOf(
+                            "alerts" to buildAlertsMap(defaults),
+                            "updatedAt" to FieldValue.serverTimestamp()
+                        ),
+                        SetOptions.merge()
+                    )
+                    if (!emitter.isDisposed) emitter.onNext(defaults)
                     return@addSnapshotListener
                 }
                 val parsed = parseSnapshot(snapshot.get("alerts"))
@@ -144,7 +163,8 @@ class FirestoreNotificationSettingsRepository(
 
         return doc.update(updatePayload).toCompletable()
             .onErrorResumeNext {
-                val typePayload = fields.toMutableMap()
+                val typePayload = buildAlertMapForSetting(defaultSetting(type)).toMutableMap()
+                fields.forEach { (key, value) -> typePayload[key] = value }
                 typePayload["updatedAt"] = timestamp
                 doc.set(
                     mapOf(
@@ -244,16 +264,33 @@ class FirestoreNotificationSettingsRepository(
         NotificationSettings(alerts = MeasurementType.values().map { defaultSetting(it) })
 
     private fun defaultSetting(type: MeasurementType): AlertSetting =
-        AlertSetting(
-            type = type,
-            enabled = true,
-            min = null,
-            max = null,
-            spikePercent = 20,
-            windowCount = 3,
-            channels = setOf(AlertChannel.APP),
-            caregiverIds = emptyList()
-        )
+        if (type == MeasurementType.PRESSURE) {
+            AlertSetting(
+                type = type,
+                enabled = true,
+                min = null,
+                max = null,
+                spikePercent = 20,
+                windowCount = 3,
+                channels = setOf(AlertChannel.APP),
+                caregiverIds = emptyList(),
+                systolicMin = defaultPressureSystolicMin,
+                systolicMax = defaultPressureSystolicMax,
+                diastolicMin = defaultPressureDiastolicMin,
+                diastolicMax = defaultPressureDiastolicMax
+            )
+        } else {
+            AlertSetting(
+                type = type,
+                enabled = true,
+                min = null,
+                max = null,
+                spikePercent = 20,
+                windowCount = 3,
+                channels = setOf(AlertChannel.APP),
+                caregiverIds = emptyList()
+            )
+        }
 
     private fun parseChannels(raw: Any?): Set<AlertChannel> {
         val list = (raw as? List<*>)?.mapNotNull { it as? String }.orEmpty()
