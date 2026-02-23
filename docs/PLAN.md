@@ -211,6 +211,7 @@ Zasady etapu:
 - [x] 9.36 Alerty: DI/UI — przepiecie na NotificationSettings + cleanup starego configu
 - [x] 9.37 Alerty: walidacja — assembleDebug + test
 - [x] 9.38 Alerty: docs — aktualizacja USE_CASES + Firestore schema (settings/notifications)
+- [x] 9.39 Alerty: fix — update pol per-typ bez nadpisywania mapy alerts
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case

@@ -151,16 +151,25 @@ class FirestoreNotificationSettingsRepository(
         val uid = requireUid()
         val doc = newDoc(uid)
 
-        val typePayload = fields.toMutableMap()
-        typePayload["updatedAt"] = FieldValue.serverTimestamp()
+        val timestamp = FieldValue.serverTimestamp()
+        val updatePayload = fields.entries.associate { (key, value) ->
+            "alerts.${type.name}.$key" to value
+        }.toMutableMap()
+        updatePayload["alerts.${type.name}.updatedAt"] = timestamp
+        updatePayload["updatedAt"] = timestamp
 
-        return doc.set(
-            mapOf(
-                "alerts" to mapOf(type.name to typePayload),
-                "updatedAt" to FieldValue.serverTimestamp()
-            ),
-            SetOptions.merge()
-        ).toCompletable()
+        return doc.update(updatePayload).toCompletable()
+            .onErrorResumeNext {
+                val typePayload = fields.toMutableMap()
+                typePayload["updatedAt"] = timestamp
+                doc.set(
+                    mapOf(
+                        "alerts" to mapOf(type.name to typePayload),
+                        "updatedAt" to timestamp
+                    ),
+                    SetOptions.merge()
+                ).toCompletable()
+            }
     }
 
     private fun newDoc(uid: String) = firestore.collection(FirestorePaths.USERS)
@@ -295,4 +304,3 @@ class FirestoreNotificationSettingsRepository(
 
     private fun requireUid(): String = uidProvider.requirePatientUid()
 }
-
