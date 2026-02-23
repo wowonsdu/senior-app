@@ -36,6 +36,8 @@ import zdrowy.senior.io.domain.alert.SetAlertEnabledUseCase
 import zdrowy.senior.io.domain.alert.UpdateAlertCaregiversUseCase
 import zdrowy.senior.io.domain.alert.UpdateAlertChannelsUseCase
 import zdrowy.senior.io.domain.alert.UpdateAlertConfigUseCase
+import zdrowy.senior.io.domain.alert.UpdateBloodPressureCategoryRulesUseCase
+import zdrowy.senior.io.domain.alert.UpdateBloodPressureCriticalThresholdsUseCase
 import zdrowy.senior.io.domain.alert.UpdateCriticalThresholdsUseCase
 import zdrowy.senior.io.domain.alert.UpdateSpikeRulesUseCase
 import zdrowy.senior.io.domain.carelink.CareLinkRepository
@@ -48,6 +50,7 @@ import zdrowy.senior.io.domain.history.GetMeasurementChartDataUseCase
 import zdrowy.senior.io.domain.history.GetMeasurementHistoryUseCase
 import zdrowy.senior.io.domain.measurement.AddBloodPressureMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.AddMeasurementUseCase
+import zdrowy.senior.io.domain.measurement.ClassifyBloodPressureUseCase
 import zdrowy.senior.io.domain.measurement.DeleteMeasurementUseCase
 import zdrowy.senior.io.domain.measurement.GetRecentMeasurementsUseCase
 import zdrowy.senior.io.domain.measurement.MeasurementByUidRepository
@@ -118,6 +121,7 @@ import zdrowy.senior.io.ui.patient.PatientSettingsViewModel
 val domainModule = module {
     factory { AddMeasurementUseCase(get()) }
     factory { AddBloodPressureMeasurementUseCase(get()) }
+    factory { ClassifyBloodPressureUseCase() }
     factory { UpdateMeasurementUseCase(get()) }
     factory { UpdateBloodPressureMeasurementUseCase(get()) }
     factory { DeleteMeasurementUseCase(get()) }
@@ -149,6 +153,8 @@ val domainModule = module {
     factory { UpdateAlertConfigUseCase(get()) }
     factory { SetAlertEnabledUseCase(get()) }
     factory { UpdateCriticalThresholdsUseCase(get()) }
+    factory { UpdateBloodPressureCriticalThresholdsUseCase(get()) }
+    factory { UpdateBloodPressureCategoryRulesUseCase(get()) }
     factory { UpdateSpikeRulesUseCase(get()) }
     factory { UpdateAlertChannelsUseCase(get()) }
     factory { UpdateAlertCaregiversUseCase(get()) }
