@@ -6,6 +6,7 @@ import org.koin.dsl.module
 import zdrowy.senior.io.data.agent.FirestoreAccessCodeRepository
 import zdrowy.senior.io.data.agent.FirestoreAgentRepository
 import zdrowy.senior.io.data.alert.FirestoreAlertRepository
+import zdrowy.senior.io.data.alert.FirestoreAlertEventRepository
 import zdrowy.senior.io.data.carelink.FirestoreCareLinkRepository
 import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementByUidRepository
@@ -30,6 +31,10 @@ import zdrowy.senior.io.domain.agent.RemoveAgentUseCase
 import zdrowy.senior.io.domain.agent.SendAccessCodeSmsUseCase
 import zdrowy.senior.io.domain.agent.UpdateAgentUseCase
 import zdrowy.senior.io.domain.alert.AlertRepository
+import zdrowy.senior.io.domain.alert.AlertEventRepository
+import zdrowy.senior.io.domain.alert.AddAlertEventUseCase
+import zdrowy.senior.io.domain.alert.GetLastAlertEventUseCase
+import zdrowy.senior.io.domain.alert.ObserveRecentAlertEventsUseCase
 import zdrowy.senior.io.domain.alert.GetAlertConfigUseCase
 import zdrowy.senior.io.domain.alert.ObserveAlertConfigUseCase
 import zdrowy.senior.io.domain.alert.SetAlertEnabledUseCase
@@ -159,6 +164,10 @@ val domainModule = module {
     factory { UpdateAlertChannelsUseCase(get()) }
     factory { UpdateAlertCaregiversUseCase(get()) }
 
+    factory { AddAlertEventUseCase(get()) }
+    factory { GetLastAlertEventUseCase(get()) }
+    factory { ObserveRecentAlertEventsUseCase(get()) }
+
     factory { ObserveCareLinksUseCase(get()) }
     factory { GenerateCareLinkCodeUseCase(get()) }
     factory { GetCareLinkCodeInfoUseCase(get()) }
@@ -207,6 +216,7 @@ val dataModule = module {
     single<CareLinkRepository> { FirestoreCareLinkRepository(get()) }
     single<NotificationRepository> { NoOpNotificationRepository() }
     single<AlertRepository> { FirestoreAlertRepository(get()) }
+    single<AlertEventRepository> { FirestoreAlertEventRepository(get()) }
     single<SettingsRepository> { FirestoreSettingsRepository(get()) }
     single<PersonalDataByUidRepository> { FirestorePersonalDataByUidRepository() }
 
