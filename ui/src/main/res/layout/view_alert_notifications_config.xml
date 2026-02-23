@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/alert_notifications_channels_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:text="@string/patient_alerts_config_section_channels"
+        android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+        android:textColor="@color/senior_primary" />
+
+    <TextView
+        android:id="@+id/alert_notifications_channels_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:text="@string/patient_alerts_config_channels_hint"
+        android:textAppearance="@style/TextAppearance.Senior.Caption"
+        android:textColor="@color/senior_text_secondary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/alert_notifications_channels_enable_all"
+            style="Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/patient_alerts_config_channels_enable_all" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/alert_notifications_channels_disable_all"
+            style="Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_weight="1"
+            android:text="@string/patient_alerts_config_channels_disable_all" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:orientation="horizontal">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/alert_notifications_sms_card"
+            style="@style/Widget.Senior.Card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="@dimen/tile_height"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_alert_tile_outline_primary"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_s">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@null"
+                    android:src="@android:drawable/sym_action_chat"
+                    android:tint="@color/senior_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_s"
+                    android:text="@string/patient_alerts_config_channel_sms"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                    android:textColor="@color/senior_text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/patient_alerts_config_channel_sms_subtitle"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/alert_notifications_sms_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/alert_notifications_email_card"
+            style="@style/Widget.Senior.Card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_weight="1"
+            android:minHeight="@dimen/tile_height"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_alert_tile_outline_primary"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_s">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@null"
+                    android:src="@android:drawable/ic_dialog_email"
+                    android:tint="@color/senior_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_s"
+                    android:text="@string/patient_alerts_config_channel_email"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                    android:textColor="@color/senior_text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/patient_alerts_config_channel_email_subtitle"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/alert_notifications_email_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/alert_notifications_app_card"
+            style="@style/Widget.Senior.Card"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_weight="1"
+            android:minHeight="@dimen/tile_height"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_alert_tile_outline_primary"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_s">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_alert_bell"
+                    android:tint="@color/senior_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_s"
+                    android:text="@string/patient_alerts_config_channel_app"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                    android:textColor="@color/senior_text_primary" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/patient_alerts_config_channel_app_subtitle"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/alert_notifications_app_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/alert_notifications_caregivers_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:text="@string/patient_alerts_config_caregivers_title"
+        android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+        android:textColor="@color/senior_primary" />
+
+    <TextView
+        android:id="@+id/alert_notifications_caregivers_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xs"
+        android:text="@string/patient_alerts_config_caregivers_subtitle"
+        android:textAppearance="@style/TextAppearance.Senior.Caption"
+        android:textColor="@color/senior_text_secondary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/alert_notifications_caregivers_select_all"
+            style="Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/patient_alerts_config_caregivers_select_all" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/alert_notifications_caregivers_deselect_all"
+            style="Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_weight="1"
+            android:text="@string/patient_alerts_config_caregivers_deselect_all" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/alert_notifications_caregivers_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:nestedScrollingEnabled="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <TextView
+        android:id="@+id/alert_notifications_caregivers_empty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_s"
+        android:text="@string/patient_alerts_caregivers_empty"
+        android:textAppearance="@style/TextAppearance.Senior.Caption"
+        android:textColor="@color/senior_text_tertiary"
+        android:visibility="gone" />
+
+</LinearLayout>
+

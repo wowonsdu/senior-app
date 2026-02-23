@@ -363,9 +363,10 @@
     <string name="patient_alerts_config_channel_email_subtitle">Wiadomosc mailowa</string>
     <string name="patient_alerts_config_channel_app_subtitle">Push notification</string>
     <string name="patient_alerts_config_caregivers_title">Powiadomienia dla opiekunow</string>
-    <string name="patient_alerts_config_caregivers_subtitle">Wybierz opiekunow, ktorzy otrzymaja powiadomienia o alertach dla poziomu cukru:</string>
+    <string name="patient_alerts_config_caregivers_subtitle">Wybierz opiekunow, ktorzy otrzymaja powiadomienia o alertach.</string>
     <string name="patient_alerts_config_caregivers_select_all">Zaznacz wszystkich</string>
     <string name="patient_alerts_config_caregivers_deselect_all">Odznacz wszystkich</string>
+    <string name="patient_alerts_caregivers_empty">Brak opiekunow</string>
     <string name="patient_alerts_config_agent_name">Janek, Syn</string>
     <string name="patient_alerts_config_agent_phone">Tel: 692 56 070</string>
     <string name="alert_item_title_sugar">Poziom cukru</string>
