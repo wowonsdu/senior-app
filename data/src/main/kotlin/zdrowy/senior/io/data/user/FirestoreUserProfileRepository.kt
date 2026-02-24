@@ -46,10 +46,12 @@ class FirestoreUserProfileRepository : UserProfileRepository {
                         "phoneNumberE164" to phoneNumberE164
                     )
                 )
-                if (role == UserRole.PATIENT) {
-                    val settingsCol = doc.collection(FirestorePaths.SETTINGS)
+                val settingsCol = doc.collection(FirestorePaths.SETTINGS)
+                if (role == UserRole.PATIENT || role == UserRole.CAREGIVER) {
                     val personalDoc = settingsCol.document(FirestorePaths.PERSONAL_DATA)
                     tx.set(personalDoc, defaultPersonalDataPayload())
+                }
+                if (role == UserRole.PATIENT) {
                     val notificationsDoc = settingsCol.document(FirestorePaths.NOTIFICATIONS)
                     tx.set(
                         notificationsDoc,

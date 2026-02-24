@@ -28,7 +28,13 @@ class CaregiverDependentsAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CaregiverDependentTileUiModel) {
             binding.caregiverDependentAvatar.text = item.avatar
-            binding.caregiverDependentName.text = item.fullName
+            if (item.isSelf) {
+                binding.caregiverDependentName.text = itemView.context.getString(
+                    zdrowy.senior.io.ui.R.string.caregiver_dependents_self_label
+                )
+            } else {
+                binding.caregiverDependentName.text = item.fullName
+            }
             binding.caregiverDependentPhone.text = item.phone
             binding.caregiverDependentSelect.setOnClickListener { onSelect(item) }
             val unread = item.unreadCount

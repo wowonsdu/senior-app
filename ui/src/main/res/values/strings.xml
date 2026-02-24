@@ -56,6 +56,7 @@
     <string name="caregiver_dependents_header">Wybierz osobe, aby zarzadzac jej danymi zdrowotnymi:</string>
     <string name="caregiver_dependents_add">+ DODAJ NOWEGO PODOPIECZNEGO</string>
     <string name="caregiver_dependents_select">WYBIERZ</string>
+    <string name="caregiver_dependents_self_label">Ja / moj profil</string>
     <string name="caregiver_dependents_badge_content">Nowe pomiary</string>
     <string name="caregiver_add_dependent_title">Dodaj podopiecznego</string>
     <string name="caregiver_add_dependent_subtitle">Wpisz dane nowego podopiecznego</string>

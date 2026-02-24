@@ -14,6 +14,7 @@ import zdrowy.senior.io.domain.measurement.ObserveMeasurementReadStateUseCase
 import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsByUidUseCase
 import zdrowy.senior.io.domain.settings.ObservePersonalDataByUidUseCase
 import zdrowy.senior.io.domain.settings.PersonalData
+import zdrowy.senior.io.domain.user.CurrentUserUidProvider
 import zdrowy.senior.io.domain.user.SetActivePatientUseCase
 import zdrowy.senior.io.ui.caregiver.model.CaregiverDependentTileUiModel
 
@@ -22,7 +23,8 @@ class CaregiverDependentsViewModel(
     private val observePersonalDataByUid: ObservePersonalDataByUidUseCase,
     private val observeRecentMeasurementsByUid: ObserveRecentMeasurementsByUidUseCase,
     private val observeMeasurementReadState: ObserveMeasurementReadStateUseCase,
-    private val setActivePatient: SetActivePatientUseCase
+    private val setActivePatient: SetActivePatientUseCase,
+    private val currentUserUidProvider: CurrentUserUidProvider
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val _dependents = MutableLiveData<List<CaregiverDependentTileUiModel>>()
@@ -38,9 +40,17 @@ class CaregiverDependentsViewModel(
             observeCareLinks()
                 .subscribeOn(Schedulers.io())
                 .switchMap { links ->
+                    val selfUid = try {
+                        currentUserUidProvider.requireUid()
+                    } catch (error: Throwable) {
+                        return@switchMap Observable.just(emptyList())
+                    }
                     val patientUids = links.map { it.patientUid }.distinct()
-                    if (patientUids.isEmpty()) return@switchMap Observable.just(emptyList())
-                    val observers = patientUids.map { uid ->
+                    val managedUids = listOf(selfUid) + patientUids
+                    val distinctUids = managedUids.distinct()
+                    if (distinctUids.isEmpty()) return@switchMap Observable.just(emptyList())
+                    val observers = distinctUids.map { uid ->
+                        val isSelf = uid == selfUid
                         Observable.combineLatest(
                             observePersonalDataByUid(uid)
                                 .onErrorReturnItem(fallbackPersonalData()),
@@ -49,8 +59,14 @@ class CaregiverDependentsViewModel(
                             observeRecentMeasurementsByUid(uid, MEASUREMENTS_LIMIT)
                                 .onErrorReturnItem(emptyList())
                         ) { data, readState, measurements ->
-                            mapItem(uid, data as PersonalData, readState as MeasurementReadState, measurements as List<Measurement>)
-                        }.onErrorReturnItem(fallbackItem(uid))
+                            mapItem(
+                                uid,
+                                data as PersonalData,
+                                readState as MeasurementReadState,
+                                measurements as List<Measurement>,
+                                isSelf
+                            )
+                        }.onErrorReturnItem(fallbackItem(uid, isSelf))
                     }
                     Observable.combineLatest(observers) { items ->
                         items.map { it as CaregiverDependentTileUiModel }
@@ -91,7 +107,8 @@ class CaregiverDependentsViewModel(
         uid: String,
         data: PersonalData,
         readState: MeasurementReadState,
-        measurements: List<Measurement>
+        measurements: List<Measurement>,
+        isSelf: Boolean
     ): CaregiverDependentTileUiModel {
         val firstName = data.firstName.trim()
         val lastName = data.lastName.trim()
@@ -104,17 +121,19 @@ class CaregiverDependentsViewModel(
             fullName = if (fullName.isBlank()) "-" else fullName,
             phone = phone,
             avatar = initials(firstName, lastName),
-            unreadCount = unreadCount
+            unreadCount = unreadCount,
+            isSelf = isSelf
         )
     }
 
-    private fun fallbackItem(uid: String): CaregiverDependentTileUiModel {
+    private fun fallbackItem(uid: String, isSelf: Boolean): CaregiverDependentTileUiModel {
         return CaregiverDependentTileUiModel(
             uid = uid,
             fullName = "-",
             phone = "-",
             avatar = "?",
-            unreadCount = 0
+            unreadCount = 0,
+            isSelf = isSelf
         )
     }
 

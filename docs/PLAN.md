@@ -270,7 +270,7 @@ Zasady etapu:
 - [x] Opiekun: dashboard — nowe pomiary (UI/VM)
 - [ ] Opiekun: dashboard — nowe pomiary (smoke)
 - [x] Opiekun: blokada caregiver↔caregiver + reguly profilu opiekuna
-- [ ] Opiekun: "Ja / moj profil" w Podopiecznych + personalData seed
+- [x] Opiekun: "Ja / moj profil" w Podopiecznych + personalData seed
 - [ ] Pacjent: opiekunowie z profilu (observe agents)
 
 ## Etap 13 — Speech to Text (monitor zdrowia)

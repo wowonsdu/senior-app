@@ -5,5 +5,6 @@ data class CaregiverDependentTileUiModel(
     val fullName: String,
     val phone: String,
     val avatar: String,
-    val unreadCount: Int
+    val unreadCount: Int,
+    val isSelf: Boolean
 )
