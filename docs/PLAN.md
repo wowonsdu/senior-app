@@ -272,6 +272,7 @@ Zasady etapu:
 - [x] Opiekun: blokada caregiver↔caregiver + reguly profilu opiekuna
 - [x] Opiekun: "Ja / moj profil" w Podopiecznych + personalData seed
 - [x] Pacjent: opiekunowie z profilu (observe agents)
+- [x] Pacjent: agenci monitorujacy (observe agents)
 
 ## Etap 13 — Speech to Text (monitor zdrowia)
 - [x] STT: plan (docs/plan/MAIN-PLAN-obsluga-speech-to-text.md)

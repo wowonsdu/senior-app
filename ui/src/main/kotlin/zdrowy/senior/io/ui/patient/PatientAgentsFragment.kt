@@ -53,7 +53,7 @@ class PatientAgentsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.loadAgents()
+        viewModel.start()
         viewModel.agents.observe(viewLifecycleOwner) { agents ->
             val caregivers = agents.filter { it.role == AgentRole.CAREGIVER }
             val doctors = agents.filter { it.role == AgentRole.DOCTOR }

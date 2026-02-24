@@ -7,18 +7,21 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.agent.Agent
-import zdrowy.senior.io.domain.agent.ListAgentsUseCase
+import zdrowy.senior.io.domain.agent.ObserveAgentsUseCase
 
 class PatientAgentsViewModel(
-    private val listAgents: ListAgentsUseCase
+    private val observeAgents: ObserveAgentsUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val _agents = MutableLiveData<List<Agent>>()
     val agents: LiveData<List<Agent>> = _agents
+    private var started = false
 
-    fun loadAgents() {
+    fun start() {
+        if (started) return
+        started = true
         disposables.add(
-            listAgents()
+            observeAgents()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ items ->
