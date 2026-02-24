@@ -75,6 +75,13 @@ class FirestoreCareLinkRepository(
         ttlSeconds: Long,
         draft: CareLinkDraft?
     ): Single<CareLinkCode> {
+        val role = requireRole()
+        if (type == CareLinkCodeType.PATIENT_TO_CAREGIVER && role != UserRole.PATIENT) {
+            return Single.error(IllegalStateException("Kod pacjenta moze byc generowany tylko przez pacjenta"))
+        }
+        if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT && role != UserRole.CAREGIVER) {
+            return Single.error(IllegalStateException("Kod opiekuna moze byc generowany tylko przez opiekuna"))
+        }
         val uid = requireUid()
         val expiresAtMs = System.currentTimeMillis() + ttlSeconds * 1000
         return createUniqueCode(
@@ -129,6 +136,14 @@ class FirestoreCareLinkRepository(
             val typeRaw = snapshot.getString("type").orEmpty()
             val type = runCatching { CareLinkCodeType.valueOf(typeRaw) }
                 .getOrElse { throw InvalidCodeException("Nieprawidlowy typ kodu") }
+
+            val role = requireRole()
+            if (type == CareLinkCodeType.PATIENT_TO_CAREGIVER && role != UserRole.CAREGIVER) {
+                throw InvalidCodeException("Kod pacjenta moze byc uzyty tylko przez opiekuna")
+            }
+            if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT && role != UserRole.PATIENT) {
+                throw InvalidCodeException("Kod opiekuna moze byc uzyty tylko przez pacjenta")
+            }
 
             var draftFirstName = snapshot.getString("draftFirstName").orEmpty()
             var draftLastName = snapshot.getString("draftLastName").orEmpty()
