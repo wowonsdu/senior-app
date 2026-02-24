@@ -1,4 +1,4 @@
-﻿package zdrowy.senior.io.domain.alert
+package zdrowy.senior.io.domain.alert
 
 import zdrowy.senior.io.domain.measurement.MeasurementType
 
