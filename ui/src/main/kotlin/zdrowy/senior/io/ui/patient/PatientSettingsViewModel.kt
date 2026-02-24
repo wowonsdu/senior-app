@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.agent.Agent
 import zdrowy.senior.io.domain.agent.AgentRole
 import zdrowy.senior.io.domain.agent.ListAgentsUseCase
+import zdrowy.senior.io.domain.agent.ObserveAgentsUseCase
 import zdrowy.senior.io.domain.settings.GetSettingsOverviewUseCase
 import zdrowy.senior.io.domain.settings.ObserveDiseasesUseCase
 import zdrowy.senior.io.domain.settings.ObserveMedicationsUseCase
@@ -19,6 +20,7 @@ import zdrowy.senior.io.domain.settings.SettingsOverview
 class PatientSettingsViewModel(
     private val getSettingsOverview: GetSettingsOverviewUseCase,
     private val listAgents: ListAgentsUseCase,
+    private val observeAgents: ObserveAgentsUseCase,
     private val observePersonalData: ObservePersonalDataUseCase,
     private val observeDiseases: ObserveDiseasesUseCase,
     private val observeMedications: ObserveMedicationsUseCase
@@ -81,6 +83,18 @@ class PatientSettingsViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ data ->
                     updateOverview { it.copy(personalData = data) }
+                }, {
+                })
+        )
+        disposables.add(
+            observeAgents()
+                .subscribeOn(Schedulers.io())
+                .map { agents -> agents.filter { it.role == AgentRole.CAREGIVER } }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ caregivers ->
+                    currentCaregivers = caregivers
+                    val overview = currentOverview ?: return@subscribe
+                    _uiState.value = PatientSettingsUiState.from(overview, currentCaregivers)
                 }, {
                 })
         )

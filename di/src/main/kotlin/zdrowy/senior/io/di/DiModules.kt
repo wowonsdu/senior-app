@@ -242,7 +242,7 @@ val viewModelModule = module {
     viewModel { PatientAgentsViewModel(get()) }
     viewModel { PatientAlertsViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { PatientHomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { PatientSettingsViewModel(get(), get(), get(), get(), get()) }
+    viewModel { PatientSettingsViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { PatientMeasurementDialogViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { PatientNotifyAgentsViewModel(get(), get()) }
     viewModel { PatientPersonalDataViewModel(get(), get()) }
