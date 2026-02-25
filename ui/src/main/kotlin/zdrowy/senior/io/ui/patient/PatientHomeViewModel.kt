@@ -98,6 +98,10 @@ class PatientHomeViewModel(
         }
     }
 
+    fun onProfileClicked() {
+        _navTarget.value = PatientHomeNavTarget.SETTINGS
+    }
+
     fun onNavigationHandled() {
         _navTarget.value = null
     }

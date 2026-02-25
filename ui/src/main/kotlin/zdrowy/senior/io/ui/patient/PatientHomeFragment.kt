@@ -129,7 +129,7 @@ class PatientHomeFragment : Fragment() {
             startSpeechToText()
         }
         binding.patientHomeProfile.setOnClickListener {
-            viewModel.onHeaderClicked()
+            viewModel.onProfileClicked()
         }
         binding.patientHomeProfileActionContainer.setOnClickListener {
             viewModel.onHeaderClicked()
@@ -155,6 +155,9 @@ class PatientHomeFragment : Fragment() {
             }
             if (target == PatientHomeNavTarget.CAREGIVER_HOME) {
                 findNavController().popBackStack()
+            }
+            if (target == PatientHomeNavTarget.SETTINGS) {
+                findNavController().navigate(R.id.action_patientHome_to_patientSettings)
             }
             if (target != null) viewModel.onNavigationHandled()
         }

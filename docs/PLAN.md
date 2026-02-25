@@ -288,6 +288,7 @@ Zasady etapu:
 - [x] 9.11.6 Patient Home: voice input — retry (error 5/6/7) + 20s na start mowy + hint po ciszy
 - [x] 9.11.7 Patient Home: voice input — spokojniejszy retry (backoff), mniej „pik”
 - [x] 9.11.8 Patient Home: voice input — bez retry na NO_MATCH (error 7) + bez retry dla pustych wynikow
+- [x] 9.11.9 Patient Home: klik w panel profilu -> ustawienia
 - [ ] 9.12 Ekran: Alerts Overview + Config
 - [ ] 9.13 Auth: SMS verify (patient/caregiver) — VM + UI models + data binding
 - [x] 9.14 Alerty i powiadomienia: plan (docs/plan) + wpis do PLAN.md
