@@ -1,5 +1,102 @@
 ﻿# Plan wykonania (checklista)
 
+## Etap PR — Przygotowanie do Play Production Release (Google Play)
+
+# MVP “Production Release” (Google Play) — Senior App
+
+## Podsumowanie
+W obecnym stanie aplikacja ma już sporo funkcji MVP (pacjent + opiekun, realtime na Firestore, STT), ale do wypuszczenia na **Play Production** brakuje kilku rzeczy, które są realnymi blockerami: **konfiguracja produkcyjnego Firebase w release**, **usunięcie debugowych wejść (DesignBook/DevHub) z release**, **compliance (privacy + usuwanie konta/danych)** oraz domknięcie smoke testów z `docs/PLAN.md`. Dodatkowo: **6‑cyfrowe kody** są **zgadywalne** i bez backendu nie da się ich sensownie zabezpieczyć w samych Firestore rules (brak rate limiting) — przy produkcji z danymi zdrowotnymi to duże ryzyko.
+
+## Dlaczego 6‑cyfrowy kod jest problemem (konkretnie)
+- 6 cyfr = 1 000 000 kombinacji.
+- Kod jest dokumentem w `accessCodes/{code}` i aplikacja robi `get()` po dokumencie, żeby sprawdzić czy istnieje i potem go zużyć (`FirestoreCareLinkRepository.getLinkCodeInfo()` i `consumeLinkCode()`).
+- W `firestore.rules` jest `allow get: if isSignedIn();` dla `match /accessCodes/{code}`, więc **każdy zalogowany** może próbować `get()` na losowych kodach aż trafi aktywny.
+- Firestore rules nie mają mechanizmu “licz prób na minutę” → nie da się dodać twardej ochrony bez warstwy serwerowej albo dłuższego tokena.
+
+Jeśli mimo tego zostajemy przy 6 cyfrach w produkcji, to w planie zapisuję to jako **świadomie zaakceptowane ryzyko**.
+
+---
+
+## 1) Blocker: Firebase w Release (żeby w ogóle działało na produkcji)
+Aktualny stan:
+- Nie ma `google-services.json` w repo (OK), ale też nie ma w ogóle pluginu `com.google.gms.google-services`, więc release nie dostanie konfiguracji “z automatu”.
+- `SeniorApp.initFirebase()` ma fallback tylko dla `BuildConfig.DEBUG`, więc **release bez google-services** prawdopodobnie nie wstanie na produkcji.
+
+Do zrobienia:
+1. Dodać plugin `com.google.gms.google-services` (version catalog + `app/build.gradle.kts`).
+2. Dostarczyć `app/google-services.json` dla produkcyjnego projektu Firebase (lokalnie/CI; nie musi być commitowany).
+3. Smoke: `assembleRelease` + uruchomienie builda release na urządzeniu i pełny login SMS.
+
+## 2) Blocker: Usunięcie debugowych “wejść” z wydania sklepowego
+Aktualny stan:
+- `DesignBookActivity` + `activity-alias` launcher są w `app/src/main/AndroidManifest.xml` (czyli trafią do release).
+- W nawigacji jest `devHubFragment` i action z Role Select (`ui/src/main/res/navigation/nav_graph.xml`).
+
+Do zrobienia:
+1. Przenieść `DesignBookActivity` i `DesignBookLauncher` do `app/src/debug/AndroidManifest.xml` (albo gated przez flavor), żeby w release nie było drugiej ikony.
+2. Zablokować `DevHubFragment` w release:
+3. UI: brak jakiejkolwiek ścieżki do dev ekranów w buildzie release.
+
+## 3) Compliance: Privacy policy + Data safety + “Usuwanie konta”
+W repo nie ma śladów:
+- polityki prywatności/ekranu informacyjnego,
+- mechanizmu “Usuń konto”/“Usuń dane”,
+- tekstu pod Data Safety (a aplikacja przetwarza dane zdrowotne + numer telefonu, opcjonalnie audio/mikrofon).
+
+Do zrobienia (minimalny zestaw dla Play Production):
+1. Dodać ekran w app: `Ustawienia -> Prywatność` z linkami:
+2. Dodać “Usuń konto” w app (w UI pacjenta i opiekuna):
+3. Przygotować URL do webowego “Delete account” (Play tego wymaga jako link w Console) spójny z tym, co robi app.
+4. Przygotować treści do Data Safety (zdrowie, PII, audio/mikrofon, Firebase Auth/Firestore).
+
+## 4) Bezpieczeństwo danych (minimalne hardening bez backendu)
+Ponieważ wybrałeś “akceptujemy ryzyko” 6‑cyfrowych kodów:
+- Zostawiamy mechanizm, ale wpisujemy w DoD MVP, że to jest **znane ryzyko**.
+
+Minimalne rzeczy, które i tak warto dopiąć:
+1. App Check (żeby utrudnić automatyczny scraping z “gołego” skryptu) — nie rozwiązuje brute-force w pełni, ale podnosi próg.
+2. Bardzo krótkie TTL kodów + natychmiastowe kasowanie po użyciu (częściowo już jest).
+3. Monitoring anomalii (min. logi po stronie Firebase / alerty), bo w release bez tego nie zobaczysz ataku.
+
+## 5) Stabilność: domknięcie smoke testów z `docs/PLAN.md`
+Na dziś są nieodhaczone m.in.:
+- “Dane osobowe: smoke check fragmentu”
+- “Choroby: smoke check fragmentów”
+- “10.12.4 Smoke: restart app (pacjent/opiekun) + utrzymanie kontekstu”
+- “Walidacja: smoke test live update (pacjent/opiekun)”
+- “Opiekun: badge/dashboards (smoke)”
+
+Do zrobienia:
+1. Wykonać te smoke testy na emulatorze i 1 fizycznym urządzeniu.
+2. Wykonać te same scenariusze na buildzie release (najpierw Internal testing).
+
+## 6) Release engineering (Play)
+1. Dodać prawidłowe `signingConfig` pod upload key (albo przynajmniej pipeline pod AAB).
+2. Zweryfikować wymagany `targetSdk` na Play na dzień 2026-02-24 i zaktualizować jeśli trzeba.
+3. Utworzyć track `Internal testing` i tam wrzucić pierwszy AAB, zanim Production.
+
+---
+
+## Zmiany w publicznych interfejsach (planowane)
+- `domain`: nowe use case’y typu `DeleteAccountUseCase`, `DeleteUserDataUseCase` (jeśli robimy “usuń dane bez usuwania auth”).
+- `domain`: interfejs repo (np. `AccountRepository`) z implementacją w `data` (FirebaseAuth + Firestore).
+- `ui`: nowe ekrany `PrivacyFragment` + `DeleteAccountFragment` (lub sekcja w istniejących ustawieniach).
+
+## Testy i scenariusze akceptacyjne
+- Release: instalacja + start bez emulatorów (`BuildConfig.USE_FIREBASE_*` false) i poprawna inicjalizacja Firebase.
+- Auth: login pacjent i opiekun SMS na produkcyjnych usługach.
+- Sesja: restart app → poprawne odtworzenie roli i aktywnego pacjenta.
+- Realtime: pacjent dodaje pomiar → opiekun widzi update bez ręcznego refresh.
+- Privacy: ekran prywatności dostępny, linki działają.
+- Account deletion: usuwa dane użytkownika i konto (albo “konto + dane” zgodnie z polityką); po operacji app wraca do startu.
+
+## Założenia (zamrożone na ten plan)
+- Wydanie: Google Play **Production**.
+- Backend danych: **Firestore produkcyjny**.
+- Scope v1: **Pacjent + opiekun**.
+- `DesignBookActivity` i dev narzędzia: **tylko debug**.
+- 6‑cyfrowe kody linkowania: **zostają** i **ryzyko brute-force jest zaakceptowane** (odradzam, ale to jest decyzja wejściowa do planu).
+
 ## Etap 0 — System stylu (UI system)
 - [x] Theme + kolory + typografia + shapes
 - [x] Dimens (odstepy, rozmiary, promienie)
