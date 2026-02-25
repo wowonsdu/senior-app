@@ -267,6 +267,7 @@ Zasady etapu:
 - [x] 9.0 Aktualizacja AGENTS.md (Schedulers w VM) + plan refaktoru w PLAN.md
 - [x] 9.1 API obserwacyjne: domain/data/di (Agents/Measurements/Alerts + use case observe)
 - [ ] 9.2 Ekran: Patient Settings (overview + listy) — UI models + observe + data binding
+- [x] 9.2.1 Patient Settings: UX (karta o mnie -> edycja, przyciski sekcji, usun konto)
 - [ ] 9.3 Dialog: Personal Data (dodaj/edytuj)
 - [ ] 9.4 Dialog: Disease add/edit
 - [ ] 9.5 Dialog: Medication add/edit

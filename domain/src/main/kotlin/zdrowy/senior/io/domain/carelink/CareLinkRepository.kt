@@ -14,4 +14,5 @@ interface CareLinkRepository {
     fun getLinkCodeInfo(code: String): Single<CareLinkCodeInfo>
     fun consumeLinkCode(code: String): Single<CareLink>
     fun ensureCaregiverContact(caregiverUid: String): Completable
+    fun removeCareLink(patientUid: String, caregiverUid: String): Completable
 }

@@ -319,6 +319,15 @@ class FirestoreCareLinkRepository(
         ).toCompletable()
     }
 
+    override fun removeCareLink(patientUid: String, caregiverUid: String): Completable {
+        if (patientUid.isBlank() || caregiverUid.isBlank()) {
+            return Completable.error(IllegalStateException("Brak identyfikatorow powiazania"))
+        }
+        val linkId = "${patientUid}_${caregiverUid}"
+        val doc = firestore.collection(FirestorePaths.CARE_LINKS).document(linkId)
+        return doc.delete().toCompletable()
+    }
+
     private fun requireUid(): String {
         return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
     }

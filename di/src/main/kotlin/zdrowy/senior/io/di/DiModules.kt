@@ -16,6 +16,7 @@ import zdrowy.senior.io.data.settings.FirestorePersonalDataByUidRepository
 import zdrowy.senior.io.data.settings.FirestoreSettingsRepository
 import zdrowy.senior.io.data.settings.notifications.FirestoreNotificationSettingsRepository
 import zdrowy.senior.io.data.user.FirebaseCurrentUserUidProvider
+import zdrowy.senior.io.data.user.FirestoreAccountRepository
 import zdrowy.senior.io.data.user.SharedPrefsActivePatientContext
 import zdrowy.senior.io.data.user.SharedPrefsCurrentUserRoleContext
 import zdrowy.senior.io.domain.agent.AccessCodeRepository
@@ -41,6 +42,7 @@ import zdrowy.senior.io.domain.carelink.EnsureCaregiverContactUseCase
 import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
 import zdrowy.senior.io.domain.carelink.GetCareLinkCodeInfoUseCase
 import zdrowy.senior.io.domain.carelink.ObserveCareLinksUseCase
+import zdrowy.senior.io.domain.carelink.RemoveCareLinkUseCase
 import zdrowy.senior.io.domain.history.GetHistoryFiltersUseCase
 import zdrowy.senior.io.domain.history.GetMeasurementChartDataUseCase
 import zdrowy.senior.io.domain.history.GetMeasurementHistoryUseCase
@@ -96,6 +98,8 @@ import zdrowy.senior.io.domain.user.EnsureCurrentUserRoleLoadedUseCase
 import zdrowy.senior.io.domain.user.ActivePatientContext
 import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
 import zdrowy.senior.io.domain.user.ClearCurrentUserRoleUseCase
+import zdrowy.senior.io.domain.user.DeleteCurrentUserAccountUseCase
+import zdrowy.senior.io.domain.user.DeleteUserDataUseCase
 import zdrowy.senior.io.domain.user.CurrentUserUidProvider
 import zdrowy.senior.io.domain.user.CurrentUserRoleContext
 import zdrowy.senior.io.domain.user.GetCurrentUserRoleUseCase
@@ -104,6 +108,7 @@ import zdrowy.senior.io.domain.user.ObserveCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.ObserveManagedUserUidStateUseCase
 import zdrowy.senior.io.domain.user.SetActivePatientUseCase
 import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
+import zdrowy.senior.io.domain.user.AccountRepository
 import zdrowy.senior.io.domain.user.UserProfileRepository
 import zdrowy.senior.io.data.user.FirestoreUserProfileRepository
 import zdrowy.senior.io.ui.caregiver.CaregiverLinkViewModel
@@ -176,6 +181,7 @@ val domainModule = module {
     factory { GetCareLinkCodeInfoUseCase(get()) }
     factory { ConsumeCareLinkCodeUseCase(get()) }
     factory { EnsureCaregiverContactUseCase(get()) }
+    factory { RemoveCareLinkUseCase(get(), get()) }
 
     factory { GetPersonalDataUseCase(get()) }
     factory { GetSettingsOverviewUseCase(get()) }
@@ -200,6 +206,8 @@ val domainModule = module {
     factory { ObserveCurrentUserRoleUseCase(get()) }
     factory { GetCurrentUserRoleUseCase(get()) }
     factory { ClearCurrentUserRoleUseCase(get()) }
+    factory { DeleteCurrentUserAccountUseCase(get()) }
+    factory { DeleteUserDataUseCase(get()) }
     factory { SetActivePatientUseCase(get()) }
     factory { ClearActivePatientUseCase(get()) }
     factory { ObserveActivePatientUseCase(get()) }
@@ -223,6 +231,7 @@ val dataModule = module {
     single<AlertEventRepository> { FirestoreAlertEventRepository(get()) }
     single<SettingsRepository> { FirestoreSettingsRepository(get()) }
     single<PersonalDataByUidRepository> { FirestorePersonalDataByUidRepository() }
+    single<AccountRepository> { FirestoreAccountRepository() }
 
     single<UserProfileRepository> { FirestoreUserProfileRepository() }
 }
@@ -242,7 +251,22 @@ val viewModelModule = module {
     viewModel { PatientAgentsViewModel(get()) }
     viewModel { PatientAlertsViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { PatientHomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
-    viewModel { PatientSettingsViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel {
+        PatientSettingsViewModel(
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
     viewModel { PatientMeasurementDialogViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { PatientNotifyAgentsViewModel(get(), get()) }
     viewModel { PatientPersonalDataViewModel(get(), get()) }

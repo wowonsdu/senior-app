@@ -94,6 +94,15 @@
                                 android:textAppearance="@style/TextAppearance.Senior.Caption"
                                 android:textColor="@color/senior_text_secondary" />
                         </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/patient_settings_personal_edit"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="@dimen/spacing_m"
+                            android:contentDescription="@null"
+                            android:src="@android:drawable/ic_menu_edit"
+                            android:tint="@color/senior_primary" />
                     </LinearLayout>
 
                     <View
@@ -152,6 +161,15 @@
                 android:layout_marginTop="@dimen/spacing_s"
                 android:nestedScrollingEnabled="false" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/patient_settings_add_disease"
+                style="@style/Widget.Senior.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:minHeight="48dp"
+                android:text="@string/patient_settings_add_disease" />
+
             <TextView
                 android:id="@+id/patient_settings_section_meds"
                 android:layout_width="wrap_content"
@@ -175,6 +193,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_s"
                 android:nestedScrollingEnabled="false" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/patient_settings_add_med"
+                style="@style/Widget.Senior.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:minHeight="48dp"
+                android:text="@string/patient_settings_add_med" />
 
             <TextView
                 android:id="@+id/patient_settings_section_config"
@@ -311,110 +338,14 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/patient_settings_delete_account"
+                style="@style/Widget.Senior.Button.Danger"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_l"
-                android:orientation="horizontal">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/patient_settings_add_personal"
-                    style="@style/Widget.Senior.Card"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_marginEnd="@dimen/spacing_s"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/senior_primary">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:contentDescription="@null"
-                            android:src="@android:drawable/ic_menu_edit"
-                            android:tint="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_s"
-                            android:text="@string/patient_settings_add_personal"
-                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/patient_settings_add_disease"
-                    style="@style/Widget.Senior.Card"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_marginStart="@dimen/spacing_s"
-                    android:layout_weight="1"
-                    app:cardBackgroundColor="@color/senior_danger">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:contentDescription="@null"
-                            android:src="@android:drawable/ic_input_add"
-                            android:tint="@color/white" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_s"
-                            android:text="@string/patient_settings_add_disease"
-                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/patient_settings_add_med"
-                style="@style/Widget.Senior.Card"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:layout_marginTop="@dimen/spacing_s"
-                app:cardBackgroundColor="@color/senior_magenta">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:contentDescription="@null"
-                        android:src="@android:drawable/ic_input_add"
-                        android:tint="@color/white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_s"
-                        android:text="@string/patient_settings_add_med"
-                        android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                        android:textColor="@color/white"
-                        android:textStyle="bold" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                android:minHeight="48dp"
+                android:text="@string/patient_settings_delete_account" />
 
         </LinearLayout>
     </ScrollView>
