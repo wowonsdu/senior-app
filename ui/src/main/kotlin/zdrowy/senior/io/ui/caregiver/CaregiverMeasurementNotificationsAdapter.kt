@@ -69,7 +69,7 @@ class CaregiverMeasurementNotificationsAdapter(
         override fun areItemsTheSame(
             oldItem: CaregiverMeasurementNotificationUi,
             newItem: CaregiverMeasurementNotificationUi
-        ): Boolean = oldItem.id == newItem.id
+        ): Boolean = oldItem.id == newItem.id && oldItem.patientUid == newItem.patientUid
 
         override fun areContentsTheSame(
             oldItem: CaregiverMeasurementNotificationUi,

@@ -4,6 +4,7 @@ import zdrowy.senior.io.domain.measurement.MeasurementType
 
 data class CaregiverMeasurementNotificationUi(
     val id: String,
+    val patientUid: String,
     val patientName: String,
     val type: MeasurementType,
     val typeLabel: String,

@@ -373,6 +373,7 @@ Zasady etapu:
 - [ ] Opiekun: badge nowych pomiarow (smoke)
 - [x] Opiekun: dashboard — nowe pomiary (domain/data/DI)
 - [x] Opiekun: dashboard — nowe pomiary (UI/VM)
+- [x] Opiekun: dashboard — agregacja pomiarow wszystkich podopiecznych
 - [ ] Opiekun: dashboard — nowe pomiary (smoke)
 - [x] Opiekun: blokada caregiver↔caregiver + reguly profilu opiekuna
 - [x] Opiekun: "Ja / moj profil" w Podopiecznych + personalData seed
