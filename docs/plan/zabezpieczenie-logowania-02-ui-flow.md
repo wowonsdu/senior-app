@@ -23,6 +23,7 @@ Checklist:
 - [x] Formularz generowania kodu: telefon pacjenta wymagany
 - [x] Normalizacja telefonu do E164 (albo jasno wymagamy E164 w UI)
 - [x] UX: informacja "Pacjent musi potwierdzic ten numer SMS, potem wpisac kod"
+- [x] Dodaj podopiecznego: obserwuj careLinks i zamknij ekran po polaczeniu
 
 ## PATIENT->CAREGIVER (jesli nie wylaczamy)
 - [x] Wymagac telefonu opiekuna i generowac kod z phoneNumberE164 opiekuna (nie dotyczy — flow wylaczony)

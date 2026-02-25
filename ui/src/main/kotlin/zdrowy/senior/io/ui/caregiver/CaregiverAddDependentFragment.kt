@@ -30,6 +30,7 @@ class CaregiverAddDependentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.start()
         binding.caregiverAddDependentToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -49,6 +50,12 @@ class CaregiverAddDependentFragment : Fragment() {
         }
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             binding.caregiverAddDependentPhoneInput.error = message
+        }
+        viewModel.closeScreen.observe(viewLifecycleOwner) { close ->
+            if (close == true) {
+                findNavController().popBackStack()
+                viewModel.onCloseHandled()
+            }
         }
     }
 

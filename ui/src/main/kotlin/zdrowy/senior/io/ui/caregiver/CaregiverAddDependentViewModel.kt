@@ -9,15 +9,43 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.carelink.CareLinkCodeType
 import zdrowy.senior.io.domain.carelink.CareLinkDraft
 import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
+import zdrowy.senior.io.domain.carelink.ObserveCareLinksUseCase
 
 class CaregiverAddDependentViewModel(
-    private val generateCareLinkCode: GenerateCareLinkCodeUseCase
+    private val generateCareLinkCode: GenerateCareLinkCodeUseCase,
+    private val observeCareLinks: ObserveCareLinksUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val _generatedCode = MutableLiveData<String>()
     val generatedCode: LiveData<String> = _generatedCode
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
+    private val _closeScreen = MutableLiveData<Boolean>()
+    val closeScreen: LiveData<Boolean> = _closeScreen
+    private var started = false
+    private var baselineCount: Int? = null
+
+    fun start() {
+        if (started) return
+        started = true
+        disposables.add(
+            observeCareLinks()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ links ->
+                    if (baselineCount == null) {
+                        baselineCount = links.size
+                        return@subscribe
+                    }
+                    if (links.size > (baselineCount ?: 0)) {
+                        baselineCount = links.size
+                        _closeScreen.value = true
+                    }
+                }, { error ->
+                    _errorMessage.value = error.message
+                })
+        )
+    }
 
     fun generateCode(draft: CareLinkDraft) {
         val ttlSeconds = 30L * 24 * 60 * 60
@@ -32,6 +60,10 @@ class CaregiverAddDependentViewModel(
                     _errorMessage.value = error.message ?: "Blad generowania kodu"
                 })
         )
+    }
+
+    fun onCloseHandled() {
+        _closeScreen.value = false
     }
 
     override fun onCleared() {
