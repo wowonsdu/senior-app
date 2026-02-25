@@ -361,6 +361,7 @@ Zasady etapu:
 - [x] Panel opiekuna: routing (login + startup gate) + nav_graph
 - [x] Panel opiekuna: UI tabs (TabLayout + ViewPager2) + placeholdery
 - [x] Podopieczni: lista careLinks (kafelki) + wybór pacjenta
+- [x] Podopieczni: wybór pacjenta po kliknięciu całego kafelka
 - [x] Podopieczni: formularz dodaj + kod + kopiuj
 - [x] Auth pacjenta: login z kodem (consume careLink + prefill danych)
 - [x] Auth pacjenta: auto-SMS po kodzie (bez wpisywania telefonu)

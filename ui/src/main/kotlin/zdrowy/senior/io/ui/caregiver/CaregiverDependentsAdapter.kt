@@ -36,7 +36,7 @@ class CaregiverDependentsAdapter(
                 binding.caregiverDependentName.text = item.fullName
             }
             binding.caregiverDependentPhone.text = item.phone
-            binding.caregiverDependentSelect.setOnClickListener { onSelect(item) }
+            binding.root.setOnClickListener { onSelect(item) }
             val unread = item.unreadCount
             binding.caregiverDependentBell.visibility = if (unread > 0) View.VISIBLE else View.GONE
             binding.caregiverDependentBadge.text = unread.toString()
