@@ -1,4 +1,9 @@
-﻿# Plan wykonania (checklista)
+﻿# Plan wykonania (checklista)## Etap ZL — Zabezpieczenie logowania (SMS -> kod)
+- [x] 0. Decyzja: PATIENT->CAREGIVER wylaczony w prod (tylko CAREGIVER->PATIENT)
+- [x] 1. Model + rules: accessCodes z phoneNumberE164 + ograniczenia dostepu
+- [x] 2. UI/UX: SMS verify -> ekran kodu (bez kodu przed SMS)
+- [x] 3. Domain/Data: dopasowanie repo/UC pod phone gate
+- [ ] 4. QA: smoke debug + release (bez emulatorow)
 
 ## Etap PR — Przygotowanie do Play Production Release (Google Play)
 

@@ -6,7 +6,7 @@ import zdrowy.senior.io.ui.R
 object PhoneAuthUi {
     const val ARG_VERIFICATION_ID = "verificationId"
     const val ARG_PHONE_E164 = "phoneE164"
-    const val ARG_PENDING_CARE_LINK_CODE = "pendingCareLinkCode"
+    const val ARG_LINK_FROM_AUTH = "linkFromAuth"
 
     fun navOptionsPopToRoleSelect(): NavOptions =
         NavOptions.Builder()

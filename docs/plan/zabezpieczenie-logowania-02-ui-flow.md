@@ -11,8 +11,8 @@ Docelowy flow:
 4) Zuzyj kod -> link -> wejscie do aplikacji pacjenta
 
 Checklist:
-- [ ] Zablokowac wszystkie wejscia do kodu przed SMS verify
-- [ ] UI bledu: bledny kod / wygasl / kod dla innego telefonu
+- [x] Zablokowac wszystkie wejscia do kodu przed SMS verify
+- [x] UI bledu: bledny kod / wygasl / kod dla innego telefonu
 
 ## Opiekun
 Docelowy flow generowania:
@@ -20,11 +20,10 @@ Docelowy flow generowania:
 - Kod zapisuje phoneNumberE164, zeby pacjent po SMS mogl go zuzyc
 
 Checklist:
-- [ ] Formularz generowania kodu: telefon pacjenta wymagany
-- [ ] Normalizacja telefonu do E164 (albo jasno wymagamy E164 w UI)
-- [ ] UX: informacja "Pacjent musi potwierdzic ten numer SMS, potem wpisac kod"
+- [x] Formularz generowania kodu: telefon pacjenta wymagany
+- [x] Normalizacja telefonu do E164 (albo jasno wymagamy E164 w UI)
+- [x] UX: informacja "Pacjent musi potwierdzic ten numer SMS, potem wpisac kod"
 
 ## PATIENT->CAREGIVER (jesli nie wylaczamy)
-- [ ] Wymagac telefonu opiekuna i generowac kod z phoneNumberE164 opiekuna
-- [ ] Flow opiekuna: SMS -> wpisz kod od pacjenta
-
+- [x] Wymagac telefonu opiekuna i generowac kod z phoneNumberE164 opiekuna (nie dotyczy — flow wylaczony)
+- [x] Flow opiekuna: SMS -> wpisz kod od pacjenta (nie dotyczy — flow wylaczony)

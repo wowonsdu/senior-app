@@ -4,18 +4,17 @@ Cel:
 Dopasowac kontrakty repozytoriow i use case do nowych wymagan (phoneNumberE164) oraz usunac sciezki, ktore umozliwiaja odczyt kodu bez phone gate.
 
 ## Domain
-- [ ] Ustalic, czy CareLinkCode / AccessCode zawieraja phoneNumberE164
-- [ ] Doprecyzowac UseCase:
+- [x] Ustalic, czy CareLinkCode / AccessCode zawieraja phoneNumberE164
+- [x] Doprecyzowac UseCase:
   - GenerateLinkCodeUseCase / GenerateAccessCodeForAgentUseCase: wymagany phoneNumberE164 dla kodow "do wpisania"
   - GetLinkCodeInfoUseCase / ConsumeLinkCodeUseCase: zaklada, ze user jest po Phone Auth
 
 ## Data (Firestore)
-- [ ] FirestoreCareLinkRepository:
+- [x] FirestoreCareLinkRepository:
   - getLinkCodeInfo / consumeLinkCode: pracuja na accessCodes z phoneNumberE164
-- [ ] FirestoreAccessCodeRepository (dla agentow, jesli to tez "do wpisania"):
-  - decyzja: czy agent-kody tez przechodza na phone gate, czy zostaja long token / inny mechanizm
+- [x] FirestoreAccessCodeRepository (dla agentow, jesli to tez "do wpisania"):
+  - decyzja: agent-kody nie przechodza na phone gate; dostep ograniczony po patientUid w rules
 
 ## Checklist
-- [ ] Spisac mapowanie pol i kompatybilnosc danych (jeśli istnieja stare kody w bazie)
-- [ ] Usunac/wylaczyc stare wejscia i nav actions, ktore pozwalaja na kod bez SMS
-
+- [x] Spisac mapowanie pol i kompatybilnosc danych (jeśli istnieja stare kody w bazie)
+- [x] Usunac/wylaczyc stare wejscia i nav actions, ktore pozwalaja na kod bez SMS

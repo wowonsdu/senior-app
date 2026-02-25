@@ -28,11 +28,11 @@ class PatientLoginViewModel(
                         _codeError.value = "Nieprawidlowy kod"
                         return@subscribe
                     }
-                    if (info.draftPhoneNumber.isBlank()) {
+                    if (info.phoneNumberE164.isBlank()) {
                         _codeError.value = "Nieprawidlowy kod"
                         return@subscribe
                     }
-                    _resolvedPhone.value = info.draftPhoneNumber
+                    _resolvedPhone.value = info.phoneNumberE164
                 }, {
                     _codeError.value = "Nieprawidlowy kod"
                 })

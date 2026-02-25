@@ -27,8 +27,7 @@ Dodatkowe (opcjonalne, jak juz jest):
   - utrzymac obecne zasady: get/delete tylko dla dopasowanego phone_number
 
 ## Checklist
-- [ ] Spisac finalny kontrakt pol (jedna nazwa pola dla telefonu: phoneNumberE164)
-- [ ] Zmienic firestore.rules zgodnie z wymaganiami
-- [ ] (Jesli trzeba) firestore.indexes.json bez zmian
+- [x] Spisac finalny kontrakt pol (jedna nazwa pola dla telefonu: phoneNumberE164)
+- [x] Zmienic firestore.rules zgodnie z wymaganiami
+- [x] (Jesli trzeba) firestore.indexes.json bez zmian
 - [ ] Walidacja: proba odczytu kodu z innego konta/telefonu musi byc PERMISSION_DENIED
-

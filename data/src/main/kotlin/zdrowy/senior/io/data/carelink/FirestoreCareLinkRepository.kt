@@ -3,6 +3,7 @@ package zdrowy.senior.io.data.carelink
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.SetOptions
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
@@ -76,11 +77,15 @@ class FirestoreCareLinkRepository(
         draft: CareLinkDraft?
     ): Single<CareLinkCode> {
         val role = requireRole()
-        if (type == CareLinkCodeType.PATIENT_TO_CAREGIVER && role != UserRole.PATIENT) {
-            return Single.error(IllegalStateException("Kod pacjenta moze byc generowany tylko przez pacjenta"))
+        if (type == CareLinkCodeType.PATIENT_TO_CAREGIVER) {
+            return Single.error(IllegalStateException("Flow PACJENT->OPIEKUN jest wylaczony"))
         }
         if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT && role != UserRole.CAREGIVER) {
             return Single.error(IllegalStateException("Kod opiekuna moze byc generowany tylko przez opiekuna"))
+        }
+        val phoneNumberE164 = draft?.phoneNumber?.trim().orEmpty()
+        if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT && phoneNumberE164.isBlank()) {
+            return Single.error(IllegalStateException("Telefon pacjenta jest wymagany"))
         }
         val uid = requireUid()
         val expiresAtMs = System.currentTimeMillis() + ttlSeconds * 1000
@@ -89,7 +94,8 @@ class FirestoreCareLinkRepository(
             ownerUid = uid,
             expiresAtMs = expiresAtMs,
             type = type,
-            draft = draft
+            draft = draft,
+            phoneNumberE164 = phoneNumberE164
         )
     }
 
@@ -109,14 +115,24 @@ class FirestoreCareLinkRepository(
                 val type = runCatching { CareLinkCodeType.valueOf(typeRaw) }
                     .getOrElse { throw InvalidCodeException("Nieprawidlowy typ kodu") }
 
-                val draftPhone = snapshot.getString("draftPhoneNumber").orEmpty()
+                val phoneNumberE164 = snapshot.getString("phoneNumberE164").orEmpty()
+                    .ifBlank { snapshot.getString("draftPhoneNumber").orEmpty() }
 
                 CareLinkCodeInfo(
                     code = code,
                     type = type,
                     expiresAtMs = expiresAtMs,
-                    draftPhoneNumber = draftPhone
+                    phoneNumberE164 = phoneNumberE164
                 )
+            }
+            .onErrorResumeNext { error ->
+                if (error is FirebaseFirestoreException
+                    && error.code == FirebaseFirestoreException.Code.PERMISSION_DENIED
+                ) {
+                    Single.error(InvalidCodeException("Kod dla innego numeru telefonu"))
+                } else {
+                    Single.error(error)
+                }
             }
     }
 
@@ -148,7 +164,8 @@ class FirestoreCareLinkRepository(
             var draftFirstName = snapshot.getString("draftFirstName").orEmpty()
             var draftLastName = snapshot.getString("draftLastName").orEmpty()
             var draftPesel = snapshot.getString("draftPesel").orEmpty()
-            val draftPhone = snapshot.getString("draftPhoneNumber").orEmpty()
+            val draftPhone = snapshot.getString("phoneNumberE164").orEmpty()
+                .ifBlank { snapshot.getString("draftPhoneNumber").orEmpty() }
             var draftAddress = snapshot.getString("draftAddress").orEmpty()
 
             val (patientUid, caregiverUid) = when (type) {
@@ -224,7 +241,17 @@ class FirestoreCareLinkRepository(
                 tx.delete(draftDoc)
             }
             CareLink(patientUid = patientUid, caregiverUid = caregiverUid, status = CareLinkStatus.ACTIVE)
-        }.toSingle()
+        }
+            .toSingle()
+            .onErrorResumeNext { error ->
+                if (error is FirebaseFirestoreException
+                    && error.code == FirebaseFirestoreException.Code.PERMISSION_DENIED
+                ) {
+                    Single.error(InvalidCodeException("Kod dla innego numeru telefonu"))
+                } else {
+                    Single.error(error)
+                }
+            }
     }
 
     override fun ensureCaregiverContact(caregiverUid: String): Completable {
@@ -254,7 +281,8 @@ class FirestoreCareLinkRepository(
         ownerUid: String,
         expiresAtMs: Long,
         type: CareLinkCodeType,
-        draft: CareLinkDraft?
+        draft: CareLinkDraft?,
+        phoneNumberE164: String
     ): Single<CareLinkCode> {
         if (remainingAttempts <= 0) {
             return Single.error(IllegalStateException("Unable to generate unique access code"))
@@ -278,8 +306,10 @@ class FirestoreCareLinkRepository(
                 CareLinkCodeType.PATIENT_TO_CAREGIVER -> payload["patientUid"] = ownerUid
                 CareLinkCodeType.CAREGIVER_TO_PATIENT -> payload["caregiverUid"] = ownerUid
             }
-            val draftPhone = draft?.phoneNumber?.trim().orEmpty()
-            if (draftPhone.isNotBlank()) payload["draftPhoneNumber"] = draftPhone
+            if (phoneNumberE164.isNotBlank()) {
+                payload["phoneNumberE164"] = phoneNumberE164
+                payload["draftPhoneNumber"] = phoneNumberE164
+            }
 
             tx.set(doc, payload)
 
@@ -289,7 +319,7 @@ class FirestoreCareLinkRepository(
                 if (draft.lastName.isNotBlank()) draftPayload["draftLastName"] = draft.lastName
                 if (draft.pesel.isNotBlank()) draftPayload["draftPesel"] = draft.pesel
                 if (draft.address.isNotBlank()) draftPayload["draftAddress"] = draft.address
-                if (draftPhone.isNotBlank()) draftPayload["phoneNumberE164"] = draftPhone
+                if (phoneNumberE164.isNotBlank()) draftPayload["phoneNumberE164"] = phoneNumberE164
                 if (draftPayload.isNotEmpty()) {
                     val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
                     tx.set(draftDoc, draftPayload)
@@ -306,7 +336,8 @@ class FirestoreCareLinkRepository(
                         ownerUid = ownerUid,
                         expiresAtMs = expiresAtMs,
                         type = type,
-                        draft = draft
+                        draft = draft,
+                        phoneNumberE164 = phoneNumberE164
                     )
                 } else {
                     Single.error(error)

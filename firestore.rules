@@ -32,6 +32,23 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/careLinks/$(careLinkId(request.auth.uid, caregiverUid)));
     }
 
+    function accessCodePhoneMatches() {
+      return resource != null
+        && request.auth.token.phone_number != null
+        && resource.data.phoneNumberE164 is string
+        && request.auth.token.phone_number == resource.data.phoneNumberE164;
+    }
+
+    function isAccessCodeOwner() {
+      return resource != null && resource.data.ownerUid == request.auth.uid;
+    }
+
+    function isAccessCodeParticipant() {
+      return resource != null
+        && (resource.data.patientUid == request.auth.uid
+            || resource.data.caregiverUid == request.auth.uid);
+    }
+
     match /users/{uid} {
       allow read, write: if isSignedIn() && (request.auth.uid == uid || isCaregiverOf(uid));
 
@@ -77,13 +94,23 @@ service cloud.firestore {
 
     match /accessCodes/{code} {
       allow create: if isSignedIn()
-        && request.resource.data.type is string
-        && ((request.resource.data.type == "PATIENT_TO_CAREGIVER" && isPatient(request.auth.uid))
-            || (request.resource.data.type == "CAREGIVER_TO_PATIENT" && isCaregiver(request.auth.uid)));
-      allow get: if isSignedIn();
+        && (
+          (request.resource.data.type is string
+            && request.resource.data.phoneNumberE164 is string
+            && ((request.resource.data.type == "PATIENT_TO_CAREGIVER" && isPatient(request.auth.uid))
+                || (request.resource.data.type == "CAREGIVER_TO_PATIENT" && isCaregiver(request.auth.uid))))
+          || (request.resource.data.contactId is string
+              && request.resource.data.patientUid == request.auth.uid)
+        );
+      allow get: if isSignedIn()
+        && (resource == null
+            || accessCodePhoneMatches()
+            || isAccessCodeOwner()
+            || isAccessCodeParticipant());
       allow list: if false;
       allow update: if false;
-      allow delete: if isSignedIn();
+      allow delete: if isSignedIn()
+        && (accessCodePhoneMatches() || isAccessCodeOwner() || isAccessCodeParticipant());
     }
 
     match /accessCodeDrafts/{code} {

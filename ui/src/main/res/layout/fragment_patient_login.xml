@@ -80,36 +80,6 @@
             android:orientation="vertical"
             android:padding="@dimen/spacing_l">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@null"
-                    android:src="@android:drawable/ic_menu_call"
-                    android:tint="@color/senior_info" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_s"
-                    android:layout_marginEnd="@dimen/spacing_s"
-                    android:text="@string/login_or"
-                    android:textAppearance="@style/TextAppearance.Senior.Caption"
-                    android:textColor="@color/senior_text_secondary" />
-
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:contentDescription="@null"
-                    android:src="@android:drawable/ic_lock_lock"
-                    android:tint="@color/senior_info" />
-            </LinearLayout>
-
             <TextView
                 android:id="@+id/patient_login_method_title"
                 android:layout_width="wrap_content"
@@ -143,31 +113,6 @@
                     android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/patient_login_or_divider"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/spacing_m"
-                android:text="@string/login_or_divider"
-                android:textAppearance="@style/TextAppearance.Senior.Caption"
-                android:textColor="@color/senior_text_tertiary" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/patient_login_code_input"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_m"
-                android:hint="@string/login_code_hint">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/patient_login_access_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberPassword" />
-            </com.google.android.material.textfield.TextInputLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -179,15 +124,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/login_phone_tip_patient"
-                    android:textAppearance="@style/TextAppearance.Senior.Caption"
-                    android:textColor="@color/senior_text_secondary" />
-
-                <TextView
-                    android:id="@+id/patient_login_code_tip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_xs"
-                    android:text="@string/login_code_tip_patient"
                     android:textAppearance="@style/TextAppearance.Senior.Caption"
                     android:textColor="@color/senior_text_secondary" />
             </LinearLayout>

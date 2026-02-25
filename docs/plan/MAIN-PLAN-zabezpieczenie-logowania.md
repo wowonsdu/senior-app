@@ -29,30 +29,31 @@ Efekt:
 - Flow PATIENT -> CAREGIVER:
   - MVP: wylaczone albo wymagajace podania telefonu opiekuna (do decyzji w Etapie 0).
   - Bez tego flow nadal da sie zabezpieczyc tylko dlugim tokenem/QR albo backendem.
+Wybor: opcja A (PATIENT->CAREGIVER wylaczony w produkcji).
 
 ## Etap 0 — Scope i decyzja dla PATIENT->CAREGIVER
-- [ ] Ustalic jednoznacznie:
+- [x] Ustalic jednoznacznie:
   - opcja A (recommended): wylacz PATIENT->CAREGIVER w produkcji (UI i UC), zostaje tylko CAREGIVER->PATIENT
   - opcja B: PATIENT->CAREGIVER wymaga telefonu opiekuna i tez zapisuje phoneNumberE164 w accessCodes
-- [ ] Zapisac decyzje w tym pliku (sekcja "Decyzje")
+- [x] Zapisac decyzje w tym pliku (sekcja "Decyzje")
 
 ## Etap 1 — Model danych + Firestore rules (bezpieczne accessCodes)
-- [ ] Zdefiniowac wymagane pola w accessCodes/{code} dla kodow "do wpisania po SMS"
-- [ ] Zmienic rules dla accessCodes: get/delete tylko dla dopasowanego phone_number (i ewentualnie owner)
-- [ ] Upewnic sie, ze accessCodeDrafts pozostaje zgodne (tam juz jest powiazanie po phone)
-- [ ] Subplan: docs/plan/zabezpieczenie-logowania-01-model-rules.md
+- [x] Zdefiniowac wymagane pola w accessCodes/{code} dla kodow "do wpisania po SMS"
+- [x] Zmienic rules dla accessCodes: get/delete tylko dla dopasowanego phone_number (i ewentualnie owner)
+- [x] Upewnic sie, ze accessCodeDrafts pozostaje zgodne (tam juz jest powiazanie po phone)
+- [x] Subplan: docs/plan/zabezpieczenie-logowania-01-model-rules.md
 
 ## Etap 2 — UI/UX: najpierw SMS, potem kod
-- [ ] Przestawic flow tak, aby ekran wpisania kodu pojawial sie dopiero po sukcesie SMS verify
-- [ ] Dla pacjenta: Phone Auth -> ekran "Podaj kod od opiekuna"
-- [ ] Dla opiekuna: generowanie kodu wymaga telefonu pacjenta (E164 lub normalizacja)
-- [ ] Subplan: docs/plan/zabezpieczenie-logowania-02-ui-flow.md
+- [x] Przestawic flow tak, aby ekran wpisania kodu pojawial sie dopiero po sukcesie SMS verify
+- [x] Dla pacjenta: Phone Auth -> ekran "Podaj kod od opiekuna"
+- [x] Dla opiekuna: generowanie kodu wymaga telefonu pacjenta (E164 lub normalizacja)
+- [x] Subplan: docs/plan/zabezpieczenie-logowania-02-ui-flow.md
 
 ## Etap 3 — Domain/Data: logika generowania i zuzywania kodu
-- [ ] Domain: doprecyzowac kontrakty UseCase/Repo pod nowe wymagania (phoneNumberE164)
-- [ ] Data: FirestoreCareLinkRepository / FirestoreAccessCodeRepository dostosowane do nowych pol
-- [ ] Usunac lub ukryc stare sciezki, ktore czytaja kod bez phone gate
-- [ ] Subplan: docs/plan/zabezpieczenie-logowania-03-domain-data.md
+- [x] Domain: doprecyzowac kontrakty UseCase/Repo pod nowe wymagania (phoneNumberE164)
+- [x] Data: FirestoreCareLinkRepository / FirestoreAccessCodeRepository dostosowane do nowych pol
+- [x] Usunac lub ukryc stare sciezki, ktore czytaja kod bez phone gate
+- [x] Subplan: docs/plan/zabezpieczenie-logowania-03-domain-data.md
 
 ## Etap 4 — QA + smoke
 - [ ] Testy scenariuszy (pacjent i opiekun), w tym bledne telefony, bledne kody, wygasniecie TTL
@@ -63,4 +64,3 @@ Efekt:
 - Kod accessCodes jest nieczytelny dla userow bez dopasowanego phone_number.
 - W UI nie da sie dojsc do "wpisz kod" bez przejscia SMS verify.
 - Smoke pacjent/opiekun przechodzi end-to-end.
-

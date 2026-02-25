@@ -55,8 +55,8 @@
         android:label="@string/role_select_app_name"
         tools:layout="@layout/fragment_patient_sms_verify">
         <action
-            android:id="@+id/action_patientSmsVerify_to_patientHome"
-            app:destination="@id/patientHomeFragment" />
+            android:id="@+id/action_patientSmsVerify_to_caregiverLink"
+            app:destination="@id/caregiverLinkFragment" />
     </fragment>
 
     <fragment
@@ -348,6 +348,10 @@
         android:name="zdrowy.senior.io.ui.caregiver.CaregiverLinkFragment"
         android:label="@string/caregiver_link_title"
         tools:layout="@layout/fragment_caregiver_link">
+        <argument
+            android:name="linkFromAuth"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_caregiverLink_to_patientHome"
             app:destination="@id/patientHomeFragment" />

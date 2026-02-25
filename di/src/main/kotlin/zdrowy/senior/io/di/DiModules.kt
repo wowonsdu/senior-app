@@ -236,7 +236,7 @@ val viewModelModule = module {
     viewModel { PatientLoginViewModel(get()) }
     viewModel { CaregiverLinkViewModel(get(), get(), get(), get(), get()) }
     viewModel { CaregiverDependentsViewModel(get(), get(), get(), get(), get(), get()) }
-    viewModel { CaregiverAddDependentViewModel(get(), get()) }
+    viewModel { CaregiverAddDependentViewModel(get()) }
     viewModel { CaregiverDashboardViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { PatientHistoryViewModel(get(), get(), get()) }
     viewModel { PatientAgentsViewModel(get()) }

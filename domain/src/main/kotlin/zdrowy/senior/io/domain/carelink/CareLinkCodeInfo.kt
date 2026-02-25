@@ -4,5 +4,5 @@ data class CareLinkCodeInfo(
     val code: String,
     val type: CareLinkCodeType,
     val expiresAtMs: Long?,
-    val draftPhoneNumber: String
+    val phoneNumberE164: String
 )

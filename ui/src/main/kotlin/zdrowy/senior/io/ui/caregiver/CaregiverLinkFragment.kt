@@ -1,8 +1,5 @@
 package zdrowy.senior.io.ui.caregiver
 
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +15,7 @@ class CaregiverLinkFragment : Fragment() {
     private var _binding: FragmentCaregiverLinkBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CaregiverLinkViewModel by viewModel()
+    private var fromAuthFlow: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,31 +23,23 @@ class CaregiverLinkFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCaregiverLinkBinding.inflate(inflater, container, false)
+        fromAuthFlow = arguments?.getBoolean(PhoneAuthUi.ARG_LINK_FROM_AUTH) == true
         binding.caregiverLinkToolbar.setNavigationOnClickListener {
-            findNavController().popBackStack()
+            handleCancel()
         }
         binding.caregiverLinkCancel.setOnClickListener {
-            findNavController().popBackStack()
+            handleCancel()
         }
         binding.caregiverLinkConnect.setOnClickListener {
             val code = binding.caregiverLinkCode.text?.toString()?.trim().orEmpty()
             viewModel.consumeCode(code)
-        }
-        binding.caregiverLinkGenerate.setOnClickListener {
-            viewModel.generateCode()
-        }
-        binding.caregiverLinkCopy.setOnClickListener {
-            copyCode()
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.start()
-        viewModel.generatedCode.observe(viewLifecycleOwner) { code ->
-            binding.caregiverLinkCodeValue.text = code
-        }
+        viewModel.start(fromAuthFlow)
         viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
             binding.caregiverLinkCodeInput.error = message
         }
@@ -74,10 +64,15 @@ class CaregiverLinkFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private fun copyCode() {
-        val code = binding.caregiverLinkCodeValue.text?.toString().orEmpty()
-        if (code.isBlank()) return
-        val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboard.setPrimaryClip(ClipData.newPlainText("careLinkCode", code))
+    private fun handleCancel() {
+        if (fromAuthFlow) {
+            findNavController().navigate(
+                R.id.patientHomeFragment,
+                null,
+                PhoneAuthUi.navOptionsPopToRoleSelect()
+            )
+        } else {
+            findNavController().popBackStack()
+        }
     }
 }

@@ -15,12 +15,11 @@
     <string name="patient_login_subtitle">Wprowadz swoje dane</string>
     <string name="login_or">lub</string>
     <string name="login_method_title">Wybierz sposob logowania</string>
-    <string name="login_method_subtitle">Wypelnij jedno z ponizszych pol</string>
+    <string name="login_method_subtitle">Wpisz numer telefonu, wyslemy kod SMS</string>
     <string name="login_phone_hint">Numer telefonu</string>
     <string name="login_or_divider">— LUB —</string>
     <string name="login_code_hint">Kod dostepu (6 cyfr)</string>
     <string name="login_phone_tip_patient">Numer telefonu: Wyslemy Ci kod SMS</string>
-    <string name="login_code_tip_patient">Kod dostepu: Otrzymany od opiekuna</string>
     <string name="login_continue">KONTYNUUJ</string>
     <string name="login_footer">Twoje dane sa bezpieczne i chronione</string>
 
@@ -28,17 +27,12 @@
     <string name="caregiver_login_title">Zaloguj sie</string>
     <string name="caregiver_login_subtitle">Wprowadz swoje dane</string>
     <string name="login_phone_tip_caregiver">Numer telefonu: Wyslemy Ci kod SMS</string>
-    <string name="login_code_tip_caregiver">Kod dostepu: Otrzymany od pacjenta</string>
-    <string name="caregiver_link_title">Powiaz konto</string>
-    <string name="caregiver_link_subtitle">Polacz pacjenta i opiekuna kodem</string>
-    <string name="caregiver_link_have_code">Mam kod</string>
+    <string name="caregiver_link_title">Podaj kod opiekuna</string>
+    <string name="caregiver_link_subtitle">Po weryfikacji SMS wpisz kod od opiekuna</string>
+    <string name="caregiver_link_have_code">Podaj kod</string>
     <string name="caregiver_link_code_hint">Kod dostepu (6 cyfr)</string>
     <string name="caregiver_link_cancel">Anuluj</string>
     <string name="caregiver_link_connect">Polacz</string>
-    <string name="caregiver_link_generate_title">Moj kod</string>
-    <string name="caregiver_link_code_placeholder">------</string>
-    <string name="caregiver_link_generate">Wygeneruj kod</string>
-    <string name="caregiver_link_copy">Kopiuj kod</string>
     <string name="caregiver_home_title">Panel Opiekuna</string>
     <string name="caregiver_home_subtitle">Zarzadzaj swoimi podopiecznymi</string>
     <string name="caregiver_tab_dashboard">Dashboard</string>
@@ -60,10 +54,7 @@
     <string name="caregiver_dependents_badge_content">Nowe pomiary</string>
     <string name="caregiver_add_dependent_title">Dodaj podopiecznego</string>
     <string name="caregiver_add_dependent_subtitle">Wpisz dane nowego podopiecznego</string>
-    <string name="caregiver_add_dependent_link_header">Mam kod pacjenta</string>
-    <string name="caregiver_add_dependent_link_code_hint">Kod dostepu (6 cyfr)</string>
-    <string name="caregiver_add_dependent_link_action">Powiaz pacjenta</string>
-    <string name="caregiver_add_dependent_form_header">lub wpisz dane nowego podopiecznego</string>
+    <string name="caregiver_add_dependent_form_header">Wpisz dane nowego podopiecznego</string>
     <string name="caregiver_add_dependent_first_name_hint">Imie</string>
     <string name="caregiver_add_dependent_last_name_hint">Nazwisko</string>
     <string name="caregiver_add_dependent_pesel_hint">PESEL</string>
