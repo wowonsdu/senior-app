@@ -39,7 +39,7 @@ class FirestoreAccessCodeRepository(
 
         val code = random.nextInt(100000, 1000000).toString()
         val accessCode = AccessCode(code = code, expiresAt = expiresAtMs)
-        val doc = firestore.collection(FirestorePaths.ACCESS_CODES).document(code)
+        val doc = firestore.collection(FirestorePaths.AGENT_ACCESS_CODES).document(code)
 
         return firestore.runTransaction { tx ->
             val snapshot = tx.get(doc)

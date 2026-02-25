@@ -1,6 +1,7 @@
 ﻿# Plan wykonania (checklista)## Etap ZL — Zabezpieczenie logowania (SMS -> kod)
 - [x] 0. Decyzja: PATIENT->CAREGIVER wylaczony w prod (tylko CAREGIVER->PATIENT)
 - [x] 1. Model + rules: accessCodes z phoneNumberE164 + ograniczenia dostepu
+- [x] 1.1 accessCodes docId = phoneE164 + tylko inny numer + jeden kod aktywny
 - [x] 2. UI/UX: SMS verify -> ekran kodu (bez kodu przed SMS)
 - [x] 2.1 UI/UX: Dodaj podopiecznego auto-zamyka po konsumcji kodu
 - [x] 3. Domain/Data: dopasowanie repo/UC pod phone gate

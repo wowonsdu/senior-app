@@ -18,3 +18,4 @@ Dopasowac kontrakty repozytoriow i use case do nowych wymagan (phoneNumberE164) 
 ## Checklist
 - [x] Spisac mapowanie pol i kompatybilnosc danych (jeśli istnieja stare kody w bazie)
 - [x] Usunac/wylaczyc stare wejscia i nav actions, ktore pozwalaja na kod bez SMS
+- [x] Implementacja: accessCodes pod docId = phoneE164, kod w polu `code`

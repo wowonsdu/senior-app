@@ -83,24 +83,58 @@ class FirestoreCareLinkRepository(
         if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT && role != UserRole.CAREGIVER) {
             return Single.error(IllegalStateException("Kod opiekuna moze byc generowany tylko przez opiekuna"))
         }
+        val ownerPhone = requireAuthPhone()
         val phoneNumberE164 = draft?.phoneNumber?.trim().orEmpty()
         if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT && phoneNumberE164.isBlank()) {
             return Single.error(IllegalStateException("Telefon pacjenta jest wymagany"))
         }
+        if (phoneNumberE164 == ownerPhone) {
+            return Single.error(IllegalStateException("Kod nie moze byc generowany na wlasny numer"))
+        }
         val uid = requireUid()
         val expiresAtMs = System.currentTimeMillis() + ttlSeconds * 1000
-        return createUniqueCode(
-            remainingAttempts = 8,
-            ownerUid = uid,
-            expiresAtMs = expiresAtMs,
-            type = type,
-            draft = draft,
-            phoneNumberE164 = phoneNumberE164
+        val code = random.nextInt(100000, 1000000).toString()
+        val accessCode = CareLinkCode(code = code, expiresAt = expiresAtMs, type = type)
+        val doc = firestore.collection(FirestorePaths.ACCESS_CODES).document(phoneNumberE164)
+
+        val payload = mutableMapOf<String, Any>(
+            "type" to type.name,
+            "ownerUid" to uid,
+            "phoneNumberE164" to phoneNumberE164,
+            "code" to code,
+            "expiresAtMs" to expiresAtMs,
+            "createdAt" to FieldValue.serverTimestamp()
         )
+        when (type) {
+            CareLinkCodeType.PATIENT_TO_CAREGIVER -> payload["patientUid"] = uid
+            CareLinkCodeType.CAREGIVER_TO_PATIENT -> payload["caregiverUid"] = uid
+        }
+
+        val draftPayload = mutableMapOf<String, Any>()
+        if (draft != null && type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
+            if (draft.firstName.isNotBlank()) draftPayload["draftFirstName"] = draft.firstName
+            if (draft.lastName.isNotBlank()) draftPayload["draftLastName"] = draft.lastName
+            if (draft.pesel.isNotBlank()) draftPayload["draftPesel"] = draft.pesel
+            if (draft.address.isNotBlank()) draftPayload["draftAddress"] = draft.address
+            draftPayload["phoneNumberE164"] = phoneNumberE164
+        }
+
+        return firestore.runTransaction { tx ->
+            tx.set(doc, payload)
+            if (draftPayload.isNotEmpty()) {
+                val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS)
+                    .document(phoneNumberE164)
+                tx.set(draftDoc, draftPayload)
+            }
+            true
+        }
+            .toSingle()
+            .map { accessCode }
     }
 
     override fun getLinkCodeInfo(code: String): Single<CareLinkCodeInfo> {
-        val doc = firestore.collection(FirestorePaths.ACCESS_CODES).document(code)
+        val phoneNumberE164 = requireAuthPhone()
+        val doc = firestore.collection(FirestorePaths.ACCESS_CODES).document(phoneNumberE164)
         return doc.get()
             .toSingle()
             .map { snapshot ->
@@ -111,12 +145,14 @@ class FirestoreCareLinkRepository(
                     throw InvalidCodeException("Kod wygasl")
                 }
 
+                val storedCode = snapshot.getString("code").orEmpty()
+                if (storedCode != code) {
+                    throw InvalidCodeException("Nieprawidlowy kod")
+                }
+
                 val typeRaw = snapshot.getString("type").orEmpty()
                 val type = runCatching { CareLinkCodeType.valueOf(typeRaw) }
                     .getOrElse { throw InvalidCodeException("Nieprawidlowy typ kodu") }
-
-                val phoneNumberE164 = snapshot.getString("phoneNumberE164").orEmpty()
-                    .ifBlank { snapshot.getString("draftPhoneNumber").orEmpty() }
 
                 CareLinkCodeInfo(
                     code = code,
@@ -138,7 +174,8 @@ class FirestoreCareLinkRepository(
 
     override fun consumeLinkCode(code: String): Single<CareLink> {
         val uid = requireUid()
-        val doc = firestore.collection(FirestorePaths.ACCESS_CODES).document(code)
+        val phoneNumberE164 = requireAuthPhone()
+        val doc = firestore.collection(FirestorePaths.ACCESS_CODES).document(phoneNumberE164)
 
         return firestore.runTransaction { tx ->
             val snapshot = tx.get(doc)
@@ -147,6 +184,11 @@ class FirestoreCareLinkRepository(
             val expiresAtMs = (snapshot.get("expiresAtMs") as? Number)?.toLong()
             if (expiresAtMs != null && System.currentTimeMillis() > expiresAtMs) {
                 throw InvalidCodeException("Kod wygasl")
+            }
+
+            val storedCode = snapshot.getString("code").orEmpty()
+            if (storedCode != code) {
+                throw InvalidCodeException("Nieprawidlowy kod")
             }
 
             val typeRaw = snapshot.getString("type").orEmpty()
@@ -165,7 +207,6 @@ class FirestoreCareLinkRepository(
             var draftLastName = snapshot.getString("draftLastName").orEmpty()
             var draftPesel = snapshot.getString("draftPesel").orEmpty()
             val draftPhone = snapshot.getString("phoneNumberE164").orEmpty()
-                .ifBlank { snapshot.getString("draftPhoneNumber").orEmpty() }
             var draftAddress = snapshot.getString("draftAddress").orEmpty()
 
             val (patientUid, caregiverUid) = when (type) {
@@ -184,7 +225,8 @@ class FirestoreCareLinkRepository(
             }
 
             if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
-                val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
+                val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS)
+                    .document(phoneNumberE164)
                 val draftSnapshot = tx.get(draftDoc)
                 if (draftSnapshot.exists()) {
                     draftFirstName = draftSnapshot.getString("draftFirstName").orEmpty()
@@ -237,7 +279,8 @@ class FirestoreCareLinkRepository(
 
             tx.delete(doc)
             if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
-                val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
+                val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS)
+                    .document(phoneNumberE164)
                 tx.delete(draftDoc)
             }
             CareLink(patientUid = patientUid, caregiverUid = caregiverUid, status = CareLinkStatus.ACTIVE)
@@ -276,75 +319,6 @@ class FirestoreCareLinkRepository(
         ).toCompletable()
     }
 
-    private fun createUniqueCode(
-        remainingAttempts: Int,
-        ownerUid: String,
-        expiresAtMs: Long,
-        type: CareLinkCodeType,
-        draft: CareLinkDraft?,
-        phoneNumberE164: String
-    ): Single<CareLinkCode> {
-        if (remainingAttempts <= 0) {
-            return Single.error(IllegalStateException("Unable to generate unique access code"))
-        }
-
-        val code = random.nextInt(100000, 1000000).toString()
-        val accessCode = CareLinkCode(code = code, expiresAt = expiresAtMs, type = type)
-        val doc = firestore.collection(FirestorePaths.ACCESS_CODES).document(code)
-
-        return firestore.runTransaction { tx ->
-            val snapshot = tx.get(doc)
-            if (snapshot.exists()) throw CodeCollisionException()
-
-            val payload = mutableMapOf<String, Any>(
-                "type" to type.name,
-                "ownerUid" to ownerUid,
-                "expiresAtMs" to expiresAtMs,
-                "createdAt" to FieldValue.serverTimestamp()
-            )
-            when (type) {
-                CareLinkCodeType.PATIENT_TO_CAREGIVER -> payload["patientUid"] = ownerUid
-                CareLinkCodeType.CAREGIVER_TO_PATIENT -> payload["caregiverUid"] = ownerUid
-            }
-            if (phoneNumberE164.isNotBlank()) {
-                payload["phoneNumberE164"] = phoneNumberE164
-                payload["draftPhoneNumber"] = phoneNumberE164
-            }
-
-            tx.set(doc, payload)
-
-            if (draft != null && type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
-                val draftPayload = mutableMapOf<String, Any>()
-                if (draft.firstName.isNotBlank()) draftPayload["draftFirstName"] = draft.firstName
-                if (draft.lastName.isNotBlank()) draftPayload["draftLastName"] = draft.lastName
-                if (draft.pesel.isNotBlank()) draftPayload["draftPesel"] = draft.pesel
-                if (draft.address.isNotBlank()) draftPayload["draftAddress"] = draft.address
-                if (phoneNumberE164.isNotBlank()) draftPayload["phoneNumberE164"] = phoneNumberE164
-                if (draftPayload.isNotEmpty()) {
-                    val draftDoc = firestore.collection(FirestorePaths.ACCESS_CODE_DRAFTS).document(code)
-                    tx.set(draftDoc, draftPayload)
-                }
-            }
-            true
-        }
-            .toSingle()
-            .map { accessCode }
-            .onErrorResumeNext { error ->
-                if (error is CodeCollisionException) {
-                    createUniqueCode(
-                        remainingAttempts = remainingAttempts - 1,
-                        ownerUid = ownerUid,
-                        expiresAtMs = expiresAtMs,
-                        type = type,
-                        draft = draft,
-                        phoneNumberE164 = phoneNumberE164
-                    )
-                } else {
-                    Single.error(error)
-                }
-            }
-    }
-
     private fun requireUid(): String {
         return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
     }
@@ -353,8 +327,11 @@ class FirestoreCareLinkRepository(
         return roleContext.getRole() ?: throw IllegalStateException("User role not set")
     }
 
+    private fun requireAuthPhone(): String {
+        return auth.currentUser?.phoneNumber?.trim()
+            ?: throw IllegalStateException("Brak zweryfikowanego numeru telefonu")
+    }
 
-    private class CodeCollisionException : RuntimeException()
 
     private class InvalidCodeException(message: String) : RuntimeException(message)
 }

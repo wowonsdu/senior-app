@@ -92,36 +92,44 @@ service cloud.firestore {
         && isCaregiver(resource.data.caregiverUid);
     }
 
-    match /accessCodes/{code} {
-      allow create: if isSignedIn()
-        && (
-          (request.resource.data.type is string
-            && request.resource.data.phoneNumberE164 is string
-            && ((request.resource.data.type == "PATIENT_TO_CAREGIVER" && isPatient(request.auth.uid))
-                || (request.resource.data.type == "CAREGIVER_TO_PATIENT" && isCaregiver(request.auth.uid))))
-          || (request.resource.data.contactId is string
-              && request.resource.data.patientUid == request.auth.uid)
-        );
-      allow get: if isSignedIn()
-        && (resource == null
-            || accessCodePhoneMatches()
-            || isAccessCodeOwner()
-            || isAccessCodeParticipant());
+    match /accessCodes/{phoneE164} {
+      allow create, update: if isSignedIn()
+        && isCaregiver(request.auth.uid)
+        && request.auth.token.phone_number != null
+        && request.resource.data.type == "CAREGIVER_TO_PATIENT"
+        && request.resource.data.phoneNumberE164 is string
+        && request.resource.data.code is string
+        && request.resource.data.expiresAtMs is number
+        && request.resource.data.phoneNumberE164 == phoneE164
+        && request.resource.data.phoneNumberE164 != request.auth.token.phone_number
+        && request.resource.data.ownerUid == request.auth.uid;
+      allow get, delete: if isSignedIn()
+        && request.auth.token.phone_number != null
+        && request.auth.token.phone_number == phoneE164;
       allow list: if false;
-      allow update: if false;
-      allow delete: if isSignedIn()
-        && (accessCodePhoneMatches() || isAccessCodeOwner() || isAccessCodeParticipant());
     }
 
-    match /accessCodeDrafts/{code} {
-      allow create: if isSignedIn();
-      allow get: if isSignedIn()
-        && (resource == null
-            || request.auth.token.phone_number == resource.data.phoneNumberE164);
-      allow delete: if isSignedIn()
-        && request.auth.token.phone_number == resource.data.phoneNumberE164;
+    match /agentAccessCodes/{code} {
+      allow create: if isSignedIn()
+        && request.resource.data.contactId is string
+        && request.resource.data.patientUid == request.auth.uid;
+      allow get, delete: if isSignedIn()
+        && resource.data.patientUid == request.auth.uid;
       allow list: if false;
       allow update: if false;
+    }
+
+    match /accessCodeDrafts/{phoneE164} {
+      allow create, update: if isSignedIn()
+        && isCaregiver(request.auth.uid)
+        && request.auth.token.phone_number != null
+        && request.resource.data.phoneNumberE164 is string
+        && request.resource.data.phoneNumberE164 == phoneE164
+        && request.resource.data.phoneNumberE164 != request.auth.token.phone_number;
+      allow get, delete: if isSignedIn()
+        && request.auth.token.phone_number != null
+        && request.auth.token.phone_number == phoneE164;
+      allow list: if false;
     }
   }
 }

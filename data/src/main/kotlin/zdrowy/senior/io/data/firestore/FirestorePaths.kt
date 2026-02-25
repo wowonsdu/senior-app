@@ -15,4 +15,5 @@ internal object FirestorePaths {
 
     const val ACCESS_CODES = "accessCodes"
     const val ACCESS_CODE_DRAFTS = "accessCodeDrafts"
+    const val AGENT_ACCESS_CODES = "agentAccessCodes"
 }

@@ -42,6 +42,7 @@ Wybor: opcja A (PATIENT->CAREGIVER wylaczony w produkcji).
 - [x] Zmienic rules dla accessCodes: get/delete tylko dla dopasowanego phone_number (i ewentualnie owner)
 - [x] Upewnic sie, ze accessCodeDrafts pozostaje zgodne (tam juz jest powiazanie po phone)
 - [x] Subplan: docs/plan/zabezpieczenie-logowania-01-model-rules.md
+- [x] DocId = phoneE164 (get po numerze, jeden aktywny kod na numer)
 
 ## Etap 2 — UI/UX: najpierw SMS, potem kod
 - [x] Przestawic flow tak, aby ekran wpisania kodu pojawial sie dopiero po sukcesie SMS verify

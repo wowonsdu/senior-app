@@ -31,3 +31,4 @@ Dodatkowe (opcjonalne, jak juz jest):
 - [x] Zmienic firestore.rules zgodnie z wymaganiami
 - [x] (Jesli trzeba) firestore.indexes.json bez zmian
 - [ ] Walidacja: proba odczytu kodu z innego konta/telefonu musi byc PERMISSION_DENIED
+- [x] DocId = phoneE164 + jeden aktywny kod na numer
