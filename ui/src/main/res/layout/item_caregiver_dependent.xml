@@ -58,6 +58,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_s"
                 android:text="@string/caregiver_dependent_med_reminder_toggle"
+                android:textOn="@string/caregiver_dependent_med_reminder_toggle"
+                android:textOff="@string/caregiver_dependent_med_reminder_toggle"
                 android:visibility="gone" />
         </LinearLayout>
 
