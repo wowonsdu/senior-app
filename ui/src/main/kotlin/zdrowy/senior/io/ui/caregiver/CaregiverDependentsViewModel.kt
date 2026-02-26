@@ -12,6 +12,12 @@ import zdrowy.senior.io.domain.measurement.Measurement
 import zdrowy.senior.io.domain.measurement.MeasurementReadState
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementReadStateUseCase
 import zdrowy.senior.io.domain.measurement.ObserveRecentMeasurementsByUidUseCase
+import zdrowy.senior.io.domain.settings.reminders.MedicationReminderEvent
+import zdrowy.senior.io.domain.settings.reminders.MedicationReminderReadState
+import zdrowy.senior.io.domain.settings.reminders.ObserveCaregiverMedicationReminderPrefsUseCase
+import zdrowy.senior.io.domain.settings.reminders.ObserveMedicationReminderEventsUseCase
+import zdrowy.senior.io.domain.settings.reminders.ObserveMedicationReminderReadStateUseCase
+import zdrowy.senior.io.domain.settings.reminders.SetCaregiverMedicationReminderPrefUseCase
 import zdrowy.senior.io.domain.settings.ObservePersonalDataByUidUseCase
 import zdrowy.senior.io.domain.settings.PersonalData
 import zdrowy.senior.io.domain.user.CurrentUserUidProvider
@@ -23,6 +29,10 @@ class CaregiverDependentsViewModel(
     private val observePersonalDataByUid: ObservePersonalDataByUidUseCase,
     private val observeRecentMeasurementsByUid: ObserveRecentMeasurementsByUidUseCase,
     private val observeMeasurementReadState: ObserveMeasurementReadStateUseCase,
+    private val observeMedicationReminderEvents: ObserveMedicationReminderEventsUseCase,
+    private val observeMedicationReminderReadState: ObserveMedicationReminderReadStateUseCase,
+    private val observeCaregiverPrefs: ObserveCaregiverMedicationReminderPrefsUseCase,
+    private val setCaregiverPref: SetCaregiverMedicationReminderPrefUseCase,
     private val setActivePatient: SetActivePatientUseCase,
     private val currentUserUidProvider: CurrentUserUidProvider
 ) : ViewModel() {
@@ -49,28 +59,38 @@ class CaregiverDependentsViewModel(
                     val managedUids = listOf(selfUid) + patientUids
                     val distinctUids = managedUids.distinct()
                     if (distinctUids.isEmpty()) return@switchMap Observable.just(emptyList())
-                    val observers = distinctUids.map { uid ->
-                        val isSelf = uid == selfUid
-                        Observable.combineLatest(
-                            observePersonalDataByUid(uid)
-                                .onErrorReturnItem(fallbackPersonalData()),
-                            observeMeasurementReadState(uid)
-                                .onErrorReturnItem(MeasurementReadState(uid, emptySet())),
-                            observeRecentMeasurementsByUid(uid, MEASUREMENTS_LIMIT)
-                                .onErrorReturnItem(emptyList())
-                        ) { data, readState, measurements ->
-                            mapItem(
-                                uid,
-                                data as PersonalData,
-                                readState as MeasurementReadState,
-                                measurements as List<Measurement>,
-                                isSelf
-                            )
-                        }.onErrorReturnItem(fallbackItem(uid, isSelf))
-                    }
-                    Observable.combineLatest(observers) { items ->
-                        items.map { it as CaregiverDependentTileUiModel }
-                    }
+                    observeCaregiverPrefs()
+                        .switchMap { prefs ->
+                            val observers = distinctUids.map { uid ->
+                                val isSelf = uid == selfUid
+                                Observable.combineLatest(
+                                    observePersonalDataByUid(uid)
+                                        .onErrorReturnItem(fallbackPersonalData()),
+                                    observeMeasurementReadState(uid)
+                                        .onErrorReturnItem(MeasurementReadState(uid, emptySet())),
+                                    observeRecentMeasurementsByUid(uid, MEASUREMENTS_LIMIT)
+                                        .onErrorReturnItem(emptyList()),
+                                    observeMedicationReminderEvents(uid, REMINDER_LIMIT)
+                                        .onErrorReturnItem(emptyList()),
+                                    observeMedicationReminderReadState(uid)
+                                        .onErrorReturnItem(MedicationReminderReadState(uid, emptySet()))
+                                ) { data, readState, measurements, reminders, reminderReadState ->
+                                    mapItem(
+                                        uid,
+                                        data as PersonalData,
+                                        readState as MeasurementReadState,
+                                        measurements as List<Measurement>,
+                                        reminders as List<MedicationReminderEvent>,
+                                        reminderReadState as MedicationReminderReadState,
+                                        isSelf,
+                                        prefs[uid] ?: true
+                                    )
+                                }.onErrorReturnItem(fallbackItem(uid, isSelf))
+                            }
+                            Observable.combineLatest(observers) { items ->
+                                items.map { it as CaregiverDependentTileUiModel }
+                            }
+                        }
                 }
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ items ->
@@ -98,6 +118,15 @@ class CaregiverDependentsViewModel(
         _navTarget.value = null
     }
 
+    fun setMedicationReminderEnabled(patientUid: String, enabled: Boolean) {
+        disposables.add(
+            setCaregiverPref(patientUid, enabled)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({}, {})
+        )
+    }
+
     override fun onCleared() {
         disposables.clear()
         super.onCleared()
@@ -108,21 +137,29 @@ class CaregiverDependentsViewModel(
         data: PersonalData,
         readState: MeasurementReadState,
         measurements: List<Measurement>,
-        isSelf: Boolean
+        reminders: List<MedicationReminderEvent>,
+        reminderReadState: MedicationReminderReadState,
+        isSelf: Boolean,
+        reminderEnabled: Boolean
     ): CaregiverDependentTileUiModel {
         val firstName = data.firstName.trim()
         val lastName = data.lastName.trim()
         val fullName = listOf(firstName, lastName).filter { it.isNotBlank() }.joinToString(" ")
         val phone = data.phoneNumber.trim().ifBlank { "-" }
         val readIds = readState.readMeasurementIds
-        val unreadCount = measurements.count { !readIds.contains(it.id) }
+        val unreadMeasurements = measurements.count { !readIds.contains(it.id) }
+        val reminderReadIds = reminderReadState.readEventIds
+        val unreadReminders = reminders.count { !reminderReadIds.contains(it.id) }
+        val unreadCount = unreadMeasurements + unreadReminders
         return CaregiverDependentTileUiModel(
             uid = uid,
             fullName = if (fullName.isBlank()) "-" else fullName,
             phone = phone,
             avatar = initials(firstName, lastName),
             unreadCount = unreadCount,
-            isSelf = isSelf
+            isSelf = isSelf,
+            reminderEnabled = if (isSelf) false else reminderEnabled,
+            showReminderToggle = !isSelf
         )
     }
 
@@ -133,7 +170,9 @@ class CaregiverDependentsViewModel(
             phone = "-",
             avatar = "?",
             unreadCount = 0,
-            isSelf = isSelf
+            isSelf = isSelf,
+            reminderEnabled = false,
+            showReminderToggle = !isSelf
         )
     }
 
@@ -160,5 +199,6 @@ class CaregiverDependentsViewModel(
 
     private companion object {
         private const val MEASUREMENTS_LIMIT = 50
+        private const val REMINDER_LIMIT = 50
     }
 }

@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import zdrowy.senior.io.ui.R
-import zdrowy.senior.io.ui.caregiver.model.CaregiverMeasurementNotificationUi
+import zdrowy.senior.io.ui.caregiver.model.CaregiverDashboardItemUi
 import zdrowy.senior.io.ui.databinding.ItemCaregiverMeasurementNotificationBinding
 
 class CaregiverMeasurementNotificationsAdapter(
-    private val onMarkRead: (CaregiverMeasurementNotificationUi) -> Unit
-) : ListAdapter<CaregiverMeasurementNotificationUi, CaregiverMeasurementNotificationsAdapter.ViewHolder>(Diff()) {
+    private val onMarkRead: (CaregiverDashboardItemUi) -> Unit
+) : ListAdapter<CaregiverDashboardItemUi, CaregiverMeasurementNotificationsAdapter.ViewHolder>(Diff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -27,10 +27,10 @@ class CaregiverMeasurementNotificationsAdapter(
 
     class ViewHolder(
         private val binding: ItemCaregiverMeasurementNotificationBinding,
-        private val onMarkRead: (CaregiverMeasurementNotificationUi) -> Unit
+        private val onMarkRead: (CaregiverDashboardItemUi) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: CaregiverMeasurementNotificationUi) {
+        fun bind(item: CaregiverDashboardItemUi) {
             val context = binding.root.context
             val chipColor = ContextCompat.getColor(context, item.chipColorRes)
             val iconColor = ContextCompat.getColor(context, item.iconTintRes)
@@ -65,15 +65,15 @@ class CaregiverMeasurementNotificationsAdapter(
         }
     }
 
-    private class Diff : DiffUtil.ItemCallback<CaregiverMeasurementNotificationUi>() {
+    private class Diff : DiffUtil.ItemCallback<CaregiverDashboardItemUi>() {
         override fun areItemsTheSame(
-            oldItem: CaregiverMeasurementNotificationUi,
-            newItem: CaregiverMeasurementNotificationUi
+            oldItem: CaregiverDashboardItemUi,
+            newItem: CaregiverDashboardItemUi
         ): Boolean = oldItem.id == newItem.id && oldItem.patientUid == newItem.patientUid
 
         override fun areContentsTheSame(
-            oldItem: CaregiverMeasurementNotificationUi,
-            newItem: CaregiverMeasurementNotificationUi
+            oldItem: CaregiverDashboardItemUi,
+            newItem: CaregiverDashboardItemUi
         ): Boolean = oldItem == newItem
     }
 }

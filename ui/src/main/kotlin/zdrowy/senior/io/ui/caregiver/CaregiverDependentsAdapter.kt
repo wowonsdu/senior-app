@@ -10,12 +10,13 @@ import zdrowy.senior.io.ui.caregiver.model.CaregiverDependentTileUiModel
 import zdrowy.senior.io.ui.databinding.ItemCaregiverDependentBinding
 
 class CaregiverDependentsAdapter(
-    private val onSelect: (CaregiverDependentTileUiModel) -> Unit
+    private val onSelect: (CaregiverDependentTileUiModel) -> Unit,
+    private val onToggleReminder: (CaregiverDependentTileUiModel, Boolean) -> Unit
 ) : ListAdapter<CaregiverDependentTileUiModel, CaregiverDependentsAdapter.ViewHolder>(Diff()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemCaregiverDependentBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding, onSelect)
+        return ViewHolder(binding, onSelect, onToggleReminder)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -24,7 +25,8 @@ class CaregiverDependentsAdapter(
 
     class ViewHolder(
         private val binding: ItemCaregiverDependentBinding,
-        private val onSelect: (CaregiverDependentTileUiModel) -> Unit
+        private val onSelect: (CaregiverDependentTileUiModel) -> Unit,
+        private val onToggleReminder: (CaregiverDependentTileUiModel, Boolean) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CaregiverDependentTileUiModel) {
             binding.caregiverDependentAvatar.text = item.avatar
@@ -40,6 +42,14 @@ class CaregiverDependentsAdapter(
             val unread = item.unreadCount
             binding.caregiverDependentBell.visibility = if (unread > 0) View.VISIBLE else View.GONE
             binding.caregiverDependentBadge.text = unread.toString()
+
+            binding.caregiverDependentReminderToggle.setOnCheckedChangeListener(null)
+            binding.caregiverDependentReminderToggle.isChecked = item.reminderEnabled
+            binding.caregiverDependentReminderToggle.visibility =
+                if (item.showReminderToggle) View.VISIBLE else View.GONE
+            binding.caregiverDependentReminderToggle.setOnCheckedChangeListener { _, isChecked ->
+                onToggleReminder(item, isChecked)
+            }
         }
     }
 

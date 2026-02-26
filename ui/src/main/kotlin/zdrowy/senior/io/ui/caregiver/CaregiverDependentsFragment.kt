@@ -15,9 +15,14 @@ class CaregiverDependentsFragment : Fragment() {
     private var _binding: FragmentCaregiverDependentsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: CaregiverDependentsViewModel by viewModel()
-    private val adapter = CaregiverDependentsAdapter { item ->
-        viewModel.selectDependent(item.uid)
-    }
+    private val adapter = CaregiverDependentsAdapter(
+        onSelect = { item ->
+            viewModel.selectDependent(item.uid)
+        },
+        onToggleReminder = { item, enabled ->
+            viewModel.setMedicationReminderEnabled(item.uid, enabled)
+        }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,

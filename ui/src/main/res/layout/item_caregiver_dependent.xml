@@ -51,6 +51,14 @@
                 android:text="234234234"
                 android:textAppearance="@style/TextAppearance.Senior.Caption"
                 android:textColor="@color/senior_text_secondary" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/caregiver_dependent_reminder_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:text="@string/caregiver_dependent_med_reminder_toggle"
+                android:visibility="gone" />
         </LinearLayout>
 
         <FrameLayout
