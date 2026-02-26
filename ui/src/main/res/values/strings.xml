@@ -307,6 +307,12 @@
     <string name="patient_add_med_frequency_hint">Ile razy dziennie</string>
     <string name="patient_add_med_time_hint_format">Godzina przyjecia %1$d</string>
     <string name="patient_add_med_notify">Powiadamiaj o godzinie przyjecia</string>
+    <string name="med_reminder_channel_name">Przypomnienia o lekach</string>
+    <string name="med_reminder_channel_desc">Powiadomienia o przyjeciu leku</string>
+    <string name="med_reminder_title_patient">Czas na lek</string>
+    <string name="med_reminder_title_caregiver">Przypomnienie dla podopiecznego</string>
+    <string name="med_reminder_body_patient">Wez %1$s (%2$s)</string>
+    <string name="med_reminder_body_caregiver">%1$s ma wziac %2$s (%3$s)</string>
     <string name="patient_add_med_cancel">Anuluj</string>
     <string name="patient_add_med_save">Zapisz</string>
     <string name="patient_edit_med_title">Edytuj lek</string>

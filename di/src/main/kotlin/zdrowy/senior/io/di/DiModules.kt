@@ -145,6 +145,8 @@ import zdrowy.senior.io.ui.patient.PatientEditDiseaseViewModel
 import zdrowy.senior.io.ui.patient.PatientEditMedViewModel
 import zdrowy.senior.io.ui.patient.PatientPersonalDataViewModel
 import zdrowy.senior.io.ui.patient.PatientSettingsViewModel
+import zdrowy.senior.io.ui.reminders.MedicationReminderAlarmCache
+import zdrowy.senior.io.ui.reminders.MedicationReminderAlarmScheduler
 
 val domainModule = module {
     factory { AddMeasurementUseCase(get()) }
@@ -304,4 +306,9 @@ val viewModelModule = module {
     viewModel { PatientEditMedViewModel(get(), get(), get()) }
 }
 
-val appModules = listOf(domainModule, dataModule, viewModelModule, uiModule)
+val reminderModule = module {
+    single { MedicationReminderAlarmCache(androidContext()) }
+    single { MedicationReminderAlarmScheduler(androidContext(), get()) }
+}
+
+val appModules = listOf(domainModule, dataModule, viewModelModule, uiModule, reminderModule)
