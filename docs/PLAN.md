@@ -404,3 +404,9 @@ Zasady etapu:
 - [x] 14.3 Coordinator: obserwacje lekow/prefs i planowanie alarmow
 - [x] 14.4 UI: toggle per podopieczny + dashboard eventy lekow + badge
 - [ ] 14.5 QA: smoke (pacjent/opiekun)
+- [ ] 14.6 FCM: push do opiekunow na event przypomnienia leku
+  - [ ] 14.6.1 Domain/Data: rejestracja tokenow FCM per user + UC + DI
+  - [ ] 14.6.2 Firebase: przechowywanie tokenow + reguly dostepu
+  - [ ] 14.6.3 Cloud Functions: trigger na event przypomnienia -> wysylka push do opiekunow
+  - [ ] 14.6.4 Logika: uwzglednij preferencje opiekuna (toggle) przy wysylce
+  - [ ] 14.6.5 QA: test push na urzadzeniu fizycznym (opiekun)
