@@ -401,6 +401,6 @@ Zasady etapu:
 ## Etap 14 — Leki: przypomnienia lokalne + opiekun
 - [x] 14.1 Domain/Data: eventy przypomnien + read state + prefs opiekuna + repo/use case
 - [x] 14.2 Android: alarmy + receiver + notyfikacje lokalne (pacjent + opiekun)
-- [ ] 14.3 Coordinator: obserwacje lekow/prefs i planowanie alarmow
+- [x] 14.3 Coordinator: obserwacje lekow/prefs i planowanie alarmow
 - [ ] 14.4 UI: toggle per podopieczny + dashboard eventy lekow + badge
 - [ ] 14.5 QA: smoke (pacjent/opiekun)

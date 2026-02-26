@@ -7,8 +7,10 @@ import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.core.context.GlobalContext
 import timber.log.Timber
 import zdrowy.senior.io.di.appModules
+import zdrowy.senior.io.ui.reminders.MedicationReminderCoordinator
 
 class SeniorApp : Application() {
     override fun onCreate() {
@@ -24,6 +26,8 @@ class SeniorApp : Application() {
             androidContext(this@SeniorApp)
             modules(appModules)
         }
+
+        GlobalContext.get().get<MedicationReminderCoordinator>().start()
     }
 
     private fun initFirebase() {
