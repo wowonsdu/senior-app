@@ -68,7 +68,7 @@ Minimalne rzeczy, które i tak warto dopiąć:
 ## 5) Stabilność: domknięcie smoke testów z `docs/PLAN.md`
 Na dziś są nieodhaczone m.in.:
 - “Dane osobowe: smoke check fragmentu”
-- “Choroby: smoke check fragmentów”
+- “Dolegliwości: smoke check fragmentów”
 - “10.12.4 Smoke: restart app (pacjent/opiekun) + utrzymanie kontekstu”
 - “Walidacja: smoke test live update (pacjent/opiekun)”
 - “Opiekun: badge/dashboards (smoke)”
@@ -158,18 +158,18 @@ Zasady etapu:
 - [x] Agenci monitorujacy: edytuj lekarza (dialog)
 - [x] Moje ustawienia (przeglad)
 - [x] Dodaj dane osobowe (dialog)
-- [x] Dodaj chorobe (dialog)
+- [x] Dodaj dolegliwość (dialog)
 - [x] Dodaj lek (dialog)
-- [x] Moje ustawienia: edycja chorob/lekow/danych
+- [x] Moje ustawienia: edycja dolegliwości/lekow/danych
 - [x] Moje ustawienia: odswiezanie po edycji + QA
 - [x] Dane osobowe: migracja dialog -> fragment (scroll)
 - [x] Dane osobowe: VM/DI (Rx na Schedulers.io) + prefill przez observe
 - [x] Dane osobowe: cleanup dialogu + usuniecie FragmentResult
 - [ ] Dane osobowe: smoke check fragmentu + odswiezanie przez observe
-- [x] Choroby: migracja "Dodaj/Edytuj" do fragmentow (zamiast dialogow)
-- [x] Choroby: VM/DI dla add/edit (Rx na Schedulers.io) + powrot popBackStack
-- [x] Choroby: cleanup dialogow + usuniecie FragmentResult refresh
-- [ ] Choroby: smoke check fragmentow (dodaj/edytuj/usun) + odswiezanie listy przez observe
+- [x] Dolegliwości: migracja "Dodaj/Edytuj" do fragmentow (zamiast dialogow)
+- [x] Dolegliwości: VM/DI dla add/edit (Rx na Schedulers.io) + powrot popBackStack
+- [x] Dolegliwości: cleanup dialogow + usuniecie FragmentResult refresh
+- [ ] Dolegliwości: smoke check fragmentow (dodaj/edytuj/usun) + odswiezanie listy przez observe
 - [x] Alerty i powiadomienia (przeglad)
 - [x] Alerty i powiadomienia (pelna konfiguracja)
 
@@ -198,10 +198,10 @@ Zasady etapu:
 - [x] Dialog UI + nawigacja (kafelek na Monitorze zdrowia)
 - [x] ViewModel + logika wysylki + toast
 
-## Etap 4.6 — Ustawienia: przebieg choroby (opcje)
-- [x] Aktualizacja opcji przebiegu choroby (Lekki/Sredni/Ciezki/Bardzo ciezki) + seed + styl
-- [x] Fix: dropdown przebiegu choroby otwiera liste opcji
-- [x] Reaktywne listy chorob/lekow (observe + VM update)
+## Etap 4.6 — Ustawienia: przebieg dolegliwości (opcje)
+- [x] Aktualizacja opcji przebiegu dolegliwości (Lekki/Sredni/Ciezki/Bardzo ciezki) + seed + styl
+- [x] Fix: dropdown przebiegu dolegliwości otwiera liste opcji
+- [x] Reaktywne listy dolegliwości/lekow (observe + VM update)
 
 ## Etap 4.7 — Leki: nowy UX dodawania/edycji
 - [x] Plan: MAIN-PLAN-dodawanie-leku + subplany
@@ -394,3 +394,13 @@ Zasady etapu:
  - [x] STT: Patient Home — 10s okno ciszy na kolejne pomiary
  - [x] STT: dialogi pomiarow — 10s okno ciszy
  - [x] STT: wydluz start nasluchu (restart timeout)
+
+## Etap 13.1 — Terminologia i UI
+- [x] Terminologia: dolegliwosci + usuniecie "Lista lekow" w ustawieniach pacjenta
+
+## Etap 14 — Leki: przypomnienia lokalne + opiekun
+- [ ] 14.1 Domain/Data: eventy przypomnien + read state + prefs opiekuna + repo/use case
+- [ ] 14.2 Android: alarmy + receiver + notyfikacje lokalne (pacjent + opiekun)
+- [ ] 14.3 Coordinator: obserwacje lekow/prefs i planowanie alarmow
+- [ ] 14.4 UI: toggle per podopieczny + dashboard eventy lekow + badge
+- [ ] 14.5 QA: smoke (pacjent/opiekun)

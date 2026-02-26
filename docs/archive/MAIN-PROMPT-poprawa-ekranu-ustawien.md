@@ -1,7 +1,7 @@
-# Execute Master Plan � Poprawa ekranu ustawien
+# Execute Master Plan — Poprawa ekranu ustawien
 
 Context:
-Wprowadzamy poprawki ekranu "Moje ustawienia" pacjenta, aby odtworzyc uklad z makiet: dane pacjenta jako osobny, nierozwijany card oraz domyslnie widoczne listy chorob i lekow. Praca jest podzielona na etapy UI, VM/domena oraz walidacje MCP.
+Wprowadzamy poprawki ekranu "Moje ustawienia" pacjenta, aby odtworzyc uklad z makiet: dane pacjenta jako osobny, nierozwijany card oraz domyslnie widoczne listy dolegliwości i lekow. Praca jest podzielona na etapy UI, VM/domena oraz walidacje MCP.
 
 Plan file: docs/plan/MAIN-PLAN-poprawa-ekranu-ustawien.md
 

@@ -64,6 +64,7 @@ class PatientSettingsFragment : Fragment() {
         binding.patientSettingsDiseasesList.adapter = diseasesAdapter
         binding.patientSettingsMedsList.layoutManager = LinearLayoutManager(requireContext())
         binding.patientSettingsMedsList.adapter = medsAdapter
+        binding.patientSettingsMedsListLabel.visibility = View.GONE
         binding.patientSettingsCaregiversList.layoutManager = LinearLayoutManager(requireContext())
         binding.patientSettingsCaregiversList.adapter = caregiversAdapter
         return binding.root
@@ -78,8 +79,6 @@ class PatientSettingsFragment : Fragment() {
             binding.patientSettingsPersonalAddress.text = "Adres: ${state.personalData.address}"
             binding.patientSettingsPersonalPhone.text = "Telefon: ${state.personalData.phoneNumber}"
             diseasesAdapter.submitList(state.diseases)
-            binding.patientSettingsMedsListLabel.text =
-                "Lista Lekow (${state.medications.size})"
             medsAdapter.submitList(state.medications)
             caregiversAdapter.submitList(state.caregivers)
         }

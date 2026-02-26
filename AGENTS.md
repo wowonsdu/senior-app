@@ -65,9 +65,9 @@ Cel: kazdy formularz, ktory moze miec wiecej pol / dynamiczne sekcje, robimy jak
 - Nie dodawaj recznego odswiezania list (FragmentResult / manual refresh). Lista ma sie aktualizowac przez obserwacje (`ObserveXxxUseCase`).
 
 ### Commit (przyklad)
-- Przykład (implementacja ekranow + VM): `Choroby: dodaj/edytuj jako fragmenty + VM`
-- Przykład (nawigacja): `Choroby: nawigacja do fragmentow`
-- Przykład (cleanup): `Choroby: cleanup dialogow i FragmentResult`
+- Przykład (implementacja ekranow + VM): `Dolegliwości: dodaj/edytuj jako fragmenty + VM`
+- Przykład (nawigacja): `Dolegliwości: nawigacja do fragmentow`
+- Przykład (cleanup): `Dolegliwości: cleanup dialogow i FragmentResult`
 
 ## Planowanie i flow init-plan
 - Gdy uzytkownik zawoła `$init-plan`, najpierw zapytaj, czy jest w trybie planowania; kontynuuj dopiero po potwierdzeniu.

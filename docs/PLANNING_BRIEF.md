@@ -4,7 +4,7 @@
 Zbudowac natywna aplikacje Android dla seniorow do monitorowania zdrowia, z prostym wprowadzaniem pomiarow, historia danych, alertami i wspolpraca z opiekunami/lekarzami. Aplikacja ma byc czytelna, prosta i bezpieczna, z danymi przechowywanymi lokalnie. Integracje z Firebase (Auth/Firestore) maja byc przygotowane, ale na start dopuszczalne sa implementacje in-memory.
 
 ## Grupy uzytkownikow
-- Pacjent (senior): rejestruje pomiary, przeglada historie, zarzadza lekami/chorobami, ustawia alerty i opiekunow.
+- Pacjent (senior): rejestruje pomiary, przeglada historie, zarzadza lekami/dolegliwościami, ustawia alerty i opiekunow.
 - Opiekun/Lekarz: monitoruje podopiecznych, przeglada pomiary i historie, planuje wizyty.
 
 ## Kluczowe funkcjonalnosci
@@ -44,7 +44,7 @@ Zbudowac natywna aplikacje Android dla seniorow do monitorowania zdrowia, z pros
 7) Ustawienia (Moje ustawienia)
 - Dane osobowe pacjenta.
 - Moi opiekunowie.
-- Moje choroby: dodawanie/edycja/usuwanie, stopien ciezkosci.
+- Moje dolegliwości: dodawanie/edycja/usuwanie, stopien ciezkosci.
 - Moje leki: dawka, godziny przyjec, powiadomienia.
 - Konfiguracja alertow jako osobna sekcja.
 
@@ -56,7 +56,7 @@ Pacjent:
 - Dialogi pomiarow: cukier, insulina, cisnienie, tetno.
 - Historia pomiarow: widoki z filtrami i wykresami.
 - Agenci monitorujacy: lista, dodawanie, edycja, kody dostepu.
-- Ustawienia: dane osobowe, choroby, leki, alerty.
+- Ustawienia: dane osobowe, dolegliwości, leki, alerty.
 - Alerty i powiadomienia: przeglad + pelna konfiguracja.
 
 Opiekun:
@@ -73,7 +73,7 @@ Szczegolowa lista w `docs/USE_CASES.md`. Najwazniejsze obszary:
 - Opiekun: podopieczni, dashboard, oznaczanie nowych pomiarow.
 - Alerty: progi, kanaly, przypisanie opiekunow, zapis konfiguracji.
 - Wizyty: dodawanie, edycja, statusy i przypomnienia.
-- Ustawienia pacjenta: dane, choroby, leki i powiadomienia.
+- Ustawienia pacjenta: dane, dolegliwości, leki i powiadomienia.
 
 ## Zasady realizacji ekranow
 - Najpierw pelny **Pacjent flow** (UI + nawigacja), potem **Opiekun flow**, a dopiero na koncu logika (use case/repo/Firebase).

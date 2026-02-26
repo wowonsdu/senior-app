@@ -21,8 +21,8 @@
 
 ## Ustawienia
 1. Profil pacjenta pokazuje dane imie/nazwisko oraz telefon/email.
-2. Lista chorob i lekow laduje sie (min. po 1 pozycji).
-3. Dodanie choroby/leku aktualizuje liste.
+2. Lista dolegliwości i lekow laduje sie (min. po 1 pozycji).
+3. Dodanie dolegliwości/leku aktualizuje liste.
 4. Dane osobowe zapisują sie (brak crasha).
 
 ## Alerty

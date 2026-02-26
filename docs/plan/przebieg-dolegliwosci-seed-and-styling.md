@@ -1,4 +1,4 @@
-# Seed + Stylowanie Przebiegu Choroby — Plan
+# Seed + Stylowanie Przebiegu Dolegliwości — Plan
 
 ## Scope
 - Aktualizacja seed danych w InMemory.
@@ -18,4 +18,4 @@
 - [ ] Nie migrowac istniejacych danych Firestore.
 
 ## Validation
-- [ ] Sprawdzic widok listy chorob dla seed (chip + kolor).
+- [ ] Sprawdzic widok listy dolegliwości dla seed (chip + kolor).

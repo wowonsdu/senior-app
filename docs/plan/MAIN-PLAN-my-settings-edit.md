@@ -1,9 +1,9 @@
 # Plan - Edycja w "Moje ustawienia"
 
 ## Summary
-- Dodanie edycji danych osobowych, chorob i lekow z poziomu ekranu "Moje ustawienia".
-- Wejscie do edycji: tap w element listy (choroby/leki) oraz tap na karcie danych osobowych.
-- Dialogi edycji chorob i lekow zawieraja przycisk "Usun".
+- Dodanie edycji danych osobowych, dolegliwości i lekow z poziomu ekranu "Moje ustawienia".
+- Wejscie do edycji: tap w element listy (dolegliwości/leki) oraz tap na karcie danych osobowych.
+- Dialogi edycji dolegliwości i lekow zawieraja przycisk "Usun".
 - Model `PersonalData` zmieniony na `firstName` + `lastName` (zamiast `fullName`).
 
 ## Assumptions
@@ -24,7 +24,7 @@
 - [x] Zmiana modelu `PersonalData` na `firstName/lastName` i aktualizacja warstw domain/data
 - [x] Subplan: docs/plan/settings-edit-personal-model.md
 
-## Etap 2 - Edycja UI (choroby/leki/dane)
+## Etap 2 - Edycja UI (dolegliwości/leki/dane)
 - [x] Wejscia do edycji + dialogi edycji + nawigacja
 - [x] Subplan: docs/plan/settings-edit-ui.md
 

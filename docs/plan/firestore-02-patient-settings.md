@@ -18,5 +18,5 @@
 
 ## Validation
 - [ ] Emulator: zapis personalData i odczyt po restarcie app.
-- [ ] Emulator: dodanie/edycja/usunięcie choroby i leku.
+- [ ] Emulator: dodanie/edycja/usunięcie dolegliwości i leku.
 

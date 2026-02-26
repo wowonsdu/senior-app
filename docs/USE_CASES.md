@@ -253,22 +253,22 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Wyjscie: `Unit`.
   - Repo: `SettingsRepository`.
 - UC-SET-03 AddDisease
-  - Cel: dodanie choroby.
+  - Cel: dodanie dolegliwości.
   - Wejscie: `DiseaseDraft`.
   - Wyjscie: `DiseaseId`.
   - Repo: `SettingsRepository`.
 - UC-SET-04 UpdateDisease
-  - Cel: edycja choroby.
+  - Cel: edycja dolegliwości.
   - Wejscie: `DiseaseId`, `DiseaseUpdate`.
   - Wyjscie: `Unit`.
   - Repo: `SettingsRepository`.
 - UC-SET-05 RemoveDisease
-  - Cel: usuniecie choroby.
+  - Cel: usuniecie dolegliwości.
   - Wejscie: `DiseaseId`.
   - Wyjscie: `Unit`.
   - Repo: `SettingsRepository`.
 - UC-SET-06 ListDiseases
-  - Cel: pobranie listy chorob.
+  - Cel: pobranie listy dolegliwości.
   - Wejscie: brak.
   - Wyjscie: `List<Disease>`.
   - Repo: `SettingsRepository`.
@@ -305,7 +305,7 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Repo: `SettingsRepository`.
 
 - UC-SET-13 ObserveDiseases
-  - Cel: realtime obserwacja listy chorob.
+  - Cel: realtime obserwacja listy dolegliwości.
   - Wejscie: brak.
   - Wyjscie: `Observable<List<Disease>>`.
   - Repo: `SettingsRepository`.

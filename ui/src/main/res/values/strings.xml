@@ -238,11 +238,11 @@
     <string name="patient_settings_section_caregivers">Moi Opiekunowie</string>
     <string name="patient_settings_profile_name">Janek, Syn</string>
     <string name="patient_settings_profile_phone">Tel: 692 58 070</string>
-    <string name="patient_settings_section_diseases">Moje Choroby</string>
+    <string name="patient_settings_section_diseases">Moje Dolegliwości</string>
     <string name="patient_settings_section_meds">Moje Leki</string>
     <string name="patient_settings_section_config">Konfiguracja</string>
-    <string name="patient_settings_empty_diseases_title">Brak zarejestrowanych chorob</string>
-    <string name="patient_settings_empty_diseases_body">Kliknij przycisk ponizej, aby dodac informacje o chorobie</string>
+    <string name="patient_settings_empty_diseases_title">Brak zarejestrowanych dolegliwości</string>
+    <string name="patient_settings_empty_diseases_body">Kliknij przycisk ponizej, aby dodac informacje o dolegliwości</string>
     <string name="patient_settings_empty_meds_title">Brak dodanych lekow</string>
     <string name="patient_settings_empty_meds_body">Kliknij przycisk ponizej, aby dodac pierwszy lek</string>
     <string name="patient_settings_alerts_title">Alerty i Powiadomienia</string>
@@ -250,7 +250,7 @@
     <string name="patient_settings_agents_title">Agenci monitorujacy</string>
     <string name="patient_settings_agents_subtitle">Opiekunowie i lekarze</string>
     <string name="patient_settings_add_personal">Dodaj Dane</string>
-    <string name="patient_settings_add_disease">Dodaj Chorobe</string>
+    <string name="patient_settings_add_disease">Dodaj Dolegliwość</string>
     <string name="patient_settings_add_med">Dodaj Lek</string>
     <string name="patient_settings_delete_account">Usun konto</string>
     <string name="patient_settings_delete_account_title">Usun konto</string>
@@ -266,8 +266,8 @@
     <string name="patient_settings_delete_action_unlink">Zakoncz</string>
     <string name="patient_settings_personal_title">Dane osobowe</string>
     <string name="patient_settings_personal_subtitle">Imie, nazwisko, kontakt</string>
-    <string name="patient_settings_diseases_title">Moje choroby</string>
-    <string name="patient_settings_diseases_subtitle">Lista chorob i stopien ciezkosci</string>
+    <string name="patient_settings_diseases_title">Moje dolegliwości</string>
+    <string name="patient_settings_diseases_subtitle">Lista dolegliwości i stopien ciezkosci</string>
     <string name="patient_settings_meds_title">Moje leki</string>
     <string name="patient_settings_meds_subtitle">Dawki i harmonogram</string>
 
@@ -281,15 +281,15 @@
     <string name="patient_personal_cancel">Anuluj</string>
     <string name="patient_personal_save">Zapisz</string>
 
-    <string name="patient_add_disease_title">Dodaj chorobe</string>
-    <string name="patient_add_disease_subtitle">Podaj nazwe choroby, od kiedy chorujesz i przebieg</string>
-    <string name="patient_add_disease_name_hint">Nazwa choroby</string>
-    <string name="patient_add_disease_since_hint">Od kiedy chorujesz</string>
-    <string name="patient_add_disease_course_hint">Przebieg choroby</string>
+    <string name="patient_add_disease_title">Dodaj dolegliwość</string>
+    <string name="patient_add_disease_subtitle">Podaj nazwe dolegliwości, od kiedy masz dolegliwości i przebieg</string>
+    <string name="patient_add_disease_name_hint">Nazwa dolegliwości</string>
+    <string name="patient_add_disease_since_hint">Od kiedy masz dolegliwości</string>
+    <string name="patient_add_disease_course_hint">Przebieg dolegliwości</string>
     <string name="patient_add_disease_cancel">Anuluj</string>
     <string name="patient_add_disease_save">Zapisz</string>
-    <string name="patient_edit_disease_title">Edytuj chorobe</string>
-    <string name="patient_edit_disease_delete_title">Usun chorobe?</string>
+    <string name="patient_edit_disease_title">Edytuj dolegliwość</string>
+    <string name="patient_edit_disease_delete_title">Usun dolegliwość?</string>
     <string name="patient_edit_disease_delete_message">Ta operacja jest nieodwracalna.</string>
     <string name="patient_edit_remove">Usun</string>
 
@@ -411,5 +411,5 @@
     <string name="design_book_dialog_example">Przykladowy dialog/formularz</string>
     <string name="design_book_section_dialog_inputs">Pola w dialogach</string>
     <string name="design_book_dialog_input_name">Nazwa</string>
-    <string name="design_book_dialog_input_course">Przebieg choroby</string>
+    <string name="design_book_dialog_input_course">Przebieg dolegliwości</string>
 </resources>

@@ -1,9 +1,9 @@
-﻿# Etap 2 - Edycja UI (choroby/leki/dane) Plan
+# Etap 2 - Edycja UI (dolegliwości/leki/dane) Plan
 
 ## Scope
-- Tap na elementach listy chorob/lekow otwiera dialog edycji.
+- Tap na elementach listy dolegliwości/lekow otwiera dialog edycji.
 - Tap na karcie danych osobowych otwiera dialog edycji.
-- Dialogi edycji chorob/lekow maja przycisk "Usun".
+- Dialogi edycji dolegliwości/lekow maja przycisk "Usun".
 - UI dostosowane do nowego modelu `PersonalData` (firstName/lastName).
 
 ## Modules And Layers
@@ -19,15 +19,15 @@
 - Akcje nawigacji z argumentami `diseaseId` / `medicationId`.
 
 ## Implementation Checklist
-- [x] Dodac klik w itemach chorob i lekow w adapterach.
+- [x] Dodac klik w itemach dolegliwości i lekow w adapterach.
 - [x] Ustawic `MaterialCardView` w itemach jako clickable, jesli potrzeba.
-- [x] Dodac akcje i argumenty w `nav_graph.xml` dla edycji (id choroby/leku).
+- [x] Dodac akcje i argumenty w `nav_graph.xml` dla edycji (id dolegliwości/leku).
 - [x] Dodac nowe dialogi edycji z prefill z repo (pobranie listy i wybor po id).
-- [x] Dodac "Usun" w dialogach edycji chorob/lekow i obsluzyc `Remove*UseCase`.
+- [x] Dodac "Usun" w dialogach edycji dolegliwości/lekow i obsluzyc `Remove*UseCase`.
 - [x] Ustawic tap na `patient_settings_personal` jako wejscie do edycji danych osobowych.
 - [x] Zaktualizowac `PatientSettingsUiState` oraz `PatientSettingsFragment` do `firstName/lastName`.
 - [x] Zaktualizowac `PatientPersonalDataFragment` (prefill + zapis `firstName/lastName`).
-- [x] Zaktualizowac stringi tytulow/CTA ("Edytuj chorobe", "Edytuj lek", "Usun").
+- [x] Zaktualizowac stringi tytulow/CTA ("Edytuj dolegliwość", "Edytuj lek", "Usun").
 - [x] Zaktualizowac `docs/PLAN.md` i zrobic commit opisujacy etap.
 
 ## Validation

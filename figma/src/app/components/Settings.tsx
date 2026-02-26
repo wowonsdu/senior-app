@@ -440,19 +440,19 @@ export function Settings() {
           </>
         )}
 
-        {/* CHOROBY SECTION */}
+        {/* DOLEGLIWOSCI SECTION */}
         <Typography variant="h5" sx={{ mb: 3, fontWeight: 500, color: "#1976d2" }}>
-          Moje Choroby
+          Moje Dolegliwości
         </Typography>
 
         {diseases.length === 0 ? (
           <Card sx={{ boxShadow: "0 2px 4px rgba(0,0,0,0.2)", mb: 3 }}>
             <CardContent sx={{ py: 6 }}>
               <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 2 }}>
-                Brak zarejestrowanych chorób
+                Brak zarejestrowanych dolegliwości
               </Typography>
               <Typography variant="body1" align="center" color="text.secondary">
-                Kliknij przycisk poniżej, aby dodać informację o chorobie
+                Kliknij przycisk poniżej, aby dodać informację o dolegliwości
               </Typography>
             </CardContent>
           </Card>
@@ -705,7 +705,7 @@ export function Settings() {
             >
               <Add sx={{ fontSize: 72 }} />
               <Typography variant="h5" component="div" sx={{ fontWeight: 500 }}>
-                Dodaj Chorobę
+                Dodaj Dolegliwość
               </Typography>
             </CardContent>
           </Card>
@@ -915,7 +915,7 @@ export function Settings() {
         </DialogActions>
       </Dialog>
 
-      {/* Dialog dodawania/edycji choroby */}
+      {/* Dialog dodawania/edycji dolegliwości */}
       <Dialog
         open={showDiseaseDialog}
         onClose={() => setShowDiseaseDialog(false)}
@@ -929,15 +929,15 @@ export function Settings() {
       >
         <DialogContent sx={{ pt: 4 }}>
           <Typography variant="h5" sx={{ mb: 3, fontWeight: 500 }}>
-            {editDiseaseMode ? "Edytuj Chorobę" : "Dodaj Chorobę"}
+            {editDiseaseMode ? "Edytuj Dolegliwość" : "Dodaj Dolegliwość"}
           </Typography>
           <Typography variant="body1" sx={{ mb: 3, color: "text.secondary" }}>
-            {editDiseaseMode ? "Zmień dane choroby" : "Podaj nazwę choroby, od kiedy chorujesz i przebieg"}
+            {editDiseaseMode ? "Zmień dane dolegliwości" : "Podaj nazwę dolegliwości, od kiedy masz dolegliwości i przebieg"}
           </Typography>
           <TextField
             autoFocus
             fullWidth
-            label="Nazwa choroby"
+            label="Nazwa dolegliwości"
             variant="outlined"
             value={diseaseName}
             onChange={(e) => setDiseaseName(e.target.value)}
@@ -954,7 +954,7 @@ export function Settings() {
           />
           <TextField
             fullWidth
-            label="Od kiedy chorujesz"
+            label="Od kiedy masz dolegliwości"
             variant="outlined"
             value={diseaseSince}
             onChange={(e) => setDiseaseSince(e.target.value)}
@@ -970,12 +970,12 @@ export function Settings() {
             }}
           />
           <FormControl fullWidth sx={{ mb: 3 }}>
-            <InputLabel id="severity-label">Przebieg choroby</InputLabel>
+            <InputLabel id="severity-label">Przebieg dolegliwości</InputLabel>
             <Select
               labelId="severity-label"
               value={diseaseSeverity}
               onChange={(e) => setDiseaseSeverity(e.target.value as "łagodny" | "średni" | "ciężki")}
-              label="Przebieg choroby"
+              label="Przebieg dolegliwości"
               sx={{
                 "& .MuiSelect-select": {
                   fontSize: "18px",
@@ -1033,7 +1033,7 @@ export function Settings() {
                 },
               }}
             >
-              Usuń chorobę
+              Usuń dolegliwość
             </Button>
           )}
         </DialogActions>
