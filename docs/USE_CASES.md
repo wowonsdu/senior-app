@@ -316,6 +316,54 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Wyjscie: `Observable<List<Medication>>`.
   - Repo: `SettingsRepository`.
 
+- UC-SET-15 ObserveMedicationsByUid
+  - Cel: realtime obserwacja listy lekow po `patientUid`.
+  - Wejscie: `patientUid`.
+  - Wyjscie: `Observable<List<Medication>>`.
+  - Repo: `MedicationByUidRepository`.
+
+- UC-SET-16 ObserveMedicationReminderEvents
+  - Cel: realtime obserwacja eventow przypomnien o lekach.
+  - Wejscie: `patientUid`, `limit`.
+  - Wyjscie: `Observable<List<MedicationReminderEvent>>`.
+  - Repo: `MedicationReminderEventRepository`.
+
+- UC-SET-17 UpsertMedicationReminderEvent
+  - Cel: zapis eventu przypomnienia o leku (idempotentnie).
+  - Wejscie: `patientUid`, `MedicationReminderEvent`.
+  - Wyjscie: `Unit`.
+  - Repo: `MedicationReminderEventRepository`.
+
+- UC-SET-18 ObserveMedicationReminderReadState
+  - Cel: realtime obserwacja stanu "przeczytane" dla przypomnien o lekach.
+  - Wejscie: `patientUid`.
+  - Wyjscie: `Observable<MedicationReminderReadState>`.
+  - Repo: `MedicationReminderReadStateRepository`.
+
+- UC-SET-19 MarkMedicationReminderRead
+  - Cel: oznaczenie eventu przypomnienia o leku jako przeczytany.
+  - Wejscie: `patientUid`, `eventId`.
+  - Wyjscie: `Unit`.
+  - Repo: `MedicationReminderReadStateRepository`.
+
+- UC-SET-20 SetReadMedicationReminders
+  - Cel: masowe oznaczenie przypomnien o lekach jako przeczytane.
+  - Wejscie: `patientUid`, `eventIds`.
+  - Wyjscie: `Unit`.
+  - Repo: `MedicationReminderReadStateRepository`.
+
+- UC-SET-21 ObserveCaregiverMedicationReminderPrefs
+  - Cel: obserwacja preferencji powiadomien opiekuna per podopieczny.
+  - Wejscie: brak.
+  - Wyjscie: `Observable<Map<patientUid, enabled>>`.
+  - Repo: `CaregiverMedicationReminderPrefsRepository`.
+
+- UC-SET-22 SetCaregiverMedicationReminderPref
+  - Cel: ustawienie preferencji powiadomien opiekuna dla podopiecznego.
+  - Wejscie: `patientUid`, `enabled`.
+  - Wyjscie: `Unit`.
+  - Repo: `CaregiverMedicationReminderPrefsRepository`.
+
 ## Powiadomienia (lokalne / SMS / email)
 - UC-NOTIF-01 ScheduleVisitReminder
   - Cel: zaplanowanie powiadomienia o wizycie.

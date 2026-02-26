@@ -27,10 +27,17 @@ class FirestoreAccountRepository : AccountRepository {
 
             deleteCollection(userDoc.collection(FirestorePaths.DISEASES))
             deleteCollection(userDoc.collection(FirestorePaths.MEDICATIONS))
+            deleteCollection(userDoc.collection(FirestorePaths.MEDICATION_REMINDER_EVENTS))
+            deleteCollection(userDoc.collection(FirestorePaths.MEDICATION_REMINDER_READ_STATES))
             deleteCollection(userDoc.collection(FirestorePaths.MEASUREMENTS))
             deleteCollection(userDoc.collection(FirestorePaths.MEASUREMENT_READ_STATES))
             deleteCollection(userDoc.collection(FirestorePaths.CONTACTS))
             deleteCollection(userDoc.collection(FirestorePaths.ALERT_EVENTS))
+            deleteCollection(
+                userDoc.collection(FirestorePaths.SETTINGS)
+                    .document(FirestorePaths.MEDICATION_REMINDER_PREFS)
+                    .collection("items")
+            )
 
             Tasks.await(
                 userDoc.collection(FirestorePaths.SETTINGS)

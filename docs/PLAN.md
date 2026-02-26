@@ -399,7 +399,7 @@ Zasady etapu:
 - [x] Terminologia: dolegliwosci + usuniecie "Lista lekow" w ustawieniach pacjenta
 
 ## Etap 14 — Leki: przypomnienia lokalne + opiekun
-- [ ] 14.1 Domain/Data: eventy przypomnien + read state + prefs opiekuna + repo/use case
+- [x] 14.1 Domain/Data: eventy przypomnien + read state + prefs opiekuna + repo/use case
 - [ ] 14.2 Android: alarmy + receiver + notyfikacje lokalne (pacjent + opiekun)
 - [ ] 14.3 Coordinator: obserwacje lekow/prefs i planowanie alarmow
 - [ ] 14.4 UI: toggle per podopieczny + dashboard eventy lekow + badge

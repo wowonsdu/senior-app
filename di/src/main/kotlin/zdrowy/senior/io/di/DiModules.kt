@@ -12,8 +12,12 @@ import zdrowy.senior.io.data.measurement.FirestoreMeasurementByUidRepository
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementRepository
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementReadStateRepository
 import zdrowy.senior.io.data.notification.NoOpNotificationRepository
+import zdrowy.senior.io.data.settings.FirestoreMedicationsByUidRepository
 import zdrowy.senior.io.data.settings.FirestorePersonalDataByUidRepository
 import zdrowy.senior.io.data.settings.FirestoreSettingsRepository
+import zdrowy.senior.io.data.settings.reminders.FirestoreCaregiverMedicationReminderPrefsRepository
+import zdrowy.senior.io.data.settings.reminders.FirestoreMedicationReminderEventRepository
+import zdrowy.senior.io.data.settings.reminders.FirestoreMedicationReminderReadStateRepository
 import zdrowy.senior.io.data.settings.notifications.FirestoreNotificationSettingsRepository
 import zdrowy.senior.io.data.user.FirebaseCurrentUserUidProvider
 import zdrowy.senior.io.data.user.FirestoreAccountRepository
@@ -70,7 +74,9 @@ import zdrowy.senior.io.domain.settings.GetPersonalDataUseCase
 import zdrowy.senior.io.domain.settings.GetSettingsOverviewUseCase
 import zdrowy.senior.io.domain.settings.ListDiseasesUseCase
 import zdrowy.senior.io.domain.settings.ListMedicationsUseCase
+import zdrowy.senior.io.domain.settings.MedicationByUidRepository
 import zdrowy.senior.io.domain.settings.ObserveDiseasesUseCase
+import zdrowy.senior.io.domain.settings.ObserveMedicationsByUidUseCase
 import zdrowy.senior.io.domain.settings.ObserveMedicationsUseCase
 import zdrowy.senior.io.domain.settings.ObservePersonalDataByUidUseCase
 import zdrowy.senior.io.domain.settings.ObservePersonalDataUseCase
@@ -82,6 +88,16 @@ import zdrowy.senior.io.domain.settings.ToggleMedicationNotificationsUseCase
 import zdrowy.senior.io.domain.settings.UpdateDiseaseUseCase
 import zdrowy.senior.io.domain.settings.UpdateMedicationUseCase
 import zdrowy.senior.io.domain.settings.UpsertPersonalDataUseCase
+import zdrowy.senior.io.domain.settings.reminders.CaregiverMedicationReminderPrefsRepository
+import zdrowy.senior.io.domain.settings.reminders.MarkMedicationReminderReadUseCase
+import zdrowy.senior.io.domain.settings.reminders.MedicationReminderEventRepository
+import zdrowy.senior.io.domain.settings.reminders.MedicationReminderReadStateRepository
+import zdrowy.senior.io.domain.settings.reminders.ObserveCaregiverMedicationReminderPrefsUseCase
+import zdrowy.senior.io.domain.settings.reminders.ObserveMedicationReminderEventsUseCase
+import zdrowy.senior.io.domain.settings.reminders.ObserveMedicationReminderReadStateUseCase
+import zdrowy.senior.io.domain.settings.reminders.SetCaregiverMedicationReminderPrefUseCase
+import zdrowy.senior.io.domain.settings.reminders.SetReadMedicationRemindersUseCase
+import zdrowy.senior.io.domain.settings.reminders.UpsertMedicationReminderEventUseCase
 import zdrowy.senior.io.domain.settings.notifications.GetNotificationSettingsUseCase
 import zdrowy.senior.io.domain.settings.notifications.NotificationSettingsRepository
 import zdrowy.senior.io.domain.settings.notifications.ObserveNotificationSettingsUseCase
@@ -190,6 +206,7 @@ val domainModule = module {
     factory { ObservePersonalDataByUidUseCase(get()) }
     factory { ObserveDiseasesUseCase(get()) }
     factory { ObserveMedicationsUseCase(get()) }
+    factory { ObserveMedicationsByUidUseCase(get()) }
     factory { AddDiseaseUseCase(get()) }
     factory { UpdateDiseaseUseCase(get()) }
     factory { RemoveDiseaseUseCase(get()) }
@@ -199,6 +216,13 @@ val domainModule = module {
     factory { RemoveMedicationUseCase(get()) }
     factory { ListMedicationsUseCase(get()) }
     factory { ToggleMedicationNotificationsUseCase(get()) }
+    factory { ObserveMedicationReminderEventsUseCase(get()) }
+    factory { UpsertMedicationReminderEventUseCase(get()) }
+    factory { ObserveMedicationReminderReadStateUseCase(get()) }
+    factory { MarkMedicationReminderReadUseCase(get()) }
+    factory { SetReadMedicationRemindersUseCase(get()) }
+    factory { ObserveCaregiverMedicationReminderPrefsUseCase(get()) }
+    factory { SetCaregiverMedicationReminderPrefUseCase(get()) }
 
     factory { EnsureUserProfileUseCase(get()) }
     factory { EnsureCurrentUserRoleLoadedUseCase(get(), get()) }
@@ -230,8 +254,12 @@ val dataModule = module {
     single<NotificationSettingsRepository> { FirestoreNotificationSettingsRepository(get()) }
     single<AlertEventRepository> { FirestoreAlertEventRepository(get()) }
     single<SettingsRepository> { FirestoreSettingsRepository(get()) }
+    single<MedicationByUidRepository> { FirestoreMedicationsByUidRepository() }
     single<PersonalDataByUidRepository> { FirestorePersonalDataByUidRepository() }
     single<AccountRepository> { FirestoreAccountRepository() }
+    single<MedicationReminderEventRepository> { FirestoreMedicationReminderEventRepository() }
+    single<MedicationReminderReadStateRepository> { FirestoreMedicationReminderReadStateRepository(get()) }
+    single<CaregiverMedicationReminderPrefsRepository> { FirestoreCaregiverMedicationReminderPrefsRepository(get()) }
 
     single<UserProfileRepository> { FirestoreUserProfileRepository() }
 }
