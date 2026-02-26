@@ -90,6 +90,7 @@ class PatientAddMedFragment : Fragment() {
             itemBinding.medTimeInputLayout.hint =
                 getString(R.string.patient_add_med_time_hint_format, index + 1)
             itemBinding.medTimeInput.setText(previous.getOrNull(index).orEmpty())
+            TimeInputMasker.attach(itemBinding.medTimeInput)
             binding.patientAddMedTimesContainer.addView(itemBinding.root)
             timeInputs += itemBinding.medTimeInput
         }
@@ -101,7 +102,8 @@ class PatientAddMedFragment : Fragment() {
         val frequencyText = binding.patientAddMedFrequency.text?.toString()?.trim().orEmpty()
         val frequencyCount = frequencyText.toIntOrNull()?.coerceIn(0, 10) ?: 0
         val times = timeInputs.map { it.text?.toString()?.trim().orEmpty() }
-        val schedule = if (frequencyCount > 0) times.joinToString(", ") else ""
+        val normalizedTimes = times.mapNotNull { TimeInputMasker.normalize(it) }
+        val schedule = if (frequencyCount > 0) normalizedTimes.joinToString(", ") else ""
         val notificationsEnabled = binding.patientAddMedNotify.isChecked
 
         if (!validateNotBlank(binding.patientAddMedName, name)) return
@@ -120,7 +122,17 @@ class PatientAddMedFragment : Fragment() {
         var valid = true
         timeInputs.forEachIndexed { index, field ->
             val value = times.getOrNull(index).orEmpty()
-            if (!validateNotBlank(field, value)) valid = false
+            if (!validateNotBlank(field, value)) {
+                valid = false
+                return@forEachIndexed
+            }
+            if (TimeInputMasker.normalize(value) == null) {
+                findTextInputLayout(field)?.error =
+                    getString(R.string.patient_add_med_time_format_error)
+                valid = false
+            } else {
+                findTextInputLayout(field)?.error = null
+            }
         }
         return valid
     }

@@ -307,6 +307,7 @@
     <string name="patient_add_med_dose_hint">Dawka</string>
     <string name="patient_add_med_frequency_hint">Ile razy dziennie</string>
     <string name="patient_add_med_time_hint_format">Godzina przyjecia %1$d</string>
+    <string name="patient_add_med_time_format_error">Podaj czas w formacie HH:mm</string>
     <string name="patient_add_med_notify">Powiadamiaj o godzinie przyjecia</string>
     <string name="med_reminder_channel_name">Przypomnienia o lekach</string>
     <string name="med_reminder_channel_desc">Powiadomienia o przyjeciu leku</string>
