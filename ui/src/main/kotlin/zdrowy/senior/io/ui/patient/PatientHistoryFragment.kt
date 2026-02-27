@@ -22,6 +22,7 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import zdrowy.senior.io.ui.R
+import zdrowy.senior.io.ui.common.VerticalSpacingItemDecoration
 
 class PatientHistoryFragment : Fragment() {
     private var _binding: FragmentPatientHistoryBinding? = null
@@ -38,6 +39,11 @@ class PatientHistoryFragment : Fragment() {
     ): View {
         _binding = FragmentPatientHistoryBinding.inflate(inflater, container, false)
         binding.patientHistoryList.layoutManager = LinearLayoutManager(requireContext())
+        binding.patientHistoryList.addItemDecoration(
+            VerticalSpacingItemDecoration(
+                gapPx = resources.getDimensionPixelSize(R.dimen.list_item_gap)
+            )
+        )
         binding.patientHistoryList.adapter = adapter
         binding.patientHistoryToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()

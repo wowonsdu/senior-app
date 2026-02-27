@@ -11,8 +11,10 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import zdrowy.senior.io.ui.R
+import zdrowy.senior.io.ui.common.VerticalSpacingItemDecoration
 import zdrowy.senior.io.ui.databinding.FragmentPatientSettingsBinding
 
 class PatientSettingsFragment : Fragment() {
@@ -75,13 +77,17 @@ class PatientSettingsFragment : Fragment() {
             viewModel.onDeleteAccountClicked()
         }
         binding.patientSettingsDiseasesList.layoutManager = LinearLayoutManager(requireContext())
+        applyListSpacing(binding.patientSettingsDiseasesList)
         binding.patientSettingsDiseasesList.adapter = diseasesAdapter
         binding.patientSettingsMedsList.layoutManager = LinearLayoutManager(requireContext())
+        applyListSpacing(binding.patientSettingsMedsList)
         binding.patientSettingsMedsList.adapter = medsAdapter
         binding.patientSettingsMedsListLabel.visibility = View.GONE
         binding.patientSettingsCaregiversList.layoutManager = LinearLayoutManager(requireContext())
+        applyListSpacing(binding.patientSettingsCaregiversList)
         binding.patientSettingsCaregiversList.adapter = caregiversAdapter
         binding.patientSettingsDoctorsList.layoutManager = LinearLayoutManager(requireContext())
+        applyListSpacing(binding.patientSettingsDoctorsList)
         binding.patientSettingsDoctorsList.adapter = doctorsAdapter
         return binding.root
     }
@@ -203,5 +209,13 @@ class PatientSettingsFragment : Fragment() {
 
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun applyListSpacing(recyclerView: RecyclerView) {
+        recyclerView.addItemDecoration(
+            VerticalSpacingItemDecoration(
+                gapPx = resources.getDimensionPixelSize(R.dimen.list_item_gap)
+            )
+        )
     }
 }

@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.RecyclerView
 import zdrowy.senior.io.domain.alert.AlertChannel
+import zdrowy.senior.io.ui.R
+import zdrowy.senior.io.ui.common.VerticalSpacingItemDecoration
 import zdrowy.senior.io.ui.databinding.ItemAlertCaregiverToggleBinding
 import zdrowy.senior.io.ui.databinding.ViewAlertNotificationsConfigBinding
 
@@ -39,6 +41,11 @@ class AlertNotificationsConfigView @JvmOverloads constructor(
         orientation = VERTICAL
 
         binding.alertNotificationsCaregiversList.adapter = caregiversAdapter
+        binding.alertNotificationsCaregiversList.addItemDecoration(
+            VerticalSpacingItemDecoration(
+                gapPx = resources.getDimensionPixelSize(R.dimen.list_item_gap)
+            )
+        )
 
         binding.alertNotificationsChannelsEnableAll.setOnClickListener { onEnableAllChannels?.invoke() }
         binding.alertNotificationsChannelsDisableAll.setOnClickListener { onDisableAllChannels?.invoke() }
