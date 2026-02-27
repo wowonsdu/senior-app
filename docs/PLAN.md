@@ -333,7 +333,7 @@ Zasady etapu:
 - [x] 9.52 CareLink: opiekun po loginie (kolejka, bez transakcji)
 - [x] 9.53 CareLink: sync danych profilu opiekuna do contacts pacjentow
 - [x] 9.54 Ustawienia: sekcje Moi lekarze/Moi opiekunowie + listy i przyciski
-- [ ] 9.55 Lekarze: dodaj/edytuj jako fragmenty + VM (formularz)
+- [x] 9.55 Lekarze: dodaj/edytuj jako fragmenty + VM (formularz)
 - [ ] 9.56 Opiekunowie: dodaj/edytuj jako fragmenty + kod powiazania na add
 - [ ] 9.57 Nawigacja: usuniecie ekranu Agenci + routing do formularzy
 - [ ] 9.58 Cleanup: usuniecie dialogow/kodow Agenci monitorujacy
