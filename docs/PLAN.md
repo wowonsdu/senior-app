@@ -342,6 +342,7 @@ Zasady etapu:
 - [x] 9.61 Pacjent: Dodaj opiekuna — utworz kod + wpisz kod na jednym ekranie
 - [x] 9.62 Opiekun: Dodaj podopiecznego — wpisz kod + generuj kod bez telefonu
 - [x] 9.63 Walidacja: assembleDebug po zmianach kodow laczenia
+- [x] 9.64 Hotfix: brak crasha Rx (Undeliverable InterruptedException) przy wpisaniu kodu podopiecznego
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
