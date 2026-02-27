@@ -173,81 +173,11 @@
             app:argType="long" />
     </dialog>
 
-    <dialog
-        android:id="@+id/patientNotifyAgentsDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientNotifyAgentsDialogFragment"
-        android:label="@string/patient_notify_agents_title"
-        tools:layout="@layout/dialog_patient_notify_agents" />
-
     <fragment
         android:id="@+id/patientHistoryFragment"
         android:name="zdrowy.senior.io.ui.patient.PatientHistoryFragment"
         android:label="@string/patient_history_title"
         tools:layout="@layout/fragment_patient_history" />
-
-    <fragment
-        android:id="@+id/patientAgentsFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientAgentsFragment"
-        android:label="@string/patient_agents_title"
-        tools:layout="@layout/fragment_patient_agents">
-        <action
-            android:id="@+id/action_patientAgents_to_addAgent"
-            app:destination="@id/patientAddAgentDialogFragment" />
-        <action
-            android:id="@+id/action_patientAgents_to_agentCode"
-            app:destination="@id/patientAgentCodeDialogFragment" />
-        <action
-            android:id="@+id/action_patientAgents_to_editAgent"
-            app:destination="@id/patientEditAgentDialogFragment" />
-        <action
-            android:id="@+id/action_patientAgents_to_addDoctor"
-            app:destination="@id/patientAddDoctorDialogFragment" />
-        <action
-            android:id="@+id/action_patientAgents_to_doctorCode"
-            app:destination="@id/patientDoctorCodeDialogFragment" />
-        <action
-            android:id="@+id/action_patientAgents_to_editDoctor"
-            app:destination="@id/patientEditDoctorDialogFragment" />
-        <action
-            android:id="@+id/action_patientAgents_to_caregiverLink"
-            app:destination="@id/caregiverLinkFragment" />
-    </fragment>
-
-    <dialog
-        android:id="@+id/patientAddAgentDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientAddAgentDialogFragment"
-        android:label="@string/patient_add_agent_title"
-        tools:layout="@layout/dialog_patient_add_agent" />
-
-    <dialog
-        android:id="@+id/patientAgentCodeDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientAgentCodeDialogFragment"
-        android:label="@string/patient_agent_code_title"
-        tools:layout="@layout/dialog_patient_agent_code" />
-
-    <dialog
-        android:id="@+id/patientEditAgentDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientEditAgentDialogFragment"
-        android:label="@string/patient_edit_agent_title"
-        tools:layout="@layout/dialog_patient_edit_agent" />
-
-    <dialog
-        android:id="@+id/patientAddDoctorDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientAddDoctorDialogFragment"
-        android:label="@string/patient_add_doctor_title"
-        tools:layout="@layout/dialog_patient_add_doctor" />
-
-    <dialog
-        android:id="@+id/patientDoctorCodeDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientDoctorCodeDialogFragment"
-        android:label="@string/patient_doctor_code_title"
-        tools:layout="@layout/dialog_patient_doctor_code" />
-
-    <dialog
-        android:id="@+id/patientEditDoctorDialogFragment"
-        android:name="zdrowy.senior.io.ui.patient.PatientEditDoctorDialogFragment"
-        android:label="@string/patient_edit_doctor_title"
-        tools:layout="@layout/dialog_patient_edit_doctor" />
 
     <fragment
         android:id="@+id/patientSettingsFragment"

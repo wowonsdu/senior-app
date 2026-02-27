@@ -134,12 +134,10 @@ import zdrowy.senior.io.ui.caregiver.CaregiverAddDependentViewModel
 import zdrowy.senior.io.ui.auth.StartupGateViewModel
 import zdrowy.senior.io.ui.auth.PatientLoginViewModel
 import zdrowy.senior.io.ui.caregiver.CaregiverDashboardViewModel
-import zdrowy.senior.io.ui.patient.PatientAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientAlertsViewModel
 import zdrowy.senior.io.ui.patient.PatientHistoryViewModel
 import zdrowy.senior.io.ui.patient.PatientHomeViewModel
 import zdrowy.senior.io.ui.patient.PatientMeasurementDialogViewModel
-import zdrowy.senior.io.ui.patient.PatientNotifyAgentsViewModel
 import zdrowy.senior.io.ui.patient.PatientAddMedViewModel
 import zdrowy.senior.io.ui.patient.PatientAddDiseaseViewModel
 import zdrowy.senior.io.ui.patient.PatientAddDoctorViewModel
@@ -313,7 +311,6 @@ val viewModelModule = module {
         )
     }
     viewModel { PatientHistoryViewModel(get(), get(), get()) }
-    viewModel { PatientAgentsViewModel(get()) }
     viewModel { PatientAlertsViewModel(get(), get(), get(), get(), get(), get(), get(), get()) }
     viewModel { PatientHomeViewModel(get(), get(), get(), get(), get(), get(), get()) }
     viewModel {
@@ -333,7 +330,6 @@ val viewModelModule = module {
         )
     }
     viewModel { PatientMeasurementDialogViewModel(get(), get(), get(), get(), get(), get()) }
-    viewModel { PatientNotifyAgentsViewModel(get(), get()) }
     viewModel { PatientPersonalDataViewModel(get(), get()) }
     viewModel { PatientAddDiseaseViewModel(get()) }
     viewModel { PatientAddDoctorViewModel(get()) }

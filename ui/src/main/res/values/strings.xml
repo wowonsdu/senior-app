@@ -115,15 +115,6 @@
     <string name="patient_home_voice_saved">Zapisano: %1$s</string>
     <string name="patient_home_voice_skipped">Pominieto: %1$s</string>
 
-    <string name="patient_notify_agents_title">Powiadom agentow</string>
-    <string name="patient_notify_agents_subtitle">Wpisz wiadomosc dla opiekunow</string>
-    <string name="patient_notify_agents_message_hint">Wiadomosc</string>
-    <string name="patient_notify_agents_cancel">Anuluj</string>
-    <string name="patient_notify_agents_send">Wyslij</string>
-    <string name="patient_notify_agents_toast_success">Powiadomienie wyslane</string>
-    <string name="patient_notify_agents_toast_empty">Brak dodanych agentow</string>
-    <string name="patient_notify_agents_toast_error">Nie udalo sie wyslac powiadomienia</string>
-
     <string name="patient_sugar_dialog_title">Cukier</string>
     <string name="patient_sugar_dialog_subtitle">Wpisz wynik pomiaru</string>
     <string name="patient_sugar_dialog_hint">Poziom cukru</string>
@@ -173,16 +164,6 @@
     <string name="patient_history_item_pulse">Tetno: 72 bpm</string>
     <string name="patient_history_item_time">19.02.2026, 02:41</string>
 
-    <string name="patient_agents_title">Agenci monitorujacy</string>
-    <string name="patient_agents_subtitle">Osoby, ktore maja dostep do Twoich pomiarow</string>
-    <string name="patient_agents_empty_agents_title">Brak dodanych agentow</string>
-    <string name="patient_agents_empty_agents_body">Kliknij przycisk ponizej, aby dodac pierwszego agenta</string>
-    <string name="patient_agents_empty_doctors_title">Brak dodanych lekarzy</string>
-    <string name="patient_agents_empty_doctors_body">Kliknij przycisk ponizej, aby dodac pierwszego lekarza</string>
-    <string name="patient_agents_add_agent_tile">Dodaj Agenta</string>
-    <string name="patient_agents_add_doctor_tile">Dodaj Lekarza</string>
-    <string name="patient_agents_link_caregiver_tile">Powiaz opiekuna (kod)</string>
-
     <string name="patient_add_agent_title">Dodaj opiekuna</string>
     <string name="patient_add_agent_subtitle">Wpisz dane nowego opiekuna</string>
     <string name="patient_add_agent_name_hint">Imie i nazwisko</string>
@@ -191,12 +172,6 @@
     <string name="patient_add_agent_email_hint">Email (opcjonalnie)</string>
     <string name="patient_add_agent_cancel">Anuluj</string>
     <string name="patient_add_agent_save">Zapisz</string>
-
-    <string name="patient_agent_code_title">Kod dostepu</string>
-    <string name="patient_agent_code_subtitle">Przekaz kod opiekunowi, aby mogl sie zalogowac</string>
-    <string name="patient_agent_code_value">483 920</string>
-    <string name="patient_agent_code_copy">Kopiuj kod</string>
-    <string name="patient_agent_code_sms">Wyslij SMS</string>
 
     <string name="patient_edit_agent_title">Edytuj opiekuna</string>
     <string name="patient_edit_agent_subtitle">Zaktualizuj dane opiekuna</string>
@@ -216,12 +191,6 @@
     <string name="patient_add_doctor_email_hint">Email (opcjonalnie)</string>
     <string name="patient_add_doctor_cancel">Anuluj</string>
     <string name="patient_add_doctor_save">Zapisz</string>
-
-    <string name="patient_doctor_code_title">Kod lekarza</string>
-    <string name="patient_doctor_code_subtitle">Przekaz kod lekarzowi, aby mogl sie zalogowac</string>
-    <string name="patient_doctor_code_value">982 114</string>
-    <string name="patient_doctor_code_copy">Kopiuj kod</string>
-    <string name="patient_doctor_code_sms">Wyslij SMS</string>
 
     <string name="patient_edit_doctor_title">Edytuj lekarza</string>
     <string name="patient_edit_doctor_subtitle">Zaktualizuj dane lekarza</string>
@@ -427,4 +396,5 @@
     <string name="design_book_dialog_input_name">Nazwa</string>
     <string name="design_book_dialog_input_course">Przebieg dolegliwości</string>
 </resources>
+
 

@@ -336,7 +336,7 @@ Zasady etapu:
 - [x] 9.55 Lekarze: dodaj/edytuj jako fragmenty + VM (formularz)
 - [x] 9.56 Opiekunowie: dodaj/edytuj jako fragmenty + kod powiazania na add
 - [x] 9.57 Nawigacja: usuniecie ekranu Agenci + routing do formularzy
-- [ ] 9.58 Cleanup: usuniecie dialogow/kodow Agenci monitorujacy
+- [x] 9.58 Cleanup: usuniecie dialogow/kodow Agenci monitorujacy
 - [ ] 9.59 Walidacja: assembleDebug + smoke formularzy ustawien
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
