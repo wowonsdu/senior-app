@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -59,8 +60,25 @@ class CaregiverVisitsFragment : Fragment() {
                 CaregiverVisitFilter.COMPLETED -> getString(R.string.caregiver_visits_empty_completed)
             }
         }
-        viewModel.navTarget.observe(viewLifecycleOwner) {
-            viewModel.onNavigationHandled()
+        viewModel.navTarget.observe(viewLifecycleOwner) { target ->
+            when (target) {
+                CaregiverVisitsNavTarget.ADD -> {
+                    requireParentFragment().findNavController().navigate(
+                        R.id.caregiverAddVisitFragment
+                    )
+                    viewModel.onNavigationHandled()
+                }
+                is CaregiverVisitsNavTarget.EDIT -> {
+                    requireParentFragment().findNavController().navigate(
+                        R.id.caregiverEditVisitFragment,
+                        Bundle().apply {
+                            putString("visitId", target.visitId)
+                        }
+                    )
+                    viewModel.onNavigationHandled()
+                }
+                null -> Unit
+            }
         }
     }
 

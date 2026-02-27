@@ -46,7 +46,6 @@
     <string name="caregiver_dashboard_empty_new">Brak nowych pomiarow</string>
     <string name="caregiver_dashboard_empty_read">Brak przeczytanych pomiarow</string>
     <string name="caregiver_dashboard_empty_missing_patient">Brak przypisanych podopiecznych.</string>
-    <string name="caregiver_placeholder_soon">Wkrotce</string>
     <string name="caregiver_visits_header">Wizyty podopiecznych</string>
     <string name="caregiver_visits_filter_upcoming">Nadchodzace</string>
     <string name="caregiver_visits_filter_all">Wszystkie</string>

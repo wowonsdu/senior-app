@@ -315,6 +315,22 @@
         tools:layout="@layout/fragment_caregiver_add_dependent" />
 
     <fragment
+        android:id="@+id/caregiverAddVisitFragment"
+        android:name="zdrowy.senior.io.ui.caregiver.CaregiverAddVisitFragment"
+        android:label="@string/caregiver_add_visit_title"
+        tools:layout="@layout/fragment_caregiver_add_visit" />
+
+    <fragment
+        android:id="@+id/caregiverEditVisitFragment"
+        android:name="zdrowy.senior.io.ui.caregiver.CaregiverEditVisitFragment"
+        android:label="@string/caregiver_edit_visit_title"
+        tools:layout="@layout/fragment_caregiver_edit_visit">
+        <argument
+            android:name="visitId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
         android:id="@+id/caregiverLinkFragment"
         android:name="zdrowy.senior.io.ui.caregiver.CaregiverLinkFragment"
         android:label="@string/caregiver_link_title"
