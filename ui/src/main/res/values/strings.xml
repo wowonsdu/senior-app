@@ -87,6 +87,24 @@
     <string name="caregiver_add_dependent_code_placeholder">------</string>
     <string name="caregiver_add_dependent_copy">Kopiuj kod</string>
     <string name="caregiver_add_dependent_code_info">Zapisz ten kod. Podopieczny uzyje go przy pierwszym logowaniu.</string>
+    <string name="caregiver_add_visit_title">Dodaj wizyte</string>
+    <string name="caregiver_add_visit_subtitle">Uzupelnij dane wizyty podopiecznego</string>
+    <string name="caregiver_edit_visit_title">Edytuj wizyte</string>
+    <string name="caregiver_edit_visit_subtitle">Zaktualizuj dane wizyty</string>
+    <string name="caregiver_visit_dependent_hint">Podopieczny</string>
+    <string name="caregiver_visit_title_hint">Tytul wizyty</string>
+    <string name="caregiver_visit_datetime_hint">Data i godzina</string>
+    <string name="caregiver_visit_location_hint">Miejsce</string>
+    <string name="caregiver_visit_notes_hint">Notatki (opcjonalnie)</string>
+    <string name="caregiver_visit_reminder_toggle">Przypomnienie przed wizyta</string>
+    <string name="caregiver_visit_reminder_offset_hint">Ile minut przed</string>
+    <string name="caregiver_visit_reminder_offset_option">%1$d min przed</string>
+    <string name="caregiver_visit_form_cancel">Anuluj</string>
+    <string name="caregiver_visit_form_save">Zapisz</string>
+    <string name="caregiver_visit_form_delete">Usun</string>
+    <string name="caregiver_visit_save_error">Nie udalo sie zapisac wizyty</string>
+    <string name="caregiver_visit_not_found">Nie znaleziono wizyty</string>
+    <string name="common_field_required">Pole wymagane</string>
 
     <string name="sms_verify_title">Zaloguj sie</string>
     <string name="sms_verify_header">Wpisz kod z SMS</string>
