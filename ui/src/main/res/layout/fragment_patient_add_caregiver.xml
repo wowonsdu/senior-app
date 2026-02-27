@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/senior_bg">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/patient_add_caregiver_toolbar"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/senior_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@android:drawable/ic_media_previous"
+        app:navigationIconTint="@color/white"
+        app:subtitle="@string/patient_add_agent_subtitle"
+        app:subtitleTextAppearance="@style/TextAppearance.Senior.Caption"
+        app:subtitleTextColor="@color/white"
+        app:title="@string/patient_add_agent_title"
+        app:titleTextAppearance="@style/TextAppearance.Senior.BodyLarge"
+        app:titleTextColor="@color/white" />
+
+    <ScrollView
+        android:id="@+id/patient_add_caregiver_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/patient_add_caregiver_toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_l">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_add_caregiver_name_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/patient_add_agent_name_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_add_caregiver_name"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_add_caregiver_phone_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/patient_add_agent_phone_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_add_caregiver_phone"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_add_caregiver_email_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/patient_add_agent_email_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_add_caregiver_email"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:background="@color/senior_outline" />
+
+            <TextView
+                android:id="@+id/patient_add_caregiver_code_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:text="@string/caregiver_link_have_code"
+                android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                android:textColor="@color/senior_text_primary" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/patient_add_caregiver_code_input"
+                style="@style/Widget.Senior.TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:hint="@string/caregiver_link_code_hint">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/patient_add_caregiver_code"
+                    style="@style/Widget.Senior.TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/patient_add_caregiver_link"
+                style="@style/Widget.Senior.Button.Secondary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:text="@string/caregiver_link_connect" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/patient_add_caregiver_cancel"
+                    style="@style/Widget.Senior.Button.Secondary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/patient_add_agent_cancel" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/patient_add_caregiver_save"
+                    style="@style/Widget.Senior.Button.Primary"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_s"
+                    android:layout_weight="1"
+                    android:text="@string/patient_add_agent_save" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
