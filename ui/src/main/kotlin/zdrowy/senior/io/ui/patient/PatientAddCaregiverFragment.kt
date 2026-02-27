@@ -1,5 +1,8 @@
 package zdrowy.senior.io.ui.patient
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +40,12 @@ class PatientAddCaregiverFragment : Fragment() {
         }
         binding.patientAddCaregiverLink.setOnClickListener {
             linkCaregiverByCode()
+        }
+        binding.patientAddCaregiverGenerateCode.setOnClickListener {
+            generateCode()
+        }
+        binding.patientAddCaregiverCopy.setOnClickListener {
+            copyCode()
         }
     }
 
@@ -84,6 +93,26 @@ class PatientAddCaregiverFragment : Fragment() {
                 binding.patientAddCaregiverCodeInput.error = message
             }
         )
+    }
+
+    private fun generateCode() {
+        viewModel.generateCode(
+            onCodeGenerated = { code ->
+                binding.patientAddCaregiverCodeSection.visibility = View.VISIBLE
+                binding.patientAddCaregiverCodeValue.text = code
+                binding.patientAddCaregiverCodeInput.error = null
+            },
+            onError = { message ->
+                binding.patientAddCaregiverCodeInput.error = message
+            }
+        )
+    }
+
+    private fun copyCode() {
+        val code = binding.patientAddCaregiverCodeValue.text?.toString().orEmpty()
+        if (code.isBlank()) return
+        val clipboard = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        clipboard.setPrimaryClip(ClipData.newPlainText("careLinkCode", code))
     }
 
     private fun validateNotBlank(

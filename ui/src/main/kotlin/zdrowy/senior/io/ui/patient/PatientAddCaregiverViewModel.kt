@@ -6,11 +6,14 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.agent.AddAgentUseCase
 import zdrowy.senior.io.domain.agent.AgentDraft
+import zdrowy.senior.io.domain.carelink.CareLinkCodeType
 import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
 import zdrowy.senior.io.domain.carelink.EnsureCaregiverContactUseCase
+import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
 
 class PatientAddCaregiverViewModel(
     private val addAgent: AddAgentUseCase,
+    private val generateCareLinkCode: GenerateCareLinkCodeUseCase,
     private val consumeCareLinkCode: ConsumeCareLinkCodeUseCase,
     private val ensureCaregiverContact: EnsureCaregiverContactUseCase
 ) : ViewModel() {
@@ -22,6 +25,20 @@ class PatientAddCaregiverViewModel(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ onDone() }, { onDone() })
+        )
+    }
+
+    fun generateCode(onCodeGenerated: (String) -> Unit, onError: (String) -> Unit) {
+        val ttlSeconds = 30L * 24 * 60 * 60
+        disposables.add(
+            generateCareLinkCode(CareLinkCodeType.PATIENT_TO_CAREGIVER, ttlSeconds)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ code ->
+                    onCodeGenerated(code.code)
+                }, { error ->
+                    onError(error.message ?: "Blad generowania kodu")
+                })
         )
     }
 

@@ -170,6 +170,8 @@
     <string name="patient_add_agent_role_hint">Relacja (np. syn, corka)</string>
     <string name="patient_add_agent_phone_hint">Telefon</string>
     <string name="patient_add_agent_email_hint">Email (opcjonalnie)</string>
+    <string name="patient_add_caregiver_generate_title">Utworz kod dla opiekuna</string>
+    <string name="patient_add_caregiver_generate_button">Utworz kod</string>
     <string name="patient_add_agent_cancel">Anuluj</string>
     <string name="patient_add_agent_save">Zapisz</string>
 
