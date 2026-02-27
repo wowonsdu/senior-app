@@ -29,7 +29,7 @@ class CaregiverVisitsViewModel(
     private val observeVisits: ObserveVisitsUseCase,
     private val evaluateVisitStatus: EvaluateVisitStatusUseCase,
     private val markVisitCompleted: MarkVisitCompletedUseCase,
-    private val removeVisit: RemoveVisitUseCase
+    private val removeVisitUseCase: RemoveVisitUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val _uiState = MutableLiveData(CaregiverVisitsUiState())
@@ -112,7 +112,7 @@ class CaregiverVisitsViewModel(
 
     fun removeVisit(visitId: String) {
         disposables.add(
-            removeVisit(visitId)
+            removeVisitUseCase(visitId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({}, {})

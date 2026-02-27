@@ -5,18 +5,99 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/senior_bg"
-    android:padding="@dimen/spacing_l">
+    android:paddingStart="@dimen/screen_gutter_horizontal"
+    android:paddingTop="@dimen/screen_gutter_vertical"
+    android:paddingEnd="@dimen/screen_gutter_horizontal"
+    android:paddingBottom="@dimen/screen_gutter_vertical">
 
     <TextView
-        android:id="@+id/caregiver_visits_placeholder"
-        android:layout_width="wrap_content"
+        android:id="@+id/caregiver_visits_header"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/caregiver_placeholder_soon"
+        android:text="@string/caregiver_visits_header"
         android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
         android:textColor="@color/senior_text_secondary"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/caregiver_visits_filters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_m"
+        app:checkedButton="@id/caregiver_visits_filter_upcoming"
+        app:singleSelection="true"
+        app:layout_constraintTop_toBottomOf="@id/caregiver_visits_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/caregiver_visits_filter_upcoming"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/caregiver_visits_filter_upcoming"
+            android:textAllCaps="false" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/caregiver_visits_filter_all"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_weight="1"
+            android:text="@string/caregiver_visits_filter_all"
+            android:textAllCaps="false" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/caregiver_visits_filter_completed"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:layout_weight="1"
+            android:text="@string/caregiver_visits_filter_completed"
+            android:textAllCaps="false" />
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <TextView
+        android:id="@+id/caregiver_visits_empty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_xl"
+        android:gravity="center"
+        android:text="@string/caregiver_visits_empty_upcoming"
+        android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+        android:textColor="@color/senior_text_secondary"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/caregiver_visits_filters"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/caregiver_visits_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/spacing_m"
+        android:layout_marginBottom="@dimen/spacing_m"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/spacing_l"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/caregiver_visits_filters"
+        app:layout_constraintBottom_toTopOf="@id/caregiver_visits_add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/caregiver_visits_add"
+        style="@style/Widget.Senior.Button.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/caregiver_visits_add"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

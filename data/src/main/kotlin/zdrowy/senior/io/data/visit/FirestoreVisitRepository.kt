@@ -105,8 +105,9 @@ class FirestoreVisitRepository(
             payload["reminderEnabled"] = enabled
             if (!enabled) payload["reminderOffsetMinutes"] = FieldValue.delete()
         }
-        if (update.reminderOffsetMinutes != null) {
-            payload["reminderOffsetMinutes"] = update.reminderOffsetMinutes
+        val reminderOffsetMinutes = update.reminderOffsetMinutes
+        if (reminderOffsetMinutes != null) {
+            payload["reminderOffsetMinutes"] = reminderOffsetMinutes
         }
         update.isCompletedManual?.let { payload["isCompletedManual"] = it }
         update.completedAtMs?.let { payload["completedAtMs"] = it }

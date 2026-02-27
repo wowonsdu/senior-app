@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Senior.Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/white"
+    app:strokeColor="@color/senior_outline"
+    app:strokeWidth="@dimen/stroke_width">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_m">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/caregiver_visit_patient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                android:textColor="@color/senior_text_secondary"
+                android:textStyle="bold" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/caregiver_visit_status_chip"
+                style="@style/Widget.Senior.Card"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/senior_warning">
+
+                <TextView
+                    android:id="@+id/caregiver_visit_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingStart="@dimen/spacing_s"
+                    android:paddingEnd="@dimen/spacing_s"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/white" />
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/caregiver_visit_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+            android:textColor="@color/senior_text_primary"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/caregiver_visit_datetime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textAppearance="@style/TextAppearance.Senior.Caption"
+            android:textColor="@color/senior_text_secondary" />
+
+        <TextView
+            android:id="@+id/caregiver_visit_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textAppearance="@style/TextAppearance.Senior.Caption"
+            android:textColor="@color/senior_text_secondary" />
+
+        <TextView
+            android:id="@+id/caregiver_visit_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:textAppearance="@style/TextAppearance.Senior.Caption"
+            android:textColor="@color/senior_primary"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/caregiver_visit_complete"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/caregiver_visits_action_complete"
+                android:textAllCaps="false" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/caregiver_visit_edit"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/caregiver_visits_action_edit"
+                android:textAllCaps="false" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/caregiver_visit_delete"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/caregiver_visits_action_delete"
+                android:textAllCaps="false"
+                android:textColor="@color/senior_danger" />
+        </LinearLayout>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
