@@ -345,6 +345,7 @@ Zasady etapu:
 - [x] 9.64 Hotfix: brak crasha Rx (Undeliverable InterruptedException) przy wpisaniu kodu podopiecznego
 - [x] 9.65 Hotfix: SwitchCompat NPE (null text) — showText=false dla switchy w alertach/opiekunie/lekach
 - [x] 9.66 Hotfix: SwitchCompat NPE — app:showText + globalny switchStyle fallback (showText/textOn/textOff)
+- [x] 9.67 CareLink: symetryczne tworzenie kontaktu pacjenta po consume kodu
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case

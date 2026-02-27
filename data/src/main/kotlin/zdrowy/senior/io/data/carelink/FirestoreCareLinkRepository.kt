@@ -267,12 +267,8 @@ class FirestoreCareLinkRepository(
         }
             .toSingle()
             .flatMap { link ->
-                if (role == UserRole.CAREGIVER) {
-                    upsertPatientCaregiverContact(link.patientUid, link.caregiverUid)
-                        .andThen(Single.just(link))
-                } else {
-                    Single.just(link)
-                }
+                upsertPatientCaregiverContact(link.patientUid, link.caregiverUid)
+                    .andThen(Single.just(link))
             }
             .onErrorResumeNext { error ->
                 if (error is FirebaseFirestoreException
@@ -288,23 +284,7 @@ class FirestoreCareLinkRepository(
     override fun ensureCaregiverContact(caregiverUid: String): Completable {
         if (caregiverUid.isBlank()) return Completable.complete()
         val uid = requireUid()
-        val doc = firestore.collection(FirestorePaths.USERS)
-            .document(uid)
-            .collection(FirestorePaths.CONTACTS)
-            .document(caregiverUid)
-        return doc.set(
-            mapOf(
-                "fullName" to "Opiekun",
-                "role" to AgentRole.CAREGIVER.name,
-                "phone" to "",
-                "email" to "",
-                "specialization" to null,
-                "linkedUid" to caregiverUid,
-                "createdAt" to FieldValue.serverTimestamp(),
-                "updatedAt" to FieldValue.serverTimestamp()
-            ),
-            SetOptions.merge()
-        ).toCompletable()
+        return upsertPatientCaregiverContact(uid, caregiverUid)
     }
 
     override fun removeCareLink(patientUid: String, caregiverUid: String): Completable {
@@ -330,21 +310,56 @@ class FirestoreCareLinkRepository(
             .document(patientUid)
             .collection(FirestorePaths.CONTACTS)
             .document(caregiverUid)
-        return doc.set(
-            mapOf(
-                "fullName" to "Opiekun",
-                "role" to AgentRole.CAREGIVER.name,
-                "phone" to "",
-                "email" to "",
-                "specialization" to null,
-                "linkedUid" to caregiverUid,
-                "createdAt" to FieldValue.serverTimestamp(),
-                "updatedAt" to FieldValue.serverTimestamp()
-            ),
-            SetOptions.merge()
-        ).toCompletable()
+        val caregiverPersonalDataDoc = firestore.collection(FirestorePaths.USERS)
+            .document(caregiverUid)
+            .collection(FirestorePaths.SETTINGS)
+            .document(FirestorePaths.PERSONAL_DATA)
+        val fallback = CaregiverContactSeed(
+            fullName = "Opiekun",
+            phone = "",
+            email = ""
+        )
+
+        return caregiverPersonalDataDoc.get()
+            .toSingle()
+            .map { snapshot ->
+                val firstName = snapshot.getString("firstName").orEmpty().trim()
+                val lastName = snapshot.getString("lastName").orEmpty().trim()
+                val mergedName = listOf(firstName, lastName)
+                    .filter { it.isNotBlank() }
+                    .joinToString(" ")
+                val phone = snapshot.getString("phoneNumber").orEmpty().trim()
+                val email = snapshot.getString("email").orEmpty().trim()
+                CaregiverContactSeed(
+                    fullName = mergedName.ifBlank { fallback.fullName },
+                    phone = phone.ifBlank { fallback.phone },
+                    email = email.ifBlank { fallback.email }
+                )
+            }
+            .onErrorReturnItem(fallback)
+            .flatMapCompletable { seed ->
+                doc.set(
+                    mapOf(
+                        "fullName" to seed.fullName,
+                        "role" to AgentRole.CAREGIVER.name,
+                        "phone" to seed.phone,
+                        "email" to seed.email,
+                        "specialization" to null,
+                        "linkedUid" to caregiverUid,
+                        "createdAt" to FieldValue.serverTimestamp(),
+                        "updatedAt" to FieldValue.serverTimestamp()
+                    ),
+                    SetOptions.merge()
+                ).toCompletable()
+            }
     }
 
+
+    private data class CaregiverContactSeed(
+        val fullName: String,
+        val phone: String,
+        val email: String
+    )
 
     private class CodeCollisionException : RuntimeException()
     private class InvalidCodeException(message: String) : RuntimeException(message)
