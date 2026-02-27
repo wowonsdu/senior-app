@@ -422,6 +422,7 @@ Zasady etapu:
 - [x] 14.4 UI: toggle per podopieczny + dashboard eventy lekow + badge
 - [x] 14.7 Potwierdzenie "Wzialem lek": akcja w powiadomieniu pacjenta + sync statusu w Firestore + dashboard/push opiekuna (local)
 - [x] 14.8 UI: kafelek podopiecznego — switch "Powiadamiaj o lekach" (bez duplikacji tekstu)
+- [x] 14.8.1 Hotfix: kafelek podopiecznego — render switcha "Powiadamiaj o lekach" (SwitchMaterial)
 - [ ] 14.5 QA: smoke (pacjent/opiekun)
 - [ ] 14.6 FCM: push do opiekunow na event przypomnienia leku
   - [ ] 14.6.1 Domain/Data: rejestracja tokenow FCM per user + UC + DI

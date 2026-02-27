@@ -125,7 +125,7 @@
                 android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
                 android:textColor="@color/senior_text_primary" />
 
-            <com.google.android.material.materialswitch.MaterialSwitch
+            <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/caregiver_dependent_reminder_toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
