@@ -19,6 +19,7 @@ import zdrowy.senior.io.data.settings.reminders.FirestoreCaregiverMedicationRemi
 import zdrowy.senior.io.data.settings.reminders.FirestoreMedicationReminderEventRepository
 import zdrowy.senior.io.data.settings.reminders.FirestoreMedicationReminderReadStateRepository
 import zdrowy.senior.io.data.settings.notifications.FirestoreNotificationSettingsRepository
+import zdrowy.senior.io.data.visit.FirestoreVisitRepository
 import zdrowy.senior.io.data.user.FirebaseCurrentUserUidProvider
 import zdrowy.senior.io.data.user.FirestoreAccountRepository
 import zdrowy.senior.io.data.user.SharedPrefsActivePatientContext
@@ -128,9 +129,19 @@ import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.AccountRepository
 import zdrowy.senior.io.domain.user.UserProfileRepository
 import zdrowy.senior.io.data.user.FirestoreUserProfileRepository
+import zdrowy.senior.io.domain.visit.AddVisitUseCase
+import zdrowy.senior.io.domain.visit.EvaluateVisitStatusUseCase
+import zdrowy.senior.io.domain.visit.MarkVisitCompletedUseCase
+import zdrowy.senior.io.domain.visit.ObserveVisitsUseCase
+import zdrowy.senior.io.domain.visit.RemoveVisitUseCase
+import zdrowy.senior.io.domain.visit.UpdateVisitUseCase
+import zdrowy.senior.io.domain.visit.VisitRepository
 import zdrowy.senior.io.ui.caregiver.CaregiverLinkViewModel
+import zdrowy.senior.io.ui.caregiver.CaregiverVisitsViewModel
 import zdrowy.senior.io.ui.caregiver.CaregiverDependentsViewModel
 import zdrowy.senior.io.ui.caregiver.CaregiverAddDependentViewModel
+import zdrowy.senior.io.ui.caregiver.CaregiverAddVisitViewModel
+import zdrowy.senior.io.ui.caregiver.CaregiverEditVisitViewModel
 import zdrowy.senior.io.ui.auth.StartupGateViewModel
 import zdrowy.senior.io.ui.auth.PatientLoginViewModel
 import zdrowy.senior.io.ui.caregiver.CaregiverDashboardViewModel
@@ -207,6 +218,13 @@ val domainModule = module {
     factory { EnsureCaregiverContactUseCase(get()) }
     factory { RemoveCareLinkUseCase(get(), get()) }
 
+    factory { ObserveVisitsUseCase(get()) }
+    factory { AddVisitUseCase(get()) }
+    factory { UpdateVisitUseCase(get()) }
+    factory { RemoveVisitUseCase(get()) }
+    factory { MarkVisitCompletedUseCase(get()) }
+    factory { EvaluateVisitStatusUseCase() }
+
     factory { GetPersonalDataUseCase(get()) }
     factory { GetSettingsOverviewUseCase(get()) }
     factory { UpsertPersonalDataUseCase(get()) }
@@ -263,6 +281,7 @@ val dataModule = module {
     single<NotificationSettingsRepository> { FirestoreNotificationSettingsRepository(get()) }
     single<AlertEventRepository> { FirestoreAlertEventRepository(get()) }
     single<SettingsRepository> { FirestoreSettingsRepository(get()) }
+    single<VisitRepository> { FirestoreVisitRepository(get()) }
     single<MedicationByUidRepository> { FirestoreMedicationsByUidRepository() }
     single<PersonalDataByUidRepository> { FirestorePersonalDataByUidRepository() }
     single<AccountRepository> { FirestoreAccountRepository() }
@@ -296,6 +315,9 @@ val viewModelModule = module {
         )
     }
     viewModel { CaregiverAddDependentViewModel(get(), get(), get(), get()) }
+    viewModel { CaregiverVisitsViewModel(get(), get(), get(), get(), get(), get()) }
+    viewModel { CaregiverAddVisitViewModel(get(), get(), get()) }
+    viewModel { CaregiverEditVisitViewModel(get(), get(), get(), get(), get()) }
     viewModel {
         CaregiverDashboardViewModel(
             get(),

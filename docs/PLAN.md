@@ -441,7 +441,7 @@ Zasady etapu:
 ## Etap 16 — Wizyty: ekran opiekuna + reminder lokalny
 - [x] 16.1 Domena: modele wizyt + VisitRepository + UC (observe/add/update/remove/complete/status)
 - [x] 16.2 Data: FirestoreVisitRepository + FirestorePaths + mapowanie
-- [ ] 16.3 DI: wiring repo/UC/VM wizyt
+- [x] 16.3 DI: wiring repo/UC/VM wizyt
 - [ ] 16.4 UI: CaregiverVisitsFragment (lista realtime + filtry + empty state + akcje)
 - [ ] 16.5 UI: formularze Add/Edit Visit jako pelnoekranowe fragmenty (walidacja)
 - [ ] 16.6 Reminder wizyt: scheduler/cache/notifier/receiver/boot + koordynator
