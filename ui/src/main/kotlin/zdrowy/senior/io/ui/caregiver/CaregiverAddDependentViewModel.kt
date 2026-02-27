@@ -8,18 +8,24 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.carelink.CareLinkCodeType
 import zdrowy.senior.io.domain.carelink.CareLinkDraft
+import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
 import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
 import zdrowy.senior.io.domain.carelink.ObserveCareLinksUseCase
+import zdrowy.senior.io.domain.user.SetActivePatientUseCase
 
 class CaregiverAddDependentViewModel(
     private val generateCareLinkCode: GenerateCareLinkCodeUseCase,
+    private val consumeCareLinkCode: ConsumeCareLinkCodeUseCase,
+    private val setActivePatient: SetActivePatientUseCase,
     private val observeCareLinks: ObserveCareLinksUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val _generatedCode = MutableLiveData<String>()
     val generatedCode: LiveData<String> = _generatedCode
-    private val _errorMessage = MutableLiveData<String?>()
-    val errorMessage: LiveData<String?> = _errorMessage
+    private val _formErrorMessage = MutableLiveData<String?>()
+    val formErrorMessage: LiveData<String?> = _formErrorMessage
+    private val _codeErrorMessage = MutableLiveData<String?>()
+    val codeErrorMessage: LiveData<String?> = _codeErrorMessage
     private val _closeScreen = MutableLiveData<Boolean>()
     val closeScreen: LiveData<Boolean> = _closeScreen
     private var started = false
@@ -42,7 +48,7 @@ class CaregiverAddDependentViewModel(
                         _closeScreen.value = true
                     }
                 }, { error ->
-                    _errorMessage.value = error.message
+                    _formErrorMessage.value = error.message
                 })
         )
     }
@@ -55,11 +61,34 @@ class CaregiverAddDependentViewModel(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ code ->
                     _generatedCode.value = code.code
-                    _errorMessage.value = null
+                    _formErrorMessage.value = null
                 }, { error ->
-                    _errorMessage.value = error.message ?: "Blad generowania kodu"
+                    _formErrorMessage.value = error.message ?: "Blad generowania kodu"
                 })
         )
+    }
+
+    fun linkByCode(code: String) {
+        disposables.add(
+            consumeCareLinkCode(code)
+                .flatMapCompletable { link -> setActivePatient(link.patientUid) }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    _codeErrorMessage.value = null
+                    _closeScreen.value = true
+                }, { error ->
+                    _codeErrorMessage.value = error.message ?: "Blad laczenia"
+                })
+        )
+    }
+
+    fun onFormErrorHandled() {
+        _formErrorMessage.value = null
+    }
+
+    fun onCodeErrorHandled() {
+        _codeErrorMessage.value = null
     }
 
     fun onCloseHandled() {

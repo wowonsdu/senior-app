@@ -40,6 +40,9 @@ class CaregiverAddDependentFragment : Fragment() {
         binding.caregiverAddDependentSave.setOnClickListener {
             generateCode()
         }
+        binding.caregiverAddDependentLink.setOnClickListener {
+            linkByCode()
+        }
         binding.caregiverAddDependentCopy.setOnClickListener {
             copyCode()
         }
@@ -48,8 +51,13 @@ class CaregiverAddDependentFragment : Fragment() {
             binding.caregiverAddDependentCodeSection.visibility = View.VISIBLE
             binding.caregiverAddDependentCodeValue.text = code
         }
-        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
+        viewModel.formErrorMessage.observe(viewLifecycleOwner) { message ->
             binding.caregiverAddDependentPhoneInput.error = message
+            if (message != null) viewModel.onFormErrorHandled()
+        }
+        viewModel.codeErrorMessage.observe(viewLifecycleOwner) { message ->
+            binding.caregiverAddDependentEnterCodeInput.error = message
+            if (message != null) viewModel.onCodeErrorHandled()
         }
         viewModel.closeScreen.observe(viewLifecycleOwner) { close ->
             if (close == true) {
@@ -74,22 +82,41 @@ class CaregiverAddDependentFragment : Fragment() {
         if (!validateNotBlank(binding.caregiverAddDependentFirstName, firstName)) return
         if (!validateNotBlank(binding.caregiverAddDependentLastName, lastName)) return
         if (!validateNotBlank(binding.caregiverAddDependentPesel, pesel)) return
-        if (!validateNotBlank(binding.caregiverAddDependentPhone, phone)) return
-        val phoneE164 = normalizePhoneNumberPl(phone)
-        if (phoneE164 == null) {
+        val phoneE164 = if (phone.isBlank()) {
+            ""
+        } else {
+            normalizePhoneNumberPl(phone)
+        }
+        if (phone.isNotBlank() && phoneE164 == null) {
             binding.caregiverAddDependentPhoneInput.error = "Podaj numer w formacie +48..."
             return
         }
+
         binding.caregiverAddDependentPhoneInput.error = null
 
         val draft = CareLinkDraft(
             firstName = firstName,
             lastName = lastName,
             pesel = pesel,
-            phoneNumber = phoneE164,
+            phoneNumber = phoneE164.orEmpty(),
             address = address
         )
         viewModel.generateCode(draft)
+    }
+
+    private fun linkByCode() {
+        val code = binding.caregiverAddDependentEnterCode.text?.toString()?.trim().orEmpty()
+        if (code.isBlank()) {
+            binding.caregiverAddDependentEnterCodeInput.error = "Pole wymagane"
+            return
+        }
+        val digits = code.filter { it.isDigit() }
+        if (digits.length != 6) {
+            binding.caregiverAddDependentEnterCodeInput.error = "Kod musi miec 6 cyfr"
+            return
+        }
+        binding.caregiverAddDependentEnterCodeInput.error = null
+        viewModel.linkByCode(digits)
     }
 
     private fun validateNotBlank(

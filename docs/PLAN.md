@@ -340,7 +340,7 @@ Zasady etapu:
 - [x] 9.59 Walidacja: assembleDebug (smoke manual formularzy — pending)
 - [x] 9.60 CareLink: kody dwukierunkowe bez wymogu numeru docelowego (repo + rules)
 - [x] 9.61 Pacjent: Dodaj opiekuna — utworz kod + wpisz kod na jednym ekranie
-- [ ] 9.62 Opiekun: Dodaj podopiecznego — wpisz kod + generuj kod bez telefonu
+- [x] 9.62 Opiekun: Dodaj podopiecznego — wpisz kod + generuj kod bez telefonu
 - [ ] 9.63 Walidacja: assembleDebug po zmianach kodow laczenia
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)

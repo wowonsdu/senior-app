@@ -295,7 +295,7 @@ val viewModelModule = module {
             get()
         )
     }
-    viewModel { CaregiverAddDependentViewModel(get(), get()) }
+    viewModel { CaregiverAddDependentViewModel(get(), get(), get(), get()) }
     viewModel {
         CaregiverDashboardViewModel(
             get(),
