@@ -164,6 +164,10 @@ import zdrowy.senior.io.ui.reminders.MedicationReminderAlarmScheduler
 import zdrowy.senior.io.ui.reminders.MedicationReminderCoordinator
 import zdrowy.senior.io.ui.reminders.MedicationReminderNotifier
 import zdrowy.senior.io.ui.reminders.MedicationTakenConfirmationCoordinator
+import zdrowy.senior.io.ui.reminders.VisitReminderAlarmCache
+import zdrowy.senior.io.ui.reminders.VisitReminderAlarmScheduler
+import zdrowy.senior.io.ui.reminders.VisitReminderCoordinator
+import zdrowy.senior.io.ui.reminders.VisitReminderNotifier
 
 val domainModule = module {
     factory { AddMeasurementUseCase(get()) }
@@ -381,6 +385,19 @@ val reminderModule = module {
     }
     single {
         MedicationTakenConfirmationCoordinator(
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
+
+    single { VisitReminderAlarmCache(androidContext()) }
+    single { VisitReminderAlarmScheduler(androidContext(), get()) }
+    single { VisitReminderNotifier(androidContext()) }
+    single {
+        VisitReminderCoordinator(
             get(),
             get(),
             get(),

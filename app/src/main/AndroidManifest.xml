@@ -49,7 +49,19 @@
             android:exported="false" />
 
         <receiver
+            android:name="zdrowy.senior.io.ui.reminders.VisitReminderAlarmReceiver"
+            android:exported="false" />
+
+        <receiver
             android:name="zdrowy.senior.io.ui.reminders.MedicationReminderBootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="zdrowy.senior.io.ui.reminders.VisitReminderBootReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

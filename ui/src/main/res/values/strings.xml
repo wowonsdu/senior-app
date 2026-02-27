@@ -330,6 +330,10 @@
     <string name="med_reminder_action_taken">Wzialem lek</string>
     <string name="med_reminder_title_caregiver_taken">Pacjent potwierdzil lek</string>
     <string name="med_reminder_body_caregiver_taken">%1$s potwierdzil przyjecie %2$s (%3$s) o %4$s</string>
+    <string name="visit_reminder_channel_name">Przypomnienia o wizytach</string>
+    <string name="visit_reminder_channel_desc">Powiadomienia o nadchodzacych wizytach podopiecznych</string>
+    <string name="visit_reminder_title">Nadchodzaca wizyta</string>
+    <string name="visit_reminder_body">%1$s: %2$s za %3$d min. Termin %4$s, miejsce: %5$s</string>
     <string name="patient_add_med_cancel">Anuluj</string>
     <string name="patient_add_med_save">Zapisz</string>
     <string name="patient_edit_med_title">Edytuj lek</string>

@@ -444,6 +444,6 @@ Zasady etapu:
 - [x] 16.3 DI: wiring repo/UC/VM wizyt
 - [x] 16.4 UI: CaregiverVisitsFragment (lista realtime + filtry + empty state + akcje)
 - [x] 16.5 UI: formularze Add/Edit Visit jako pelnoekranowe fragmenty (walidacja)
-- [ ] 16.6 Reminder wizyt: scheduler/cache/notifier/receiver/boot + koordynator
+- [x] 16.6 Reminder wizyt: scheduler/cache/notifier/receiver/boot + koordynator
 - [ ] 16.7 Nawigacja + strings + cleanup placeholdera wizyt
 - [ ] 16.8 QA: assembleDebug + smoke wizyt (CRUD/status/reminder)

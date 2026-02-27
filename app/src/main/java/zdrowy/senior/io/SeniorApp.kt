@@ -12,6 +12,7 @@ import timber.log.Timber
 import zdrowy.senior.io.di.appModules
 import zdrowy.senior.io.ui.reminders.MedicationReminderCoordinator
 import zdrowy.senior.io.ui.reminders.MedicationTakenConfirmationCoordinator
+import zdrowy.senior.io.ui.reminders.VisitReminderCoordinator
 
 class SeniorApp : Application() {
     override fun onCreate() {
@@ -30,6 +31,7 @@ class SeniorApp : Application() {
 
         GlobalContext.get().get<MedicationReminderCoordinator>().start()
         GlobalContext.get().get<MedicationTakenConfirmationCoordinator>().start()
+        GlobalContext.get().get<VisitReminderCoordinator>().start()
     }
 
     private fun initFirebase() {
