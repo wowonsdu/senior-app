@@ -104,6 +104,7 @@
                     android:id="@+id/patient_edit_med_notify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:showText="false"
                     android:checked="true" />
 
                 <TextView

@@ -18,7 +18,8 @@
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/alert_caregiver_switch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:showText="false" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -50,4 +51,3 @@
             android:tint="@color/senior_secondary" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
-
