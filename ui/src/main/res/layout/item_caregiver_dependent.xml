@@ -11,16 +11,20 @@
     android:foreground="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/white">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_m">
 
         <LinearLayout
+            android:id="@+id/caregiver_dependent_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_m">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/caregiver_dependent_avatar"
@@ -33,43 +37,41 @@
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/caregiver_dependent_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_s"
-                android:text="Jan Kowalski"
-                android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                android:textColor="@color/senior_text_primary"
-                android:textStyle="bold" />
+                android:layout_marginStart="@dimen/spacing_s"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/caregiver_dependent_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="234234234"
-                android:textAppearance="@style/TextAppearance.Senior.Caption"
-                android:textColor="@color/senior_text_secondary" />
+                <TextView
+                    android:id="@+id/caregiver_dependent_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Jan Kowalski"
+                    android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
+                    android:textColor="@color/senior_text_primary"
+                    android:textStyle="bold" />
 
-            <com.google.android.material.materialswitch.MaterialSwitch
-                android:id="@+id/caregiver_dependent_reminder_toggle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_s"
-                android:text="@string/caregiver_dependent_med_reminder_toggle"
-                android:textOn="@string/caregiver_dependent_med_reminder_toggle"
-                android:textOff="@string/caregiver_dependent_med_reminder_toggle"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/caregiver_dependent_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="234234234"
+                    android:textAppearance="@style/TextAppearance.Senior.Caption"
+                    android:textColor="@color/senior_text_secondary" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <FrameLayout
             android:id="@+id/caregiver_dependent_bell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_margin="@dimen/spacing_m"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/caregiver_dependent_bell_icon"
@@ -101,6 +103,34 @@
                     android:textColor="@color/white" />
             </com.google.android.material.card.MaterialCardView>
         </FrameLayout>
-    </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/caregiver_dependent_reminder_row"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_m"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/caregiver_dependent_info">
+
+            <TextView
+                android:id="@+id/caregiver_dependent_reminder_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/caregiver_dependent_med_reminder_toggle"
+                android:textAppearance="@style/TextAppearance.Senior.BodyMedium"
+                android:textColor="@color/senior_text_primary" />
+
+            <com.google.android.material.materialswitch.MaterialSwitch
+                android:id="@+id/caregiver_dependent_reminder_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:showText="false" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>

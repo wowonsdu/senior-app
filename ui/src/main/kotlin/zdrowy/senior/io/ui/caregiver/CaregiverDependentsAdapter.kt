@@ -45,7 +45,7 @@ class CaregiverDependentsAdapter(
 
             binding.caregiverDependentReminderToggle.setOnCheckedChangeListener(null)
             binding.caregiverDependentReminderToggle.isChecked = item.reminderEnabled
-            binding.caregiverDependentReminderToggle.visibility =
+            binding.caregiverDependentReminderRow.visibility =
                 if (item.showReminderToggle) View.VISIBLE else View.GONE
             binding.caregiverDependentReminderToggle.setOnCheckedChangeListener { _, isChecked ->
                 onToggleReminder(item, isChecked)

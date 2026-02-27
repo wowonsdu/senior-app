@@ -52,7 +52,7 @@
     <string name="caregiver_dependents_select">WYBIERZ</string>
     <string name="caregiver_dependents_self_label">Ja / moj profil</string>
     <string name="caregiver_dependents_badge_content">Nowe pomiary</string>
-    <string name="caregiver_dependent_med_reminder_toggle">Przypomnienia o lekach</string>
+    <string name="caregiver_dependent_med_reminder_toggle">Powiadamiaj o lekach</string>
     <string name="caregiver_add_dependent_title">Dodaj podopiecznego</string>
     <string name="caregiver_add_dependent_subtitle">Wpisz kod lub utworz kod dla podopiecznego</string>
     <string name="caregiver_add_dependent_enter_code_title">Wpisz kod podopiecznego</string>
