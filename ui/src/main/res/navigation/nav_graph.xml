@@ -273,8 +273,17 @@
             android:id="@+id/action_patientSettings_to_patientAlerts"
             app:destination="@id/patientAlertsFragment" />
         <action
-            android:id="@+id/action_patientSettings_to_patientAgents"
-            app:destination="@id/patientAgentsFragment" />
+            android:id="@+id/action_patientSettings_to_addDoctor"
+            app:destination="@id/patientAddDoctorFragment" />
+        <action
+            android:id="@+id/action_patientSettings_to_editDoctor"
+            app:destination="@id/patientEditDoctorFragment" />
+        <action
+            android:id="@+id/action_patientSettings_to_addCaregiver"
+            app:destination="@id/patientAddCaregiverFragment" />
+        <action
+            android:id="@+id/action_patientSettings_to_editCaregiver"
+            app:destination="@id/patientEditCaregiverFragment" />
     </fragment>
 
     <fragment
@@ -312,6 +321,38 @@
         tools:layout="@layout/fragment_patient_edit_med">
         <argument
             android:name="medicationId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientAddDoctorFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAddDoctorFragment"
+        android:label="@string/patient_add_doctor_title"
+        tools:layout="@layout/fragment_patient_add_doctor" />
+
+    <fragment
+        android:id="@+id/patientEditDoctorFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientEditDoctorFragment"
+        android:label="@string/patient_edit_doctor_title"
+        tools:layout="@layout/fragment_patient_edit_doctor">
+        <argument
+            android:name="doctorId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientAddCaregiverFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientAddCaregiverFragment"
+        android:label="@string/patient_add_agent_title"
+        tools:layout="@layout/fragment_patient_add_caregiver" />
+
+    <fragment
+        android:id="@+id/patientEditCaregiverFragment"
+        android:name="zdrowy.senior.io.ui.patient.PatientEditCaregiverFragment"
+        android:label="@string/patient_edit_agent_title"
+        tools:layout="@layout/fragment_patient_edit_caregiver">
+        <argument
+            android:name="caregiverId"
             app:argType="string" />
     </fragment>
 

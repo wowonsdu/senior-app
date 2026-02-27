@@ -335,7 +335,7 @@ Zasady etapu:
 - [x] 9.54 Ustawienia: sekcje Moi lekarze/Moi opiekunowie + listy i przyciski
 - [x] 9.55 Lekarze: dodaj/edytuj jako fragmenty + VM (formularz)
 - [x] 9.56 Opiekunowie: dodaj/edytuj jako fragmenty + kod powiazania na add
-- [ ] 9.57 Nawigacja: usuniecie ekranu Agenci + routing do formularzy
+- [x] 9.57 Nawigacja: usuniecie ekranu Agenci + routing do formularzy
 - [ ] 9.58 Cleanup: usuniecie dialogow/kodow Agenci monitorujacy
 - [ ] 9.59 Walidacja: assembleDebug + smoke formularzy ustawien
 

@@ -31,8 +31,18 @@ class PatientSettingsFragment : Fragment() {
             bundleOf("medicationId" to medication.id)
         )
     }
-    private val caregiversAdapter = PatientCaregiversAdapter()
-    private val doctorsAdapter = PatientDoctorsAdapter()
+    private val caregiversAdapter = PatientCaregiversAdapter { caregiver ->
+        findNavController().navigate(
+            R.id.action_patientSettings_to_editCaregiver,
+            bundleOf("caregiverId" to caregiver.id)
+        )
+    }
+    private val doctorsAdapter = PatientDoctorsAdapter { doctor ->
+        findNavController().navigate(
+            R.id.action_patientSettings_to_editDoctor,
+            bundleOf("doctorId" to doctor.id)
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,10 +63,10 @@ class PatientSettingsFragment : Fragment() {
             findNavController().navigate(R.id.action_patientSettings_to_addMed)
         }
         binding.patientSettingsAddCaregiver.setOnClickListener {
-            findNavController().navigate(R.id.patientAddAgentDialogFragment)
+            findNavController().navigate(R.id.action_patientSettings_to_addCaregiver)
         }
         binding.patientSettingsAddDoctor.setOnClickListener {
-            findNavController().navigate(R.id.patientAddDoctorDialogFragment)
+            findNavController().navigate(R.id.action_patientSettings_to_addDoctor)
         }
         binding.patientSettingsAlerts.setOnClickListener {
             findNavController().navigate(R.id.action_patientSettings_to_patientAlerts)
