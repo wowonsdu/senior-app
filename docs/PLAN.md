@@ -347,6 +347,7 @@ Zasady etapu:
 - [x] 9.66 Hotfix: SwitchCompat NPE — app:showText + globalny switchStyle fallback (showText/textOn/textOff)
 - [x] 9.67 CareLink: symetryczne tworzenie kontaktu pacjenta po consume kodu
 - [x] 9.68 CareLink: cleanup VM i DI (single source of truth linkowania)
+- [x] 9.69 CareLink: walidacja assembleDebug po zmianach linkowania
 
 ## Etap 10 — Opiekun: link + ActivePatient (test realtime)
 - [x] 10.1 Domena: careLinks + konteksty (ActivePatient, CurrentRole) + use case
