@@ -430,3 +430,10 @@ Zasady etapu:
   - [ ] 14.6.3 Cloud Functions: trigger na event przypomnienia -> wysylka push do opiekunow
   - [ ] 14.6.4 Logika: uwzglednij preferencje opiekuna (toggle) przy wysylce
   - [ ] 14.6.5 QA: test push na urzadzeniu fizycznym (opiekun)
+
+## Etap 15 — UI: spójne marginesy i spacing list/grid
+- [x] 15.1 UI core: semantyczne dimeny spacingu + wspolne ItemDecoration (list/grid)
+- [ ] 15.2 Opiekun Dashboard: usuniecie wrapper-card i podwojnych marginesow + spacing listy
+- [ ] 15.3 Opiekun Podopieczni: spacing grid bez marginow w itemie (ItemDecoration)
+- [ ] 15.4 Rollout: listy pacjenta/alertow na ItemDecoration (bez marginTop w itemach)
+- [ ] 15.5 QA: smoke spacing (dashboard/podopieczni/monitor ustawienia/historia)
