@@ -437,3 +437,13 @@ Zasady etapu:
 - [x] 15.3 Opiekun Podopieczni: spacing grid bez marginow w itemie (ItemDecoration)
 - [x] 15.4 Rollout: listy pacjenta/alertow na ItemDecoration (bez marginTop w itemach)
 - [ ] 15.5 QA: smoke spacing (dashboard/podopieczni/monitor ustawienia/historia)
+
+## Etap 16 — Wizyty: ekran opiekuna + reminder lokalny
+- [x] 16.1 Domena: modele wizyt + VisitRepository + UC (observe/add/update/remove/complete/status)
+- [ ] 16.2 Data: FirestoreVisitRepository + FirestorePaths + mapowanie
+- [ ] 16.3 DI: wiring repo/UC/VM wizyt
+- [ ] 16.4 UI: CaregiverVisitsFragment (lista realtime + filtry + empty state + akcje)
+- [ ] 16.5 UI: formularze Add/Edit Visit jako pelnoekranowe fragmenty (walidacja)
+- [ ] 16.6 Reminder wizyt: scheduler/cache/notifier/receiver/boot + koordynator
+- [ ] 16.7 Nawigacja + strings + cleanup placeholdera wizyt
+- [ ] 16.8 QA: assembleDebug + smoke wizyt (CRUD/status/reminder)
