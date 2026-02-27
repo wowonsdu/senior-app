@@ -433,7 +433,7 @@ Zasady etapu:
 
 ## Etap 15 — UI: spójne marginesy i spacing list/grid
 - [x] 15.1 UI core: semantyczne dimeny spacingu + wspolne ItemDecoration (list/grid)
-- [ ] 15.2 Opiekun Dashboard: usuniecie wrapper-card i podwojnych marginesow + spacing listy
+- [x] 15.2 Opiekun Dashboard: usuniecie wrapper-card i podwojnych marginesow + spacing listy
 - [ ] 15.3 Opiekun Podopieczni: spacing grid bez marginow w itemie (ItemDecoration)
 - [ ] 15.4 Rollout: listy pacjenta/alertow na ItemDecoration (bez marginTop w itemach)
 - [ ] 15.5 QA: smoke spacing (dashboard/podopieczni/monitor ustawienia/historia)

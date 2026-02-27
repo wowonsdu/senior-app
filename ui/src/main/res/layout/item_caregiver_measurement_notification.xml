@@ -6,7 +6,6 @@
     style="@style/Widget.Senior.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/spacing_s"
     app:cardBackgroundColor="@color/senior_warning_bg"
     app:strokeColor="@color/senior_warning_outline"
     app:strokeWidth="@dimen/stroke_width">

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import zdrowy.senior.io.ui.R
+import zdrowy.senior.io.ui.common.VerticalSpacingItemDecoration
 import zdrowy.senior.io.ui.databinding.FragmentCaregiverDashboardBinding
 
 class CaregiverDashboardFragment : Fragment() {
@@ -30,6 +31,11 @@ class CaregiverDashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.caregiverDashboardList.layoutManager = LinearLayoutManager(requireContext())
+        binding.caregiverDashboardList.addItemDecoration(
+            VerticalSpacingItemDecoration(
+                gapPx = resources.getDimensionPixelSize(R.dimen.list_item_gap)
+            )
+        )
         binding.caregiverDashboardList.adapter = adapter
         binding.caregiverDashboardMarkAll.setOnClickListener {
             viewModel.markAllRead()
