@@ -32,21 +32,43 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/careLinks/$(careLinkId(request.auth.uid, caregiverUid)));
     }
 
-    function accessCodePhoneMatches() {
-      return resource != null
-        && request.auth.token.phone_number != null
-        && resource.data.phoneNumberE164 is string
-        && request.auth.token.phone_number == resource.data.phoneNumberE164;
-    }
-
     function isAccessCodeOwner() {
       return resource != null && resource.data.ownerUid == request.auth.uid;
     }
 
-    function isAccessCodeParticipant() {
-      return resource != null
-        && (resource.data.patientUid == request.auth.uid
-            || resource.data.caregiverUid == request.auth.uid);
+    function isValidAccessCodeType(type) {
+      return type == "PATIENT_TO_CAREGIVER" || type == "CAREGIVER_TO_PATIENT";
+    }
+
+    function hasValidAccessCodeCreatePayload(code) {
+      return request.resource.data.code is string
+        && request.resource.data.code == code
+        && request.resource.data.code.matches('^[0-9]{6}$')
+        && request.resource.data.expiresAtMs is number
+        && request.resource.data.ownerUid is string
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.type is string
+        && isValidAccessCodeType(request.resource.data.type)
+        && (!('phoneNumberE164' in request.resource.data)
+            || (request.resource.data.phoneNumberE164 is string
+                && request.resource.data.phoneNumberE164 != ""));
+    }
+
+    function isPatientCodeCreate() {
+      return request.resource.data.type == "PATIENT_TO_CAREGIVER"
+        && isPatient(request.auth.uid)
+        && request.resource.data.patientUid is string
+        && request.resource.data.patientUid == request.auth.uid;
+    }
+
+    function isCaregiverCodeCreate() {
+      return request.resource.data.type == "CAREGIVER_TO_PATIENT"
+        && isCaregiver(request.auth.uid)
+        && request.resource.data.caregiverUid is string
+        && request.resource.data.caregiverUid == request.auth.uid
+        && (!('phoneNumberE164' in request.resource.data)
+            || request.auth.token.phone_number == null
+            || request.resource.data.phoneNumberE164 != request.auth.token.phone_number);
     }
 
     match /users/{uid} {
@@ -92,21 +114,19 @@ service cloud.firestore {
         && isCaregiver(resource.data.caregiverUid);
     }
 
-    match /accessCodes/{phoneE164} {
-      allow create, update: if isSignedIn()
-        && isCaregiver(request.auth.uid)
-        && request.auth.token.phone_number != null
-        && request.resource.data.type == "CAREGIVER_TO_PATIENT"
-        && request.resource.data.phoneNumberE164 is string
-        && request.resource.data.code is string
-        && request.resource.data.expiresAtMs is number
-        && request.resource.data.phoneNumberE164 == phoneE164
-        && request.resource.data.phoneNumberE164 != request.auth.token.phone_number
-        && request.resource.data.ownerUid == request.auth.uid;
-      allow get, delete: if isSignedIn()
-        && request.auth.token.phone_number != null
-        && request.auth.token.phone_number == phoneE164;
+    match /accessCodes/{code} {
+      allow create: if isSignedIn()
+        && hasValidAccessCodeCreatePayload(code)
+        && (isPatientCodeCreate() || isCaregiverCodeCreate());
+      allow get: if isSignedIn();
+      allow delete: if isSignedIn()
+        && (
+          isAccessCodeOwner()
+          || (resource.data.type == "PATIENT_TO_CAREGIVER" && isCaregiver(request.auth.uid))
+          || (resource.data.type == "CAREGIVER_TO_PATIENT" && isPatient(request.auth.uid))
+        );
       allow list: if false;
+      allow update: if false;
     }
 
     match /agentAccessCodes/{code} {
@@ -119,17 +139,5 @@ service cloud.firestore {
       allow update: if false;
     }
 
-    match /accessCodeDrafts/{phoneE164} {
-      allow create, update: if isSignedIn()
-        && isCaregiver(request.auth.uid)
-        && request.auth.token.phone_number != null
-        && request.resource.data.phoneNumberE164 is string
-        && request.resource.data.phoneNumberE164 == phoneE164
-        && request.resource.data.phoneNumberE164 != request.auth.token.phone_number;
-      allow get, delete: if isSignedIn()
-        && request.auth.token.phone_number != null
-        && request.auth.token.phone_number == phoneE164;
-      allow list: if false;
-    }
   }
 }
