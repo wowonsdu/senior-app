@@ -45,6 +45,12 @@
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Senior.Medium</item>
     </style>
 
+    <style name="Widget.Senior.Switch" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="showText">false</item>
+        <item name="android:textOn"> </item>
+        <item name="android:textOff"> </item>
+    </style>
+
     <style name="Widget.Senior.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox" />
 
     <style name="Widget.Senior.TextInputEditText" parent="Widget.MaterialComponents.TextInputEditText.OutlinedBox" />

@@ -10,6 +10,7 @@
         <item name="android:colorBackground">@color/senior_bg</item>
         <item name="android:statusBarColor">@color/senior_primary_dark</item>
         <item name="materialButtonStyle">@style/Widget.Senior.Button.Primary</item>
+        <item name="switchStyle">@style/Widget.Senior.Switch</item>
         <item name="materialAlertDialogTheme">@style/Widget.Senior.Dialog</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Senior.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Senior.Medium</item>

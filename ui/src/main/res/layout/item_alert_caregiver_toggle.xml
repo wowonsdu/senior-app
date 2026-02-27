@@ -19,7 +19,7 @@
             android:id="@+id/alert_caregiver_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:showText="false" />
+            app:showText="false" />
 
         <LinearLayout
             android:layout_width="0dp"

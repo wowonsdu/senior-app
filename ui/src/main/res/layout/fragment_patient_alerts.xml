@@ -179,7 +179,7 @@
                             android:id="@+id/patient_alerts_sugar_enabled_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:showText="false" />
+                            app:showText="false" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -424,7 +424,7 @@
                             android:id="@+id/patient_alerts_pressure_enabled_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:showText="false"
+                            app:showText="false"
                             android:checked="true" />
 
                         <TextView
@@ -595,7 +595,7 @@
                         <com.google.android.material.switchmaterial.SwitchMaterial
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:showText="false"
+                            app:showText="false"
                             android:checked="true" />
 
                         <TextView
@@ -856,7 +856,7 @@
                             android:id="@+id/patient_alerts_pulse_enabled_switch"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:showText="false"
+                            app:showText="false"
                             android:checked="true" />
 
                         <TextView

@@ -98,7 +98,7 @@
                     android:id="@+id/alert_notifications_sms_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:showText="false"
+                    app:showText="false"
                     android:layout_marginTop="@dimen/spacing_xs" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -149,7 +149,7 @@
                     android:id="@+id/alert_notifications_email_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:showText="false"
+                    app:showText="false"
                     android:layout_marginTop="@dimen/spacing_xs" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -200,7 +200,7 @@
                     android:id="@+id/alert_notifications_app_switch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:showText="false"
+                    app:showText="false"
                     android:layout_marginTop="@dimen/spacing_xs" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

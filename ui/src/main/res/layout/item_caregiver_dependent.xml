@@ -129,7 +129,7 @@
                 android:id="@+id/caregiver_dependent_reminder_toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:showText="false" />
+                app:showText="false" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
