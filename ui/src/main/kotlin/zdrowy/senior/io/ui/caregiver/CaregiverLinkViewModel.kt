@@ -8,7 +8,6 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.carelink.CareLink
 import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
-import zdrowy.senior.io.domain.carelink.EnsureCaregiverContactUseCase
 import zdrowy.senior.io.domain.carelink.ObserveCareLinksUseCase
 import zdrowy.senior.io.domain.user.GetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.SetActivePatientUseCase
@@ -17,7 +16,6 @@ import zdrowy.senior.io.domain.user.UserRole
 class CaregiverLinkViewModel(
     private val observeCareLinks: ObserveCareLinksUseCase,
     private val consumeCareLinkCode: ConsumeCareLinkCodeUseCase,
-    private val ensureCaregiverContact: EnsureCaregiverContactUseCase,
     private val getCurrentUserRole: GetCurrentUserRoleUseCase,
     private val setActivePatient: SetActivePatientUseCase
 ) : ViewModel() {
@@ -68,12 +66,7 @@ class CaregiverLinkViewModel(
                         } else {
                             io.reactivex.rxjava3.core.Completable.complete()
                         }
-                        val ensureContact = if (role == UserRole.PATIENT) {
-                            ensureCaregiverContact(link.caregiverUid)
-                        } else {
-                            io.reactivex.rxjava3.core.Completable.complete()
-                        }
-                        ensureContact.andThen(setActive).andThen(io.reactivex.rxjava3.core.Single.just(role))
+                        setActive.andThen(io.reactivex.rxjava3.core.Single.just(role))
                     }
                 }
                 .observeOn(AndroidSchedulers.mainThread())

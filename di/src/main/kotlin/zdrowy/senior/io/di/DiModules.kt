@@ -280,7 +280,7 @@ val uiModule = module {
 val viewModelModule = module {
     viewModel { StartupGateViewModel(get()) }
     viewModel { PatientLoginViewModel(get()) }
-    viewModel { CaregiverLinkViewModel(get(), get(), get(), get(), get()) }
+    viewModel { CaregiverLinkViewModel(get(), get(), get(), get()) }
     viewModel {
         CaregiverDependentsViewModel(
             get(),
@@ -333,7 +333,7 @@ val viewModelModule = module {
     viewModel { PatientPersonalDataViewModel(get(), get()) }
     viewModel { PatientAddDiseaseViewModel(get()) }
     viewModel { PatientAddDoctorViewModel(get()) }
-    viewModel { PatientAddCaregiverViewModel(get(), get(), get(), get()) }
+    viewModel { PatientAddCaregiverViewModel(get(), get(), get()) }
     viewModel { PatientEditDiseaseViewModel(get(), get(), get()) }
     viewModel { PatientEditDoctorViewModel(get(), get(), get()) }
     viewModel { PatientEditCaregiverViewModel(get(), get(), get()) }

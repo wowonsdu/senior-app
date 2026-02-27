@@ -8,14 +8,12 @@ import zdrowy.senior.io.domain.agent.AddAgentUseCase
 import zdrowy.senior.io.domain.agent.AgentDraft
 import zdrowy.senior.io.domain.carelink.CareLinkCodeType
 import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
-import zdrowy.senior.io.domain.carelink.EnsureCaregiverContactUseCase
 import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
 
 class PatientAddCaregiverViewModel(
     private val addAgent: AddAgentUseCase,
     private val generateCareLinkCode: GenerateCareLinkCodeUseCase,
-    private val consumeCareLinkCode: ConsumeCareLinkCodeUseCase,
-    private val ensureCaregiverContact: EnsureCaregiverContactUseCase
+    private val consumeCareLinkCode: ConsumeCareLinkCodeUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
 
@@ -45,7 +43,6 @@ class PatientAddCaregiverViewModel(
     fun linkByCode(code: String, onDone: () -> Unit, onError: (String) -> Unit) {
         disposables.add(
             consumeCareLinkCode(code)
-                .flatMapCompletable { link -> ensureCaregiverContact(link.caregiverUid) }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ onDone() }, { error ->
