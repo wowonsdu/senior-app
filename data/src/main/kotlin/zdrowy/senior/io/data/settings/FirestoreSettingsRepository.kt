@@ -1,5 +1,7 @@
 package zdrowy.senior.io.data.settings
 
+import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -10,6 +12,7 @@ import zdrowy.senior.io.data.firestore.FirestorePaths
 import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.firestore.toCompletable
 import zdrowy.senior.io.data.firestore.toSingle
+import zdrowy.senior.io.domain.agent.AgentRole
 import zdrowy.senior.io.domain.settings.Disease
 import zdrowy.senior.io.domain.settings.DiseaseDraft
 import zdrowy.senior.io.domain.settings.DiseaseUpdate
@@ -23,6 +26,7 @@ class FirestoreSettingsRepository(
     private val uidProvider: PatientUidProvider
 ) : SettingsRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun getPersonalData(): Single<PersonalData> {
         val uid = requireUid()
@@ -119,6 +123,7 @@ class FirestoreSettingsRepository(
             ),
             SetOptions.merge()
         ).toCompletable()
+            .andThen(syncLinkedCaregiverContacts(currentUid = uid, data = data))
     }
 
     override fun addDisease(draft: DiseaseDraft): Single<String> {
@@ -324,6 +329,57 @@ class FirestoreSettingsRepository(
             ),
             SetOptions.merge()
         ).toCompletable()
+    }
+
+    private fun syncLinkedCaregiverContacts(currentUid: String, data: PersonalData): Completable {
+        val authUid = auth.currentUser?.uid ?: return Completable.complete()
+        if (authUid != currentUid) return Completable.complete()
+
+        val resolvedFullName = listOf(data.firstName.trim(), data.lastName.trim())
+            .filter { it.isNotBlank() }
+            .joinToString(" ")
+        val resolvedPhone = data.phoneNumber.trim()
+        val resolvedEmail = data.email.trim()
+
+        return Completable.fromAction {
+            val careLinks = Tasks.await(
+                firestore.collection(FirestorePaths.CARE_LINKS)
+                    .whereEqualTo("caregiverUid", authUid)
+                    .get()
+            )
+            if (careLinks.isEmpty) return@fromAction
+
+            val patientUids = careLinks.documents
+                .mapNotNull { it.getString("patientUid")?.takeIf(String::isNotBlank) }
+                .distinct()
+            if (patientUids.isEmpty()) return@fromAction
+
+            patientUids.chunked(450).forEach { chunk ->
+                val batch = firestore.batch()
+                chunk.forEach { patientUid ->
+                    val contactDoc = firestore.collection(FirestorePaths.USERS)
+                        .document(patientUid)
+                        .collection(FirestorePaths.CONTACTS)
+                        .document(authUid)
+                    val payload = mutableMapOf<String, Any>(
+                        "role" to AgentRole.CAREGIVER.name,
+                        "phone" to resolvedPhone,
+                        "email" to resolvedEmail,
+                        "linkedUid" to authUid,
+                        "updatedAt" to FieldValue.serverTimestamp()
+                    )
+                    if (resolvedFullName.isNotBlank()) {
+                        payload["fullName"] = resolvedFullName
+                    }
+                    batch.set(
+                        contactDoc,
+                        payload,
+                        SetOptions.merge()
+                    )
+                }
+                Tasks.await(batch.commit())
+            }
+        }
     }
 
     private fun requireUid(): String = uidProvider.requirePatientUid()
