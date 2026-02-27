@@ -6,14 +6,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import zdrowy.senior.io.domain.agent.Agent
-import zdrowy.senior.io.ui.databinding.ItemPatientCaregiverBinding
+import zdrowy.senior.io.ui.databinding.ItemPatientAgentBinding
 
-class PatientCaregiversAdapter(
+class PatientDoctorsAdapter(
     private val onItemClick: (Agent) -> Unit = {}
-) : ListAdapter<Agent, PatientCaregiversAdapter.ViewHolder>(Diff()) {
+) : ListAdapter<Agent, PatientDoctorsAdapter.ViewHolder>(Diff()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemPatientCaregiverBinding.inflate(inflater, parent, false)
+        val binding = ItemPatientAgentBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 
@@ -22,12 +22,13 @@ class PatientCaregiversAdapter(
     }
 
     inner class ViewHolder(
-        private val binding: ItemPatientCaregiverBinding
+        private val binding: ItemPatientAgentBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(agent: Agent) {
-            binding.root.setOnClickListener { onItemClick(agent) }
-            binding.caregiverName.text = agent.fullName
-            binding.caregiverPhone.text = agent.phone
+        fun bind(doctor: Agent) {
+            binding.root.setOnClickListener { onItemClick(doctor) }
+            binding.agentName.text = doctor.fullName
+            binding.agentRole.text = doctor.specialization.orEmpty().ifBlank { "Lekarz" }
+            binding.agentContact.text = "${doctor.phone} • ${doctor.email}"
         }
     }
 

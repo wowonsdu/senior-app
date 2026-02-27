@@ -45,6 +45,7 @@ class PatientSettingsViewModel(
     private var settingsObserved = false
     private var currentOverview: SettingsOverview? = null
     private var currentCaregivers = emptyList<Agent>()
+    private var currentDoctors = emptyList<Agent>()
     private var managedRole: UserRole? = null
     private var managedPatientUid: String? = null
     private val fallbackPersonalData = PersonalData(
@@ -73,8 +74,9 @@ class PatientSettingsViewModel(
                     listAgents()
                 ) { overview, agents ->
                     currentCaregivers = agents.filter { it.role == AgentRole.CAREGIVER }
+                    currentDoctors = agents.filter { it.role == AgentRole.DOCTOR }
                     currentOverview = overview
-                    PatientSettingsUiState.from(overview, currentCaregivers)
+                    PatientSettingsUiState.from(overview, currentCaregivers, currentDoctors)
                 }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -90,8 +92,9 @@ class PatientSettingsViewModel(
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ agents ->
                         currentCaregivers = agents.filter { it.role == AgentRole.CAREGIVER }
+                        currentDoctors = agents.filter { it.role == AgentRole.DOCTOR }
                         val overview = currentOverview ?: return@subscribe
-                        _uiState.value = PatientSettingsUiState.from(overview, currentCaregivers)
+                        _uiState.value = PatientSettingsUiState.from(overview, currentCaregivers, currentDoctors)
                     }, {
                     })
             )
@@ -113,12 +116,12 @@ class PatientSettingsViewModel(
         disposables.add(
             observeAgents()
                 .subscribeOn(Schedulers.io())
-                .map { agents -> agents.filter { it.role == AgentRole.CAREGIVER } }
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ caregivers ->
-                    currentCaregivers = caregivers
+                .subscribe({ agents ->
+                    currentCaregivers = agents.filter { it.role == AgentRole.CAREGIVER }
+                    currentDoctors = agents.filter { it.role == AgentRole.DOCTOR }
                     val overview = currentOverview ?: return@subscribe
-                    _uiState.value = PatientSettingsUiState.from(overview, currentCaregivers)
+                    _uiState.value = PatientSettingsUiState.from(overview, currentCaregivers, currentDoctors)
                 }, {
                 })
         )
@@ -239,7 +242,7 @@ class PatientSettingsViewModel(
         )
         currentOverview = transform(base)
         val overview = currentOverview ?: return
-        _uiState.value = PatientSettingsUiState.from(overview, currentCaregivers)
+        _uiState.value = PatientSettingsUiState.from(overview, currentCaregivers, currentDoctors)
     }
 
     private fun handleManagedState(state: ManagedUserUidState) {

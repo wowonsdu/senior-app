@@ -32,6 +32,7 @@ class PatientSettingsFragment : Fragment() {
         )
     }
     private val caregiversAdapter = PatientCaregiversAdapter()
+    private val doctorsAdapter = PatientDoctorsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,11 +52,14 @@ class PatientSettingsFragment : Fragment() {
         binding.patientSettingsAddMed.setOnClickListener {
             findNavController().navigate(R.id.action_patientSettings_to_addMed)
         }
+        binding.patientSettingsAddCaregiver.setOnClickListener {
+            findNavController().navigate(R.id.patientAddAgentDialogFragment)
+        }
+        binding.patientSettingsAddDoctor.setOnClickListener {
+            findNavController().navigate(R.id.patientAddDoctorDialogFragment)
+        }
         binding.patientSettingsAlerts.setOnClickListener {
             findNavController().navigate(R.id.action_patientSettings_to_patientAlerts)
-        }
-        binding.patientSettingsAgents.setOnClickListener {
-            findNavController().navigate(R.id.action_patientSettings_to_patientAgents)
         }
         binding.patientSettingsDeleteAccount.setOnClickListener {
             viewModel.onDeleteAccountClicked()
@@ -67,6 +71,8 @@ class PatientSettingsFragment : Fragment() {
         binding.patientSettingsMedsListLabel.visibility = View.GONE
         binding.patientSettingsCaregiversList.layoutManager = LinearLayoutManager(requireContext())
         binding.patientSettingsCaregiversList.adapter = caregiversAdapter
+        binding.patientSettingsDoctorsList.layoutManager = LinearLayoutManager(requireContext())
+        binding.patientSettingsDoctorsList.adapter = doctorsAdapter
         return binding.root
     }
 
@@ -81,6 +87,7 @@ class PatientSettingsFragment : Fragment() {
             diseasesAdapter.submitList(state.diseases)
             medsAdapter.submitList(state.medications)
             caregiversAdapter.submitList(state.caregivers)
+            doctorsAdapter.submitList(state.doctors)
         }
         viewModel.deletePrompt.observe(viewLifecycleOwner) { prompt ->
             if (prompt == null) return@observe

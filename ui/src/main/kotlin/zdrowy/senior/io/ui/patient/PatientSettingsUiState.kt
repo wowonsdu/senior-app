@@ -10,7 +10,8 @@ data class PatientSettingsUiState(
     val personalData: PersonalData,
     val diseases: List<Disease>,
     val medications: List<Medication>,
-    val caregivers: List<Agent>
+    val caregivers: List<Agent>,
+    val doctors: List<Agent>
 ) {
     val personalFullName: String
         get() = listOf(personalData.firstName, personalData.lastName)
@@ -20,13 +21,15 @@ data class PatientSettingsUiState(
     companion object {
         fun from(
             overview: SettingsOverview,
-            caregivers: List<Agent>
+            caregivers: List<Agent>,
+            doctors: List<Agent>
         ): PatientSettingsUiState {
             return PatientSettingsUiState(
                 personalData = overview.personalData,
                 diseases = overview.diseases,
                 medications = overview.medications,
-                caregivers = caregivers
+                caregivers = caregivers,
+                doctors = doctors
             )
         }
     }

@@ -145,6 +145,40 @@
                 android:layout_marginTop="@dimen/spacing_s"
                 android:nestedScrollingEnabled="false" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/patient_settings_add_caregiver"
+                style="@style/Widget.Senior.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:minHeight="48dp"
+                android:text="@string/patient_settings_add_caregiver" />
+
+            <TextView
+                android:id="@+id/patient_settings_section_doctors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_l"
+                android:text="@string/patient_settings_section_doctors"
+                android:textAppearance="@style/TextAppearance.Senior.TitleMedium"
+                android:textColor="@color/senior_primary" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/patient_settings_doctors_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:nestedScrollingEnabled="false" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/patient_settings_add_doctor"
+                style="@style/Widget.Senior.Button.Primary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_s"
+                android:minHeight="48dp"
+                android:text="@string/patient_settings_add_doctor" />
+
             <TextView
                 android:id="@+id/patient_settings_section_diseases"
                 android:layout_width="wrap_content"
@@ -263,69 +297,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_xs"
                             android:text="@string/patient_settings_alerts_subtitle"
-                            android:textAppearance="@style/TextAppearance.Senior.Caption"
-                            android:textColor="@color/senior_text_secondary" />
-                    </LinearLayout>
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:contentDescription="@null"
-                        android:src="@android:drawable/ic_media_next"
-                        android:tint="@color/senior_primary" />
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/patient_settings_agents"
-                style="@style/Widget.Senior.Card"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_s"
-                android:clickable="true"
-                android:focusable="true"
-                app:cardBackgroundColor="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/spacing_l">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:cardBackgroundColor="@color/senior_info">
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="center"
-                            android:contentDescription="@null"
-                            android:src="@android:drawable/ic_menu_myplaces"
-                            android:tint="@color/white" />
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_m"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/patient_settings_agents_title"
-                            android:textAppearance="@style/TextAppearance.Senior.BodyLarge"
-                            android:textColor="@color/senior_text_primary" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_xs"
-                            android:text="@string/patient_settings_agents_subtitle"
                             android:textAppearance="@style/TextAppearance.Senior.Caption"
                             android:textColor="@color/senior_text_secondary" />
                     </LinearLayout>
