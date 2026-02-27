@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import zdrowy.senior.io.ui.R
+import zdrowy.senior.io.ui.common.GridSpacingItemDecoration
 import zdrowy.senior.io.ui.databinding.FragmentCaregiverDependentsBinding
 
 class CaregiverDependentsFragment : Fragment() {
@@ -36,6 +37,13 @@ class CaregiverDependentsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.caregiverDependentsList.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.caregiverDependentsList.addItemDecoration(
+            GridSpacingItemDecoration(
+                spanCount = 2,
+                gapPx = resources.getDimensionPixelSize(R.dimen.grid_item_gap),
+                includeEdge = false
+            )
+        )
         binding.caregiverDependentsList.adapter = adapter
         binding.caregiverDependentsAdd.setOnClickListener {
             requireParentFragment().findNavController().navigate(R.id.caregiverAddDependentFragment)

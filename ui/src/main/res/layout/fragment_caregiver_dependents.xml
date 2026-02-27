@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/senior_bg"
-    android:padding="@dimen/spacing_l">
+    android:paddingStart="@dimen/screen_gutter_horizontal"
+    android:paddingTop="@dimen/screen_gutter_vertical"
+    android:paddingEnd="@dimen/screen_gutter_horizontal"
+    android:paddingBottom="@dimen/screen_gutter_vertical">
 
     <TextView
         android:id="@+id/caregiver_dependents_header"
@@ -23,8 +26,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
-        android:paddingTop="@dimen/spacing_m"
-        android:paddingBottom="@dimen/spacing_m"
+        android:paddingTop="@dimen/list_item_gap"
+        android:paddingBottom="@dimen/list_item_gap"
         app:layout_constraintTop_toBottomOf="@id/caregiver_dependents_header"
         app:layout_constraintBottom_toTopOf="@id/caregiver_dependents_add"
         app:layout_constraintStart_toStartOf="parent"
