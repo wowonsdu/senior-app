@@ -334,6 +334,12 @@ Poniższa lista jest **per akcja logiczna** i ma posluzyc jako kontrakt dla wars
   - Wyjscie: `Unit`.
   - Repo: `MedicationReminderEventRepository`.
 
+- UC-SET-17.1 ConfirmMedicationReminderTaken
+  - Cel: potwierdzenie przyjecia leku przez pacjenta (idempotentnie first-write).
+  - Wejscie: `patientUid`, `MedicationReminderEvent`, `confirmedAtMs`, `source`.
+  - Wyjscie: `Unit`.
+  - Repo: `MedicationReminderEventRepository`.
+
 - UC-SET-18 ObserveMedicationReminderReadState
   - Cel: realtime obserwacja stanu "przeczytane" dla przypomnien o lekach.
   - Wejscie: `patientUid`.

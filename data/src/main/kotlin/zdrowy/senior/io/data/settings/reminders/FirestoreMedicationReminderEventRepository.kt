@@ -10,6 +10,7 @@ import zdrowy.senior.io.data.firestore.FirestorePaths
 import zdrowy.senior.io.data.firestore.toCompletable
 import zdrowy.senior.io.domain.settings.reminders.MedicationReminderEvent
 import zdrowy.senior.io.domain.settings.reminders.MedicationReminderEventRepository
+import zdrowy.senior.io.domain.settings.reminders.MedicationReminderTakenSource
 
 class FirestoreMedicationReminderEventRepository : MedicationReminderEventRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -20,7 +21,7 @@ class FirestoreMedicationReminderEventRepository : MedicationReminderEventReposi
             .collection(FirestorePaths.MEDICATION_REMINDER_EVENTS)
             .document(event.id)
 
-        val payload = mapOf(
+        val payload = mutableMapOf<String, Any?>(
             "patientUid" to event.patientUid,
             "medicationId" to event.medicationId,
             "scheduledAtMs" to event.scheduledAtMs,
@@ -31,7 +32,61 @@ class FirestoreMedicationReminderEventRepository : MedicationReminderEventReposi
             "createdAt" to FieldValue.serverTimestamp()
         )
 
-        return doc.set(payload, SetOptions.merge()).toCompletable()
+        return firestore.runTransaction { tx ->
+            val snapshot = tx.get(doc)
+            if (!snapshot.exists()) {
+                payload["isTaken"] = false
+                payload["takenAtMs"] = null
+                payload["takenSource"] = null
+            }
+            tx.set(doc, payload, SetOptions.merge())
+            true
+        }.toCompletable()
+    }
+
+    override fun confirmTaken(
+        patientUid: String,
+        event: MedicationReminderEvent,
+        confirmedAtMs: Long,
+        source: MedicationReminderTakenSource
+    ): Completable {
+        val doc = firestore.collection(FirestorePaths.USERS)
+            .document(patientUid)
+            .collection(FirestorePaths.MEDICATION_REMINDER_EVENTS)
+            .document(event.id)
+
+        return firestore.runTransaction { tx ->
+            val snapshot = tx.get(doc)
+            val alreadyTaken = snapshot.getBoolean("isTaken") == true ||
+                ((snapshot.get("takenAtMs") as? Number)?.toLong() != null)
+            if (alreadyTaken) {
+                return@runTransaction true
+            }
+
+            val basePayload = mutableMapOf<String, Any?>(
+                "patientUid" to event.patientUid,
+                "medicationId" to event.medicationId,
+                "scheduledAtMs" to event.scheduledAtMs,
+                "medicationName" to event.medicationName,
+                "dosage" to event.dosage,
+                "scheduleTime" to event.scheduleTime,
+                "updatedAt" to FieldValue.serverTimestamp()
+            )
+            if (!snapshot.exists()) {
+                basePayload["createdAt"] = FieldValue.serverTimestamp()
+            }
+
+            val confirmPayload = mapOf(
+                "isTaken" to true,
+                "takenAtMs" to confirmedAtMs,
+                "takenSource" to source.name,
+                "takenUpdatedAt" to FieldValue.serverTimestamp()
+            )
+
+            tx.set(doc, basePayload, SetOptions.merge())
+            tx.set(doc, confirmPayload, SetOptions.merge())
+            true
+        }.toCompletable()
     }
 
     override fun observeRecentEvents(
@@ -58,7 +113,11 @@ class FirestoreMedicationReminderEventRepository : MedicationReminderEventReposi
                         scheduledAtMs = doc.getLong("scheduledAtMs") ?: 0L,
                         medicationName = doc.getString("medicationName").orEmpty(),
                         dosage = doc.getString("dosage").orEmpty(),
-                        scheduleTime = doc.getString("scheduleTime").orEmpty()
+                        scheduleTime = doc.getString("scheduleTime").orEmpty(),
+                        isTaken = doc.getBoolean("isTaken") ?: false,
+                        takenAtMs = (doc.get("takenAtMs") as? Number)?.toLong(),
+                        takenSource = doc.getString("takenSource")
+                            ?.let { raw -> runCatching { MedicationReminderTakenSource.valueOf(raw) }.getOrNull() }
                     )
                 }
                 if (!emitter.isDisposed) emitter.onNext(items)

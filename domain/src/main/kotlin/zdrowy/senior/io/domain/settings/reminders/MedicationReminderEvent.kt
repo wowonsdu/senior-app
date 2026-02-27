@@ -7,5 +7,8 @@ data class MedicationReminderEvent(
     val scheduledAtMs: Long,
     val medicationName: String,
     val dosage: String,
-    val scheduleTime: String
+    val scheduleTime: String,
+    val isTaken: Boolean,
+    val takenAtMs: Long?,
+    val takenSource: MedicationReminderTakenSource?
 )

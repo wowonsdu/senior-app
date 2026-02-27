@@ -212,10 +212,18 @@ class CaregiverDashboardViewModel(
         event: MedicationReminderEvent
     ): CaregiverDashboardItemUi {
         val isRead = patient.medicationReadIds.contains(event.id)
-        val label = if (event.dosage.isBlank()) {
+        val baseLabel = if (event.dosage.isBlank()) {
             "Lek: ${event.medicationName}"
         } else {
             "Lek: ${event.medicationName}, dawka: ${event.dosage}"
+        }
+        val label = if (event.isTaken) {
+            val takenTime = event.takenAtMs?.let { takenMs ->
+                dateFormatter.format(Date(takenMs))
+            } ?: "-"
+            "$baseLabel | status: wziety ($takenTime)"
+        } else {
+            "$baseLabel | status: oczekuje"
         }
         return CaregiverDashboardItemUi(
             id = event.id,

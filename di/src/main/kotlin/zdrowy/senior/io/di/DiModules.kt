@@ -89,6 +89,7 @@ import zdrowy.senior.io.domain.settings.UpdateDiseaseUseCase
 import zdrowy.senior.io.domain.settings.UpdateMedicationUseCase
 import zdrowy.senior.io.domain.settings.UpsertPersonalDataUseCase
 import zdrowy.senior.io.domain.settings.reminders.CaregiverMedicationReminderPrefsRepository
+import zdrowy.senior.io.domain.settings.reminders.ConfirmMedicationReminderTakenUseCase
 import zdrowy.senior.io.domain.settings.reminders.MarkMedicationReminderReadUseCase
 import zdrowy.senior.io.domain.settings.reminders.MedicationReminderEventRepository
 import zdrowy.senior.io.domain.settings.reminders.MedicationReminderReadStateRepository
@@ -148,6 +149,8 @@ import zdrowy.senior.io.ui.patient.PatientSettingsViewModel
 import zdrowy.senior.io.ui.reminders.MedicationReminderAlarmCache
 import zdrowy.senior.io.ui.reminders.MedicationReminderAlarmScheduler
 import zdrowy.senior.io.ui.reminders.MedicationReminderCoordinator
+import zdrowy.senior.io.ui.reminders.MedicationReminderNotifier
+import zdrowy.senior.io.ui.reminders.MedicationTakenConfirmationCoordinator
 
 val domainModule = module {
     factory { AddMeasurementUseCase(get()) }
@@ -221,6 +224,7 @@ val domainModule = module {
     factory { ToggleMedicationNotificationsUseCase(get()) }
     factory { ObserveMedicationReminderEventsUseCase(get()) }
     factory { UpsertMedicationReminderEventUseCase(get()) }
+    factory { ConfirmMedicationReminderTakenUseCase(get()) }
     factory { ObserveMedicationReminderReadStateUseCase(get()) }
     factory { MarkMedicationReminderReadUseCase(get()) }
     factory { SetReadMedicationRemindersUseCase(get()) }
@@ -336,11 +340,21 @@ val viewModelModule = module {
 val reminderModule = module {
     single { MedicationReminderAlarmCache(androidContext()) }
     single { MedicationReminderAlarmScheduler(androidContext(), get()) }
+    single { MedicationReminderNotifier(androidContext()) }
     single {
         MedicationReminderCoordinator(
             get(),
             get(),
             get(),
+            get(),
+            get(),
+            get(),
+            get(),
+            get()
+        )
+    }
+    single {
+        MedicationTakenConfirmationCoordinator(
             get(),
             get(),
             get(),
