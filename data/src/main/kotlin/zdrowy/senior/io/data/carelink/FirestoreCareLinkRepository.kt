@@ -19,12 +19,16 @@ import zdrowy.senior.io.domain.carelink.CareLinkDraft
 import zdrowy.senior.io.domain.carelink.CareLinkRepository
 import zdrowy.senior.io.domain.carelink.CareLinkStatus
 import zdrowy.senior.io.domain.agent.AgentRole
+import zdrowy.senior.io.domain.user.ActivePatientContext
+import zdrowy.senior.io.domain.user.PatientAccountLinkRepository
 import zdrowy.senior.io.domain.user.CurrentUserRoleContext
 import zdrowy.senior.io.domain.user.UserRole
 import kotlin.random.Random
 
 class FirestoreCareLinkRepository(
-    private val roleContext: CurrentUserRoleContext
+    private val roleContext: CurrentUserRoleContext,
+    private val activePatientContext: ActivePatientContext,
+    private val patientAccountLinkRepository: PatientAccountLinkRepository
 ) : CareLinkRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -32,14 +36,14 @@ class FirestoreCareLinkRepository(
 
     override fun observeCareLinks(): Observable<List<CareLink>> {
         return Observable.create { emitter ->
-            val uid = try {
-                requireUid()
+            val role = try {
+                requireRole()
             } catch (error: Throwable) {
                 emitter.onError(error)
                 return@create
             }
-            val role = try {
-                requireRole()
+            val uid = try {
+                resolveQueryUid(role)
             } catch (error: Throwable) {
                 emitter.onError(error)
                 return@create
@@ -74,7 +78,8 @@ class FirestoreCareLinkRepository(
     override fun generateLinkCode(
         type: CareLinkCodeType,
         ttlSeconds: Long,
-        draft: CareLinkDraft?
+        draft: CareLinkDraft?,
+        patientUid: String?
     ): Single<CareLinkCode> {
         val role = requireRole()
         if (type == CareLinkCodeType.PATIENT_TO_CAREGIVER && role != UserRole.PATIENT) {
@@ -87,6 +92,10 @@ class FirestoreCareLinkRepository(
         val ownerPhone = auth.currentUser?.phoneNumber?.trim().orEmpty()
         if (phoneNumberE164.isNotBlank() && phoneNumberE164 == ownerPhone) {
             return Single.error(IllegalStateException("Kod nie moze byc generowany na wlasny numer"))
+        }
+        val cleanedPatientUid = patientUid?.trim().orEmpty()
+        if (type == CareLinkCodeType.CAREGIVER_TO_PATIENT && cleanedPatientUid.isBlank()) {
+            return Single.error(IllegalStateException("Brak podopiecznego do powiazania konta"))
         }
         val uid = requireUid()
         val expiresAtMs = System.currentTimeMillis() + ttlSeconds * 1000
@@ -104,7 +113,10 @@ class FirestoreCareLinkRepository(
         if (phoneNumberE164.isNotBlank()) payload["phoneNumberE164"] = phoneNumberE164
         when (type) {
             CareLinkCodeType.PATIENT_TO_CAREGIVER -> payload["patientUid"] = uid
-            CareLinkCodeType.CAREGIVER_TO_PATIENT -> payload["caregiverUid"] = uid
+            CareLinkCodeType.CAREGIVER_TO_PATIENT -> {
+                payload["caregiverUid"] = uid
+                payload["patientUid"] = cleanedPatientUid
+            }
         }
         if (draft != null && type == CareLinkCodeType.CAREGIVER_TO_PATIENT) {
             if (draft.firstName.isNotBlank()) payload["draftFirstName"] = draft.firstName
@@ -123,10 +135,71 @@ class FirestoreCareLinkRepository(
             .map { accessCode }
             .onErrorResumeNext { error ->
                 if (error is CodeCollisionException) {
-                    generateLinkCode(type, ttlSeconds, draft)
+                    generateLinkCode(type, ttlSeconds, draft, patientUid)
                 } else {
                     Single.error(error)
                 }
+            }
+    }
+
+    override fun createDependentProfile(draft: CareLinkDraft): Single<CareLink> {
+        val role = requireRole()
+        if (role != UserRole.CAREGIVER) {
+            return Single.error(IllegalStateException("Podopiecznego moze dodac tylko opiekun"))
+        }
+        val caregiverUid = requireUid()
+        val patientUid = firestore.collection(FirestorePaths.USERS).document().id
+        val patientDoc = firestore.collection(FirestorePaths.USERS).document(patientUid)
+        val personalDoc = patientDoc
+            .collection(FirestorePaths.SETTINGS)
+            .document(FirestorePaths.PERSONAL_DATA)
+        val linkId = "${patientUid}_${caregiverUid}"
+        val linkDoc = firestore.collection(FirestorePaths.CARE_LINKS).document(linkId)
+
+        return firestore.runTransaction { tx ->
+            val userSnapshot = tx.get(patientDoc)
+            if (userSnapshot.exists()) throw IllegalStateException("Profil pacjenta juz istnieje")
+
+            tx.set(
+                patientDoc,
+                mapOf(
+                    "role" to UserRole.PATIENT.name,
+                    "schemaVersion" to 1,
+                    "createdByCaregiverUid" to caregiverUid,
+                    "createdAt" to FieldValue.serverTimestamp(),
+                    "updatedAt" to FieldValue.serverTimestamp()
+                )
+            )
+            tx.set(
+                personalDoc,
+                mapOf(
+                    "firstName" to draft.firstName.trim(),
+                    "lastName" to draft.lastName.trim(),
+                    "pesel" to draft.pesel.trim(),
+                    "phoneNumber" to draft.phoneNumber.trim(),
+                    "email" to "",
+                    "address" to draft.address.trim(),
+                    "updatedAt" to FieldValue.serverTimestamp()
+                ),
+                SetOptions.merge()
+            )
+            tx.set(
+                linkDoc,
+                mapOf(
+                    "patientUid" to patientUid,
+                    "caregiverUid" to caregiverUid,
+                    "status" to CareLinkStatus.ACTIVE.name,
+                    "createdByUid" to caregiverUid,
+                    "createdAt" to FieldValue.serverTimestamp()
+                ),
+                SetOptions.merge()
+            )
+            CareLink(patientUid = patientUid, caregiverUid = caregiverUid, status = CareLinkStatus.ACTIVE)
+        }
+            .toSingle()
+            .flatMap { link ->
+                upsertPatientCaregiverContact(link.patientUid, link.caregiverUid)
+                    .andThen(Single.just(link))
             }
     }
 
@@ -215,9 +288,11 @@ class FirestoreCareLinkRepository(
                 }
                 CareLinkCodeType.CAREGIVER_TO_PATIENT -> {
                     val caregiverUid = snapshot.getString("caregiverUid").orEmpty()
+                    val patientUid = snapshot.getString("patientUid").orEmpty()
                     if (caregiverUid.isBlank()) throw InvalidCodeException("Brak opiekuna w kodzie")
+                    if (patientUid.isBlank()) throw InvalidCodeException("Brak podopiecznego w kodzie")
                     if (caregiverUid == uid) throw InvalidCodeException("Kod opiekuna nie moze byc uzyty przez opiekuna")
-                    uid to caregiverUid
+                    patientUid to caregiverUid
                 }
             }
 
@@ -267,7 +342,13 @@ class FirestoreCareLinkRepository(
         }
             .toSingle()
             .flatMap { link ->
-                upsertPatientCaregiverContact(link.patientUid, link.caregiverUid)
+                val upsertPatientLink = if (role == UserRole.PATIENT) {
+                    patientAccountLinkRepository.upsertPatientLink(uid, link.patientUid, code)
+                } else {
+                    Completable.complete()
+                }
+                upsertPatientLink
+                    .andThen(upsertPatientCaregiverContact(link.patientUid, link.caregiverUid))
                     .andThen(Single.just(link))
             }
             .onErrorResumeNext { error ->
@@ -298,6 +379,15 @@ class FirestoreCareLinkRepository(
 
     private fun requireUid(): String {
         return auth.currentUser?.uid ?: throw IllegalStateException("Not authenticated")
+    }
+
+    private fun resolveQueryUid(role: UserRole): String {
+        return if (role == UserRole.CAREGIVER) {
+            requireUid()
+        } else {
+            activePatientContext.getActivePatientUid()?.takeIf { it.isNotBlank() }
+                ?: requireUid()
+        }
     }
 
     private fun requireRole(): UserRole {

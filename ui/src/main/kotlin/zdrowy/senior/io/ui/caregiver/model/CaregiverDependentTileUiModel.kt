@@ -8,5 +8,6 @@ data class CaregiverDependentTileUiModel(
     val unreadCount: Int,
     val isSelf: Boolean,
     val reminderEnabled: Boolean,
-    val showReminderToggle: Boolean
+    val showReminderToggle: Boolean,
+    val showLinkAccountAction: Boolean
 )

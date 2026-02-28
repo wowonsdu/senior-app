@@ -47,6 +47,7 @@ import zdrowy.senior.io.domain.alert.ObserveRecentAlertEventsUseCase
 import zdrowy.senior.io.domain.alert.TriggerBloodPressureAlertEventUseCase
 import zdrowy.senior.io.domain.carelink.CareLinkRepository
 import zdrowy.senior.io.domain.carelink.ConsumeCareLinkCodeUseCase
+import zdrowy.senior.io.domain.carelink.CreateDependentProfileUseCase
 import zdrowy.senior.io.domain.carelink.EnsureCaregiverContactUseCase
 import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
 import zdrowy.senior.io.domain.carelink.GetCareLinkCodeInfoUseCase
@@ -229,6 +230,7 @@ val domainModule = module {
 
     factory { ObserveCareLinksUseCase(get()) }
     factory { GenerateCareLinkCodeUseCase(get()) }
+    factory { CreateDependentProfileUseCase(get()) }
     factory { GetCareLinkCodeInfoUseCase(get()) }
     factory { ConsumeCareLinkCodeUseCase(get()) }
     factory { EnsureCaregiverContactUseCase(get()) }
@@ -299,7 +301,7 @@ val dataModule = module {
     single<AgentRepository> { FirestoreAgentRepository(get()) }
     single<DoctorByUidRepository> { FirestoreDoctorByUidRepository() }
     single<AccessCodeRepository> { FirestoreAccessCodeRepository(get()) }
-    single<CareLinkRepository> { FirestoreCareLinkRepository(get()) }
+    single<CareLinkRepository> { FirestoreCareLinkRepository(get(), get(), get()) }
     single<NotificationRepository> { NoOpNotificationRepository() }
     single<NotificationSettingsRepository> { FirestoreNotificationSettingsRepository(get()) }
     single<AlertEventRepository> { FirestoreAlertEventRepository(get()) }
@@ -335,10 +337,11 @@ val viewModelModule = module {
             get(),
             get(),
             get(),
+            get(),
             get()
         )
     }
-    viewModel { CaregiverAddDependentViewModel(get(), get(), get(), get()) }
+    viewModel { CaregiverAddDependentViewModel(get(), get(), get()) }
     viewModel { CaregiverVisitsViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { CaregiverAddVisitViewModel(get(), get(), get(), get(), get()) }
     viewModel { CaregiverEditVisitViewModel(get(), get(), get(), get(), get()) }

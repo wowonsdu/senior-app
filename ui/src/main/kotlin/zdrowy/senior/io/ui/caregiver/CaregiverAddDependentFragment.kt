@@ -30,7 +30,6 @@ class CaregiverAddDependentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.start()
         binding.caregiverAddDependentToolbar.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
@@ -38,7 +37,7 @@ class CaregiverAddDependentFragment : Fragment() {
             findNavController().popBackStack()
         }
         binding.caregiverAddDependentSave.setOnClickListener {
-            generateCode()
+            createDependent()
         }
         binding.caregiverAddDependentLink.setOnClickListener {
             linkByCode()
@@ -47,10 +46,6 @@ class CaregiverAddDependentFragment : Fragment() {
             copyCode()
         }
 
-        viewModel.generatedCode.observe(viewLifecycleOwner) { code ->
-            binding.caregiverAddDependentCodeSection.visibility = View.VISIBLE
-            binding.caregiverAddDependentCodeValue.text = code
-        }
         viewModel.formErrorMessage.observe(viewLifecycleOwner) { message ->
             binding.caregiverAddDependentPhoneInput.error = message
             if (message != null) viewModel.onFormErrorHandled()
@@ -72,7 +67,7 @@ class CaregiverAddDependentFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private fun generateCode() {
+    private fun createDependent() {
         val firstName = binding.caregiverAddDependentFirstName.text?.toString()?.trim().orEmpty()
         val lastName = binding.caregiverAddDependentLastName.text?.toString()?.trim().orEmpty()
         val pesel = binding.caregiverAddDependentPesel.text?.toString()?.trim().orEmpty()
@@ -101,7 +96,7 @@ class CaregiverAddDependentFragment : Fragment() {
             phoneNumber = phoneE164.orEmpty(),
             address = address
         )
-        viewModel.generateCode(draft)
+        viewModel.createDependent(draft)
     }
 
     private fun linkByCode() {

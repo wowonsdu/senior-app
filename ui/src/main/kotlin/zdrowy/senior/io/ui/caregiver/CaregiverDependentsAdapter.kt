@@ -11,12 +11,13 @@ import zdrowy.senior.io.ui.databinding.ItemCaregiverDependentBinding
 
 class CaregiverDependentsAdapter(
     private val onSelect: (CaregiverDependentTileUiModel) -> Unit,
-    private val onToggleReminder: (CaregiverDependentTileUiModel, Boolean) -> Unit
+    private val onToggleReminder: (CaregiverDependentTileUiModel, Boolean) -> Unit,
+    private val onLinkAccount: (CaregiverDependentTileUiModel) -> Unit
 ) : ListAdapter<CaregiverDependentTileUiModel, CaregiverDependentsAdapter.ViewHolder>(Diff()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemCaregiverDependentBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding, onSelect, onToggleReminder)
+        return ViewHolder(binding, onSelect, onToggleReminder, onLinkAccount)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -26,7 +27,8 @@ class CaregiverDependentsAdapter(
     class ViewHolder(
         private val binding: ItemCaregiverDependentBinding,
         private val onSelect: (CaregiverDependentTileUiModel) -> Unit,
-        private val onToggleReminder: (CaregiverDependentTileUiModel, Boolean) -> Unit
+        private val onToggleReminder: (CaregiverDependentTileUiModel, Boolean) -> Unit,
+        private val onLinkAccount: (CaregiverDependentTileUiModel) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: CaregiverDependentTileUiModel) {
             binding.caregiverDependentAvatar.text = item.avatar
@@ -49,6 +51,11 @@ class CaregiverDependentsAdapter(
                 if (item.showReminderToggle) View.VISIBLE else View.GONE
             binding.caregiverDependentReminderToggle.setOnCheckedChangeListener { _, isChecked ->
                 onToggleReminder(item, isChecked)
+            }
+            binding.caregiverDependentLinkAccount.visibility =
+                if (item.showLinkAccountAction) View.VISIBLE else View.GONE
+            binding.caregiverDependentLinkAccount.setOnClickListener {
+                onLinkAccount(item)
             }
         }
     }

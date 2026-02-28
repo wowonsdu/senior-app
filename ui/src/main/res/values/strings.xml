@@ -72,10 +72,11 @@
     <string name="caregiver_dependents_self_label">Ja / moj profil</string>
     <string name="caregiver_dependents_badge_content">Nowe pomiary</string>
     <string name="caregiver_dependent_med_reminder_toggle">Powiadamiaj o lekach</string>
+    <string name="caregiver_dependent_link_account">Polacz konto pacjenta</string>
     <string name="caregiver_add_dependent_title">Dodaj podopiecznego</string>
-    <string name="caregiver_add_dependent_subtitle">Wpisz kod lub utworz kod dla podopiecznego</string>
+    <string name="caregiver_add_dependent_subtitle">Wpisz kod albo dodaj podopiecznego bez konta</string>
     <string name="caregiver_add_dependent_enter_code_title">Wpisz kod podopiecznego</string>
-    <string name="caregiver_add_dependent_form_header">Utworz kod dla podopiecznego</string>
+    <string name="caregiver_add_dependent_form_header">Dodaj podopiecznego bez konta</string>
     <string name="caregiver_add_dependent_first_name_hint">Imie</string>
     <string name="caregiver_add_dependent_last_name_hint">Nazwisko</string>
     <string name="caregiver_add_dependent_pesel_hint">PESEL</string>

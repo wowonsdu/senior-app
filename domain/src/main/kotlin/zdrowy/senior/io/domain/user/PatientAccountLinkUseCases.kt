@@ -8,7 +8,7 @@ class ObserveCurrentPatientLinkUseCase(
     private val repository: PatientAccountLinkRepository,
     private val currentUserUidProvider: CurrentUserUidProvider
 ) {
-    operator fun invoke(): Observable<String?> {
+    operator fun invoke(): Observable<String> {
         val accountUid = currentUserUidProvider.requireUid()
         return repository.observeLinkedPatientUid(accountUid)
     }
@@ -18,7 +18,7 @@ class GetCurrentPatientLinkUseCase(
     private val repository: PatientAccountLinkRepository,
     private val currentUserUidProvider: CurrentUserUidProvider
 ) {
-    operator fun invoke(): Single<String?> {
+    operator fun invoke(): Single<String> {
         val accountUid = currentUserUidProvider.requireUid()
         return repository.getLinkedPatientUid(accountUid)
     }

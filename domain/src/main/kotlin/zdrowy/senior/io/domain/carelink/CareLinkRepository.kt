@@ -9,8 +9,10 @@ interface CareLinkRepository {
     fun generateLinkCode(
         type: CareLinkCodeType,
         ttlSeconds: Long,
-        draft: CareLinkDraft? = null
+        draft: CareLinkDraft? = null,
+        patientUid: String? = null
     ): Single<CareLinkCode>
+    fun createDependentProfile(draft: CareLinkDraft): Single<CareLink>
     fun getLinkCodeInfo(code: String): Single<CareLinkCodeInfo>
     fun consumeLinkCode(code: String): Single<CareLink>
     fun ensureCaregiverContact(caregiverUid: String): Completable

@@ -14,7 +14,7 @@ import zdrowy.senior.io.domain.user.PatientAccountLinkRepository
 class FirestorePatientAccountLinkRepository : PatientAccountLinkRepository {
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
-    override fun observeLinkedPatientUid(accountUid: String): Observable<String?> {
+    override fun observeLinkedPatientUid(accountUid: String): Observable<String> {
         if (accountUid.isBlank()) return Observable.error(IllegalStateException("Brak UID konta"))
         return Observable.create { emitter ->
             val doc = firestore.collection(FirestorePaths.PATIENT_ACCOUNT_LINKS).document(accountUid)
@@ -24,22 +24,19 @@ class FirestorePatientAccountLinkRepository : PatientAccountLinkRepository {
                     return@addSnapshotListener
                 }
                 val patientUid = snapshot?.getString("patientUid")?.trim().orEmpty()
-                if (!emitter.isDisposed) {
-                    emitter.onNext(patientUid.ifBlank { null })
-                }
+                if (!emitter.isDisposed) emitter.onNext(patientUid)
             }
             emitter.setCancellable { registration.remove() }
         }
     }
 
-    override fun getLinkedPatientUid(accountUid: String): Single<String?> {
+    override fun getLinkedPatientUid(accountUid: String): Single<String> {
         if (accountUid.isBlank()) return Single.error(IllegalStateException("Brak UID konta"))
         val doc = firestore.collection(FirestorePaths.PATIENT_ACCOUNT_LINKS).document(accountUid)
         return doc.get()
             .toSingle()
             .map { snapshot ->
-                val patientUid = snapshot.getString("patientUid")?.trim().orEmpty()
-                patientUid.ifBlank { null }
+                snapshot.getString("patientUid")?.trim().orEmpty()
             }
     }
 

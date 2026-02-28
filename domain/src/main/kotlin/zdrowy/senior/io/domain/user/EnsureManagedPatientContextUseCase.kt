@@ -16,9 +16,9 @@ class EnsureManagedPatientContextUseCase(
                 }
                 val fallbackUid = currentUserUidProvider.requireUid()
                 getCurrentPatientLink()
-                    .onErrorReturnItem(null)
+                    .onErrorReturnItem("")
                     .flatMapCompletable { linkedUid ->
-                        val managedUid = linkedUid?.trim().orEmpty().ifBlank { fallbackUid }
+                        val managedUid = linkedUid.trim().ifBlank { fallbackUid }
                         setActivePatient(managedUid)
                     }
             }

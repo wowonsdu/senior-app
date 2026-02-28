@@ -8,7 +8,8 @@ class GenerateCareLinkCodeUseCase(
     operator fun invoke(
         type: CareLinkCodeType,
         ttlSeconds: Long,
-        draft: CareLinkDraft? = null
+        draft: CareLinkDraft? = null,
+        patientUid: String? = null
     ): Single<CareLinkCode> =
-        repository.generateLinkCode(type, ttlSeconds, draft)
+        repository.generateLinkCode(type, ttlSeconds, draft, patientUid)
 }

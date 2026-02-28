@@ -8,6 +8,8 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.carelink.ObserveCareLinksUseCase
+import zdrowy.senior.io.domain.carelink.CareLinkCodeType
+import zdrowy.senior.io.domain.carelink.GenerateCareLinkCodeUseCase
 import zdrowy.senior.io.domain.measurement.Measurement
 import zdrowy.senior.io.domain.measurement.MeasurementReadState
 import zdrowy.senior.io.domain.measurement.ObserveMeasurementReadStateUseCase
@@ -26,6 +28,7 @@ import zdrowy.senior.io.ui.caregiver.model.CaregiverDependentTileUiModel
 
 class CaregiverDependentsViewModel(
     private val observeCareLinks: ObserveCareLinksUseCase,
+    private val generateCareLinkCode: GenerateCareLinkCodeUseCase,
     private val observePersonalDataByUid: ObservePersonalDataByUidUseCase,
     private val observeRecentMeasurementsByUid: ObserveRecentMeasurementsByUidUseCase,
     private val observeMeasurementReadState: ObserveMeasurementReadStateUseCase,
@@ -41,6 +44,10 @@ class CaregiverDependentsViewModel(
     val dependents: LiveData<List<CaregiverDependentTileUiModel>> = _dependents
     private val _navTarget = MutableLiveData<String?>()
     val navTarget: LiveData<String?> = _navTarget
+    private val _linkCodeToCopy = MutableLiveData<String?>()
+    val linkCodeToCopy: LiveData<String?> = _linkCodeToCopy
+    private val _message = MutableLiveData<String?>()
+    val message: LiveData<String?> = _message
     private var started = false
 
     fun start() {
@@ -127,6 +134,37 @@ class CaregiverDependentsViewModel(
         )
     }
 
+    fun generatePatientLinkCode(patientUid: String) {
+        val cleanedUid = patientUid.trim()
+        if (cleanedUid.isBlank()) {
+            _message.value = "Brak podopiecznego do powiazania"
+            return
+        }
+        val ttlSeconds = 30L * 24 * 60 * 60
+        disposables.add(
+            generateCareLinkCode(
+                type = CareLinkCodeType.CAREGIVER_TO_PATIENT,
+                ttlSeconds = ttlSeconds,
+                patientUid = cleanedUid
+            )
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ code ->
+                    _linkCodeToCopy.value = code.code
+                }, { error ->
+                    _message.value = error.message ?: "Blad generowania kodu"
+                })
+        )
+    }
+
+    fun onLinkCodeHandled() {
+        _linkCodeToCopy.value = null
+    }
+
+    fun onMessageHandled() {
+        _message.value = null
+    }
+
     override fun onCleared() {
         disposables.clear()
         super.onCleared()
@@ -159,7 +197,8 @@ class CaregiverDependentsViewModel(
             unreadCount = unreadCount,
             isSelf = isSelf,
             reminderEnabled = if (isSelf) false else reminderEnabled,
-            showReminderToggle = !isSelf
+            showReminderToggle = !isSelf,
+            showLinkAccountAction = !isSelf
         )
     }
 
@@ -172,7 +211,8 @@ class CaregiverDependentsViewModel(
             unreadCount = 0,
             isSelf = isSelf,
             reminderEnabled = false,
-            showReminderToggle = !isSelf
+            showReminderToggle = !isSelf,
+            showLinkAccountAction = !isSelf
         )
     }
 

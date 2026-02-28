@@ -1,9 +1,13 @@
 package zdrowy.senior.io.ui.caregiver
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,6 +26,9 @@ class CaregiverDependentsFragment : Fragment() {
         },
         onToggleReminder = { item, enabled ->
             viewModel.setMedicationReminderEnabled(item.uid, enabled)
+        },
+        onLinkAccount = { item ->
+            viewModel.generatePatientLinkCode(item.uid)
         }
     )
 
@@ -58,6 +65,19 @@ class CaregiverDependentsFragment : Fragment() {
                 requireParentFragment().findNavController().navigate(R.id.patientHomeFragment)
                 viewModel.onNavigationHandled()
             }
+        }
+        viewModel.linkCodeToCopy.observe(viewLifecycleOwner) { code ->
+            if (code.isNullOrBlank()) return@observe
+            val clipboard = requireContext()
+                .getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            clipboard.setPrimaryClip(ClipData.newPlainText("careLinkCode", code))
+            Toast.makeText(requireContext(), "Skopiowano kod: $code", Toast.LENGTH_SHORT).show()
+            viewModel.onLinkCodeHandled()
+        }
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            if (message.isNullOrBlank()) return@observe
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            viewModel.onMessageHandled()
         }
     }
 
