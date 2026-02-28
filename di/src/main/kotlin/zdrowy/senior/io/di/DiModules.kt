@@ -323,7 +323,7 @@ val uiModule = module {
 }
 
 val viewModelModule = module {
-    viewModel { StartupGateViewModel(get()) }
+    viewModel { StartupGateViewModel(get(), get()) }
     viewModel { PatientLoginViewModel(get()) }
     viewModel { CaregiverLinkViewModel(get(), get(), get(), get()) }
     viewModel {

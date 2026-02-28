@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import zdrowy.senior.io.domain.user.EnsureCurrentUserRoleLoadedUseCase
+import zdrowy.senior.io.domain.user.EnsureManagedPatientContextUseCase
 import zdrowy.senior.io.domain.user.UserRole
 
 sealed class StartupGateNavTarget {
@@ -16,7 +17,8 @@ sealed class StartupGateNavTarget {
 }
 
 class StartupGateViewModel(
-    private val ensureCurrentUserRoleLoaded: EnsureCurrentUserRoleLoadedUseCase
+    private val ensureCurrentUserRoleLoaded: EnsureCurrentUserRoleLoadedUseCase,
+    private val ensureManagedPatientContext: EnsureManagedPatientContextUseCase
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
     private val _navTarget = MutableLiveData<StartupGateNavTarget?>()
@@ -28,6 +30,11 @@ class StartupGateViewModel(
         started = true
         disposables.add(
             ensureCurrentUserRoleLoaded()
+                .flatMap { role ->
+                    ensureManagedPatientContext()
+                        .onErrorComplete()
+                        .andThen(io.reactivex.rxjava3.core.Single.just(role))
+                }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ role ->

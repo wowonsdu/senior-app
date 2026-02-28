@@ -15,6 +15,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 import org.koin.android.ext.android.inject
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.databinding.FragmentPatientSmsVerifyBinding
+import zdrowy.senior.io.domain.user.EnsureManagedPatientContextUseCase
 import zdrowy.senior.io.domain.user.EnsureUserProfileUseCase
 import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.UserRole
@@ -25,6 +26,7 @@ class PatientSmsVerifyFragment : Fragment() {
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val ensureUserProfile: EnsureUserProfileUseCase by inject()
     private val setCurrentUserRole: SetCurrentUserRoleUseCase by inject()
+    private val ensureManagedPatientContext: EnsureManagedPatientContextUseCase by inject()
     private val disposables = CompositeDisposable()
 
     override fun onCreateView(
@@ -77,6 +79,7 @@ class PatientSmsVerifyFragment : Fragment() {
                     disposables.add(
                         ensureUserProfile(UserRole.PATIENT)
                             .andThen(setCurrentUserRole(UserRole.PATIENT))
+                            .andThen(ensureManagedPatientContext())
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .doFinally { binding.patientSmsConfirm.isEnabled = true }

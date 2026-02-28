@@ -23,6 +23,13 @@
         { "fieldPath": "patientUid", "order": "ASCENDING" },
         { "fieldPath": "status", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "patientAccountLinks",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "patientUid", "order": "ASCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

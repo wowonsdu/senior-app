@@ -61,7 +61,7 @@ class CaregiverLinkViewModel(
                 .subscribeOn(Schedulers.io())
                 .flatMap { link ->
                     getCurrentUserRole().flatMap { role ->
-                        val setActive = if (role == UserRole.CAREGIVER) {
+                        val setActive = if (role == UserRole.CAREGIVER || role == UserRole.PATIENT) {
                             setActivePatient(link.patientUid)
                         } else {
                             io.reactivex.rxjava3.core.Completable.complete()
@@ -94,7 +94,7 @@ class CaregiverLinkViewModel(
             getCurrentUserRole()
                 .subscribeOn(Schedulers.io())
                 .flatMap { role ->
-                    val setActive = if (role == UserRole.CAREGIVER) {
+                    val setActive = if (role == UserRole.CAREGIVER || role == UserRole.PATIENT) {
                         setActivePatient(link.patientUid)
                     } else {
                         io.reactivex.rxjava3.core.Completable.complete()

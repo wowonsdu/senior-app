@@ -14,6 +14,27 @@ service cloud.firestore {
         && exists(/databases/$(database)/documents/careLinks/$(careLinkId(patientUid, request.auth.uid)));
     }
 
+    function hasLinkedPatientProfile() {
+      return isSignedIn()
+        && exists(/databases/$(database)/documents/patientAccountLinks/$(request.auth.uid));
+    }
+
+    function linkedPatientUid() {
+      return hasLinkedPatientProfile()
+        ? get(/databases/$(database)/documents/patientAccountLinks/$(request.auth.uid)).data.patientUid
+        : "";
+    }
+
+    function effectivePatientUid() {
+      return linkedPatientUid() != "" ? linkedPatientUid() : request.auth.uid;
+    }
+
+    function isLinkedPatientProfile(uid) {
+      return isSignedIn()
+        && linkedPatientUid() != ""
+        && linkedPatientUid() == uid;
+    }
+
     function roleOf(uid) {
       return get(/databases/$(database)/documents/users/$(uid)).data.role;
     }
@@ -29,7 +50,7 @@ service cloud.firestore {
     function isLinkedPatientToCaregiver(caregiverUid) {
       return isSignedIn()
         && isPatient(request.auth.uid)
-        && exists(/databases/$(database)/documents/careLinks/$(careLinkId(request.auth.uid, caregiverUid)));
+        && exists(/databases/$(database)/documents/careLinks/$(careLinkId(effectivePatientUid(), caregiverUid)));
     }
 
     function isAccessCodeOwner() {
@@ -66,26 +87,76 @@ service cloud.firestore {
         && isCaregiver(request.auth.uid)
         && request.resource.data.caregiverUid is string
         && request.resource.data.caregiverUid == request.auth.uid
+        && request.resource.data.patientUid is string
+        && request.resource.data.patientUid != ""
+        && isPatient(request.resource.data.patientUid)
         && (!('phoneNumberE164' in request.resource.data)
             || request.auth.token.phone_number == null
             || request.resource.data.phoneNumberE164 != request.auth.token.phone_number);
     }
 
     match /users/{uid} {
-      allow read, write: if isSignedIn() && (request.auth.uid == uid || isCaregiverOf(uid));
+      allow create: if isSignedIn()
+        && (
+          request.auth.uid == uid
+          || (
+            isCaregiver(request.auth.uid)
+            && request.resource.data.role == "PATIENT"
+            && request.resource.data.createdByCaregiverUid == request.auth.uid
+          )
+        );
+
+      allow read, update, delete: if isSignedIn()
+        && (request.auth.uid == uid || isCaregiverOf(uid) || isLinkedPatientProfile(uid));
 
       match /settings/personalData {
         allow read: if isSignedIn()
           && (request.auth.uid == uid
               || isCaregiverOf(uid)
+              || isLinkedPatientProfile(uid)
               || isLinkedPatientToCaregiver(uid));
         allow write: if isSignedIn()
-          && (request.auth.uid == uid || isCaregiverOf(uid));
+          && (request.auth.uid == uid
+              || isCaregiverOf(uid)
+              || isLinkedPatientProfile(uid)
+              || (
+                isCaregiver(request.auth.uid)
+                && getAfter(/databases/$(database)/documents/users/$(uid)).data.createdByCaregiverUid == request.auth.uid
+                && getAfter(/databases/$(database)/documents/users/$(uid)).data.role == "PATIENT"
+              ));
       }
 
       match /{document=**} {
-        allow read, write: if isSignedIn() && (request.auth.uid == uid || isCaregiverOf(uid));
+        allow read: if isSignedIn()
+          && (request.auth.uid == uid || isCaregiverOf(uid) || isLinkedPatientProfile(uid));
+        allow write: if isSignedIn()
+          && (request.auth.uid == uid
+              || isCaregiverOf(uid)
+              || isLinkedPatientProfile(uid)
+              || (
+                isCaregiver(request.auth.uid)
+                && getAfter(/databases/$(database)/documents/users/$(uid)).data.createdByCaregiverUid == request.auth.uid
+                && getAfter(/databases/$(database)/documents/users/$(uid)).data.role == "PATIENT"
+              ));
       }
+    }
+
+    match /patientAccountLinks/{accountUid} {
+      allow get: if isSignedIn()
+        && (request.auth.uid == accountUid || isCaregiver(request.auth.uid));
+
+      allow list: if isSignedIn() && isCaregiver(request.auth.uid);
+
+      allow create, update: if isSignedIn()
+        && request.auth.uid == accountUid
+        && request.resource.data.accountUid is string
+        && request.resource.data.accountUid == accountUid
+        && request.resource.data.patientUid is string
+        && request.resource.data.patientUid != ""
+        && isPatient(accountUid);
+
+      allow delete: if isSignedIn()
+        && (request.auth.uid == accountUid || isCaregiver(request.auth.uid));
     }
 
     match /careLinks/{linkId} {
@@ -103,10 +174,13 @@ service cloud.firestore {
         && isPatient(request.resource.data.patientUid)
         && isCaregiver(request.resource.data.caregiverUid)
         && (request.auth.uid == request.resource.data.patientUid
-            || request.auth.uid == request.resource.data.caregiverUid);
+            || request.auth.uid == request.resource.data.caregiverUid
+            || isLinkedPatientProfile(request.resource.data.patientUid));
 
       allow update, delete: if isSignedIn()
-        && (resource.data.patientUid == request.auth.uid || resource.data.caregiverUid == request.auth.uid)
+        && (resource.data.patientUid == request.auth.uid
+            || resource.data.caregiverUid == request.auth.uid
+            || isLinkedPatientProfile(resource.data.patientUid))
         && request.resource.data.patientUid == resource.data.patientUid
         && request.resource.data.caregiverUid == resource.data.caregiverUid
         && linkId == careLinkId(resource.data.patientUid, resource.data.caregiverUid)
