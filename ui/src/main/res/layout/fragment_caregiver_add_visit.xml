@@ -59,14 +59,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_s"
-                android:hint="@string/caregiver_visit_title_hint">
+                android:hint="@string/caregiver_visit_doctor_hint"
+                app:endIconMode="dropdown_menu">
 
-                <com.google.android.material.textfield.TextInputEditText
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/caregiver_add_visit_title"
-                    style="@style/Widget.Senior.TextInputEditText"
+                    style="@style/Widget.Senior.AutoCompleteTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapSentences" />
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

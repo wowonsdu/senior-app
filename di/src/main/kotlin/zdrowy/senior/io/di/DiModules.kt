@@ -7,6 +7,7 @@ import zdrowy.senior.io.data.agent.FirestoreAccessCodeRepository
 import zdrowy.senior.io.data.agent.FirestoreAgentRepository
 import zdrowy.senior.io.data.alert.FirestoreAlertEventRepository
 import zdrowy.senior.io.data.carelink.FirestoreCareLinkRepository
+import zdrowy.senior.io.data.agent.FirestoreDoctorByUidRepository
 import zdrowy.senior.io.data.firestore.PatientUidProvider
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementByUidRepository
 import zdrowy.senior.io.data.measurement.FirestoreMeasurementRepository
@@ -32,7 +33,9 @@ import zdrowy.senior.io.domain.agent.GenerateAccessCodeForAgentUseCase
 import zdrowy.senior.io.domain.agent.ListAgentsUseCase
 import zdrowy.senior.io.domain.agent.NotificationRepository
 import zdrowy.senior.io.domain.agent.NotifyAgentsUseCase
+import zdrowy.senior.io.domain.agent.DoctorByUidRepository
 import zdrowy.senior.io.domain.agent.ObserveAgentsUseCase
+import zdrowy.senior.io.domain.agent.ObserveDoctorsByUidUseCase
 import zdrowy.senior.io.domain.agent.RemoveAgentUseCase
 import zdrowy.senior.io.domain.agent.SendAccessCodeSmsUseCase
 import zdrowy.senior.io.domain.agent.UpdateAgentUseCase
@@ -195,6 +198,7 @@ val domainModule = module {
     factory { RemoveAgentUseCase(get()) }
     factory { ListAgentsUseCase(get()) }
     factory { ObserveAgentsUseCase(get()) }
+    factory { ObserveDoctorsByUidUseCase(get()) }
     factory { GenerateAccessCodeForAgentUseCase(get()) }
     factory { SendAccessCodeSmsUseCase(get()) }
     factory { NotifyAgentsUseCase(get()) }
@@ -279,6 +283,7 @@ val dataModule = module {
     single<MeasurementByUidRepository> { FirestoreMeasurementByUidRepository() }
     single<MeasurementReadStateRepository> { FirestoreMeasurementReadStateRepository(get()) }
     single<AgentRepository> { FirestoreAgentRepository(get()) }
+    single<DoctorByUidRepository> { FirestoreDoctorByUidRepository() }
     single<AccessCodeRepository> { FirestoreAccessCodeRepository(get()) }
     single<CareLinkRepository> { FirestoreCareLinkRepository(get()) }
     single<NotificationRepository> { NoOpNotificationRepository() }
@@ -320,7 +325,7 @@ val viewModelModule = module {
     }
     viewModel { CaregiverAddDependentViewModel(get(), get(), get(), get()) }
     viewModel { CaregiverVisitsViewModel(get(), get(), get(), get(), get(), get()) }
-    viewModel { CaregiverAddVisitViewModel(get(), get(), get()) }
+    viewModel { CaregiverAddVisitViewModel(get(), get(), get(), get(), get()) }
     viewModel { CaregiverEditVisitViewModel(get(), get(), get(), get(), get()) }
     viewModel {
         CaregiverDashboardViewModel(

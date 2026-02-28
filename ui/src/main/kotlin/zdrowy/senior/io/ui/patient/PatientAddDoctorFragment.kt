@@ -58,7 +58,13 @@ class PatientAddDoctorFragment : Fragment() {
                 email = email,
                 specialization = specialization
             )
-        ) {
+        ) { createdDoctorId ->
+            if (!createdDoctorId.isNullOrBlank()) {
+                findNavController()
+                    .previousBackStackEntry
+                    ?.savedStateHandle
+                    ?.set(RESULT_CREATED_DOCTOR_ID, createdDoctorId)
+            }
             findNavController().popBackStack()
         }
     }
@@ -75,5 +81,9 @@ class PatientAddDoctorFragment : Fragment() {
             layout?.error = null
             true
         }
+    }
+
+    companion object {
+        const val RESULT_CREATED_DOCTOR_ID = "result_created_doctor_id"
     }
 }

@@ -14,7 +14,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import zdrowy.senior.io.domain.visit.VisitDraft
 import zdrowy.senior.io.ui.R
 import zdrowy.senior.io.ui.caregiver.model.CaregiverVisitDependentUi
+import zdrowy.senior.io.ui.caregiver.model.CaregiverVisitDoctorUi
 import zdrowy.senior.io.ui.databinding.FragmentCaregiverAddVisitBinding
+import zdrowy.senior.io.ui.patient.PatientAddDoctorFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -25,9 +27,14 @@ class CaregiverAddVisitFragment : Fragment() {
     private val viewModel: CaregiverAddVisitViewModel by viewModel()
     private val dateTimeFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
     private val reminderOffsets = listOf(10, 15, 30, 60)
+    private val addDoctorOptionId = "__add_doctor__"
 
     private var dependentItems: List<CaregiverVisitDependentUi> = emptyList()
     private var selectedDependentUid: String? = null
+    private var doctorItems: List<CaregiverVisitDoctorUi> = emptyList()
+    private var selectedDoctorId: String? = null
+    private var copiedDoctorName: String? = null
+    private var pendingCreatedDoctorId: String? = null
     private var selectedDateTimeMs: Long? = null
     private var selectedReminderOffsetMinutes: Int? = 15
     private var isCopyMode: Boolean = false
@@ -68,13 +75,20 @@ class CaregiverAddVisitFragment : Fragment() {
 
         setupReminderOffsetDropdown()
         setupDependentDropdown()
+        setupDoctorDropdown()
         initDefaultDateTime()
         applyCopyArgsIfPresent()
+        observeCreatedDoctorResult()
 
         viewModel.start()
         viewModel.dependents.observe(viewLifecycleOwner) { items ->
             dependentItems = items
             renderDependents(items)
+        }
+        viewModel.doctors.observe(viewLifecycleOwner) { items ->
+            doctorItems = items
+            renderDoctors(items)
+            applyPendingDoctorSelection()
         }
     }
 
@@ -87,6 +101,9 @@ class CaregiverAddVisitFragment : Fragment() {
         binding.caregiverAddVisitDependent.setOnItemClickListener { _, _, position, _ ->
             selectedDependentUid = dependentItems.getOrNull(position)?.uid
             binding.caregiverAddVisitDependentInput.error = null
+            selectedDoctorId = null
+            binding.caregiverAddVisitTitle.setText("", false)
+            observeDoctorsForSelectedDependent()
         }
         binding.caregiverAddVisitDependent.setOnClickListener {
             binding.caregiverAddVisitDependent.showDropDown()
@@ -114,6 +131,123 @@ class CaregiverAddVisitFragment : Fragment() {
             binding.caregiverAddVisitDependent.setText(labels[selectedIndex], false)
         } else {
             binding.caregiverAddVisitDependent.setText("", false)
+        }
+
+        observeDoctorsForSelectedDependent()
+    }
+
+    private fun setupDoctorDropdown() {
+        binding.caregiverAddVisitTitle.setOnItemClickListener { _, _, position, _ ->
+            val options = doctorDropdownOptions()
+            val selected = options.getOrNull(position) ?: return@setOnItemClickListener
+            if (selected.id == addDoctorOptionId) {
+                navigateToAddDoctor()
+                return@setOnItemClickListener
+            }
+            selectedDoctorId = selected.id
+            binding.caregiverAddVisitTitleInput.error = null
+        }
+        binding.caregiverAddVisitTitle.setOnClickListener {
+            if (doctorItems.isEmpty()) {
+                navigateToAddDoctor()
+            } else {
+                binding.caregiverAddVisitTitle.showDropDown()
+            }
+        }
+        binding.caregiverAddVisitTitle.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) return@setOnFocusChangeListener
+            if (doctorItems.isEmpty()) {
+                navigateToAddDoctor()
+            } else {
+                binding.caregiverAddVisitTitle.showDropDown()
+            }
+        }
+        binding.caregiverAddVisitTitleInput.setEndIconOnClickListener {
+            if (doctorItems.isEmpty()) {
+                navigateToAddDoctor()
+            } else {
+                binding.caregiverAddVisitTitle.showDropDown()
+            }
+        }
+    }
+
+    private fun renderDoctors(items: List<CaregiverVisitDoctorUi>) {
+        val options = doctorDropdownOptions(items)
+        val labels = options.map { option ->
+            if (option.id == addDoctorOptionId) {
+                getString(R.string.caregiver_visit_add_doctor_action)
+            } else {
+                doctorLabel(option)
+            }
+        }
+        val adapter = ArrayAdapter(
+            requireContext(),
+            com.google.android.material.R.layout.mtrl_auto_complete_simple_item,
+            labels
+        )
+        binding.caregiverAddVisitTitle.setAdapter(adapter)
+    }
+
+    private fun observeDoctorsForSelectedDependent() {
+        val patientUid = selectedDependentUid.orEmpty()
+        if (patientUid.isBlank()) {
+            doctorItems = emptyList()
+            renderDoctors(emptyList())
+            return
+        }
+        viewModel.observeDoctorsForPatient(patientUid)
+    }
+
+    private fun navigateToAddDoctor() {
+        val patientUid = selectedDependentUid.orEmpty()
+        if (patientUid.isBlank()) {
+            binding.caregiverAddVisitDependentInput.error = getString(R.string.common_field_required)
+            return
+        }
+        viewModel.prepareAddDoctor(
+            patientUid = patientUid,
+            onReady = {
+                requireParentFragment().findNavController().navigate(R.id.patientAddDoctorFragment)
+            },
+            onError = {
+                Toast.makeText(requireContext(), R.string.caregiver_visit_save_error, Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
+
+    private fun observeCreatedDoctorResult() {
+        val savedStateHandle = findNavController().currentBackStackEntry?.savedStateHandle ?: return
+        savedStateHandle
+            .getLiveData<String>(PatientAddDoctorFragment.RESULT_CREATED_DOCTOR_ID)
+            .observe(viewLifecycleOwner) { doctorId ->
+                if (doctorId.isNullOrBlank()) return@observe
+                pendingCreatedDoctorId = doctorId
+                applyPendingDoctorSelection()
+                savedStateHandle.remove<String>(PatientAddDoctorFragment.RESULT_CREATED_DOCTOR_ID)
+            }
+    }
+
+    private fun applyPendingDoctorSelection() {
+        val pendingId = pendingCreatedDoctorId
+        if (!pendingId.isNullOrBlank()) {
+            val doctor = doctorItems.firstOrNull { it.id == pendingId }
+            if (doctor != null) {
+                selectedDoctorId = doctor.id
+                binding.caregiverAddVisitTitle.setText(doctorLabel(doctor), false)
+                binding.caregiverAddVisitTitleInput.error = null
+                pendingCreatedDoctorId = null
+                return
+            }
+        }
+        val pendingName = copiedDoctorName
+        if (!pendingName.isNullOrBlank()) {
+            val doctor = doctorItems.firstOrNull { it.fullName.equals(pendingName, ignoreCase = true) }
+            if (doctor != null) {
+                selectedDoctorId = doctor.id
+                binding.caregiverAddVisitTitle.setText(doctorLabel(doctor), false)
+                binding.caregiverAddVisitTitleInput.error = null
+                copiedDoctorName = null
+            }
         }
     }
 
@@ -195,7 +329,9 @@ class CaregiverAddVisitFragment : Fragment() {
 
     private fun saveVisit() {
         val patientUid = selectedDependentUid
-        val title = binding.caregiverAddVisitTitle.text?.toString()?.trim().orEmpty()
+        val doctorId = selectedDoctorId
+        val doctor = doctorItems.firstOrNull { it.id == doctorId }
+        val doctorName = doctor?.fullName.orEmpty()
         val rawScheduledAtMs = selectedDateTimeMs
         val location = binding.caregiverAddVisitLocation.text?.toString()?.trim().orEmpty()
         val notes = binding.caregiverAddVisitNotes.text?.toString()?.trim().orEmpty()
@@ -212,7 +348,7 @@ class CaregiverAddVisitFragment : Fragment() {
         } else {
             binding.caregiverAddVisitDependentInput.error = null
         }
-        if (title.isBlank()) {
+        if (doctorId.isNullOrBlank() || doctorName.isBlank()) {
             binding.caregiverAddVisitTitleInput.error = getString(R.string.common_field_required)
             valid = false
         } else {
@@ -235,7 +371,7 @@ class CaregiverAddVisitFragment : Fragment() {
         viewModel.addVisit(
             draft = VisitDraft(
                 patientUid = patientUid!!,
-                title = title,
+                title = doctorName,
                 scheduledAtMs = scheduledAtMs!!,
                 location = location,
                 notes = notes,
@@ -266,7 +402,7 @@ class CaregiverAddVisitFragment : Fragment() {
         isCopyMode = true
         selectedDependentUid = arguments?.getString(ARG_COPY_PATIENT_UID)
 
-        binding.caregiverAddVisitTitle.setText(arguments?.getString(ARG_COPY_TITLE).orEmpty())
+        copiedDoctorName = arguments?.getString(ARG_COPY_TITLE).orEmpty().ifBlank { null }
         binding.caregiverAddVisitLocation.setText(arguments?.getString(ARG_COPY_LOCATION).orEmpty())
         binding.caregiverAddVisitNotes.setText(arguments?.getString(ARG_COPY_NOTES).orEmpty())
 
@@ -318,5 +454,26 @@ class CaregiverAddVisitFragment : Fragment() {
         const val ARG_COPY_NOTES = "copyNotes"
         const val ARG_COPY_REMINDER_ENABLED = "copyReminderEnabled"
         const val ARG_COPY_REMINDER_OFFSET_MINUTES = "copyReminderOffsetMinutes"
+    }
+
+    private fun doctorDropdownOptions(
+        doctors: List<CaregiverVisitDoctorUi> = doctorItems
+    ): List<CaregiverVisitDoctorUi> {
+        if (doctors.isEmpty()) return emptyList()
+        return doctors + CaregiverVisitDoctorUi(
+            id = addDoctorOptionId,
+            fullName = getString(R.string.caregiver_visit_add_doctor_action),
+            specialization = "",
+            phone = ""
+        )
+    }
+
+    private fun doctorLabel(item: CaregiverVisitDoctorUi): String {
+        val specialization = item.specialization.trim()
+        return if (specialization.isBlank()) {
+            item.fullName
+        } else {
+            "${item.fullName} (${specialization})"
+        }
     }
 }

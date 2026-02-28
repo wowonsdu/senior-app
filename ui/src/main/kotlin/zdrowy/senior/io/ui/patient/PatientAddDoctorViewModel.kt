@@ -12,12 +12,12 @@ class PatientAddDoctorViewModel(
 ) : ViewModel() {
     private val disposables = CompositeDisposable()
 
-    fun addDoctor(draft: DoctorDraft, onDone: () -> Unit) {
+    fun addDoctor(draft: DoctorDraft, onDone: (String?) -> Unit) {
         disposables.add(
             addDoctor(draft)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ onDone() }, { onDone() })
+                .subscribe({ id -> onDone(id) }, { onDone(null) })
         )
     }
 

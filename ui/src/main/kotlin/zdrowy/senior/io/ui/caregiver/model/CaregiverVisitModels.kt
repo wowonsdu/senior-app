@@ -27,3 +27,10 @@ data class CaregiverVisitDependentUi(
     val fullName: String,
     val phone: String
 )
+
+data class CaregiverVisitDoctorUi(
+    val id: String,
+    val fullName: String,
+    val specialization: String,
+    val phone: String
+)

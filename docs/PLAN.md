@@ -448,3 +448,4 @@ Zasady etapu:
 - [x] 16.7 Nawigacja + strings + cleanup placeholdera wizyt
 - [ ] 16.8 QA: assembleDebug + smoke wizyt (CRUD/status/reminder)
 - [x] 16.9 Wizyty: akcja kopiowania (prefill formularza add + zapis jako nowa nadchodzaca)
+- [x] 16.10 Wizyty: wybór/dodawanie lekarza z formularza add (dropdown + in-flow add)
