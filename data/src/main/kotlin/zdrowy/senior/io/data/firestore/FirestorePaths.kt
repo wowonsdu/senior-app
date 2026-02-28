@@ -16,6 +16,7 @@ internal object FirestorePaths {
     const val VISITS = "visits"
     const val ALERT_EVENTS = "alertEvents"
     const val CARE_LINKS = "careLinks"
+    const val PATIENT_ACCOUNT_LINKS = "patientAccountLinks"
 
     const val ACCESS_CODES = "accessCodes"
     const val ACCESS_CODE_DRAFTS = "accessCodeDrafts"

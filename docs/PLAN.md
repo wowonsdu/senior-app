@@ -449,3 +449,9 @@ Zasady etapu:
 - [ ] 16.8 QA: assembleDebug + smoke wizyt (CRUD/status/reminder)
 - [x] 16.9 Wizyty: akcja kopiowania (prefill formularza add + zapis jako nowa nadchodzaca)
 - [x] 16.10 Wizyty: wybór/dodawanie lekarza z formularza add (dropdown + in-flow add)
+
+## Etap 17 — Podopieczny bez konta + linkowanie konta pacjenta
+- [x] 17.1 Domain/Data: patientAccountLinks + use case EnsureManagedPatientContext + ManagedUserUidState pod active patient
+- [ ] 17.2 CareLink: tworzenie podopiecznego bez konta i link konta pacjenta przez kod
+- [ ] 17.3 Account deletion: odpiecie konta pacjenta + zachowanie profilu u opiekuna
+- [ ] 17.4 Rules/UI/Auth wiring + walidacja assembleDebug

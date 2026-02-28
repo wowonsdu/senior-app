@@ -23,6 +23,7 @@ import zdrowy.senior.io.data.settings.notifications.FirestoreNotificationSetting
 import zdrowy.senior.io.data.visit.FirestoreVisitRepository
 import zdrowy.senior.io.data.user.FirebaseCurrentUserUidProvider
 import zdrowy.senior.io.data.user.FirestoreAccountRepository
+import zdrowy.senior.io.data.user.FirestorePatientAccountLinkRepository
 import zdrowy.senior.io.data.user.SharedPrefsActivePatientContext
 import zdrowy.senior.io.data.user.SharedPrefsCurrentUserRoleContext
 import zdrowy.senior.io.domain.agent.AccessCodeRepository
@@ -121,15 +122,22 @@ import zdrowy.senior.io.domain.user.ClearActivePatientUseCase
 import zdrowy.senior.io.domain.user.ClearCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.DeleteCurrentUserAccountUseCase
 import zdrowy.senior.io.domain.user.DeleteUserDataUseCase
+import zdrowy.senior.io.domain.user.EnsureManagedPatientContextUseCase
 import zdrowy.senior.io.domain.user.CurrentUserUidProvider
 import zdrowy.senior.io.domain.user.CurrentUserRoleContext
 import zdrowy.senior.io.domain.user.GetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.ObserveActivePatientUseCase
 import zdrowy.senior.io.domain.user.ObserveCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.ObserveManagedUserUidStateUseCase
+import zdrowy.senior.io.domain.user.GetCurrentPatientLinkUseCase
+import zdrowy.senior.io.domain.user.ObserveCurrentPatientLinkUseCase
+import zdrowy.senior.io.domain.user.PatientAccountLinkRepository
+import zdrowy.senior.io.domain.user.RemoveCurrentPatientLinkUseCase
+import zdrowy.senior.io.domain.user.RemovePatientLinksByPatientUidUseCase
 import zdrowy.senior.io.domain.user.SetActivePatientUseCase
 import zdrowy.senior.io.domain.user.SetCurrentUserRoleUseCase
 import zdrowy.senior.io.domain.user.AccountRepository
+import zdrowy.senior.io.domain.user.UpsertCurrentPatientLinkUseCase
 import zdrowy.senior.io.domain.user.UserProfileRepository
 import zdrowy.senior.io.data.user.FirestoreUserProfileRepository
 import zdrowy.senior.io.domain.visit.AddVisitUseCase
@@ -261,10 +269,16 @@ val domainModule = module {
 
     factory { EnsureUserProfileUseCase(get()) }
     factory { EnsureCurrentUserRoleLoadedUseCase(get(), get()) }
+    factory { EnsureManagedPatientContextUseCase(get(), get(), get(), get()) }
     factory { SetCurrentUserRoleUseCase(get()) }
     factory { ObserveCurrentUserRoleUseCase(get()) }
     factory { GetCurrentUserRoleUseCase(get()) }
     factory { ClearCurrentUserRoleUseCase(get()) }
+    factory { ObserveCurrentPatientLinkUseCase(get(), get()) }
+    factory { GetCurrentPatientLinkUseCase(get(), get()) }
+    factory { UpsertCurrentPatientLinkUseCase(get(), get()) }
+    factory { RemoveCurrentPatientLinkUseCase(get(), get()) }
+    factory { RemovePatientLinksByPatientUidUseCase(get()) }
     factory { DeleteCurrentUserAccountUseCase(get()) }
     factory { DeleteUserDataUseCase(get()) }
     factory { SetActivePatientUseCase(get()) }
@@ -294,6 +308,7 @@ val dataModule = module {
     single<MedicationByUidRepository> { FirestoreMedicationsByUidRepository() }
     single<PersonalDataByUidRepository> { FirestorePersonalDataByUidRepository() }
     single<AccountRepository> { FirestoreAccountRepository() }
+    single<PatientAccountLinkRepository> { FirestorePatientAccountLinkRepository() }
     single<MedicationReminderEventRepository> { FirestoreMedicationReminderEventRepository() }
     single<MedicationReminderReadStateRepository> { FirestoreMedicationReminderReadStateRepository(get()) }
     single<CaregiverMedicationReminderPrefsRepository> { FirestoreCaregiverMedicationReminderPrefsRepository(get()) }

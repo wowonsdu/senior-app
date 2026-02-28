@@ -12,8 +12,14 @@ class ObserveManagedUserUidStateUseCase(
             .toObservable()
             .switchMap { role ->
                 if (role == UserRole.PATIENT) {
-                    val uid = currentUserUidProvider.requireUid()
-                    Observable.just(ManagedUserUidState.Available(role, uid))
+                    val fallbackUid = currentUserUidProvider.requireUid()
+                    observeActivePatient()
+                        .map { it.trim() }
+                        .map { uid ->
+                            val managedUid = uid.ifBlank { fallbackUid }
+                            ManagedUserUidState.Available(role, managedUid)
+                        }
+                        .distinctUntilChanged()
                 } else {
                     observeActivePatient()
                         .map { it.trim() }
