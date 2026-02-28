@@ -453,5 +453,5 @@ Zasady etapu:
 ## Etap 17 — Podopieczny bez konta + linkowanie konta pacjenta
 - [x] 17.1 Domain/Data: patientAccountLinks + use case EnsureManagedPatientContext + ManagedUserUidState pod active patient
 - [x] 17.2 CareLink: tworzenie podopiecznego bez konta i link konta pacjenta przez kod
-- [ ] 17.3 Account deletion: odpiecie konta pacjenta + zachowanie profilu u opiekuna
+- [x] 17.3 Account deletion: odpiecie konta pacjenta + zachowanie profilu u opiekuna
 - [ ] 17.4 Rules/UI/Auth wiring + walidacja assembleDebug
