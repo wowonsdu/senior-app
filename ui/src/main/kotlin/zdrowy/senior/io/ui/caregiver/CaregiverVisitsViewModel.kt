@@ -177,6 +177,9 @@ class CaregiverVisitsViewModel(
             dateLabel = dateFormat.format(Date(visit.scheduledAtMs)),
             timeLabel = timeFormat.format(Date(visit.scheduledAtMs)),
             locationLabel = visit.location,
+            notes = visit.notes,
+            reminderEnabled = visit.reminderEnabled,
+            reminderOffsetMinutes = visit.reminderOffsetMinutes,
             reminderLabel = reminderLabel,
             isCompleted = status == VisitComputedStatus.COMPLETED
         )

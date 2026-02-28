@@ -30,6 +30,7 @@ class CaregiverAddVisitFragment : Fragment() {
     private var selectedDependentUid: String? = null
     private var selectedDateTimeMs: Long? = null
     private var selectedReminderOffsetMinutes: Int? = 15
+    private var isCopyMode: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,6 +69,7 @@ class CaregiverAddVisitFragment : Fragment() {
         setupReminderOffsetDropdown()
         setupDependentDropdown()
         initDefaultDateTime()
+        applyCopyArgsIfPresent()
 
         viewModel.start()
         viewModel.dependents.observe(viewLifecycleOwner) { items ->
@@ -194,11 +196,14 @@ class CaregiverAddVisitFragment : Fragment() {
     private fun saveVisit() {
         val patientUid = selectedDependentUid
         val title = binding.caregiverAddVisitTitle.text?.toString()?.trim().orEmpty()
-        val scheduledAtMs = selectedDateTimeMs
+        val rawScheduledAtMs = selectedDateTimeMs
         val location = binding.caregiverAddVisitLocation.text?.toString()?.trim().orEmpty()
         val notes = binding.caregiverAddVisitNotes.text?.toString()?.trim().orEmpty()
         val reminderEnabled = binding.caregiverAddVisitReminderSwitch.isChecked
         val reminderOffset = if (reminderEnabled) selectedReminderOffsetMinutes else null
+        val scheduledAtMs = rawScheduledAtMs?.let {
+            if (isCopyMode) normalizeCopyDateTimeToUpcoming(it) else it
+        }
 
         var valid = true
         if (patientUid.isNullOrBlank()) {
@@ -252,5 +257,66 @@ class CaregiverAddVisitFragment : Fragment() {
         } else {
             "${item.fullName} (${item.phone})"
         }
+    }
+
+    private fun applyCopyArgsIfPresent() {
+        val copyVisitId = arguments?.getString(ARG_COPY_VISIT_ID).orEmpty()
+        if (copyVisitId.isBlank()) return
+
+        isCopyMode = true
+        selectedDependentUid = arguments?.getString(ARG_COPY_PATIENT_UID)
+
+        binding.caregiverAddVisitTitle.setText(arguments?.getString(ARG_COPY_TITLE).orEmpty())
+        binding.caregiverAddVisitLocation.setText(arguments?.getString(ARG_COPY_LOCATION).orEmpty())
+        binding.caregiverAddVisitNotes.setText(arguments?.getString(ARG_COPY_NOTES).orEmpty())
+
+        val copiedScheduledAtMs = arguments?.getLong(ARG_COPY_SCHEDULED_AT_MS, 0L) ?: 0L
+        if (copiedScheduledAtMs > 0L) {
+            selectedDateTimeMs = copiedScheduledAtMs
+            renderDateTime()
+        }
+
+        val reminderEnabled = arguments?.getBoolean(ARG_COPY_REMINDER_ENABLED, false) == true
+        binding.caregiverAddVisitReminderSwitch.isChecked = reminderEnabled
+        if (reminderEnabled) {
+            val copiedOffset = if (arguments?.containsKey(ARG_COPY_REMINDER_OFFSET_MINUTES) == true) {
+                arguments?.getInt(ARG_COPY_REMINDER_OFFSET_MINUTES)
+            } else {
+                null
+            }
+            selectedReminderOffsetMinutes = copiedOffset ?: reminderOffsets.firstOrNull()
+            selectedReminderOffsetMinutes?.let { offset ->
+                binding.caregiverAddVisitReminderOffset.setText(
+                    getString(R.string.caregiver_visit_reminder_offset_option, offset),
+                    false
+                )
+            }
+            binding.caregiverAddVisitReminderOffsetInput.visibility = View.VISIBLE
+        } else {
+            selectedReminderOffsetMinutes = null
+            binding.caregiverAddVisitReminderOffset.setText("", false)
+            binding.caregiverAddVisitReminderOffsetInput.visibility = View.GONE
+        }
+    }
+
+    private fun normalizeCopyDateTimeToUpcoming(baseMs: Long): Long {
+        val now = System.currentTimeMillis()
+        if (baseMs > now) return baseMs
+        val calendar = Calendar.getInstance().apply { timeInMillis = baseMs }
+        while (calendar.timeInMillis <= now) {
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
+        }
+        return calendar.timeInMillis
+    }
+
+    companion object {
+        const val ARG_COPY_VISIT_ID = "copyVisitId"
+        const val ARG_COPY_PATIENT_UID = "copyPatientUid"
+        const val ARG_COPY_TITLE = "copyTitle"
+        const val ARG_COPY_SCHEDULED_AT_MS = "copyScheduledAtMs"
+        const val ARG_COPY_LOCATION = "copyLocation"
+        const val ARG_COPY_NOTES = "copyNotes"
+        const val ARG_COPY_REMINDER_ENABLED = "copyReminderEnabled"
+        const val ARG_COPY_REMINDER_OFFSET_MINUTES = "copyReminderOffsetMinutes"
     }
 }

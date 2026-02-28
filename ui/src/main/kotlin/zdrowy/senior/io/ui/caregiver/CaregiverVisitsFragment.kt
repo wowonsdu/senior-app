@@ -25,6 +25,26 @@ class CaregiverVisitsFragment : Fragment() {
         onEdit = { item ->
             viewModel.onEditClicked(item.id)
         },
+        onCopy = { item ->
+            requireParentFragment().findNavController().navigate(
+                R.id.caregiverAddVisitFragment,
+                Bundle().apply {
+                    putString(CaregiverAddVisitFragment.ARG_COPY_VISIT_ID, item.id)
+                    putString(CaregiverAddVisitFragment.ARG_COPY_PATIENT_UID, item.patientUid)
+                    putString(CaregiverAddVisitFragment.ARG_COPY_TITLE, item.title)
+                    putLong(CaregiverAddVisitFragment.ARG_COPY_SCHEDULED_AT_MS, item.scheduledAtMs)
+                    putString(CaregiverAddVisitFragment.ARG_COPY_LOCATION, item.locationLabel)
+                    putString(CaregiverAddVisitFragment.ARG_COPY_NOTES, item.notes)
+                    putBoolean(CaregiverAddVisitFragment.ARG_COPY_REMINDER_ENABLED, item.reminderEnabled)
+                    if (item.reminderOffsetMinutes != null) {
+                        putInt(
+                            CaregiverAddVisitFragment.ARG_COPY_REMINDER_OFFSET_MINUTES,
+                            item.reminderOffsetMinutes
+                        )
+                    }
+                }
+            )
+        },
         onDelete = { item ->
             confirmDelete(item.id)
         }

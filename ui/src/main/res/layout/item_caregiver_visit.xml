@@ -108,6 +108,14 @@
                 android:textAllCaps="false" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/caregiver_visit_copy"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/caregiver_visits_action_copy"
+                android:textAllCaps="false" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/caregiver_visit_delete"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"

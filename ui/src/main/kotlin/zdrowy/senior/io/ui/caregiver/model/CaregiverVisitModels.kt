@@ -15,6 +15,9 @@ data class CaregiverVisitItemUi(
     val dateLabel: String,
     val timeLabel: String,
     val locationLabel: String,
+    val notes: String,
+    val reminderEnabled: Boolean,
+    val reminderOffsetMinutes: Int?,
     val reminderLabel: String?,
     val isCompleted: Boolean
 )

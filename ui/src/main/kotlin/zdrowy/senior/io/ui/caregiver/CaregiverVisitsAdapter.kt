@@ -14,13 +14,14 @@ import zdrowy.senior.io.ui.databinding.ItemCaregiverVisitBinding
 class CaregiverVisitsAdapter(
     private val onComplete: (CaregiverVisitItemUi) -> Unit,
     private val onEdit: (CaregiverVisitItemUi) -> Unit,
+    private val onCopy: (CaregiverVisitItemUi) -> Unit,
     private val onDelete: (CaregiverVisitItemUi) -> Unit
 ) : ListAdapter<CaregiverVisitItemUi, CaregiverVisitsAdapter.ViewHolder>(Diff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemCaregiverVisitBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding, onComplete, onEdit, onDelete)
+        return ViewHolder(binding, onComplete, onEdit, onCopy, onDelete)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -31,6 +32,7 @@ class CaregiverVisitsAdapter(
         private val binding: ItemCaregiverVisitBinding,
         private val onComplete: (CaregiverVisitItemUi) -> Unit,
         private val onEdit: (CaregiverVisitItemUi) -> Unit,
+        private val onCopy: (CaregiverVisitItemUi) -> Unit,
         private val onDelete: (CaregiverVisitItemUi) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -75,6 +77,7 @@ class CaregiverVisitsAdapter(
 
             binding.caregiverVisitComplete.setOnClickListener { onComplete(item) }
             binding.caregiverVisitEdit.setOnClickListener { onEdit(item) }
+            binding.caregiverVisitCopy.setOnClickListener { onCopy(item) }
             binding.caregiverVisitDelete.setOnClickListener { onDelete(item) }
         }
     }

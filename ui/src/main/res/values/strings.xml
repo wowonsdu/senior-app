@@ -62,6 +62,7 @@
     <string name="caregiver_visits_status_completed">Zakonczona</string>
     <string name="caregiver_visits_action_complete">Oznacz jako wykonana</string>
     <string name="caregiver_visits_action_edit">Edytuj</string>
+    <string name="caregiver_visits_action_copy">Kopiuj</string>
     <string name="caregiver_visits_action_delete">Usun</string>
     <string name="caregiver_visits_delete_title">Usunac wizyte?</string>
     <string name="caregiver_visits_delete_message">Ta operacja jest nieodwracalna.</string>
